@@ -1,0 +1,13 @@
+logs
+target
+api/target
+mongo/target
+project/target
+project/project/target
+/.idea
+/.sbtserver
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
