@@ -1,4 +1,4 @@
-package domain;
+package mongo.domain;
 
 import domain.User;
 import org.springframework.data.annotation.Id;
@@ -24,10 +24,12 @@ public class MongoUser implements User {
         this.password = password;
     }
 
+    @Override
     public String getUserName() {
         return userName;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }

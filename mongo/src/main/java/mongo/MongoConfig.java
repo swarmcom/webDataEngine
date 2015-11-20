@@ -1,16 +1,17 @@
-package config;
+package mongo;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import config.AppConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories("dao")
-@ComponentScan("service")
+@EnableMongoRepositories("mongo.dao")
+@ComponentScan("mongo.service")
 public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override

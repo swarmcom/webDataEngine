@@ -6,10 +6,12 @@ lazy val api = project
 
 lazy val mongo = project
 
+lazy val couchdb = project
+
 lazy val webDataEngine = Project("webDataEngine", file(".")).
   enablePlugins(PlayJava).
-  aggregate(api,mongo).
-  dependsOn(api,mongo)
+  aggregate(api,mongo, couchdb).
+  dependsOn(api,mongo, couchdb)
 
 scalaVersion := "2.11.6"
 

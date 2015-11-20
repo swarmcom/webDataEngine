@@ -3,7 +3,7 @@ target
 api/target
 mongo/target
 project/target
-project/project/target
+project/project
 /.idea
 /.sbtserver
 /.idea_modules

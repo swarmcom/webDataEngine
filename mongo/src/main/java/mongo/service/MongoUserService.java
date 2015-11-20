@@ -1,15 +1,16 @@
-package service;
+package mongo.service;
 
-import dao.UserRepository;
-import domain.MongoUser;
+import mongo.dao.MongoUserRepository;
+import mongo.domain.MongoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import service.UserService;
 
 @Component
-public class UserServiceImpl implements UserService {
+public class MongoUserService implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    MongoUserRepository userRepository;
 
     @Override
     public MongoUser getUser(String userName) {
