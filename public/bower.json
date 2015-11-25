@@ -1,0 +1,22 @@
+{
+  "name": "webDataEngine-ui",
+  "homepage": "https://github.com/mirceac/webDataEngine",
+  "authors": [
+    "Mircea Carasel <mirceac@ezuce.com>"
+  ],
+  "description": "web components for webDataEngine application",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0",
+    "paper-elements": "PolymerElements/paper-elements#~1.0.6",
+    "iron-elements": "PolymerElements/iron-elements#~1.0.4"
+  },
+  "resolutions": {
+    "polymer": "^1.2.0",
+    "webcomponentsjs": "^0.7.18"
+  }
+}

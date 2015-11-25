@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
+    <script src="../components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <!-- 2. Use an HTML Import to bring in some elements. -->
+    <link rel="import" href="../components/paper-button/paper-button.html">
+    <link rel="import" href="../components/paper-input/paper-input.html">
+    <link rel="import" href="../components/iron-ajax/iron-ajax.html">
+    <link rel="import" href="../components/iron-list/iron-list.html">
+    <link rel="import" href="app/userService.html">
+</head>
+<style>
+    paper-button.colored {
+      color: black;
+      background: lightgreen;
+    }
+</style>
+<body>
+<paper-input id="userName" label="Your user name"></paper-input>
+<paper-input id="password" label="Your password" type="password"></paper-input>
+<paper-button raised class="colored">Create</paper-button>
+<p>Users</p>
+<user-service id="userService"></user-service>
+
+<script>
+      // To ensure that elements are ready on polyfilled browsers,
+      // wait for WebComponentsReady.
+      document.addEventListener('WebComponentsReady', function() {
+        var userNameInput = document.getElementById("userName");
+        var passwordInput = document.getElementById("password");
+        var user = {}
+        var button = document.querySelector('paper-button');
+        var greeting = document.getElementById("greeting");
+        button.addEventListener('click', function() {
+          user["userName"] = userNameInput.value;
+          user["password"] = passwordInput.value;
+          var userData = JSON.stringify(user);
+          var userService = document.getElementById("userService");
+          userService.addNew(user);
+        });
+      })
+    </script>
+</body>
+</html>
