@@ -1,9 +1,14 @@
 package controllers;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.User;
 import models.domain.ModelUser;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -15,10 +20,13 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class Users extends Controller {
     @Inject
     UserService userService;
 
+    @Secured("ROLE_USER")
+    @PreAuthorize("true")
     public Result list() {
         List<? extends User> users = userService.getUsers();
         JsonNode node = Json.toJson(users);
