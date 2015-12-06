@@ -1,0 +1,43 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/paper-button/paper-button.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
+<style>
+    paper-input {
+    color:#000000;
+    text-align:left;
+    }
+    .centered {
+    display:block;
+    text-align:center;
+    width:100%;
+    }
+    paper-button.colored {
+    color: black;
+    background: lightblue;
+    }
+</style>
+<dom-module id="login-form">
+
+    <template>
+        <form is="iron-form" id="form" method="post" action="/login">
+          <paper-input name="userName" label="Username">
+          </paper-input>
+          <paper-input name="password" type="password" label="Password">
+          </paper-input>
+          <div class="centered">
+            <paper-button id="login" on-click="doSend" raisedButton class="colored" label="Login">Login</paper-button>
+          </div>
+        </form>
+    </template>
+
+    <script>
+    Polymer({
+      is: 'login-form',
+      doSend: function() {
+        document.getElementById('form').submit();
+      }
+    });
+    </script>
+
+</dom-module>
+

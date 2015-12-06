@@ -3,8 +3,15 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Assets.at(path="/public", file="app/index.html")
+GET     /                                controllers.Assets.at(path="/public", file="app/index.html")
 
+GET     /error                           controllers.Assets.at(path="/public", file="app/error.html")
+POST    /login                           controllers.Application.login()
+
+
+GET     /users                           controllers.Application.asset(file="/public/app/users.html")
+
+# REST api
 GET     /api/users/list                  controllers.Users.list
 POST     /api/users/add                  controllers.Users.add
 

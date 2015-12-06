@@ -2,6 +2,8 @@ package modules;
 
 import com.google.inject.Provides;
 import config.AppModule;
+import controllers.Application;
+import controllers.FormAuthenticationAction;
 import controllers.Users;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.guice.module.SpringModule;
@@ -34,5 +36,10 @@ public class SpringAppModule extends AppModule {
     @Provides
     Users providesUsersController() {
         return springContext.getBean(Users.class);
+    }
+
+    @Provides
+    Application providesApplicationController() {
+        return springContext.getBean(Application.class);
     }
 }

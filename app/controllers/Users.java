@@ -1,6 +1,5 @@
 package controllers;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.User;
@@ -8,12 +7,9 @@ import models.domain.ModelUser;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import play.libs.Json;
-import play.mvc.BodyParser;
-import play.mvc.Controller;
+import play.mvc.*;
 import play.mvc.Http.*;
-import play.mvc.Result;
 import service.UserService;
 
 import javax.inject.Inject;
@@ -21,13 +17,18 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@FormAuthentication
+@BasicAuthentication
+@Security.Authenticated(controllers.Secured.class)
+@Secured("ROLE_USER")
+@PreAuthorize("true")
 public class Users extends Controller {
     @Inject
     UserService userService;
 
-    @Secured("ROLE_USER")
-    @PreAuthorize("true")
     public Result list() {
+        System.out.println("BASIC ? fgaga" + request().getHeader("Authorization") + request().username());
+
         List<? extends User> users = userService.getUsers();
         JsonNode node = Json.toJson(users);
         return ok(node.toString());
@@ -46,5 +47,4 @@ public class Users extends Controller {
         }
         return ok("created");
     }
-
 }
