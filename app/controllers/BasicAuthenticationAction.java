@@ -46,7 +46,7 @@ public class BasicAuthenticationAction extends AuthenticationAction<BasicAuthent
             String password = credString[1];
             if (!isEmpty(userName)) {
                 Logger.info("BASIC Authentication !!");
-                setRequestAuthenticationToken(userName, password);
+                createRequestAuthenticationToken(userName, password);
             }
         }
         return delegate.call(context);

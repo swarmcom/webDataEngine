@@ -1,8 +1,11 @@
 package couchdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import domain.Role;
 import domain.User;
 import org.ektorp.support.CouchDbDocument;
+
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CouchdbUser extends CouchDbDocument implements User {
@@ -28,6 +31,11 @@ public class CouchdbUser extends CouchDbDocument implements User {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public List<String> getRoles() {
+        return null;
     }
 
     public void setUserName(String userName) {

@@ -20,8 +20,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @FormAuthentication
 @BasicAuthentication
 @Security.Authenticated(controllers.Secured.class)
-@Secured("ROLE_USER")
-@PreAuthorize("true")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class Application extends Controller {
 
     public Result login() {

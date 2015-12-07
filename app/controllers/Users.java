@@ -20,8 +20,7 @@ import java.util.List;
 @FormAuthentication
 @BasicAuthentication
 @Security.Authenticated(controllers.Secured.class)
-@Secured("ROLE_USER")
-@PreAuthorize("true")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
     @Inject
     UserService userService;

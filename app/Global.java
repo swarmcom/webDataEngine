@@ -19,7 +19,7 @@ public class Global extends GlobalSettings {
                     Logger.info("username "+ userName);
                     return delegate.call(ctx);
                 } catch (Exception ex) {
-                    Logger.info("Cannot Call Action for reason: " + ex.getMessage());
+                    Logger.info("Cannot Call Action for reason: " + ex.getMessage(), ex);
                     F.Promise<Result> result = null;
                     if (userName != null) {
                         Logger.info("Redirect to login page");

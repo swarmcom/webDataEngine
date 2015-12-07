@@ -22,14 +22,16 @@ public abstract class AuthenticationAction<T> extends Action<T> {
 
     protected void createAuthenticationTokenInSession(Http.Context context, String userName, String password) {
         context.session().put("username", userName);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userName, password);
-        sessionCache.set(userName, token);
+        sessionCache.set(userName, createToken(userName, password));
         context.session().clear();
         context.session().put("username", userName);
     }
 
-    protected void setRequestAuthenticationToken(String userName, String password) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userName, password);
-        SecurityContextHolder.getContext().setAuthentication(token);
+    protected void createRequestAuthenticationToken(String userName, String password) {
+        SecurityContextHolder.getContext().setAuthentication(createToken(userName, password));
+    }
+
+    private UsernamePasswordAuthenticationToken createToken(String userName, String password) {
+        return new UsernamePasswordAuthenticationToken(userName, password);
     }
 }
