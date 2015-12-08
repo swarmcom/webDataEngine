@@ -28,12 +28,10 @@ public class Secured extends Security.Authenticator {
         }
         //check if username in session - recreate spring token if found
         String userName = (String)ctx.session().get("username");
-        Logger.info("uSERnaME " + userName);
         if (userName != null) {
             token = sessionCache.get(userName);
             if (token != null) {
                 //Session token already created in session cache, make sure request is aware of it
-                Logger.info("SET TJE TPLEJ ");
                 SecurityContextHolder.getContext().setAuthentication(token);
             }
         } else {

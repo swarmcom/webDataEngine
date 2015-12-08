@@ -1,14 +1,16 @@
 package mongo.service;
 
 
-import domain.Role;
+import api.domain.Role;
 import mongo.dao.MongoRoleRepository;
 import mongo.domain.MongoRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import service.RoleService;
+import org.springframework.stereotype.Component;
+import api.service.RoleService;
 
 import java.util.List;
 
+@Component
 public class MongoRoleService implements RoleService {
 
     @Autowired

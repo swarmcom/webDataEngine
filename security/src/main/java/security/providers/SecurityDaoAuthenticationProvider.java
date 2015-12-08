@@ -34,7 +34,6 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Authentication auth = super.authenticate(authentication);
-        Logger.info("MIRCEA" + auth.getAuthorities());
         return auth;
     }
 }

@@ -1,6 +1,6 @@
-package service;
+package api.service;
 
-import domain.Role;
+import api.domain.Role;
 
 import java.util.List;
 

@@ -1,24 +1,12 @@
 package controllers;
 
-import domain.User;
-import models.domain.ModelUser;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import play.Play;
-import play.data.Form;
 import play.mvc.*;
-import service.UserService;
-
-import javax.inject.Inject;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Component
 @FormAuthentication
-@BasicAuthentication
 @Security.Authenticated(controllers.Secured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Application extends Controller {

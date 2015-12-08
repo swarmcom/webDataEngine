@@ -1,8 +1,12 @@
 <link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="../components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../components/iron-list/iron-list.html">
+<link rel="import" href="../components/iron-dropdown/iron-dropdown.html">
 <link rel="import" href="../components/paper-button/paper-button.html">
 <link rel="import" href="../components/paper-input/paper-input.html">
+<link rel="import" href="../components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../components/paper-item/paper-item.html">
+<link rel="import" href="../components/iron-collapse/iron-collapse.html">
 <style>
     .item {
        @apply(--layout-horizontal);
@@ -12,8 +16,20 @@
        border: 2px solid #ddd;
     }
     paper-button.colored {
-    color: black;
-    background: lightgreen;
+       color: black;
+       background: lightgreen;
+    }
+    .horizontal-section {
+       padding: 0 !important;
+    }
+    paper-item {
+       --paper-item: {
+         cursor: pointer;
+      };
+    }
+    .sublist {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 </style>
 <dom-module id="user-service">
@@ -39,6 +55,14 @@
 
         <paper-input id="userName" label="Your user name"></paper-input>
         <paper-input id="password" label="Your password" type="password"></paper-input>
+
+        <div class="horizontal-section">
+            <paper-listbox id="role" multi>
+                <paper-item value = "ROLE_ADMIN">ROLE_ADMIN</paper-item>
+                <paper-item value = "ROLE_USER">ROLE_USER</paper-item>
+            </paper-listbox>
+        </div>
+
         <paper-button id="create" raised class="colored">Create</paper-button>
         <p>Users</p>
         <iron-list items="[[data]]" as="item">
@@ -66,11 +90,21 @@
     document.addEventListener('WebComponentsReady', function() {
       var userNameInput = document.getElementById("userName");
       var passwordInput = document.getElementById("password");
+      var role = document.getElementById("role");
       var button = document.getElementById("create");
       var user = {}
       button.addEventListener('click', function() {
         user["userName"] = userNameInput.value;
         user["password"] = passwordInput.value;
+        var selectedRoles = role.selectedItems;
+        var selectedValues = [];
+        var i;
+        if (selectedRoles != undefined) {
+            for (i=0;i<selectedRoles.length; i++) {
+                selectedValues[i]=selectedRoles[i].getAttribute("value");
+            }
+        }
+        user["roles"] = selectedValues
         var userService = document.getElementById("userService");
         userService.addNew(user);
       });

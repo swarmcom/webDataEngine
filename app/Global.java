@@ -1,3 +1,4 @@
+import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 
@@ -5,7 +6,9 @@ import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
+import api.service.UserService;
 
+import javax.inject.Inject;
 import java.lang.reflect.Method;
 
 public class Global extends GlobalSettings {
@@ -16,7 +19,7 @@ public class Global extends GlobalSettings {
                 String userName = null;
                 try {
                     userName = ctx.session().get("username");
-                    Logger.info("username "+ userName);
+                    Logger.info("username in session: "+ userName);
                     return delegate.call(ctx);
                 } catch (Exception ex) {
                     Logger.info("Cannot Call Action for reason: " + ex.getMessage(), ex);

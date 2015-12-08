@@ -1,7 +1,6 @@
 package mongo.domain;
 
-import domain.Role;
-import domain.User;
+import api.domain.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +13,7 @@ public class MongoUser implements User {
     @Id
     private String id;
 
-    @Indexed
+    @Indexed(unique = true)
     private String userName;
 
     private String password;
@@ -29,7 +28,19 @@ public class MongoUser implements User {
     public MongoUser(String userName, String password) {
         this.userName = userName;
         this.password = password;
+        roles.add("ROLE_USER");
     }
+
+    public MongoUser(String userName, String password, List<String> roles) {
+        this.userName = userName;
+        this.password = password;
+        if (roles != null) {
+            this.roles.addAll(roles);
+        } else {
+            this.roles.add("ROLE_USER");
+        }
+    }
+
 
     @Override
     public String getUserName() {
@@ -55,6 +66,8 @@ public class MongoUser implements User {
     }
 
     public void setRoles(List<String> roles) {
-        this.roles = roles;
+        if (roles != null) {
+            this.roles.addAll(roles);
+        }
     }
 }

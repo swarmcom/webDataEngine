@@ -1,6 +1,6 @@
 package couchdb.config;
 
-import config.AppConfig;
+import api.config.AppConfig;
 import couchdb.dao.CouchdbUserRepository;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;

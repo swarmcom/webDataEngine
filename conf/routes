@@ -5,7 +5,6 @@
 # Home page
 GET     /                                controllers.Assets.at(path="/public", file="app/index.html")
 
-GET     /error                           controllers.Assets.at(path="/public", file="app/error.html")
 POST    /login                           controllers.Application.login()
 
 

@@ -1,11 +1,11 @@
 package mongo.service;
 
-import domain.User;
+import api.domain.User;
 import mongo.dao.MongoUserRepository;
 import mongo.domain.MongoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import service.UserService;
+import api.service.UserService;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class MongoUserService implements UserService {
     }
 
     @Override
-    public void createUser(String userName, String password) {
-        userRepository.save(new MongoUser(userName, password));
+    public void createUser(String userName, String password, List<String> roles) {
+        userRepository.save(new MongoUser(userName, password, roles));
     }
 
     @Override

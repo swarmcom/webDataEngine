@@ -1,8 +1,7 @@
 package couchdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import domain.Role;
-import domain.User;
+import api.domain.User;
 import org.ektorp.support.CouchDbDocument;
 
 import java.util.List;

@@ -1,18 +1,11 @@
 package controllers;
 
-import domain.User;
-import models.domain.ModelUser;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
-import play.data.Form;
 import play.libs.F;
-import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.Results;
-import service.UserService;
+import api.service.UserService;
 
 import javax.inject.Inject;
 

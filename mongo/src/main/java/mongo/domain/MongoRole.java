@@ -1,6 +1,6 @@
 package mongo.domain;
 
-import domain.Role;
+import api.domain.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,7 +11,7 @@ public class MongoRole implements Role {
     @Id
     private String id;
 
-    @Indexed
+    @Indexed(unique = true)
     private String roleName;
 
     public MongoRole() {

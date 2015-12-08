@@ -1,4 +1,4 @@
-package config;
+package api.config;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
@@ -6,7 +6,7 @@ import play.Configuration;
 import play.Environment;
 
 
-public abstract class AppModule extends AbstractModule{
+public abstract class AppModule extends AbstractModule {
 
     private Environment environment;
 
