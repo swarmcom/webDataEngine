@@ -28,7 +28,7 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
 
     @PostConstruct
     public void init() {
-        //setPasswordEncoder(passwordEncoder);
+        setPasswordEncoder(passwordEncoder);
         setUserDetailsService(userDetailsService);
     }
 

@@ -1,4 +1,4 @@
-package controllers;
+package auth;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 
-public class BasicAuthenticationAction extends AuthenticationAction<BasicAuthentication> {
+public class BasicAuthenticationAction extends AuthenticationAction {
 
     private static final String AUTHORIZATION = "authorization";
     private static final String WWW_AUTHENTICATE = "WWW-Authenticate";
@@ -23,7 +23,6 @@ public class BasicAuthenticationAction extends AuthenticationAction<BasicAuthent
 
     @Override
     public F.Promise<Result> call(Http.Context context) throws Throwable {
-        SecurityContextHolder.getContext().setAuthentication(null);
         String authHeader = context.request().getHeader(AUTHORIZATION);
         if (authHeader == null) {
             Logger.info("No Basic authentication detected - move to next authenticator");

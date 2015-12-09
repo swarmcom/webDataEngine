@@ -3,6 +3,7 @@ package api.service;
 import api.domain.Role;
 import api.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.Logger;
 
@@ -18,11 +19,16 @@ public class InitService {
     @Autowired
     RoleService roleService;
 
+    @Autowired
+    PasswordEncoder encoder;
+
     @PostConstruct
     public void init() {
         User user = userService.getUser("superadmin");
+
         if (user == null) {
-            userService.createUser("superadmin", "123", new ArrayList<String>(Arrays.asList("ROLE_ADMIN", "ROLE_USER")));
+            String encodedPassword = encoder.encode("123");
+            userService.createUser("superadmin", encodedPassword, new ArrayList<String>(Arrays.asList("ROLE_ADMIN", "ROLE_USER")));
         }
         Role roleAdmin = roleService.getRole("ROLE_ADMIN");
         if (roleAdmin == null) {

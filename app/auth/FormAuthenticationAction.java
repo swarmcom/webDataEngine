@@ -1,4 +1,4 @@
-package controllers;
+package auth;
 
 import models.domain.ModelUser;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,11 +9,10 @@ import play.mvc.*;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
-public class FormAuthenticationAction extends AuthenticationAction<FormAuthentication> {
+public class FormAuthenticationAction extends AuthenticationAction {
 
     @Override
     public F.Promise<Result> call(Http.Context context) throws Throwable {
-        SecurityContextHolder.getContext().setAuthentication(null);
         Form<ModelUser> userForm = Form.form(ModelUser.class);
         ModelUser user = userForm.bindFromRequest().get();
         String userName = user.getUserName();

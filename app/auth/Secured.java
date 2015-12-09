@@ -1,4 +1,4 @@
-package controllers;
+package auth;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,8 +28,10 @@ public class Secured extends Security.Authenticator {
         }
         //check if username in session - recreate spring token if found
         String userName = (String)ctx.session().get("username");
+        Logger.info("Username in session (Secured): " + userName);
         if (userName != null) {
             token = sessionCache.get(userName);
+            Logger.info("Token: " + token);
             if (token != null) {
                 //Session token already created in session cache, make sure request is aware of it
                 SecurityContextHolder.getContext().setAuthentication(token);

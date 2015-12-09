@@ -1,4 +1,4 @@
-package controllers;
+package auth;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,11 +9,10 @@ import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
-import security.util.MD5Encoder;
 
 import javax.inject.Inject;
 
-public abstract class AuthenticationAction<T> extends Action<T> {
+public class AuthenticationAction extends Action.Simple {
 
     @Inject
     @NamedCache("session-cache")
@@ -21,7 +20,6 @@ public abstract class AuthenticationAction<T> extends Action<T> {
 
 
     protected void createAuthenticationTokenInSession(Http.Context context, String userName, String password) {
-        context.session().put("username", userName);
         sessionCache.set(userName, createToken(userName, password));
         context.session().clear();
         context.session().put("username", userName);
@@ -31,7 +29,18 @@ public abstract class AuthenticationAction<T> extends Action<T> {
         SecurityContextHolder.getContext().setAuthentication(createToken(userName, password));
     }
 
+    private void clearRequestAuthenticationToken() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
     private UsernamePasswordAuthenticationToken createToken(String userName, String password) {
         return new UsernamePasswordAuthenticationToken(userName, password);
+    }
+
+    @Override
+    public F.Promise<Result> call(Http.Context context) throws Throwable {
+        Logger.info("Filtering request via authentication Layer");
+        clearRequestAuthenticationToken();
+        return delegate.call(context);
     }
 }

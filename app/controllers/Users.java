@@ -1,12 +1,13 @@
 package controllers;
 
+import auth.BasicAuthentication;
+import auth.Secured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import api.domain.User;
 import models.domain.ModelUser;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Component
 @BasicAuthentication
-@Security.Authenticated(controllers.Secured.class)
+@Security.Authenticated(Secured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
     @Inject

@@ -1,6 +1,5 @@
-package controllers;
+package auth;
 
-import play.mvc.Controller;
 import play.mvc.With;
 
 import java.lang.annotation.ElementType;
@@ -9,8 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
-@With(FormAuthenticationAction.class)
+@With(BasicAuthenticationAction.class)
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FormAuthentication {
+public @interface BasicAuthentication {
 }
