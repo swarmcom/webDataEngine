@@ -1,5 +1,10 @@
 package auth;
 
+import com.nimbusds.oauth2.sdk.AuthorizationCode;
+import org.pac4j.oidc.credentials.OidcCredentials;
+import org.pac4j.oidc.profile.OidcProfile;
+import org.pac4j.play.CallbackController;
+import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
@@ -25,6 +30,13 @@ public class AuthenticationAction extends Action.Simple {
         context.session().put("username", userName);
     }
 
+    //protected void createOidcSocialAuthenticationTokenInSession(Http.Context context, OidcCredentials credentials, String clientName) {
+
+    //    sessionCache.set(credentials.getCode().getValue(), createOidcToken(credentials, clientName));
+    //    context.session().clear();
+    //    context.session().put("username", credentials.getCode().getValue());
+    //}
+
     protected void createRequestAuthenticationToken(String userName, String password) {
         SecurityContextHolder.getContext().setAuthentication(createToken(userName, password));
     }
@@ -37,10 +49,15 @@ public class AuthenticationAction extends Action.Simple {
         return new UsernamePasswordAuthenticationToken(userName, password);
     }
 
+    private ClientAuthenticationToken createOidcToken(OidcCredentials credentials, String clientName) {
+        return new ClientAuthenticationToken(credentials, clientName);
+    }
+
     @Override
     public F.Promise<Result> call(Http.Context context) throws Throwable {
         Logger.info("Filtering request via authentication Layer");
         clearRequestAuthenticationToken();
         return delegate.call(context);
     }
+
 }

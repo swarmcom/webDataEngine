@@ -4,13 +4,18 @@
 
 # Home page
 GET     /                                controllers.Assets.at(path="/public", file="app/index.html")
+GET     /form                            controllers.Authenticator.form()
+GET     /oidc                            controllers.Authenticator.oidcIndex()
+GET     /callback                        controllers.Authenticator.callback()
+POST    /callback                        controllers.Authenticator.callback()
+GET     /logout                          org.pac4j.play.ApplicationLogoutController.logout()
 
-POST    /login                           controllers.Application.login()
+POST    /login                           controllers.Authenticator.login()
 
-
+# Assets
 GET     /users                           controllers.Application.asset(file="/public/app/users.html")
 
-# REST api
+# REST apis
 GET     /api/users/list                  controllers.Users.list
 POST     /api/users/add                  controllers.Users.add
 

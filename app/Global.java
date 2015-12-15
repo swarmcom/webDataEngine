@@ -1,7 +1,12 @@
+import org.pac4j.core.authorization.RequireAnyRoleAuthorizer;
+import org.pac4j.core.client.Clients;
+import org.pac4j.core.config.Config;
+import org.pac4j.oidc.client.OidcClient;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 
+import play.Play;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
@@ -18,8 +23,8 @@ public class Global extends GlobalSettings {
             public F.Promise<Result> call(Http.Context ctx) throws Throwable {
                 String userName = null;
                 try {
-                    userName = ctx.session().get("username");
-                    Logger.info("username in session: "+ userName);
+                    userName = request.username();
+                    Logger.info("Username in session: "+ userName);
                     return delegate.call(ctx);
                 } catch (Exception ex) {
                     Logger.info("Cannot Call Action for reason: " + ex.getMessage(), ex);

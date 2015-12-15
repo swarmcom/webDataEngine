@@ -1,7 +1,7 @@
 package controllers;
 
 import auth.BasicAuthentication;
-import auth.Secured;
+import auth.OidcSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import api.domain.User;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 @BasicAuthentication
-@Security.Authenticated(Secured.class)
+@Security.Authenticated(OidcSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
     @Inject
