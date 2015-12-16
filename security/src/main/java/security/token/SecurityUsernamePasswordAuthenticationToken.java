@@ -1,4 +1,4 @@
-package security.auth;
+package security.token;
 
 import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -20,10 +20,8 @@ public class SecuritySocialUserDetailsService implements AuthenticationUserDetai
     @Override
     public UserDetails loadUserDetails(ClientAuthenticationToken clientAuthenticationToken) throws UsernameNotFoundException {
         UserProfile profile = clientAuthenticationToken.getUserProfile();
-        Logger.info("ACCESS MIRCEA prof aaa" + profile);
         if (profile != null) {
             List<GrantedAuthority> rolesList = new ArrayList<GrantedAuthority>();
-            Logger.info("ACCESS MIRCEA prof " + profile);
             rolesList.add(new SimpleGrantedAuthority("ROLE_USER"));
             return new SecurityUserDetails(profile.getTypedId(), null, rolesList);
         }

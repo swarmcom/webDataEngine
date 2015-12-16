@@ -1,12 +1,15 @@
 package controllers;
 
+import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.OidcSecured;
+import auth.SessionSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import api.domain.User;
 import models.domain.ModelUser;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
@@ -18,12 +21,16 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@With(AuthenticationAction.class)
 @BasicAuthentication
-@Security.Authenticated(OidcSecured.class)
+@Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
     @Inject
     UserService userService;
+
+    @Inject
+    private PasswordEncoder passwordEncoder;
 
     public Result list() {
         List<? extends User> users = userService.getUsers();
@@ -38,7 +45,7 @@ public class Users extends Controller {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             User user = objectMapper.readValue(node.toString(), ModelUser.class);
-            userService.createUser(user.getUserName(), user.getPassword(), user.getRoles());
+            userService.createUser(user.getUserName(), passwordEncoder.encode(user.getPassword()), user.getRoles());
         } catch (IOException e) {
             e.printStackTrace();
         }

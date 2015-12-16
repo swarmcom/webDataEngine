@@ -1,5 +1,4 @@
-package security.auth;
-
+package security.validator;
 
 import org.pac4j.core.exception.CredentialsException;
 import org.pac4j.core.util.CommonHelper;
@@ -7,13 +6,14 @@ import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 import org.pac4j.http.profile.HttpProfile;
 
+
+
 public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAuthenticator {
 
     public void validate(UsernamePasswordCredentials credentials) {
         if (credentials == null) {
             this.throwsException("No credential");
         }
-
         String username = credentials.getUsername();
         String password = credentials.getPassword();
         if (CommonHelper.isBlank(username)) {
@@ -34,3 +34,4 @@ public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAu
         throw new CredentialsException(message);
     }
 }
+

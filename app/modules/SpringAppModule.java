@@ -3,7 +3,6 @@ package modules;
 import com.google.inject.Provides;
 import api.config.AppModule;
 import controllers.Application;
-import controllers.Authenticator;
 import controllers.Users;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.guice.module.SpringModule;
@@ -39,12 +38,7 @@ public class SpringAppModule extends AppModule {
     }
 
     @Provides
-    Application providesApplicationController() {
+    Application providesSocialApplicationController() {
         return springContext.getBean(Application.class);
-    }
-
-    @Provides
-    Authenticator providesSocialApplicationController() {
-        return springContext.getBean(Authenticator.class);
     }
 }

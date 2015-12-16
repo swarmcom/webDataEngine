@@ -1,45 +1,31 @@
 package auth;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.pac4j.core.profile.ProfileManager;
+import org.pac4j.core.profile.UserProfile;
+import org.pac4j.play.PlayWebContext;
+import org.pac4j.play.store.DataStore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
-import play.cache.CacheApi;
-import play.cache.NamedCache;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.defaultpages.unauthorized;
 
 import javax.inject.Inject;
 
-
-public class Secured extends Security.Authenticator {
+public abstract class Secured extends Security.Authenticator {
     @Inject
-    @NamedCache("session-cache")
-    protected CacheApi sessionCache;
+    protected DataStore dataStore;
 
     public String getUsername(Http.Context ctx) {
-        Authentication token = SecurityContextHolder.getContext().getAuthentication();
-        if (token != null) {
-            String principal = token.getPrincipal().toString();
-            Logger.info("Token already created in request " + principal);
-            return principal;
+        try {
+            String token = applyInitialToken(ctx);
+            Logger.info("InitialToken: " + token);
+            return token;
+        } catch(Exception ex) {
+            Logger.info("Cannot apply initial token", ex);
+            return null;
         }
-        //check if username in session - recreate spring token if found
-        String userName = (String)ctx.session().get("username");
-        Logger.info("Username in session (Secured): " + userName);
-        if (userName != null) {
-            token = sessionCache.get(userName);
-            Logger.info("Token: " + token);
-            if (token != null) {
-                //Session token already created in session cache, make sure request is aware of it
-                SecurityContextHolder.getContext().setAuthentication(token);
-            }
-        } else {
-            Logger.info("Session expired ");
-        }
-        return userName;
     }
 
     public Result onUnauthorized(Http.Context ctx) {
@@ -49,5 +35,19 @@ public class Secured extends Security.Authenticator {
         } else {
             return redirect("/");
         }
+    }
+
+    protected String applyInitialToken(Http.Context ctx) throws Exception {
+        PlayWebContext context = new PlayWebContext(ctx, dataStore);
+        Authentication initialToken = createInitialToken(context);
+        SecurityContextHolder.getContext().setAuthentication(initialToken);
+        return initialToken.toString();
+    }
+
+    protected abstract Authentication createInitialToken(PlayWebContext context) throws Exception;
+
+    protected UserProfile getUserProfile(PlayWebContext context) {
+        ProfileManager manager = new ProfileManager(context);
+        return manager.get(true);
     }
 }

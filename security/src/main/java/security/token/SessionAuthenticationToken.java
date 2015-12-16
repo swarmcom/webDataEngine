@@ -1,13 +1,13 @@
-package security.auth;
+package security.token;
 
 import org.pac4j.core.profile.UserProfile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SessionAuthenticationToken implements Authentication {
 
@@ -19,9 +19,11 @@ public class SessionAuthenticationToken implements Authentication {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-        for (String role : profile.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role));
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        if (profile != null) {
+            for (String role : profile.getRoles()) {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
         }
         return authorities;
     }
@@ -38,12 +40,12 @@ public class SessionAuthenticationToken implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return profile.getTypedId();
+        return profile != null ? profile.getTypedId() : null;
     }
 
     @Override
     public boolean isAuthenticated() {
-        return true;
+        return profile == null ? false : true;
     }
 
     @Override
