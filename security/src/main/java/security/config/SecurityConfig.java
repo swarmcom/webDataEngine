@@ -4,6 +4,7 @@ import api.config.AppConfig;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
+import org.pac4j.http.client.direct.DirectBasicAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.oidc.client.OidcClient;
 import org.pac4j.play.http.DefaultHttpActionAdapter;
@@ -68,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public Client oidcClient() {
         final OidcClient oidcClient = new OidcClient();
         oidcClient.setClientID("172969963356-1134oecdv3fkc68v7k6pa4trm9o7hu8b.apps.googleusercontent.com");
-        oidcClient.setSecret("AsD-QDRbjKtGweSzJzB1UR-C");
+        oidcClient.setSecret("zcu0VrWlwIQXCwldGuNR3L1t");
         oidcClient.setDiscoveryURI("https://accounts.google.com/.well-known/openid-configuration");
         oidcClient.addCustomParam("prompt", "consent");
 
@@ -82,11 +83,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return formClient;
     }
 
+    @Bean
+    public DirectBasicAuthClient basicClient() {
+        DirectBasicAuthClient basicAuthClient = new DirectBasicAuthClient(new SecurityUsernamePasswordAuthenticator());
+        return basicAuthClient;
+    }
+
 
     @Bean
     public Clients authClients() {
         String baseUrl = AppConfig.configuration.getString("baseUrl");
-        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClient());
+        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClient(), basicClient());
         return clients;
     }
 
@@ -110,8 +117,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.parentAuthenticationManager(authenticationManager());
     }
-
-    //FormClient formClient = new FormClient(baseUrl + "/theForm", new SimpleTestUsernamePasswordAuthenticator());
-    //IndirectBasicAuthClient basicAuthClient = new IndirectBasicAuthClient(new SimpleTestUsernamePasswordAuthenticator());
-
 }

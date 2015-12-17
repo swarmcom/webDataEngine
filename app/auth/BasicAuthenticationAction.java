@@ -1,11 +1,22 @@
 package auth;
 
+import managers.AppProfileManager;
+import org.pac4j.core.profile.ProfileManager;
+import org.pac4j.core.profile.UserProfile;
+import org.pac4j.http.client.direct.DirectBasicAuthClient;
+import org.pac4j.http.credentials.UsernamePasswordCredentials;
+import org.pac4j.play.PlayWebContext;
+import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.store.DataStore;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
 import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
 import api.service.UserService;
+import security.token.ClientType;
+import security.token.SecurityUsernamePasswordAuthenticationToken;
 
 import javax.inject.Inject;
 
@@ -13,35 +24,39 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 
 public class BasicAuthenticationAction extends AuthenticationAction {
-
-    private static final String AUTHORIZATION = "authorization";
-    private static final String WWW_AUTHENTICATE = "WWW-Authenticate";
-    private static final String REALM = "Basic realm=\"webDataEngine\"";
+    @Inject
+    DirectBasicAuthClient basicClient;
 
     @Inject
-    UserService userService;
+    protected DataStore dataStore;
+
+    @Inject
+    AppProfileManager appProfileManager;
 
     @Override
+    @RequiresAuthentication(clientName = "DirectBasicAuthClient")
     public F.Promise<Result> call(Http.Context context) throws Throwable {
-        String authHeader = context.request().getHeader(AUTHORIZATION);
-        if (authHeader == null) {
-            Logger.info("No Basic authentication detected - move to next authenticator");
-            return delegate.call(context);
+        PlayWebContext webCtx = new PlayWebContext(context, dataStore);
+        UsernamePasswordCredentials credentials = basicClient.getCredentials(webCtx);
+        if (credentials != null) {
+            Authentication token = applyInitialToken(context);
         }
 
-        String auth = authHeader.substring(6);
-        byte[] decodedAuth = new sun.misc.BASE64Decoder().decodeBuffer(auth);
-        String[] credString = new String(decodedAuth, "UTF-8").split(":");
-
-        if (credString != null && credString.length == 2) {
-            String userName = credString[0];
-            String password = credString[1];
-            if (!isEmpty(userName)) {
-                Logger.info("BASIC Authentication !!");
-                //createRequestAuthenticationToken(userName, password);
-            }
-        }
         return delegate.call(context);
+    }
+
+    protected Authentication createInitialToken(PlayWebContext context) throws Exception {
+        UsernamePasswordCredentials credentials = (UsernamePasswordCredentials)basicClient.getCredentials(context);
+        Logger.info("Check form basic " + credentials);
+        return new SecurityUsernamePasswordAuthenticationToken(credentials, ClientType.DirectBasicAuthClient);
+    }
+
+    protected Authentication applyInitialToken(Http.Context ctx) throws Exception {
+        PlayWebContext context = new PlayWebContext(ctx, dataStore);
+        Authentication initialToken = createInitialToken(context);
+        Logger.info("Apply initial token BASIC " + initialToken);
+        SecurityContextHolder.getContext().setAuthentication(initialToken);
+        return initialToken;
     }
 }
 

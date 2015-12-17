@@ -2,7 +2,6 @@ package controllers;
 
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
-import auth.OidcSecured;
 import auth.SessionSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

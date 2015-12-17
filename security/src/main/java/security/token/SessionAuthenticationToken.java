@@ -9,12 +9,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SessionAuthenticationToken implements Authentication {
+public class SessionAuthenticationToken implements Authentication, ClientToken {
 
     UserProfile profile;
+    ClientType clientType;
 
-    public SessionAuthenticationToken(UserProfile profile) {
+    public SessionAuthenticationToken(UserProfile profile, ClientType clientType) {
         this.profile = profile;
+        this.clientType = clientType;
     }
 
     @Override
@@ -56,5 +58,9 @@ public class SessionAuthenticationToken implements Authentication {
     @Override
     public String getName() {
         return null;
+    }
+
+    public ClientType getClientType() {
+        return clientType;
     }
 }

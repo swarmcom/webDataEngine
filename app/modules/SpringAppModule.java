@@ -38,7 +38,7 @@ public class SpringAppModule extends AppModule {
     }
 
     @Provides
-    Application providesSocialApplicationController() {
+    Application providesApplicationController() {
         return springContext.getBean(Application.class);
     }
 }
