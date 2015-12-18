@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import play.Logger;
 import security.token.SessionAuthenticationToken;
 
 @Component

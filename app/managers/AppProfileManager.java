@@ -1,18 +1,17 @@
 package managers;
 
+import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.store.DataStore;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import play.mvc.Http;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 
 import javax.inject.Inject;
-import java.util.Collection;
 
 @Component
 public class AppProfileManager {
@@ -46,13 +45,17 @@ public class AppProfileManager {
         saveUserProfile(ctx, userProfile);
     }
 
-    public UserProfile getUserProfile(PlayWebContext context) {
+    public UserProfile getUserProfile(WebContext context) {
         ProfileManager manager = new ProfileManager(context);
         return manager.get(true);
     }
 
     public UserProfile getUserProfile(Http.Context ctx) {
-        PlayWebContext context = new PlayWebContext(ctx, dataStore);
-        return getUserProfile(context);
+        return getUserProfile(getProfileContext(ctx));
+    }
+
+    public WebContext getProfileContext(Http.Context context) {
+        PlayWebContext webCtx = new PlayWebContext(context, dataStore);
+        return webCtx;
     }
 }

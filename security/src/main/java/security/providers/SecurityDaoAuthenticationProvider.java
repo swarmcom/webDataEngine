@@ -9,7 +9,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 import security.service.SecurityDaoUserDetailsService;
 
@@ -34,7 +33,6 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
     }
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Logger.info("Authentication MIRCEA");
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken)super.authenticate(authentication);
         SecurityUsernamePasswordAuthenticationToken userPwdToken = (SecurityUsernamePasswordAuthenticationToken)authentication;
         SecurityUsernamePasswordAuthenticationToken authenticatedToken = new SecurityUsernamePasswordAuthenticationToken(auth);

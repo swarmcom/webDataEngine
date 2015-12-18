@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import security.domain.SecurityUserDetails;
 
 import java.util.ArrayList;
