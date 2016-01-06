@@ -29,7 +29,6 @@ public class CouchDBRoleRepository extends CouchDbRepositorySupport<CouchDBRole>
         return roles;
     }
 
-    @View( name = "all", map = "function(doc) { if (doc.type == 'CouchDBRole' ) emit( null, doc._id )}")
     public List<CouchDBRole> getAllRoles() {
         return getAll();
     }

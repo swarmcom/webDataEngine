@@ -9,7 +9,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 import security.service.SecurityDaoUserDetailsService;
 
@@ -39,7 +38,6 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
         SecurityUsernamePasswordAuthenticationToken authenticatedToken = new SecurityUsernamePasswordAuthenticationToken(auth);
         authenticatedToken.setUserPwdCredentials(userPwdToken.getUserPwdCredentials());
         authenticatedToken.setClientType(userPwdToken.getClientType());
-Logger.info("MIRCEA " + auth.getCredentials());
         UserProfile userProfile = authenticatedToken.getUserPwdCredentials().getUserProfile();
 
         Collection<? extends GrantedAuthority> grantedAuthorities = authenticatedToken.getAuthorities();
