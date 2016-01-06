@@ -1,32 +1,32 @@
 package couchdb.service;
 
-import couchdb.dao.CouchdbUserRepository;
-import couchdb.domain.CouchdbUser;
 import api.domain.User;
+import couchdb.dao.CouchDBUserRepository;
 import api.service.UserService;
+import couchdb.domain.CouchDBUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class CouchdbUserService implements UserService {
+public class CouchDBUserService implements UserService {
 
     @Autowired
-    CouchdbUserRepository userRepository;
+    CouchDBUserRepository userRepository;
 
     @Override
-    public CouchdbUser getUser(String userName) {
+    public User getUser(String userName) {
         return userRepository.findByUserName(userName);
     }
 
     @Override
     public void createUser(String userName, String password, List<String> roles) {
-        userRepository.create(new CouchdbUser(userName, password));
+        userRepository.create(new CouchDBUser(userName, password, roles));
     }
 
     @Override
     public List<? extends User> getUsers() {
-        return null;
+        return userRepository.getAllUsers();
     }
 }

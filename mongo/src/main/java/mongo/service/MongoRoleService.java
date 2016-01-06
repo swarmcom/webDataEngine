@@ -2,12 +2,14 @@ package mongo.service;
 
 
 import api.domain.Role;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import mongo.dao.MongoRoleRepository;
-import mongo.domain.MongoRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import api.service.RoleService;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -16,6 +18,14 @@ public class MongoRoleService implements RoleService {
     @Autowired
     MongoRoleRepository roleRepository;
 
+    @Autowired
+    DBCollection roleCollection;
+
+    @PostConstruct
+    public void init() {
+        roleCollection.createIndex(new BasicDBObject("roleName", 1).append("unique", true));
+    }
+
     @Override
     public Role getRole(String roleName) {
         return roleRepository.findByRoleName(roleName);
@@ -23,11 +33,11 @@ public class MongoRoleService implements RoleService {
 
     @Override
     public void createRole(String roleName) {
-        roleRepository.save(new MongoRole(roleName));
+        roleRepository.save(new Role(roleName));
     }
 
     @Override
-    public List<? extends Role> getRoles() {
+    public List<Role> getRoles() {
         return roleRepository.findAll();
     }
 }

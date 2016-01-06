@@ -5,7 +5,6 @@ import api.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import play.Logger;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;

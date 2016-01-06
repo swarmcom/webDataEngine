@@ -1,12 +1,11 @@
 package controllers;
 
+import api.domain.User;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.SessionSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import api.domain.User;
-import models.domain.ModelUser;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -43,7 +42,7 @@ public class Users extends Controller {
         JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            User user = objectMapper.readValue(node.toString(), ModelUser.class);
+            User user = objectMapper.readValue(node.toString(), User.class);
             userService.createUser(user.getUserName(), passwordEncoder.encode(user.getPassword()), user.getRoles());
         } catch (IOException e) {
             e.printStackTrace();

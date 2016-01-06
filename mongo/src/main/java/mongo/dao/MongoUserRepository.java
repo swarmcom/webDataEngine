@@ -1,8 +1,8 @@
 package mongo.dao;
 
+import api.domain.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import mongo.domain.MongoUser;
 
-public interface MongoUserRepository extends MongoRepository<MongoUser, String> {
-    MongoUser findByUserName(String userName);
+public interface MongoUserRepository extends MongoRepository<User, String> {
+    User findByUserName(String userName);
 }

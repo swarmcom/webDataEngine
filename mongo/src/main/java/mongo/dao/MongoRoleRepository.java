@@ -1,9 +1,9 @@
 package mongo.dao;
 
-import mongo.domain.MongoRole;
-import mongo.domain.MongoUser;
+import api.domain.Role;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface MongoRoleRepository extends MongoRepository<MongoRole, String> {
-    MongoRole findByRoleName(String userName);
+public interface MongoRoleRepository extends MongoRepository<Role, String> {
+    Role findByRoleName(String userName);
 }
