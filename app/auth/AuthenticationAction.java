@@ -1,7 +1,6 @@
 package auth;
 
 import managers.AppTokenManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
 import play.libs.F;
 import play.mvc.Action;

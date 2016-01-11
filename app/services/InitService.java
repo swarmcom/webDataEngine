@@ -1,7 +1,8 @@
-package api.service;
+package services;
 
 import api.domain.Role;
 import api.domain.User;
+import api.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,16 +14,17 @@ import java.util.Arrays;
 @Component
 public class InitService {
     @Autowired
-    UserService userService;
-
-    @Autowired
-    RoleService roleService;
+    MultiService multiService;
 
     @Autowired
     PasswordEncoder encoder;
 
     @PostConstruct
     public void init() {
+
+    }
+
+    private void initTenant(UserService userService, RoleService roleService) {
         User user = userService.getUser("superadmin");
 
         if (user == null) {

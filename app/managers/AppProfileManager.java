@@ -25,7 +25,7 @@ public class AppProfileManager {
         }
 
         PlayWebContext context = new PlayWebContext(ctx, this.dataStore);
-        ProfileManager manager = new org.pac4j.core.profile.ProfileManager(context);
+        ProfileManager manager = new ProfileManager(context);
         if(userProfile != null) {
             manager.save(true, userProfile);
         }

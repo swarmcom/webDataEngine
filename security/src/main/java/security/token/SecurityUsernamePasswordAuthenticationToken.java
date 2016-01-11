@@ -1,5 +1,6 @@
 package security.token;
 
+import org.pac4j.core.profile.UserProfile;
 import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -28,6 +29,11 @@ public class SecurityUsernamePasswordAuthenticationToken extends UsernamePasswor
 
     public ClientType getClientType() {
         return clientType;
+    }
+
+    @Override
+    public UserProfile getUserProfile() {
+        return userPwdCredentials.getUserProfile();
     }
 
     public void setClientType(ClientType clientType) {

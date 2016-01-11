@@ -8,6 +8,7 @@ import play.Logger;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import security.util.TokenUtil;
 
 import javax.inject.Inject;
 
@@ -27,7 +28,7 @@ public abstract class Secured extends Security.Authenticator {
             }
             Logger.info("InitialToken: " + token);
             if (token != null) {
-                return appTokenManager.getUsernameFromToken(token);
+                return TokenUtil.getUsernameFromToken(token);
             }
             return null;
         } catch(Exception ex) {

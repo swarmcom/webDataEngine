@@ -1,4 +1,4 @@
-package security.providers;
+package security.provider;
 
 
 import org.pac4j.core.profile.UserProfile;

@@ -1,6 +1,7 @@
 package security.service;
 
 import api.domain.User;
+import api.service.MultiUserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import security.domain.SecurityUserDetails;
-import api.service.UserService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SecurityDaoUserDetailsService implements UserDetailsService {
 
     @Inject
-    UserService userService;
+    MultiUserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

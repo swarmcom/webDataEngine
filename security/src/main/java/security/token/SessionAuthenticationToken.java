@@ -62,4 +62,9 @@ public class SessionAuthenticationToken implements Authentication, ClientToken {
     public ClientType getClientType() {
         return clientType;
     }
+
+    @Override
+    public UserProfile getUserProfile() {
+        return profile;
+    }
 }

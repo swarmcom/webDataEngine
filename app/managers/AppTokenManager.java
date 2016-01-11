@@ -1,5 +1,6 @@
 package managers;
 
+import api.domain.User;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.UserProfile;
@@ -39,26 +40,6 @@ public class AppTokenManager {
     @Inject
     private AppProfileManager profileManager;
 
-    public String getUsernameFromToken(Authentication token) {
-        if (token instanceof ClientAuthenticationToken) {
-            ClientAuthenticationToken clientToken = (ClientAuthenticationToken)token;
-            if(StringUtils.equals(clientToken.getClientName(), ClientType.OidcClient.name())) {
-                OidcCredentials oidcCredentials = (OidcCredentials)clientToken.getCredentials();
-                return oidcCredentials.getCode().getValue();
-            }
-        } else if (token instanceof ClientToken) {
-            ClientToken clientToken = (ClientToken) token;
-            if (clientToken.getClientType() == ClientType.FormClient ||
-                    clientToken.getClientType() == ClientType.SessionClient || clientToken.getClientType() == ClientType.DirectBasicAuthClient) {
-                Object principal = token.getPrincipal();
-                if (principal != null) {
-                    return principal.toString();
-                }
-            }
-        }
-        return null;
-    }
-
     public Authentication applyInitialToken(Http.Context ctx, Authentication initialToken) throws Exception {
         if (initialToken != null) {
             SecurityContextHolder.getContext().setAuthentication(initialToken);
@@ -73,6 +54,13 @@ public class AppTokenManager {
     public Authentication createBasicInitialToken(Http.Context context) throws Exception {
         WebContext profileContext = profileManager.getProfileContext(context);
         UsernamePasswordCredentials credentials = (UsernamePasswordCredentials)basicClient.getCredentials(profileContext);
+
+        //save account id from request
+        String accountId = profileContext.getRequestParameter("accountid");
+        if (accountId != null) {
+            credentials.getUserProfile().addAttribute("accountid", accountId);
+        }
+
         Logger.info("Check form basic " + credentials);
         if (credentials != null) {
             return new SecurityUsernamePasswordAuthenticationToken(credentials, ClientType.DirectBasicAuthClient);
@@ -83,6 +71,11 @@ public class AppTokenManager {
     public Authentication createFormInitialToken(Http.Context context) throws Exception {
         WebContext profileContext = profileManager.getProfileContext(context);
         UsernamePasswordCredentials credentials = (UsernamePasswordCredentials)formClient.getCredentials(profileContext);
+
+        //save account id from request
+        String accountId = profileContext.getRequestParameter("accountid");
+        credentials.getUserProfile().addAttribute("accountid", accountId);
+
         Logger.info("Check form secured " + credentials);
         if (credentials != null) {
             return new SecurityUsernamePasswordAuthenticationToken(credentials, ClientType.FormClient);
@@ -93,6 +86,7 @@ public class AppTokenManager {
     public Authentication createOidcInitialToken(Http.Context context) throws Exception {
         WebContext profileContext = profileManager.getProfileContext(context);
         OidcCredentials credentials = (OidcCredentials)oidcClient.getCredentials(profileContext);
+
         Logger.info("Check oidc secured " + credentials);
         if (credentials != null) {
             return new ClientAuthenticationToken(credentials, "OidcClient");

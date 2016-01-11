@@ -1,6 +1,6 @@
 package security.config;
 
-import api.config.AppConfig;
+import api.config.ApiConfig;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
@@ -23,8 +23,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import security.providers.SecurityDaoAuthenticationProvider;
-import security.providers.SecuritySessionAuthenticationProvider;
+import security.provider.SecurityDaoAuthenticationProvider;
+import security.provider.SecuritySessionAuthenticationProvider;
 import security.service.SecuritySocialUserDetailsService;
 import security.validator.SecurityUsernamePasswordAuthenticator;
 
@@ -92,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public Clients authClients() {
-        String baseUrl = AppConfig.configuration.getString("baseUrl");
+        String baseUrl = ApiConfig.configuration.getString("baseUrl");
         Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClient(), basicClient());
         return clients;
     }

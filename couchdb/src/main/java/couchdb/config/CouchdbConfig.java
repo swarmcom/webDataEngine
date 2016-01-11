@@ -1,6 +1,6 @@
 package couchdb.config;
 
-import api.config.AppConfig;
+import api.config.ApiConfig;
 import couchdb.dao.CouchDBRoleRepository;
 import couchdb.dao.CouchDBUserRepository;
 import org.ektorp.CouchDbConnector;
@@ -21,7 +21,7 @@ public class CouchdbConfig {
         HttpClient httpClient = null;
         try {
             httpClient = new StdHttpClient.Builder()
-                    .url(AppConfig.configuration.getString("couchdb.uri"))
+                    .url(ApiConfig.configuration.getString("couchdb.uri"))
                     .build();
         } catch (Exception e) {
             return null;
@@ -31,12 +31,12 @@ public class CouchdbConfig {
 
     @Bean
     public CouchDbConnector couchdbUserConnector() {
-        return couchdbConnector(AppConfig.configuration.getString("couchdb.users.dbname"));
+        return couchdbConnector(ApiConfig.configuration.getString("couchdb.users.dbname"));
     }
 
     @Bean
     public CouchDbConnector couchdbRoleConnector() {
-        return couchdbConnector(AppConfig.configuration.getString("couchdb.roles.dbname"));
+        return couchdbConnector(ApiConfig.configuration.getString("couchdb.roles.dbname"));
     }
 
     private CouchDbConnector couchdbConnector(String databaseName) {

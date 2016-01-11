@@ -5,8 +5,7 @@ import com.google.inject.Module;
 import play.Configuration;
 import play.Environment;
 
-
-public abstract class AppModule extends AbstractModule {
+public abstract class ApiModule extends AbstractModule {
 
     private Environment environment;
 
@@ -14,10 +13,10 @@ public abstract class AppModule extends AbstractModule {
 
     protected Module module;
 
-    public AppModule(Environment env, Configuration conf) {
+    public ApiModule(Environment env, Configuration conf) {
         environment = env;
         configuration = conf;
-        AppConfig.configuration = configuration;
+        ApiConfig.configuration = configuration;
     }
 
     @Override

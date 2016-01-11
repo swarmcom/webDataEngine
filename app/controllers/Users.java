@@ -1,6 +1,7 @@
 package controllers;
 
 import api.domain.User;
+import api.service.MultiUserService;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.SessionSecured;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
-import api.service.UserService;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.List;
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
     @Inject
-    UserService userService;
+    MultiUserService userService;
 
     @Inject
     private PasswordEncoder passwordEncoder;

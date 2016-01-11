@@ -11,6 +11,8 @@ public class User {
 
     protected String password;
 
+    protected String accountId;
+
     protected List<String> roles = new ArrayList<String>();
 
     public User() {
@@ -60,6 +62,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public void setRoles(List<String> roles) {
