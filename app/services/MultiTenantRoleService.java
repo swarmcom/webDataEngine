@@ -32,4 +32,10 @@ public class MultiTenantRoleService implements MultiRoleService {
         RoleService currentRoleService = multiService.getCurrentTenantRoleService();
         return currentRoleService.getRoles();
     }
+
+    @Override
+    public void createRole(String tenantId, String roleName) {
+        RoleService roleService = multiService.getTenantRoleService(tenantId);
+        roleService.createRole(roleName);
+    }
 }

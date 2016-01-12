@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MongoRoleService implements RoleService {
 
     @Autowired

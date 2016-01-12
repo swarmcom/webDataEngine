@@ -14,7 +14,6 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MongoUserService implements UserService {
 
     @Autowired

@@ -20,16 +20,14 @@ import java.util.List;
 public class SpringAppModule extends ApiModule {
 
     private AnnotationConfigApplicationContext masterSpringContext;
-    private HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap =
-            new HashMap<String, AnnotationConfigApplicationContext>();
 
     public SpringAppModule(Environment env, Configuration conf) {
         super(env, conf);
         try {
             List<String> configClassesStr = conf.getStringList("spring.configurations.enabled");
-            masterSpringContext = createSpringContext(configClassesStr);
+            masterSpringContext = ApiConfig.createSpringContext(configClassesStr);
             module = new SpringModule(masterSpringContext);
-            List<String> tenantIdsStr = conf.getStringList("tenant.id");
+            /*List<String> tenantIdsStr = conf.getStringList("tenant.id");
             for (String tenantId : tenantIdsStr) {
                 String tenantConfigClassStr = conf.getString(StringUtils.join(tenantId, '.', "spring.configurations.enabled"));
                 List listStr = new ArrayList<String>();
@@ -37,21 +35,13 @@ public class SpringAppModule extends ApiModule {
                 AnnotationConfigApplicationContext tenantSpringContext = createSpringContext(listStr);
                 tenantSpringContextMap.put(tenantId, tenantSpringContext);
             }
-            ApiConfig.tenantSpringContextMap = tenantSpringContextMap;
+            ApiConfig.tenantSpringContextMap = tenantSpringContextMap;*/
         } catch (Exception ex) {
             Logger.error("Cannot instantiate spring configurations", ex);
         }
     }
 
-    private AnnotationConfigApplicationContext createSpringContext(List<String> configClassesStr) throws Exception {
-        Class[] configClasses = new Class[configClassesStr.size()];
-        int i = 0;
-        for (String configClassStr : configClassesStr) {
-            configClasses[i++] = Class.forName(configClassStr);
-        }
-        AnnotationConfigApplicationContext springContext = new AnnotationConfigApplicationContext(configClasses);
-        return springContext;
-    }
+
 
     @Provides
     Users providesUsersController() {

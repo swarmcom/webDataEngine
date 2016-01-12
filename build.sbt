@@ -10,10 +10,12 @@ lazy val couchdb = project
 
 lazy val security = project
 
+lazy val tenancy = project
+
 lazy val webDataEngine = Project("webDataEngine", file(".")).
   enablePlugins(PlayJava).
-  aggregate(api, mongo, couchdb, security).
-  dependsOn(api, mongo, couchdb, security)
+  aggregate(api, mongo, couchdb, security, tenancy).
+  dependsOn(api, mongo, couchdb, security, tenancy)
 
 scalaVersion := "2.11.6"
 

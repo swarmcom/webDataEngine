@@ -1,0 +1,101 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../components/iron-list/iron-list.html">
+<link rel="import" href="../components/iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../components/paper-button/paper-button.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
+<link rel="import" href="../components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../components/paper-item/paper-item.html">
+<link rel="import" href="../components/iron-collapse/iron-collapse.html">
+<style>
+    .item {
+    @apply(--layout-horizontal);
+        padding: 5px;
+        border-radius: 8px;
+        background-color: lightblue;
+        border: 2px solid #ddd;
+    }
+    paper-button.colored {
+        color: black;
+        background: lightgreen;
+    }
+    paper-item {
+        --paper-item: {
+        cursor: pointer;
+    };
+    }
+    .centered {
+        display:block;
+        text-align:center;
+        width:100%;
+    }
+</style>
+<dom-module id="account-service">
+    <style>
+
+    </style>
+    <template>
+        <iron-ajax
+            id="addAccountAction"
+            url="/api/accounts/add"
+            method="POST"
+            content-type="application/json"
+            on-response="accountAdded"
+            handle-as="json">
+        </iron-ajax>
+
+        <paper-input id="accountname" label="Account Name (Tenant ID)">
+        </paper-input>
+        <paper-listbox id="dbtype">
+            <paper-item value = "mongo">mongo</paper-item>
+            <paper-item value = "couchDB">couchDB</paper-item>
+        </paper-listbox>
+        <paper-input id="dbname" label="Database Name">
+        </paper-input>
+        <paper-input id="dburi" label="Database Uri">
+        </paper-input>
+        <paper-input id="username" label="Superadmin Username">
+        </paper-input>
+        <paper-input id="password" type="password" label="Superadmin Password">
+        </paper-input>
+
+        <paper-button id="create" raised class="colored">Create</paper-button>
+
+    </template>
+</dom-module>
+<script>
+    Polymer({
+       is: "account-service",
+       addNew: function(account) {
+         this.$.addAccountAction.body=JSON.stringify(account);
+         this.$.addAccountAction.generateRequest();
+       },
+       accountAdded: function() {
+         alert("Account added");
+       }
+    });
+    // To ensure that elements are ready on polyfilled browsers,
+    // wait for WebComponentsReady.
+    document.addEventListener('WebComponentsReady', function() {
+      var accountNameInput = document.getElementById("accountname");
+      var dbTypeInput = document.getElementById("dbtype");
+      var dbNameInput = document.getElementById("dbname");
+      var dbUriInput = document.getElementById("dburi");
+      var userNameInput = document.getElementById("username");
+      var passwordInput = document.getElementById("password");
+      //var role = document.getElementById("role");
+      var button = document.getElementById("create");
+      var account = {}
+      button.addEventListener('click', function() {
+        account["accountName"] = accountNameInput.value;
+        account["dbType"] = dbTypeInput.selectedItem.getAttribute("value");
+        account["dbUri"] = dbUriInput.value;
+        account["dbName"] = dbNameInput.value;
+        account["superadminUserName"] = userNameInput.value;
+        account["superadminInitialPassword"] = passwordInput.value;
+
+        var accountService = document.getElementById("accountService");
+        accountService.addNew(account);
+      });
+    })
+</script>

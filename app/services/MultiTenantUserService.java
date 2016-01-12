@@ -28,6 +28,12 @@ public class MultiTenantUserService implements MultiUserService {
     }
 
     @Override
+    public void createUser(String tenantId, String userName, String password, List<String> roles) {
+        UserService userService = multiService.getTenantUserService(tenantId);
+        userService.createUser(userName, password, roles);
+    }
+
+    @Override
     public List<? extends User> getUsers() {
         UserService userService = multiService.getCurrentTenantUserService();
         return userService.getUsers();

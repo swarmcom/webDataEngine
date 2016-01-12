@@ -9,19 +9,29 @@ import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 
 @Configuration
 @ComponentScan("couchdb.service")
 public class CouchdbConfig {
+
+    @Autowired
+    ConfigurableEnvironment env;
+
     @Bean
     public HttpClient couchDBHttpClient() {
         HttpClient httpClient = null;
         try {
             httpClient = new StdHttpClient.Builder()
-                    .url(ApiConfig.configuration.getString("couchdb.uri"))
+                    .url(env.getProperty("uri"))
                     .build();
         } catch (Exception e) {
             return null;
@@ -31,12 +41,12 @@ public class CouchdbConfig {
 
     @Bean
     public CouchDbConnector couchdbUserConnector() {
-        return couchdbConnector(ApiConfig.configuration.getString("couchdb.users.dbname"));
+        return couchdbConnector("users");
     }
 
     @Bean
     public CouchDbConnector couchdbRoleConnector() {
-        return couchdbConnector(ApiConfig.configuration.getString("couchdb.roles.dbname"));
+        return couchdbConnector("roles");
     }
 
     private CouchDbConnector couchdbConnector(String databaseName) {

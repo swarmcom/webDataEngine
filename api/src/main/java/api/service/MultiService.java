@@ -1,8 +1,9 @@
 package api.service;
 
-import java.util.HashMap;
 
 public interface MultiService {
     public UserService getCurrentTenantUserService();
+    public UserService getTenantUserService(String tenantId);
     public RoleService getCurrentTenantRoleService();
+    public RoleService getTenantRoleService(String tenantId);
 }
