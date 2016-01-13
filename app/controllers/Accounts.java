@@ -1,13 +1,11 @@
 package controllers;
 
 import api.domain.Account;
-import api.domain.User;
 import api.service.AccountService;
-import api.service.MultiUserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import play.libs.Json;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -15,7 +13,6 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.List;
 
 public class Accounts extends Controller {
     @Inject

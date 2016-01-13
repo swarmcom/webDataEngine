@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Configuration
 @EnableMongoRepositories("tenancy.dao")
 @ComponentScan("tenancy.service")
-public class DbConfig extends AbstractMongoConfiguration {
+public class TenancyConfig extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {

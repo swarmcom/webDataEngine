@@ -6,8 +6,6 @@ import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 import org.pac4j.http.profile.HttpProfile;
 
-
-
 public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAuthenticator {
 
     public void validate(UsernamePasswordCredentials credentials) {

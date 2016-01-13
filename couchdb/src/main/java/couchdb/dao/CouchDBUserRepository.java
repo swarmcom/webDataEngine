@@ -2,11 +2,8 @@ package couchdb.dao;
 
 import couchdb.domain.CouchDBUser;
 import org.ektorp.CouchDbConnector;
-import org.ektorp.ViewQuery;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
-import org.ektorp.support.View;
-import play.Logger;
 
 import java.util.List;
 

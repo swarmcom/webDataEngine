@@ -4,7 +4,6 @@ import couchdb.domain.CouchDBRole;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
-import org.ektorp.support.View;
 
 import java.util.List;
 

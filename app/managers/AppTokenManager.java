@@ -1,7 +1,5 @@
 package managers;
 
-import api.domain.User;
-import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.http.client.direct.DirectBasicAuthClient;
@@ -16,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import play.Logger;
 import play.mvc.Http;
-import security.token.ClientToken;
 import security.token.ClientType;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 import security.token.SessionAuthenticationToken;

@@ -2,7 +2,9 @@ name := """tenancy"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val tenancy = (project in file(".")).dependsOn(api)
+lazy val tenancy = (project in file(".")).dependsOn(security, api)
+
+lazy val security = (project in file("../security")).dependsOn(api)
 
 lazy val api = project in file("../api")
 

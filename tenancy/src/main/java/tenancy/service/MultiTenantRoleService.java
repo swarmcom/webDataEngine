@@ -1,4 +1,4 @@
-package services;
+package tenancy.service;
 
 import api.domain.Role;
 import api.service.MultiRoleService;

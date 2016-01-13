@@ -1,6 +1,5 @@
 package couchdb.config;
 
-import api.config.ApiConfig;
 import couchdb.dao.CouchDBRoleRepository;
 import couchdb.dao.CouchDBUserRepository;
 import org.ektorp.CouchDbConnector;
@@ -10,14 +9,10 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
 
 @Configuration
 @ComponentScan("couchdb.service")

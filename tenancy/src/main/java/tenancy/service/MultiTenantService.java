@@ -1,4 +1,4 @@
-package services;
+package tenancy.service;
 
 
 import api.config.ApiConfig;
@@ -13,21 +13,24 @@ import security.util.TokenUtil;
 @Component
 public class MultiTenantService implements MultiService {
 
-    public UserService getCurrentTenantUserService() {
-        return ApiConfig.tenantSpringContextMap.get(getCurrentTenantId()).getBean(UserService.class);
-    }
-
     @Override
     public UserService getTenantUserService(String tenantId) {
         return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(UserService.class);
     }
 
-    public RoleService getCurrentTenantRoleService() {
-        return ApiConfig.tenantSpringContextMap.get(getCurrentTenantId()).getBean(RoleService.class);
+    @Override
+    public UserService getCurrentTenantUserService() {
+        return getTenantUserService(getCurrentTenantId());
     }
 
+    @Override
     public RoleService getTenantRoleService(String tenantId) {
         return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(RoleService.class);
+    }
+
+    @Override
+    public RoleService getCurrentTenantRoleService() {
+        return getTenantRoleService(getCurrentTenantId());
     }
 
     private String getCurrentTenantId() {

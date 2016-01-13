@@ -42,7 +42,6 @@ public class DbAccountService implements AccountService {
     private PasswordEncoder passwordEncoder;
 
     private HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap = new HashMap<String, AnnotationConfigApplicationContext>();
-    private HashMap<String, Account> tenantAccountDataMap = new HashMap<String, Account>();
 
     @PostConstruct
     public void init() {
@@ -96,9 +95,7 @@ public class DbAccountService implements AccountService {
             }
             try {
                 tenantSpringContext = ApiConfig.createSpringContext(tenantConfigClassStr, createConfigurableEnvironment(account));
-
                 tenantSpringContextMap.put(tenantId, tenantSpringContext);
-                tenantAccountDataMap.put(tenantId, account);
             } catch (Exception ex) {
                 Logger.info("Cannot create tenant spring context", ex);
             }
