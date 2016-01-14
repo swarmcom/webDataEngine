@@ -24,21 +24,22 @@ public class MongoUserService implements UserService {
 
     @PostConstruct
     public void init() {
-        userCollection.createIndex(new BasicDBObject("userName", 1).append("unique", true));
+        userCollection.createIndex(new BasicDBObject("accountId", 1));
+        userCollection.createIndex(new BasicDBObject("userName", 1));
     }
 
     @Override
-    public User getUser(String userName) {
-        return userRepository.findByUserName(userName);
+    public User getUser(String accountId, String userName) {
+        return userRepository.findByAccountIdAndUserName(accountId, userName);
     }
 
     @Override
-    public void createUser(String userName, String password, List<String> roles) {
-        userRepository.save(new User(userName, password, roles));
+    public void createUser(String accountId, String userName, String password, List<String> roles) {
+        userRepository.save(new User(accountId, userName, password, roles));
     }
 
     @Override
-    public List<? extends User> getUsers() {
-        return userRepository.findAll();
+    public List<? extends User> getUsers(String accountId) {
+        return userRepository.findByAccountId(accountId);
     }
 }

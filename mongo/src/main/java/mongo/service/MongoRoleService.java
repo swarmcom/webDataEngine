@@ -25,7 +25,7 @@ public class MongoRoleService implements RoleService {
 
     @PostConstruct
     public void init() {
-        roleCollection.createIndex(new BasicDBObject("roleName", 1).append("unique", true));
+        roleCollection.createIndex(new BasicDBObject("roleName", 1), new BasicDBObject("unique", true));
     }
 
     @Override

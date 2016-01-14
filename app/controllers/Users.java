@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
+import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class Users extends Controller {
     private PasswordEncoder passwordEncoder;
 
     public Result list() {
-        List<? extends User> users = userService.getUsers();
+        List<? extends User> users = userService.getUsers(TokenUtil.getCurrentAccountId());
         JsonNode node = Json.toJson(users);
         return ok(node.toString());
     }

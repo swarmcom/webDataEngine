@@ -5,9 +5,7 @@ import api.config.ApiConfig;
 import api.service.MultiService;
 import api.service.RoleService;
 import api.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import security.util.TokenUtil;
 
 @Component
@@ -20,7 +18,7 @@ public class MultiTenantService implements MultiService {
 
     @Override
     public UserService getCurrentTenantUserService() {
-        return getTenantUserService(getCurrentTenantId());
+        return getTenantUserService(TokenUtil.getCurrentAccountId());
     }
 
     @Override
@@ -30,14 +28,6 @@ public class MultiTenantService implements MultiService {
 
     @Override
     public RoleService getCurrentTenantRoleService() {
-        return getTenantRoleService(getCurrentTenantId());
+        return getTenantRoleService(TokenUtil.getCurrentAccountId());
     }
-
-    private String getCurrentTenantId() {
-        String accountId = TokenUtil.getAccountIdFromToken(SecurityContextHolder.getContext().getAuthentication());
-        Logger.info("CurrentTenant: " + accountId);
-        return accountId;
-    }
-
-
 }

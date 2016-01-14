@@ -4,9 +4,11 @@ import couchdb.domain.CouchDBUser;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
+import org.ektorp.support.View;
 
 import java.util.List;
 
+@View( name = "by_accountIdAndUserName", map = "function(doc) { if (doc.accountId && doc.userName ) {emit(doc.userName, doc._id )} }")
 public class CouchDBUserRepository extends CouchDbRepositorySupport<CouchDBUser> {
 
     public CouchDBUserRepository(CouchDbConnector db) {
@@ -14,22 +16,28 @@ public class CouchDBUserRepository extends CouchDbRepositorySupport<CouchDBUser>
         initStandardDesignDocument();
     }
 
-    public CouchDBUser findByUserName(String userName) {
-        List<CouchDBUser> users = findByUserNameList(userName);
+    public CouchDBUser findByAccountIdAndUserName(String accountId, String userName) {
+        List<CouchDBUser> users = findByAccountIdAndUserNameList(accountId, userName);
         if (users != null && !users.isEmpty()) {
             return users.get(0);
         }
         return null;
     }
 
-    @GenerateView(field = "userName")
-    private List<CouchDBUser> findByUserNameList(String userName) {
-        List<CouchDBUser> users = queryView("by_userNameList", userName);
+    private List<CouchDBUser> findByAccountIdAndUserNameList(String accountId, String userName) {
+        List<CouchDBUser> users = queryView("by_accountIdAndUserName", userName);
         return users;
     }
 
-    public List<CouchDBUser> getAllUsers() {
-        return getAll();
+
+    public List<CouchDBUser> getAllUsers(String accountId) {
+        return findByAccountId(accountId);
+    }
+
+    @GenerateView
+    private List<CouchDBUser> findByAccountId(String accountId) {
+        List<CouchDBUser> users = queryView("by_accountId", accountId);
+        return users;
     }
 
     public void create(CouchDBUser user) {

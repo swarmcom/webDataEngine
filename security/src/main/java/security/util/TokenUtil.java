@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.pac4j.oidc.credentials.OidcCredentials;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import play.Logger;
 import security.token.ClientToken;
 import security.token.ClientType;
 
@@ -40,5 +42,11 @@ public class TokenUtil {
             return (String)clientToken.getUserProfile().getAttribute("accountid");
         }
         return null;
+    }
+
+    public static String getCurrentAccountId() {
+        String accountId = TokenUtil.getAccountIdFromToken(SecurityContextHolder.getContext().getAuthentication());
+        Logger.info("CurrentTenant: " + accountId);
+        return accountId;
     }
 }

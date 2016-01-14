@@ -6,6 +6,7 @@ import api.service.MultiService;
 import api.service.MultiUserService;
 import api.service.UserService;
 import org.springframework.stereotype.Component;
+import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,26 +17,27 @@ public class MultiTenantUserService implements MultiUserService {
     MultiService multiService;
 
     @Override
-    public User getUser(String userName) {
+    public User getUser(String accountId, String userName) {
         UserService userService = multiService.getCurrentTenantUserService();
-        return userService.getUser(userName);
+        return userService.getUser(accountId, userName);
     }
 
     @Override
     public void createUser(String userName, String password, List<String> roles) {
-        UserService userService = multiService.getCurrentTenantUserService();
-        userService.createUser(userName, password, roles);
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        UserService userService = multiService.getTenantUserService(currentAccountId);
+        userService.createUser(currentAccountId, userName, password, roles);
     }
 
     @Override
     public void createUser(String tenantId, String userName, String password, List<String> roles) {
         UserService userService = multiService.getTenantUserService(tenantId);
-        userService.createUser(userName, password, roles);
+        userService.createUser(tenantId, userName, password, roles);
     }
 
     @Override
-    public List<? extends User> getUsers() {
+    public List<? extends User> getUsers(String accountId) {
         UserService userService = multiService.getCurrentTenantUserService();
-        return userService.getUsers();
+        return userService.getUsers(accountId);
     }
 }

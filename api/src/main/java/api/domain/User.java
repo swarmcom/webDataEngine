@@ -16,17 +16,20 @@ public class User {
     protected List<String> roles = new ArrayList<String>();
 
     public User() {
-        userName = "Anonymous";
-        password = "123";
+        this.userName = "Anonymous";
+        this.password = "123";
+        this.accountId = "AnonymousTenant";
     }
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        roles.add("ROLE_USER");
+        this.roles.add("ROLE_USER");
+        this.accountId = "AnonymousTenant";
     }
 
-    public User(String userName, String password, List<String> roles) {
+    public User(String accountId, String userName, String password, List<String> roles) {
+        this.accountId = accountId;
         this.userName = userName;
         this.password = password;
         if (roles != null) {

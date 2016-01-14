@@ -3,6 +3,7 @@ package tenancy.service;
 import api.config.ApiConfig;
 import api.domain.Account;
 import api.domain.DbType;
+import api.domain.Role;
 import api.service.AccountService;
 import api.service.MultiRoleService;
 import api.service.MultiUserService;
@@ -45,7 +46,7 @@ public class DbAccountService implements AccountService {
 
     @PostConstruct
     public void init() {
-        accountCollection.createIndex(new BasicDBObject("accountName", 1).append("unique", true));
+        accountCollection.createIndex(new BasicDBObject("accountName", 1), new BasicDBObject("unique", true));
         refreshTenantSpringContexts();
     }
 
@@ -60,8 +61,14 @@ public class DbAccountService implements AccountService {
         refreshTenantSpringContexts();
         String adminRole = "ROLE_ADMIN";
         String userRole = "ROLE_USER";
-        roleService.createRole(accountName, adminRole);
-        roleService.createRole(accountName, userRole);
+        Role existingRole = roleService.getRole(accountName, adminRole);
+        if (existingRole == null) {
+            roleService.createRole(accountName, adminRole);
+        }
+        existingRole = roleService.getRole(accountName, userRole);
+        if (existingRole == null) {
+            roleService.createRole(accountName, userRole);
+        }
         userService.createUser(accountName, superadminUserName,
                 passwordEncoder.encode(superadminPassword), new ArrayList<String>(Arrays.asList(adminRole, userRole)));
     }

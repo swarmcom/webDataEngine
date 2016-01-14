@@ -21,8 +21,8 @@ public class CouchDBUser extends User {
         super(userName, password);
     }
 
-    public CouchDBUser(String userName, String password, List<String> roles) {
-        super(userName, password, roles);
+    public CouchDBUser(String accountId, String userName, String password, List<String> roles) {
+        super(accountId, userName, password, roles);
     }
 
     @JsonProperty("_id")

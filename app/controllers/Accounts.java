@@ -4,8 +4,6 @@ import api.domain.Account;
 import api.service.AccountService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;

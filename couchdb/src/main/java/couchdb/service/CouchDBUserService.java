@@ -16,17 +16,17 @@ public class CouchDBUserService implements UserService {
     CouchDBUserRepository userRepository;
 
     @Override
-    public User getUser(String userName) {
-        return userRepository.findByUserName(userName);
+    public User getUser(String accountId,String userName) {
+        return userRepository.findByAccountIdAndUserName(accountId, userName);
     }
 
     @Override
-    public void createUser(String userName, String password, List<String> roles) {
-        userRepository.create(new CouchDBUser(userName, password, roles));
+    public void createUser(String accountId, String userName, String password, List<String> roles) {
+        userRepository.create(new CouchDBUser(accountId, userName, password, roles));
     }
 
     @Override
-    public List<? extends User> getUsers() {
-        return userRepository.getAllUsers();
+    public List<? extends User> getUsers(String accountId) {
+        return userRepository.getAllUsers(accountId);
     }
 }
