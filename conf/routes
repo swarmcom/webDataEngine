@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                                controllers.Assets.at(path="/public", file="app/index.html")
+GET     /alpaca                          controllers.Assets.at(path="/public", file="app/index2.html")
 GET     /form                            controllers.Application.form()
 GET     /oidc                            controllers.Application.oidcIndex()
 GET     /callback                        controllers.Application.callback()
