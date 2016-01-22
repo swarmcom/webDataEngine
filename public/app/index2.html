@@ -26,48 +26,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $("#field1").alpaca({
-        "schema": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "title": "Name"
-                },
-                "age": {
-                    "type": "number",
-                    "title": "Age"
-                }
-            }
-        },
-        "data": {
-            "name": "Joe Smith",
-            "age": 35
-        }
-
-        /** add in this section to experiment with a form button */
-        /*
-        ,"options": {
-            "form": {
-                "buttons": {
-                    "submit": {
-                        "title": "Submit",
-                        "click": function() {
-                            alert("Form value is: " + JSON.stringify(this.getValue(), null, "  "));
-                        }
-                    }
-                }
-            }
-        }
-        */
-
-        /** add in this section to receive the callback after the form renders **/
-        /*
-        ,"postRender": function(control)
-        {
-            control.childrenByPropertyId["age"].options.label = "How old are you?";
-            control.childrenByPropertyId["age"].refresh();
-        }
-        */
+        "schemaSource": "/devices/polycom/template/identification_schema",
+        "optionsSource": "/devices/polycom/template/identification_options"
     });
 });
 </script>

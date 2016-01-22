@@ -21,7 +21,10 @@ GET     /api/users/list                  controllers.Users.list
 POST    /api/users/add                   controllers.Users.add
 POST    /api/accounts/add                controllers.Accounts.add()
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+# Devices
+GET     /devices/polycom                 controllers.Assets.at(path="/public", file="app/polycom.html")
+GET     /devices/polycom/template/:key   controllers.Devices.polycomTemplate(key: String)
 
-GET     /*file                      controllers.Assets.at(path="/public", file)
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
+GET     /*file                           controllers.Assets.at(path="/public", file)
