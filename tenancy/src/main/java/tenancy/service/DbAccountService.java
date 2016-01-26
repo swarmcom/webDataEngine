@@ -2,7 +2,7 @@ package tenancy.service;
 
 import api.config.ApiConfig;
 import api.domain.Account;
-import api.domain.DbType;
+import api.type.DbType;
 import api.domain.Role;
 import api.service.AccountService;
 import api.service.MultiRoleService;

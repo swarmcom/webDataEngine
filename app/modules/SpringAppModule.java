@@ -4,6 +4,7 @@ import api.config.ApiConfig;
 import com.google.inject.Provides;
 import api.config.ApiModule;
 import controllers.Application;
+import controllers.Phones;
 import controllers.Users;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.guice.module.SpringModule;
@@ -36,5 +37,10 @@ public class SpringAppModule extends ApiModule {
     @Provides
     Application providesApplicationController() {
         return masterSpringContext.getBean(Application.class);
+    }
+
+    @Provides
+    Phones providesPhonesController() {
+        return masterSpringContext.getBean(Phones.class);
     }
 }

@@ -6,4 +6,6 @@ public interface MultiService {
     public UserService getTenantUserService(String tenantId);
     public RoleService getCurrentTenantRoleService();
     public RoleService getTenantRoleService(String tenantId);
+    public PhoneService getCurrentTenantPhoneService();
+    public PhoneService getTenantPhoneService(String tenantId);
 }

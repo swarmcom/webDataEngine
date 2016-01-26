@@ -8,6 +8,8 @@
 <link rel="import" href="/assets/components/paper-menu/paper-menu.html">
 <link rel="import" href="/assets/components/paper-item/paper-item.html">
 <link rel="import" href="/assets/components/iron-pages/iron-pages.html">
+<link rel="import" href="/assets/components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
 
 <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap/dist/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="/assets/components/alpaca/dist/alpaca/bootstrap/alpaca.min.css">
@@ -37,8 +39,20 @@
         paper-toolbar.drawer{
         background-color: var(--paper-blue-900);
         }
+        paper-button.colored {
+        color: black;
+        background: lightgreen;
+        }
     </style>
     <template>
+        <iron-ajax
+                id="addPhoneAction"
+                url="/api/phones/add"
+                method="POST"
+                content-type="application/json"
+                on-response="phoneAdded"
+                handle-as="json">
+        </iron-ajax>
         <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-toolbar class="drawer">
@@ -62,6 +76,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div id="page_Identification"></div>
+                                    <paper-button id="create" class="colored">Save</paper-button>
                                 </div>
                             </div>
                         </div>
@@ -88,16 +103,27 @@
               ]
           }
       },
+      addNew: function(phone) {
+         this.$.addPhoneAction.body=JSON.stringify(phone);
+         this.$.addPhoneAction.generateRequest();
+      },
+      phoneAdded: function() {
+         alert("Phone added");
+      }
     });
 
     document.addEventListener('WebComponentsReady', function() {
         var phone = document.querySelector('#polycomTemplate');
         phone.heading = "Settings";
-    });
-    $(document).ready(function() {
         $("#page_Identification").alpaca({
-            "schemaSource": "/devices/polycom/template/identification_schema",
-            "optionsSource": "/devices/polycom/template/identification_options"
+            "schemaSource": "/phones/polycom/template/identification_schema",
+            "optionsSource": "/phones/polycom/template/identification_options",
+            "postRender": function(control) {
+                $('#create').click(function() {
+                    var val = control.getValue();
+                    phone.addNew(val);
+                });
+            }
         });
     });
     </script>

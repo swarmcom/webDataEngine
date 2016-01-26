@@ -2,7 +2,7 @@
   "identification_schema": {
     "type": "object",
     "properties": {
-      "serial": {
+      "serialNumber": {
         "type": "string",
         "title": "Serial number"
       },
@@ -10,7 +10,7 @@
         "type": "string",
         "title": "Description"
       },
-      "firmware": {
+      "firmwareVersion": {
         "type":"string",
         "title":"Firmware version",
         "enum": [
@@ -39,6 +39,7 @@
     }
   },
   "identification_options": {
+    "renderForm":true,
     "helper": "Identification",
     "fields": {
       "description" : {

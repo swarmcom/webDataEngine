@@ -25,8 +25,7 @@ public class MultiTenantUserService implements MultiUserService {
     @Override
     public void createUser(String userName, String password, List<String> roles) {
         String currentAccountId = TokenUtil.getCurrentAccountId();
-        UserService userService = multiService.getTenantUserService(currentAccountId);
-        userService.createUser(currentAccountId, userName, password, roles);
+        createUser(currentAccountId, userName, password, roles);
     }
 
     @Override

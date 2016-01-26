@@ -1,5 +1,6 @@
 package api.domain;
 
+import api.type.DbType;
 import org.apache.commons.lang3.StringUtils;
 
 public class Account {

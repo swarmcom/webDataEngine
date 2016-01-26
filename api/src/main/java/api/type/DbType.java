@@ -1,4 +1,4 @@
-package api.domain;
+package api.type;
 
 public enum DbType {
     mongo,
