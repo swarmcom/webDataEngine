@@ -14,10 +14,10 @@ public class Phone {
         this.accountId = "Anonymous";
     }
 
-    public Phone(String accountId, String firmwareVersion, String description, String serialNumber) {
+    public Phone(String accountId, String serialNumber, String description, String firmwareVersion) {
+        this.serialNumber = serialNumber;
         this.firmwareVersion = firmwareVersion;
         this.description = description;
-        this.serialNumber = serialNumber;
         this.accountId = accountId;
     }
 

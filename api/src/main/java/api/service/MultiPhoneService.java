@@ -1,5 +1,8 @@
 package api.service;
 
+import api.domain.Phone;
+
 public interface MultiPhoneService extends PhoneService {
-    public void createPhone(String serialNumber, String description, String firmwareVersion);
+    void createPhone(String serialNumber, String description, String firmwareVersion);
+    Phone getPhone(String serialNumber);
 }

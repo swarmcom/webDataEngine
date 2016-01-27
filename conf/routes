@@ -3,29 +3,31 @@
 # ~~~~
 
 # Home page
-GET     /                                controllers.Assets.at(path="/public", file="app/index.html")
-GET     /alpaca                          controllers.Assets.at(path="/public", file="app/index2.html")
-GET     /form                            controllers.Application.form()
-GET     /oidc                            controllers.Application.oidcIndex()
-GET     /callback                        controllers.Application.callback()
-POST    /callback                        controllers.Application.callback()
-GET     /logout                          org.pac4j.play.ApplicationLogoutController.logout()
+GET     /                                  controllers.Assets.at(path="/public", file="app/index.html")
+GET     /alpaca                            controllers.Assets.at(path="/public", file="app/index2.html")
+GET     /form                              controllers.Application.form()
+GET     /oidc                              controllers.Application.oidcIndex()
+GET     /callback                          controllers.Application.callback()
+POST    /callback                          controllers.Application.callback()
+GET     /logout                            org.pac4j.play.ApplicationLogoutController.logout()
 
-POST    /login                           controllers.Application.login()
+POST    /login                             controllers.Application.login()
 
 # Assets
-GET     /users                           controllers.Application.asset(file="/public/app/users.html")
-GET     /phones/polycom                  controllers.Application.asset(file="/public/app/polycom.html")
+GET     /users                             controllers.Application.asset(file="/public/app/users.html")
+GET     /phones/polycom                    controllers.Application.asset(file="/public/app/polycom.html")
 
 # Templates
-GET     /phones/polycom/template/:key    controllers.Phones.polycomTemplate(key: String)
+GET     /phones/polycom/template/:key      controllers.Phones.polycomTemplate(key: String)
 
 # REST apis
-GET     /api/users/list                  controllers.Users.list
-POST    /api/users/add                   controllers.Users.add
-POST    /api/accounts/add                controllers.Accounts.add()
-POST    /api/phones/add                  controllers.Phones.add()
+GET     /api/users/list                    controllers.Users.list
+POST    /api/users/add                     controllers.Users.add
+POST    /api/accounts/add                  controllers.Accounts.add()
+POST    /api/phones/add                    controllers.Phones.add()
+GET     /api/phones/get/:serialNumber      controllers.Phones.get(serialNumber: String)
+POST    /api/phones/modify/:serialNumber   controllers.Phones.modify(serialNumber: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
-GET     /*file                           controllers.Assets.at(path="/public", file)
+GET     /assets/*file                      controllers.Assets.versioned(path="/public", file: Asset)
+GET     /*file                             controllers.Assets.at(path="/public", file)

@@ -13,10 +13,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import play.Logger;
 import play.Play;
+import play.libs.Json;
 import play.mvc.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
+
 
 @Component
 @With(AuthenticationAction.class)
@@ -42,14 +44,36 @@ public class Phones extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
-        Logger.info("MIRCEA add phone executed");
         Http.RequestBody body = request().body();
         JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Phone phone = objectMapper.readValue(node.toString(), Phone.class);
-            Logger.info("MIRCEAAA " + phone);
             phoneService.createPhone(phone.getSerialNumber(), phone.getDescription(), phone.getFirmwareVersion());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ok("created");
+    }
+
+    public Result get(String serialNumber) {
+        Phone phone = phoneService.getPhone(serialNumber);
+        if (phone != null) {
+            JsonNode node = Json.toJson(phone);
+            return ok(node.toString());
+        } else {
+            return ok("");
+        }
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result modify(String serialNumber) {
+        Http.RequestBody body = request().body();
+        JsonNode node = body.asJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Phone phone = objectMapper.readValue(node.toString(), Phone.class);
+            phoneService.modifyPhone(phone);
         } catch (IOException e) {
             e.printStackTrace();
         }

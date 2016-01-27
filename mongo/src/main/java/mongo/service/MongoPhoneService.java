@@ -36,6 +36,11 @@ public class MongoPhoneService implements PhoneService {
     }
 
     @Override
+    public void modifyPhone(Phone phone) {
+        phoneRepository.save(phone);
+    }
+
+    @Override
     public List<? extends Phone> getPhones(String accountId) {
         return phoneRepository.findByAccountId(accountId);
     }

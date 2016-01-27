@@ -53,6 +53,14 @@
                 on-response="phoneAdded"
                 handle-as="json">
         </iron-ajax>
+        <iron-ajax
+                id="modifyPhoneAction"
+                url="/api/phones/modify/{{serialNumber}}"
+                method="POST"
+                content-type="application/json"
+                on-response="phoneModified"
+                handle-as="json">
+        </iron-ajax>
         <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-toolbar class="drawer">
@@ -107,21 +115,45 @@
          this.$.addPhoneAction.body=JSON.stringify(phone);
          this.$.addPhoneAction.generateRequest();
       },
+      modifyExisting: function(phone) {
+         this.$.modifyPhoneAction.body=JSON.stringify(phone);
+         this.$.modifyPhoneAction.generateRequest();
+      },
       phoneAdded: function() {
          alert("Phone added");
+      },
+      phoneModified: function() {
+         alert("Phone modified");
       }
     });
 
+    function getDataSource(serialNumber) {
+        dataSource = "{}"
+        if (serialNumber) {
+            dataSource = "/api/phones/get/" + serialNumber;
+        }
+        return dataSource;
+    }
+
     document.addEventListener('WebComponentsReady', function() {
+
         var phone = document.querySelector('#polycomTemplate');
         phone.heading = "Settings";
+        var serialNumber = $(location).attr('hash').replace("#","");
+        phone.serialNumber = serialNumber;
+
         $("#page_Identification").alpaca({
             "schemaSource": "/phones/polycom/template/identification_schema",
             "optionsSource": "/phones/polycom/template/identification_options",
+            "dataSource": getDataSource(serialNumber),
             "postRender": function(control) {
                 $('#create').click(function() {
                     var val = control.getValue();
-                    phone.addNew(val);
+                    if(serialNumber) {
+                        phone.modifyExisting(val)
+                    } else {
+                        phone.addNew(val);
+                    }
                 });
             }
         });

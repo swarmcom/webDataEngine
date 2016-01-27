@@ -2,6 +2,14 @@
   "identification_schema": {
     "type": "object",
     "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "accountId": {
+        "type": "string",
+        "title": "Account"
+      },
       "serialNumber": {
         "type": "string",
         "title": "Serial number"
@@ -47,6 +55,12 @@
         "rows": 5,
         "cols": 40,
         "helper": "Please enter your description."
+      },
+      "id": {
+        "type": "hidden"
+      },
+      "accountId": {
+        "type": "hidden"
       }
     }
   }

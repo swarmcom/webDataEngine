@@ -29,6 +29,12 @@ public class MultiTenantPhoneService implements MultiPhoneService {
     }
 
     @Override
+    public void modifyPhone(Phone phone) {
+        PhoneService phoneService = multiService.getTenantPhoneService(phone.getAccountId());
+        phoneService.modifyPhone(phone);
+    }
+
+    @Override
     public List<? extends Phone> getPhones(String accountId) {
         PhoneService phoneService = multiService.getTenantPhoneService(accountId);
         return phoneService.getPhones(accountId);
@@ -38,5 +44,11 @@ public class MultiTenantPhoneService implements MultiPhoneService {
     public void createPhone(String serialNumber, String description, String firmwareVersion) {
         String currentAccountId = TokenUtil.getCurrentAccountId();
         createPhone(currentAccountId, serialNumber, description, firmwareVersion);
+    }
+
+    @Override
+    public Phone getPhone(String serialNumber) {
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        return getPhone(currentAccountId, serialNumber);
     }
 }
