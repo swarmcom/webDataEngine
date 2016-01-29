@@ -63,5 +63,41 @@
         "type": "hidden"
       }
     }
+  },
+  "lines_schema": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "accountId": {
+        "type": "string",
+        "title": "Account"
+      },
+      "serialNumber": {
+        "type": "string",
+        "title": "Serial number"
+      },
+      "lines": {
+        "type": "array",
+        "title": "Lines"
+      }
+    }
+  },
+  "lines_options": {
+    "renderForm":true,
+    "helper": "Lines",
+    "fields": {
+      "id": {
+        "type": "hidden"
+      },
+      "accountId": {
+        "type": "hidden"
+      },
+      "serialNumber": {
+        "type": "hidden"
+      }
+    }
   }
 }

@@ -1,11 +1,15 @@
 package api.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Phone {
     protected String id;
     protected String accountId;
     protected String serialNumber;
     protected String description;
     protected String firmwareVersion;
+    protected List<String> lines = new ArrayList<String>();
 
     public Phone() {
         this.firmwareVersion = "4.0";
@@ -59,5 +63,13 @@ public class Phone {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public List<String> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<String> lines) {
+        this.lines = lines;
     }
 }
