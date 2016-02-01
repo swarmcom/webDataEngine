@@ -139,8 +139,11 @@
       phoneAdded: function(request) {
          alert("Phone added");
          phoneTemplate = document.querySelector('#polycomTemplate');
-         phone = this.$.addPhoneAction.body
+         phone = this.$.addPhoneAction.body;
          phoneJson = JSON.parse(phone);
+         //phone added, Identification form needs to be regenerated
+         $("#page_Identification").alpaca("destroy");
+         $('#create_identification').off("click");
          phoneTemplate.serialNumber = phoneJson.serialNumber;
          phoneTemplate.getExisting();
       },
