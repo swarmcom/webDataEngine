@@ -1,7 +1,6 @@
 package controllers;
 
 import api.domain.Phone;
-import api.domain.User;
 import api.service.MultiPhoneService;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import play.Play;
 import play.libs.Json;
 import play.mvc.*;
@@ -31,15 +29,7 @@ public class Phones extends Controller {
     MultiPhoneService phoneService;
 
     public Result polycomTemplate(String key) {
-        String schema = StringUtils.EMPTY;
-
-        try {
-            JsonNode node = new ObjectMapper().readTree(Play.application().getFile("/public/app/devices/polycom/polycomTemplate.json"));
-            schema = node.get(key).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ok(schema);
+        return ok(getPolycomTemplate(key));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
@@ -49,7 +39,8 @@ public class Phones extends Controller {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Phone phone = objectMapper.readValue(node.toString(), Phone.class);
-            phoneService.createPhone(phone.getSerialNumber(), phone.getDescription(), phone.getFirmwareVersion());
+            Phone phoneWithDefaults = objectMapper.readerForUpdating(phone).readValue(getPolycomDefaultsJSON());
+            phoneService.savePhone(phoneWithDefaults);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,11 +63,29 @@ public class Phones extends Controller {
         JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Phone phone = objectMapper.readValue(node.toString(), Phone.class);
-            phoneService.modifyPhone(phone);
+            String dataToUpdate = node.toString();
+            Phone existingPhone = phoneService.getPhone(serialNumber);
+            Phone phone = objectMapper.readValue(dataToUpdate, Phone.class);
+            existingPhone.merge(phone);
+            phoneService.savePhone(existingPhone);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return ok("created");
+    }
+
+    private String getPolycomTemplate(String key) {
+        String schema = StringUtils.EMPTY;
+        try {
+            JsonNode node = new ObjectMapper().readTree(Play.application().getFile("/public/app/devices/polycom/polycomTemplate.json"));
+            schema = node.get(key).toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return schema;
+    }
+
+    private String getPolycomDefaultsJSON() {
+        return getPolycomTemplate("settings_defaults");
     }
 }

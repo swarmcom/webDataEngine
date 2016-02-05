@@ -36,7 +36,7 @@ public class MongoPhoneService implements PhoneService {
     }
 
     @Override
-    public void modifyPhone(Phone phone) {
+    public void savePhone(Phone phone) {
         phoneRepository.save(phone);
     }
 

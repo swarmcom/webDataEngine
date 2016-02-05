@@ -29,9 +29,13 @@ public class MultiTenantPhoneService implements MultiPhoneService {
     }
 
     @Override
-    public void modifyPhone(Phone phone) {
-        PhoneService phoneService = multiService.getTenantPhoneService(phone.getAccountId());
-        phoneService.modifyPhone(phone);
+    public void savePhone(Phone phone) {
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        if (phone.isNew()) {
+            phone.setAccountId(currentAccountId);
+        }
+        PhoneService phoneService = multiService.getTenantPhoneService(currentAccountId);
+        phoneService.savePhone(phone);
     }
 
     @Override

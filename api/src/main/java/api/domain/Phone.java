@@ -1,8 +1,10 @@
 package api.domain;
 
-import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Phone {
     protected String id;
@@ -10,20 +12,10 @@ public class Phone {
     protected String serialNumber;
     protected String description;
     protected String firmwareVersion;
-    protected List<String> lines = new ArrayList<String>();
-    protected HashMap<String, Object> settings = new HashMap<String, Object>();
+    protected List<String> lines;
+    protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
     public Phone() {
-        this.firmwareVersion = "4.0";
-        this.description = "Anonymous phone";
-        this.serialNumber = "123456789012";
-        this.accountId = "Anonymous";
-        settings.put("mama", "Rodica");
-        settings.put("mama/varsta", 68);
-        List<String> brothers = new ArrayList<String>();
-        brothers.add("Vladone");
-        brothers.add("Andriuca");
-        settings.put("brothers", brothers);
     }
 
     public Phone(String accountId, String serialNumber, String description, String firmwareVersion) {
@@ -31,6 +23,10 @@ public class Phone {
         this.firmwareVersion = firmwareVersion;
         this.description = description;
         this.accountId = accountId;
+    }
+
+    public boolean isNew() {
+        return StringUtils.isEmpty(this.id);
     }
 
     public String getId() {
@@ -79,5 +75,41 @@ public class Phone {
 
     public void setLines(List<String> lines) {
         this.lines = lines;
+    }
+
+    public Map<String, Map<String, Object>> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Map<String, Map<String, Object>> settings) {
+        this.settings = settings;
+    }
+
+    public void merge(Phone phone) {
+        String description = phone.getDescription();
+        if (description != null) {
+            setDescription(description);
+        }
+        String serialNumber = phone.getSerialNumber();
+        if (serialNumber != null) {
+            setSerialNumber(serialNumber);
+        }
+        String firmwareVersion = phone.getFirmwareVersion();
+        if (firmwareVersion != null) {
+            setFirmwareVersion(firmwareVersion);
+        }
+        List<String> lines = phone.getLines();
+        if (lines != null) {
+            setLines(lines);
+        }
+        Map<String, Map<String, Object>> settings = phone.getSettings();
+        if (settings != null) {
+            for (Map.Entry entry : this.settings.entrySet()) {
+                Map<String, Object> entryToMerge = settings.get(entry.getKey());
+                if (entryToMerge != null) {
+                    entry.setValue(entryToMerge);
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ public interface PhoneService {
 
     void createPhone(String accountId, String serialNumber, String description, String firmwareVersion);
 
-    void modifyPhone(Phone phone);
+    void savePhone(Phone phone);
 
     public List<? extends Phone> getPhones(String accountId);
 }

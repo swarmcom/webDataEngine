@@ -67,18 +67,6 @@
   "lines_schema": {
     "type": "object",
     "properties": {
-      "id": {
-        "type": "string",
-        "title": "Id"
-      },
-      "accountId": {
-        "type": "string",
-        "title": "Account"
-      },
-      "serialNumber": {
-        "type": "string",
-        "title": "Serial number"
-      },
       "lines": {
         "type": "array",
         "title": "Lines"
@@ -89,14 +77,281 @@
     "renderForm":true,
     "helper": "Lines",
     "fields": {
-      "id": {
-        "type": "hidden"
+    }
+  },
+  "dateTime_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "dateTimeSettings": {
+            "type": "object",
+            "properties": {
+              "hourFormat": {
+                "title": "24 Hour Format",
+                "type": "boolean"
+              },
+              "dateFormat": {
+                "title": "Date Format",
+                "type": "string"
+              },
+              "dateLongFormat": {
+                "title": "Date Long Format",
+                "type": "boolean"
+              },
+              "dateTop": {
+                "title": "Date Top",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dateTime_settings_options": {
+    "helper": "Date/Time",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dateTimeSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "hourFormat": {
+                "helper": "If checked the time is in the 24h format, otherwise 12h AM/PM format."
+              },
+              "dateFormat": {
+                "helper": "Controls the format of the date string (D = day of week, d = day of the month, M = month), e.g. D,dM = \"Thursday, 3 July\" or \"Md,D = July 3, Thursday\". The field may contain 0, 1 or 2 commas, which can occur only between characters and only one at a time i.e. 'D,,dM' is illegal."
+              },
+              "dateLongFormat": {
+                "helper": "If checked, display the day and month in long format (Friday/November). Otherwise use abbreviations (Fri/Nov)"
+              },
+              "dateTop": {
+                "helper": "If checked, display date above time, else display time above date."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "userPreferences_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "userPreferences": {
+            "type": "object",
+            "properties": {
+              "analogHeadsetOption": {
+                "title": "Analog Headset Option",
+                "type": "boolean"
+              },
+              "headsetMode": {
+                "title": "Headset Mode",
+                "type": "boolean"
+              },
+              "handsfreeMode": {
+                "title": "Handsfree Mode",
+                "type": "boolean"
+              },
+              "useDirectoryNames": {
+                "title": "Use Directory Names",
+                "type": "boolean"
+              },
+              "oneTouchVoiceMail": {
+                "title": "One Touch Voice Mail",
+                "type": "boolean"
+              },
+              "welcomeSoundEnabled": {
+                "title": "Welcome Sound Enabled",
+                "type": "boolean"
+              },
+              "welcomeSoundOnWarmBootEnabled": {
+                "title": "Welcome Sound On Warm Boot Enabled",
+                "type": "boolean"
+              },
+              "localClockEnabled": {
+                "title": "Local Clock Enabled",
+                "type": "boolean"
+              },
+              "idleTimeout": {
+                "title": "Idle Timeout",
+                "type": "string"
+              },
+              "pfFolder": {
+                "title": "Picture Frame Folder",
+                "type": "string"
+              },
+              "pfTimePerImage": {
+                "title": "Picture Frame Time Per Image",
+                "type": "string"
+              },
+              "screenSaverEnabled": {
+                "title": "Screen saver enabled",
+                "type": "boolean"
+              },
+              "screenSaverWaitTime": {
+                "title": "Screen saver wait time",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "userPreferences_settings_options": {
+    "helper": "User Preferences",
+    "fields": {
+      "settings": {
+        "fields": {
+          "userPreferences": {
+            "toolbarSticky": true,
+            "fields": {
+              "analogHeadsetOption": {
+                "helper": "If checked, an attached DHSG-compatible headset will be used as an electronic hookswitch"
+              },
+              "headsetMode": {
+                "helper": "If checked, the headset will be selected as the preferred transducer after its first use until the headset key is pressed again; otherwise, handsfree will be selected preferentially over the headset."
+              },
+              "handsfreeMode": {
+                "helper": "Leave checked to enable the hands-free speakerphone. If unchecked, the hands-free speakerphone will be disabled."
+              },
+              "useDirectoryNames": {
+                "helper": "If checked, the name fields of directory entries which match incoming calls will be used for caller identification display and in the call lists instead of the name provided via network signaling."
+              },
+              "oneTouchVoiceMail": {
+              },
+              "welcomeSoundEnabled": {
+                "helper": "If checked, play welcome sound effect after a reboot."
+              },
+              "welcomeSoundOnWarmBootEnabled": {
+                "helper": "If checked, play welcome sound effect on warm as well as cold boots, otherwise only a cold boot will trigger the welcome sound effect."
+              },
+              "localClockEnabled": {
+                "helper": "If checked, display the date and time on the idle display"
+              },
+              "idleTimeout": {
+                "helper": "Timeout for the idle display or default call handling display. If set to 0, there is no timeout. If set to Null, the default timeout of 20 seconds is used. If set to value greater than 0, the timeout is for that number of seconds (maximum 65536)."
+              },
+              "pfFolder": {
+              },
+              "pfTimePerImage": {
+              },
+              "screnSaverEnabled": {
+              },
+              "screenSaverWaitTime": {
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dtmf_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "dtmf": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "title": "Level",
+                "type": "string"
+              },
+              "onTime": {
+                "title": "On Time",
+                "type": "string"
+              },
+              "offTime": {
+                "title": "Off Time",
+                "type": "string"
+              },
+              "chassisMasking": {
+                "title": "Chassis Masking",
+                "type": "boolean"
+              },
+              "viaRtp": {
+                "title": "Via Rtp",
+                "type": "boolean"
+              },
+              "rfc2833Control": {
+                "title": "RFC 2833 Control",
+                "type": "boolean"
+              },
+              "rfc2833Payload": {
+                "title": "RFC 2833 Payload",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dtmf_settings_options": {
+    "helper": "DTMF",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dtmf": {
+            "toolbarSticky": true,
+            "fields": {
+              "level": {
+                "helper": "Level of the high frequency component of the DTMF digit measured in dBm0; the low frequency tone will be two dB lower."
+              },
+              "onTime": {
+                "helper": "When a sequence of DTMF tones is played out automatically, this is the length of time in milliseconds the tones will be generated for; this is also the minimum time the tone will be played for when dialing manually (even if key press is shorter)."
+              },
+              "offTime": {
+                "helper": "When a sequence of DTMF tones is played out automatically, this is the length of time in milliseconds the phone will pause between digits; this is also the minimum inter-digit time when dialing manually."
+              },
+              "chassisMasking": {
+                "helper": "If checked, DTMF tones will be substituted with a non-DTMF pacifier tone when dialing in hands-free mode. This prevents DTMF digits being broadcast to other surrounding telephony log.device.s or being inadvertently transmitted in-band due to local acoustic echo. Note: tone.dtmf.chassis.masking should only be enabled when tone.dtmf.viaRtp is disabled."
+              },
+              "viaRtp": {
+                "helper": "If checked, encode DTMF in the active RTP stream, otherwise, DTMF may be encoded within the signaling protocol only when the protocol offers the option. Note: tone.dtmf.chassis.masking should be enabled when tone.dtmf.viaRtp is disabled."
+              },
+              "rfc2833Control": {
+                "helper": "If checked, the phone will indicate a preference for encoding DTMF via RFC 2833 format in its Session Description Protocol (SDP) offers by showing support for the phone-event payload type; this does not affect SDP answers, these will always honor the DTMF format present in the offer since the phone has native support for RFC 2833."
+              },
+              "rfc2833Payload": {
+                "helper": "The phone-event payload encoding in the dynamic range to be used in SDP offers."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings_defaults": {
+    "settings": {
+      "dateTimeSettings": {
+        "dateFormat": "D,Md",
+        "dateLongFormat": true,
+        "dateTop": true
       },
-      "accountId": {
-        "type": "hidden"
+      "userPreferences": {
+        "handsfreeMode": true,
+        "oneTouchVoiceMail": true,
+        "welcomeSoundEnabled": true,
+        "welcomeSoundOnWarmBootEnabled": true,
+        "idleTimeout": 40,
+        "pfTimePerImage": 5,
+        "screenSaverWaitTime": 15
       },
-      "serialNumber": {
-        "type": "hidden"
+      "dtmf": {
+        "level": -15,
+        "onTime": 50,
+        "offTime": 50,
+        "viaRtp": true,
+        "rfc2833Control": true,
+        "rfc2833Payload": 101
       }
     }
   }

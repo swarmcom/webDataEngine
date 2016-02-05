@@ -103,8 +103,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="page_DateTime"></div>
-                        <div id="page_UserPreferences"></div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_DateTime"></div>
+                                    <paper-button id="create_dateTime" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_UserPreferences"></div>
+                                    <paper-button id="create_userPreferences" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_Dtmf"></div>
+                                    <paper-button id="create_dtmf" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
                     </iron-pages>
                 </div>
             </paper-header-panel>
@@ -121,7 +143,8 @@
               'Identification',
               'Lines',
               'Date/Time',
-              'User Preferences'
+              'User Preferences',
+              'DTMF'
               ]
           }
       },
@@ -178,6 +201,39 @@
                       });
                   }
               });
+              $("#page_DateTime").alpaca({
+                  "schemaSource": "/phones/polycom/template/dateTime_settings_schema",
+                  "optionsSource": "/phones/polycom/template/dateTime_settings_options",
+                  "dataSource": phone,
+                  "postRender": function(control) {
+                      $('#create_dateTime').click(function() {
+                          alert(JSON.stringify(control.getValue()));
+                          save(control.getValue());
+                      });
+                  }
+              });
+              $("#page_UserPreferences").alpaca({
+                  "schemaSource": "/phones/polycom/template/userPreferences_settings_schema",
+                  "optionsSource": "/phones/polycom/template/userPreferences_settings_options",
+                  "dataSource": phone,
+                  "postRender": function(control) {
+                      $('#create_userPreferences').click(function() {
+                          alert(JSON.stringify(control.getValue()));
+                          save(control.getValue());
+                      });
+                  }
+              });
+              $("#page_Dtmf").alpaca({
+                  "schemaSource": "/phones/polycom/template/dtmf_settings_schema",
+                  "optionsSource": "/phones/polycom/template/dtmf_settings_options",
+                  "dataSource": phone,
+                  "postRender": function(control) {
+                      $('#create_dtmf').click(function() {
+                          alert(JSON.stringify(control.getValue()));
+                          save(control.getValue());
+                      });
+                  }
+              });
           }
       }
     });
@@ -187,6 +243,7 @@
         if(phoneTemplate.serialNumber) {
             phoneTemplate.modifyExisting(phone)
         } else {
+        alert(JSON.stringify(phone));
             phoneTemplate.addNew(phone);
         }
     }
