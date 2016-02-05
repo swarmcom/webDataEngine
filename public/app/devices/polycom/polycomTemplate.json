@@ -329,6 +329,105 @@
       }
     }
   },
+  "soundEffects_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "soundEffects": {
+            "type": "object",
+            "properties": {
+              "stutterOnVoiceMail": {
+                "title": "Stutter On VoiceMail",
+                "type": "boolean"
+              },
+              "appLocalEnabled": {
+                "title": "App Local Enabled",
+                "type": "boolean"
+              },
+              "messageWaitingType": {
+                "title": "Message Waiting Type",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "callWaitingType": {
+                "title": "Call Waiting Type",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "callWaitingValue": {
+                "title": "Call Waiting Value",
+                "type": "string"
+              },
+              "longCallWaitingType1": {
+                "title": "Type 1",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue1": {
+                "title": "Value 1",
+                "type": "string"
+              },
+              "longCallWaitingType2": {
+                "title": "Type 2",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue2": {
+                "title": "Value 2",
+                "type": "string"
+              },
+              "longCallWaitingType3": {
+                "title": "Type 3",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue3": {
+                "title": "Value 3",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "soundEffects_settings_options": {
+    "helper": "Sound Effects",
+    "fields": {
+      "settings": {
+        "fields": {
+          "soundEffects": {
+            "toolbarSticky": true,
+            "fields": {
+              "stutterOnVoiceMail": {
+                "helper": "If checked, stuttered dial tone is used in place of normal dial tone to indicate that one or more messages (voice-mail) are waiting at the message center."
+              },
+              "appLocalEnabled": {
+                "helper": "If checked, local user interface sound effects such as confirmation/error tones, will be enabled."
+              },
+              "messageWaitingType": {
+                "removeDefaultNone": true
+              },
+              "callWaitingType": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType1": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType2": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType3": {
+                "removeDefaultNone": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "settings_defaults": {
     "settings": {
       "dateTimeSettings": {
@@ -352,6 +451,19 @@
         "viaRtp": true,
         "rfc2833Control": true,
         "rfc2833Payload": 101
+      },
+      "soundEffects": {
+        "stutterOnVoiceMail": true,
+        "appLocalEnabled": true,
+        "messageWaitingType": "Silence",
+        "callWaitingType": "Chord",
+        "callWaitingValue": "callWaiting",
+        "longCallWaitingType1": "Chord",
+        "longCallWaitingValue1": "callWaitingLong",
+        "longCallWaitingType2": "Silence",
+        "longCallWaitingValue2": 150,
+        "longCallWaitingType3": "Chord",
+        "longCallWaitingValue3": 6
       }
     }
   }

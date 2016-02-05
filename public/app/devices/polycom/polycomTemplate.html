@@ -127,6 +127,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_SoundEffects"></div>
+                                    <paper-button id="create_soundEffects" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
                     </iron-pages>
                 </div>
             </paper-header-panel>
@@ -144,7 +152,8 @@
               'Lines',
               'Date/Time',
               'User Preferences',
-              'DTMF'
+              'DTMF',
+              'Sound Effects'
               ]
           }
       },
@@ -180,71 +189,40 @@
         phoneTemplate.generateUI(phone, phoneTemplate.serialNumber);
       },
       generateUI: function(phone, serialNumber) {
-          $("#page_Identification").alpaca({
-              "schemaSource": "/phones/polycom/template/identification_schema",
-              "optionsSource": "/phones/polycom/template/identification_options",
-              "dataSource": phone,
-              "postRender": function(control) {
-                  $('#create_identification').click(function() {
-                      save(control.getValue());
-                  });
-              }
-          });
+          generateAlpacaForm("#page_Identification", "identification_schema", "identification_options", phone, "#create_identification");
           if (serialNumber) {
-              $("#page_Lines").alpaca({
-                  "schemaSource": "/phones/polycom/template/lines_schema",
-                  "optionsSource": "/phones/polycom/template/lines_options",
-                  "dataSource": phone,
-                  "postRender": function(control) {
-                      $('#create_lines').click(function() {
-                          save(control.getValue());
-                      });
-                  }
-              });
-              $("#page_DateTime").alpaca({
-                  "schemaSource": "/phones/polycom/template/dateTime_settings_schema",
-                  "optionsSource": "/phones/polycom/template/dateTime_settings_options",
-                  "dataSource": phone,
-                  "postRender": function(control) {
-                      $('#create_dateTime').click(function() {
-                          alert(JSON.stringify(control.getValue()));
-                          save(control.getValue());
-                      });
-                  }
-              });
-              $("#page_UserPreferences").alpaca({
-                  "schemaSource": "/phones/polycom/template/userPreferences_settings_schema",
-                  "optionsSource": "/phones/polycom/template/userPreferences_settings_options",
-                  "dataSource": phone,
-                  "postRender": function(control) {
-                      $('#create_userPreferences').click(function() {
-                          alert(JSON.stringify(control.getValue()));
-                          save(control.getValue());
-                      });
-                  }
-              });
-              $("#page_Dtmf").alpaca({
-                  "schemaSource": "/phones/polycom/template/dtmf_settings_schema",
-                  "optionsSource": "/phones/polycom/template/dtmf_settings_options",
-                  "dataSource": phone,
-                  "postRender": function(control) {
-                      $('#create_dtmf').click(function() {
-                          alert(JSON.stringify(control.getValue()));
-                          save(control.getValue());
-                      });
-                  }
-              });
+              generateAlpacaForm("#page_Lines", "lines_schema", "lines_options", phone, "#create_lines");
+              generateAlpacaForm("#page_DateTime", "dateTime_settings_schema", "dateTime_settings_options", phone, "#create_dateTime");
+              generateAlpacaForm("#page_UserPreferences", "userPreferences_settings_schema", "userPreferences_settings_options", phone, "#create_userPreferences");
+              generateAlpacaForm("#page_Dtmf", "dtmf_settings_schema", "dtmf_settings_options", phone, "#create_dtmf");
+              generateAlpacaForm("#page_SoundEffects", "soundEffects_settings_schema", "soundEffects_settings_options", phone, "#create_soundEffects");
           }
       }
     });
 
-    function save(phone) {
+    function generateAlpacaForm(page, schemaName, optionsName, data, saveButton) {
+        var schema = "/phones/polycom/template/" + schemaName;
+        var options = "/phones/polycom/template/" + optionsName;
+        $(page).alpaca({
+            "schemaSource": schema,
+            "optionsSource": options,
+            "dataSource": data,
+            "postRender": function(control) {
+                $(saveButton).click(function() {
+                    alert(JSON.stringify(control.getValue()));
+                    save(control.getValue());
+                });
+            }
+        });
+    }
+
+    function save(data) {
         phoneTemplate = document.querySelector('#polycomTemplate');
         if(phoneTemplate.serialNumber) {
-            phoneTemplate.modifyExisting(phone)
+            phoneTemplate.modifyExisting(data)
         } else {
-        alert(JSON.stringify(phone));
-            phoneTemplate.addNew(phone);
+        alert(JSON.stringify(data));
+            phoneTemplate.addNew(data);
         }
     }
 
