@@ -22,26 +22,28 @@
 <dom-module id="polycom-template">
     <style>
         paper-header-panel[main]{
-        background-color: var(--paper-blue-100);
+        background-color: var(--paper-grey-100);
         }
         paper-header-panel[drawer]{
-        background-color: var(--paper-blue-200);
+        background-color: var(--paper-grey-200);
         }
         paper-menu.menu{
-        background-color: var(--paper-blue-200);
+        background-color: var(--paper-grey-200);
         }
         paper-item.menu{
-        background-color: var(--paper-blue-200);
+        background-color: var(--paper-grey-200);
         }
         paper-toolbar.main{
-        background-color: var(--paper-blue-500);
+        background-color: var(--paper-green-300);
+        color: black;
+        font-size: 24px;
         }
         paper-toolbar.drawer{
-        background-color: var(--paper-blue-900);
+        background-color: var(--paper-green-300);
         }
         paper-button.colored {
         color: black;
-        background: lightgreen;
+        background-color: var(--paper-grey-400);
         }
     </style>
     <template>
@@ -71,7 +73,6 @@
         <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-toolbar class="drawer">
-                    <div flex>Description</div>
                 </paper-toolbar>
                 <paper-menu selected="{{selected}}" class="menu">
                     <template is="dom-repeat" items="{{menu}}">
@@ -135,6 +136,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_VoiceCodecs"></div>
+                                    <paper-button id="create_voiceCodecs" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_Video"></div>
+                                    <paper-button id="create_video" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
                     </iron-pages>
                 </div>
             </paper-header-panel>
@@ -153,7 +170,9 @@
               'Date/Time',
               'User Preferences',
               'DTMF',
-              'Sound Effects'
+              'Sound Effects',
+              'Voice/Codecs',
+              'Video'
               ]
           }
       },
@@ -196,6 +215,8 @@
               generateAlpacaForm("#page_UserPreferences", "userPreferences_settings_schema", "userPreferences_settings_options", phone, "#create_userPreferences");
               generateAlpacaForm("#page_Dtmf", "dtmf_settings_schema", "dtmf_settings_options", phone, "#create_dtmf");
               generateAlpacaForm("#page_SoundEffects", "soundEffects_settings_schema", "soundEffects_settings_options", phone, "#create_soundEffects");
+              generateAlpacaForm("#page_VoiceCodecs", "voiceCodecs_settings_schema", "voiceCodecs_settings_options", phone, "#create_voiceCodecs");
+              generateAlpacaForm("#page_Video", "video_settings_schema", "video_settings_options", phone, "#create_video");
           }
       }
     });
@@ -229,7 +250,7 @@
     document.addEventListener('WebComponentsReady', function() {
         serialNumber = $(location).attr('hash').replace("#","");
         phoneTemplate = document.querySelector('#polycomTemplate');
-        phoneTemplate.heading = "Settings";
+        phoneTemplate.heading = "Polycom VVX500";
         phoneTemplate.serialNumber = serialNumber;
         if (serialNumber) {
             phoneTemplate.getExisting();

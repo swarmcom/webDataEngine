@@ -428,6 +428,339 @@
       }
     }
   },
+  "voiceCodecs_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "voiceCodecs": {
+            "type": "object",
+            "properties": {
+              "txPacketFilter": {
+                "title": "Tx Packet Filter",
+                "type": "boolean"
+              },
+              "codec": {
+                "title": "Codec preference",
+                "type": "array",
+                "items": {
+                  "enum": ["G711_A", "iLBC.13_33kbps", "iLBC.15_2kbps", "G.722", "G.722.1 (32 kbps)", "G7221_C.48kbps", "G729_AB"]
+                }
+              },
+              "g711Mu_payloadSize": {
+                "title": "G711MU Payload Size",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferMin": {
+                "title": "G711MU Jitter Buffer Min",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferShrink": {
+                "title": "G711MU Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferMax": {
+                "title": "G711MU Jitter Buffer Max",
+                "type": "string"
+              },
+              "g711A_payloadSize": {
+                "title": "G711A Payload Size",
+                "type": "string"
+              },
+              "g711A_jitterBufferMin": {
+                "title": "G711A Jitter Buffer Min",
+                "type": "string"
+              },
+              "g711A_jitterBufferShrink": {
+                "title": "G711A Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g711A_jitterBufferMax": {
+                "title": "G711A Jitter Buffer Max",
+                "type": "string"
+              },
+              "g729AB_payloadSize": {
+                "title": "G729AB Payload Size",
+                "type": "string"
+              },
+              "g729AB_jitterBufferMin": {
+                "title": "G729AB Jitter Buffer Min",
+                "type": "string"
+              },
+              "g729AB_jitterBufferShrink": {
+                "title": "G729AB Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g729AB_jitterBufferMax": {
+                "title": "G729AB Jitter Buffer Max",
+                "type": "string"
+              },
+              "g722_payloadSize": {
+                "title": "G722 Payload Size",
+                "type": "string"
+              },
+              "g722_jitterBufferMin": {
+                "title": "G722 Jitter Buffer Min",
+                "type": "string"
+              },
+              "g722_jitterBufferShrink": {
+                "title": "G722 Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g722_jitterBufferMax": {
+                "title": "G722 Jitter Buffer Max",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsPayloadSize": {
+                "title": "iLBC 13_33kbps Payload Size",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferMin": {
+                "title": "iLBC 13_33kbps Buffer Min",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferShrink": {
+                "title": "iLBC 13_33kbps Buffer Shrink",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferMax": {
+                "title": "iLBC 13_33kbps Buffer Max",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsPayloadSize": {
+                "title": "iLBC 13_33kbps Payload Size",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsBufferMin": {
+                "title": "iLBC 13_33kbps Buffer Min",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferShrink": {
+                "title": "iLBC 13_33kbps Buffer Shrink",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsBufferMax": {
+                "title": "iLBC 13_33kbps Buffer Max",
+                "type": "string"
+              },
+              "persistHandset": {
+                "title": "Persist Handset",
+                "type": "boolean"
+              },
+              "persistHeadset": {
+                "title": "Persist Headset",
+                "type": "boolean"
+              },
+              "persistHandsfree": {
+                "title": "Persist Handsfree",
+                "type": "boolean"
+              },
+              "vadEnable": {
+                "title": "Enable voice activity Detection",
+                "type": "boolean"
+              },
+              "vadTresh": {
+                "title": "Voice activity Treshold",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "voiceCodecs_settings_options": {
+    "helper": "Voice/Codecs",
+    "fields": {
+      "settings": {
+        "fields": {
+          "voiceCodecs": {
+            "toolbarSticky": true,
+            "fields": {
+              "txPacketFilter": {
+                "helper": "Flag to determine whether or not narrowband Tx high-pass filtering should be enabled."
+              },
+              "codec": {
+                  "items": {
+                    "removeDefaultNone": true
+                  }
+              },
+              "persistHandset": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "persistHeadset": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "persistHandsfree": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "vadEnable": {
+                "helper": "If checked, enable VAD."
+              },
+              "vadThresh": {
+                "helper": "The threshold for determining what is active voice and what is background noise in dB. This does not apply to G.729AB codec operation which has its own built-in VAD function."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "video_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "video": {
+            "type": "object",
+            "properties": {
+              "enable": {
+                "title": "Enable",
+                "type": "boolean"
+              },
+              "autoStartVideoTx": {
+                "title": "Auto Start Video",
+                "type": "boolean"
+              },
+              "autoFullScreen": {
+                "title": "Auto Full Screen",
+                "type": "boolean"
+              },
+              "screenMode": {
+                "title": "Screen Mode",
+                "enum": ["normal", "full", "crop"]
+              },
+              "screenModeFS": {
+                "title": "Screen Mode FS",
+                "enum": ["normal", "full", "crop"]
+              },
+              "quality": {
+                "title": "Quality",
+                "enum": ["motion", "sharpness"]
+              },
+              "maxCallRate": {
+                "title": "Max Call Rate",
+                "type": "number"
+              },
+              "codecs": {
+                "title": "Codec preference",
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "H264",
+                    "H.263+(1998)",
+                    "H263",
+                    "H261"
+                  ]
+                }
+              },
+              "flickerAvoidance": {
+                "title": "Flicker Avoidance",
+                "type": "string"
+              },
+              "frameRate": {
+                "title": "Frame Rate",
+                "type": "number"
+              },
+              "brightness": {
+                "title": "Brightness",
+                "type": "number"
+              },
+              "saturation": {
+                "title": "Saturation",
+                "type": "number"
+              },
+              "contrast": {
+                "title": "Contrast",
+                "type": "number"
+              },
+              "sharpness": {
+                "title": "Sharpness",
+                "type": "number"
+              },
+              "fullscreenEnabled": {
+                "title": "Fullscreen Enabled",
+                "type": "boolean"
+              },
+              "fullscreenMode": {
+                "title": "Fullscreen Mode",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "video_settings_options": {
+    "helper": "Video",
+    "fields": {
+      "settings": {
+        "fields": {
+          "video": {
+            "toolbarSticky": true,
+            "fields": {
+              "enable": {
+                "helper": "Flag to determine whether or not video calls are established. This applies to all calls, between two Polycom VVX 1500s and between Polycom VVX 1500 and any other video device.If set to 1 (enabled) or Null, video is sent in outgoing calls and received in incoming calls. outgoing calls and received in incoming calls.If set to 0, video is not sent in outgoing calls and not received in incoming calls. All calls are audionly."
+              },
+              "autoStartVideoTx": {
+                "helper": "Flag to determine whether or not video transmission occurs when a call starts. If set to 0, video transmission does not start. If set to 1 or Null, video transmissionoccurs when a call starts."
+              },
+              "autoFullScreen": {
+                "helper": "Flag to determine whether or not video calls use the full screen layout."
+              },
+              "screenMode": {
+                "helper": "Applies to the video window shown in the normal mode.",
+                "removeDefaultNone": true
+              },
+              "screenModeFS": {
+                "helper": "Applies to the video window in Full Screen mode.The image is re-sized to maintain the correct aspect ratio and any parts of the image that do not fit in the display are cropped.",
+                "removeDefaultNone": true
+              },
+              "codecs": {
+                "items": {
+                  "removeDefaultNone": true
+                }
+              },
+              "quality": {
+                "helper": "Determine the quality of video shown in a call or conference. Use \"motion\" for people or other video with motion. Use \"sharpness\" or Null for video with little or no movement.Moderate to heavy motion can cause some frames to be dropped.",
+                "removeDefaultNone": true
+              },
+              "maxCallRate": {
+                "helper": "Limits the maximum network bandwidth used in a call. It is used in the SDP bandwidth signaling. Permitted value: 128 - 1024 kbps. If set to Null, the value 448 is used."
+              },
+              "flickerAvoidance": {
+                "helper": "Set flicker avoidance. If set to 0 or Null, licker avoidance is automatic. If set to 1, 50hz AC power frequency flicker avoidance (Europe/Asia).If set to 2, 60hz AC power frequency flicker avoidance (North America)."
+              },
+              "frameRate": {
+                "helper": "Set target frame rate. Values indicate a fixed frame rate, from 5 (least smooth) to 30 (most smooth). If set to Null, the value 25 is used."
+              },
+              "brightness": {
+                "helper": "Set brightness level. The value range is from 0 (Dimmest) to 6 (Brightest). If set to Null, the value 3 is used."
+              },
+              "saturation": {
+                "helper": "Set saturation level. The value range is from 0 (Lowest) to 6 (Highest). If set to Null, the value 3 is used."
+              },
+              "contrast": {
+                "helper": "Set contrast level. The value range is from 0 (No contrastincrease) to 3 (Most contrast increase, and 4 (Noise reduction contrast). If set to Null, the value 0 is used."
+              },
+              "sharpness": {
+                "helper": "Set sharpness level. The value range is from 0 (Lowest) to 6 (Highest). If set to Null, the value 3 is used."
+              },
+              "fullscreenEnabled": {
+                "helper": "Determines whether the local camera view is shown in the full screen layout."
+              },
+              "fullscreenMode": {
+                "helper": "How the local camera view is shown. If set to 'pip', the local camera view appears as a picture-in-picture with the far end window. If set to Null, the local camera view appears side-by-side with the far end window."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "settings_defaults": {
     "settings": {
       "dateTimeSettings": {
@@ -464,6 +797,53 @@
         "longCallWaitingValue2": 150,
         "longCallWaitingType3": "Chord",
         "longCallWaitingValue3": 6
+      },
+      "voiceCodecs": {
+        "txPacketFilter": true,
+        "g711Mu_payloadSize": 20,
+        "g711Mu_jitterBufferMin": 40,
+        "g711Mu_jitterBufferShrink": 500,
+        "g711Mu_jitterBufferMax": 160,
+        "g711A_payloadSize": 20,
+        "g711A_jitterBufferMin": 40,
+        "g711A_jitterBufferShrink": 500,
+        "g711A_jitterBufferMax": 160,
+        "g729AB_payloadSize": 20,
+        "g729AB_jitterBufferMin": 40,
+        "g729AB_jitterBufferShrink": 500,
+        "g729AB_jitterBufferMax": 160,
+        "g722_payloadSize": 20,
+        "g722_jitterBufferMin": 40,
+        "g722_jitterBufferShrink": 1500,
+        "g722_jitterBufferMax": 200,
+        "iLBC_13_33kbpsPayloadSize":30,
+        "iLBC_13_33kbpsBufferMin": 40,
+        "iLBC_13_33kbpsBufferShrink":500,
+        "iLBC_13_33kbpsBufferMax": 160,
+        "iLBC_15_2kbpsPayloadSize":20,
+        "iLBC_15_2kbpsBufferMin": 40,
+        "iLBC_15_2kbpsBufferShrink":500,
+        "iLBC_15_2kbpsBufferMax": 160,
+        "persistHandset": true,
+        "persistHandsfree": true,
+        "vadTresh": 15
+      },
+      "video": {
+        "enable": true,
+        "autoStartVideoTx": true,
+        "autoFullScreen": true,
+        "screenMode": "normal",
+        "screenModeFS": "normal",
+        "quality": "motion",
+        "maxCallRate": 768,
+        "flickerAvoidance": 5,
+        "frameRate": 25,
+        "brightness": 3,
+        "saturation": 3,
+        "contrast": 0,
+        "sharpness": 3,
+        "fullscreenEnabled": true,
+        "fullscreenMode": true
       }
     }
   }
