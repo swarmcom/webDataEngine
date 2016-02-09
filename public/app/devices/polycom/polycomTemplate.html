@@ -152,6 +152,38 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_VoiceQMonitoring"></div>
+                                    <paper-button id="create_voiceQMonitoring" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_QualityOfService"></div>
+                                    <paper-button id="create_qualityOfService" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_Sntp"></div>
+                                    <paper-button id="create_sntp" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-top:30px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="page_Rtp"></div>
+                                    <paper-button id="create_rtp" class="colored">Save</paper-button>
+                                </div>
+                            </div>
+                        </div>
                     </iron-pages>
                 </div>
             </paper-header-panel>
@@ -172,7 +204,11 @@
               'DTMF',
               'Sound Effects',
               'Voice/Codecs',
-              'Video'
+              'Video',
+              'Voice Quality Monitoring',
+              'Quality of Service',
+              'SNTP',
+              'RTP'
               ]
           }
       },
@@ -217,6 +253,10 @@
               generateAlpacaForm("#page_SoundEffects", "soundEffects_settings_schema", "soundEffects_settings_options", phone, "#create_soundEffects");
               generateAlpacaForm("#page_VoiceCodecs", "voiceCodecs_settings_schema", "voiceCodecs_settings_options", phone, "#create_voiceCodecs");
               generateAlpacaForm("#page_Video", "video_settings_schema", "video_settings_options", phone, "#create_video");
+              generateAlpacaForm("#page_VoiceQMonitoring", "voiceQMonitoring_settings_schema", "voiceQMonitoring_settings_options", phone, "#create_voiceQMonitoring");
+              generateAlpacaForm("#page_QualityOfService", "qualityOfService_settings_schema", "qualityOfService_settings_options", phone, "#create_qualityOfService");
+              generateAlpacaForm("#page_Sntp", "sntp_settings_schema", "sntp_settings_options", phone, "#create_sntp");
+              generateAlpacaForm("#page_Rtp", "rtp_settings_schema", "rtp_settings_options", phone, "#create_rtp");
           }
       }
     });
