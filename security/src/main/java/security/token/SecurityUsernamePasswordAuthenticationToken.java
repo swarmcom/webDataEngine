@@ -1,7 +1,7 @@
 package security.token;
 
+import org.pac4j.core.credentials.UsernamePasswordCredentials;
 import org.pac4j.core.profile.UserProfile;
-import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class SecurityUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken implements ClientToken {

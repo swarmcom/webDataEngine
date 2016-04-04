@@ -5,6 +5,7 @@ import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.http.client.direct.DirectBasicAuthClient;
+import org.pac4j.http.client.direct.DirectDigestAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.oidc.client.OidcClient;
 import org.pac4j.play.http.DefaultHttpActionAdapter;
@@ -23,9 +24,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import security.provider.DigestDaoAuthenticationProvider;
 import security.provider.SecurityDaoAuthenticationProvider;
 import security.provider.SecuritySessionAuthenticationProvider;
 import security.service.SecuritySocialUserDetailsService;
+import security.validator.SecurityDigestAuthenticator;
 import security.validator.SecurityUsernamePasswordAuthenticator;
 
 import javax.inject.Inject;
@@ -40,6 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Inject
     SecurityDaoAuthenticationProvider daoProvider;
+
+    @Inject
+    DigestDaoAuthenticationProvider digestDaoProvider;
 
     @Inject
     private SecuritySocialUserDetailsService userDetailsService;
@@ -60,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         List<AuthenticationProvider> authenticationProviderList = new ArrayList<AuthenticationProvider>();
         authenticationProviderList.add(sessionProvider);
         authenticationProviderList.add(daoProvider);
+        authenticationProviderList.add(digestDaoProvider);
         authenticationProviderList.add(clientAuthenticationProvider());
         ProviderManager providerManager = new ProviderManager(authenticationProviderList);
         return providerManager;
@@ -89,6 +96,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return basicAuthClient;
     }
 
+    @Bean
+    public DirectDigestAuthClient digestClient() {
+        DirectDigestAuthClient digestAuthClient = new DirectDigestAuthClient(new SecurityDigestAuthenticator());
+        digestAuthClient.setRealm("testRealm");
+        return digestAuthClient;
+    }
 
     @Bean
     public Clients authClients() {

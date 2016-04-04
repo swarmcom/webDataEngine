@@ -17,7 +17,9 @@ libraryDependencies ++= Seq(
   "org.springframework.security" % "spring-security-core" % "4.0.3.RELEASE",
   "org.springframework.security" % "spring-security-config" % "4.0.3.RELEASE",
   "org.springframework.security" % "spring-security-web" % "4.0.3.RELEASE",
+  "com.nimbusds" % "oauth2-oidc-sdk" % "5.5",
   "org.pac4j" % "play-pac4j-java" % "2.0.0",
+  "org.pac4j" % "pac4j-core" % "1.8.1",
   "org.pac4j" % "pac4j-oidc" % "1.8.1",
   "org.pac4j" % "pac4j-http" % "1.8.1",
   "org.pac4j" % "spring-security-pac4j" % "1.2.5"

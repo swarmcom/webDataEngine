@@ -1,29 +1,24 @@
 package security.validator;
 
-import org.pac4j.core.credentials.Credentials;
-import org.pac4j.core.credentials.UsernamePasswordCredentials;
-import org.pac4j.core.credentials.authenticator.Authenticator;
-import org.pac4j.core.credentials.authenticator.UsernamePasswordAuthenticator;
+import org.pac4j.core.credentials.TokenCredentials;
+import org.pac4j.core.credentials.authenticator.TokenAuthenticator;
 import org.pac4j.core.exception.CredentialsException;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
+import org.pac4j.http.credentials.DigestCredentials;
 
 
-public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAuthenticator {
+public class SecurityDigestAuthenticator implements TokenAuthenticator {
 
-    public void validate(UsernamePasswordCredentials credentials) {
+    @Override
+    public void validate(TokenCredentials credentials) {
         if (credentials == null) {
             this.throwsException("No credential");
         }
-
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
+        DigestCredentials digestCredentials = (DigestCredentials)credentials;
+        String username = digestCredentials.getUsername();
         if (CommonHelper.isBlank(username)) {
             this.throwsException("Username cannot be blank");
-        }
-
-        if (CommonHelper.isBlank(password)) {
-            this.throwsException("Password cannot be blank");
         }
 
         UserProfile profile = new UserProfile();
@@ -31,9 +26,7 @@ public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAu
         profile.addAttribute("username", username);
         credentials.setUserProfile(profile);
     }
-
     protected void throwsException(String message) {
         throw new CredentialsException(message);
     }
 }
-

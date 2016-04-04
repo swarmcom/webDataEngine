@@ -9,6 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import play.Logger;
+import security.encoder.SecurityPasswordEncoder;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 import security.service.SecurityDaoUserDetailsService;
 
@@ -23,7 +25,7 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
     private SecurityDaoUserDetailsService userDetailsService;
 
     @Inject
-    private PasswordEncoder passwordEncoder;
+    private SecurityPasswordEncoder passwordEncoder;
 
 
     @PostConstruct
@@ -39,12 +41,10 @@ public class SecurityDaoAuthenticationProvider extends DaoAuthenticationProvider
         authenticatedToken.setUserPwdCredentials(userPwdToken.getUserPwdCredentials());
         authenticatedToken.setClientType(userPwdToken.getClientType());
         UserProfile userProfile = authenticatedToken.getUserPwdCredentials().getUserProfile();
-
         Collection<? extends GrantedAuthority> grantedAuthorities = authenticatedToken.getAuthorities();
         for (GrantedAuthority authority : grantedAuthorities) {
             userProfile.addRole(authority.getAuthority());
         }
-
         return authenticatedToken;
     }
 }

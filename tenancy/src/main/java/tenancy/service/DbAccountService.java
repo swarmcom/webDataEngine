@@ -17,6 +17,8 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.Logger;
+import security.encoder.SecurityPasswordEncoder;
+import security.util.EncoderUtil;
 import tenancy.dao.DbAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,7 +42,7 @@ public class DbAccountService implements AccountService {
     MultiRoleService roleService;
 
     @Inject
-    private PasswordEncoder passwordEncoder;
+    private SecurityPasswordEncoder passwordEncoder;
 
     private HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap = new HashMap<String, AnnotationConfigApplicationContext>();
 
@@ -70,7 +72,7 @@ public class DbAccountService implements AccountService {
             roleService.createRole(accountName, userRole);
         }
         userService.createUser(accountName, superadminUserName,
-                passwordEncoder.encode(superadminPassword), new ArrayList<String>(Arrays.asList(adminRole, userRole)));
+                EncoderUtil.digestEncodePassword(superadminUserName, "testRealm", superadminPassword), new ArrayList<String>(Arrays.asList(adminRole, userRole)));
     }
 
     @Override

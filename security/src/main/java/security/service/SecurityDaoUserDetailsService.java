@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import play.Logger;
 import security.domain.SecurityUserDetails;
 import security.util.TokenUtil;
 
@@ -24,11 +25,13 @@ public class SecurityDaoUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userService.getUser(TokenUtil.getCurrentAccountId(), userName);
+        Logger.info("MIRCEA user " + user);
         if (user != null) {
             List<GrantedAuthority> rolesList = new ArrayList<GrantedAuthority>();
             for (String role : user.getRoles()) {
                 rolesList.add(new SimpleGrantedAuthority(role));
             }
+            Logger.info("MIRCEA RET " + user);
             return new SecurityUserDetails(user.getUserName(), user.getPassword(), rolesList);
         }
         return null;

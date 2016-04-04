@@ -4,6 +4,6 @@ public enum ClientType {
     OidcClient,
     FormClient,
     SessionClient,
-    DirectBasicAuthClient
-
+    DirectBasicAuthClient,
+    DirectDigestAuthClient
 }

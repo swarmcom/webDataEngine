@@ -21,7 +21,8 @@ public class TokenUtil {
         } else if (token instanceof ClientToken) {
             ClientToken clientToken = (ClientToken) token;
             if (clientToken.getClientType() == ClientType.FormClient ||
-                    clientToken.getClientType() == ClientType.SessionClient || clientToken.getClientType() == ClientType.DirectBasicAuthClient) {
+                    clientToken.getClientType() == ClientType.SessionClient ||
+                    clientToken.getClientType() == ClientType.DirectBasicAuthClient || clientToken.getClientType() == ClientType.DirectDigestAuthClient) {
                 Object principal = token.getPrincipal();
                 if (principal != null) {
                     return principal.toString();

@@ -4,15 +4,16 @@ import api.domain.User;
 import api.service.MultiUserService;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
+import auth.DigestAuthentication;
 import auth.SessionSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
+import security.encoder.SecurityPasswordEncoder;
 import security.util.TokenUtil;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import java.util.List;
 @Component
 @With(AuthenticationAction.class)
 @BasicAuthentication
+@DigestAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
 public class Users extends Controller {
@@ -29,7 +31,7 @@ public class Users extends Controller {
     MultiUserService userService;
 
     @Inject
-    private PasswordEncoder passwordEncoder;
+    private SecurityPasswordEncoder passwordEncoder;
 
     public Result list() {
         List<? extends User> users = userService.getUsers(TokenUtil.getCurrentAccountId());
