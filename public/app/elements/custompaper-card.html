@@ -1,0 +1,93 @@
+<link rel="import" href="/assets/components/paper-material/paper-material.html"/>
+<link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/assets/components/paper-card/paper-card.html">
+
+<dom-module id="custompaper-card">
+    <style>
+        *{
+        //font:16px 'Segoe UI', Helvetica, 'Droid Sans', Tahoma, Geneva, sans-serif;
+        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+        font-style: normal;font-weight: 300;font-size: 16px;color:black;-webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+
+        }
+
+        .title{font-size:16px;font-weight: bold;}
+        .caption{font-size:12px;bottom:10px}
+
+        .menu-item{color:whitesmoke;padding:5px;}
+
+        .small{min-width:25%; height:125px}
+        .large{min-width:43%;height:125px;}
+
+        .big{height:60px;width:60px;}
+
+        .YELLOW{background-color:#FFCA28}
+        .INDIGO{background-color:#5C6BC0}
+        .ORANGE{background-color:#FF7043}
+        .BLUE{background-color:#0086D4}
+        .LIGHTBLUE{background-color:#26C6DA}
+        .GREEN{background-color:#9CCC65}
+        .PINK{background-color:#EC407A}
+        .PURPLE{background-color:#AB47BC}
+
+        .center {display:block; margin-left:auto; margin-right:auto; text-align:center;}
+
+    </style>
+
+    <template>
+            <paper-card animated elevation="{{elevation}}" style$="{{classColor(color)}}">
+                <div id="content" class="card-content" >
+                    <paper-icon-button on-mouseover="handleOver" on-mouseout="handleOut" class="big center" icon="{{icon}}" flex self-center></paper-icon-button>
+                    <label  class="title center" >{{item}}</label>
+                    <label class="caption center" self-start >{{description}}</label>
+                </div>
+            </paper-card>
+    </template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: "custompaper-card",
+		properties: {
+			width: {
+				type: Number,
+				value: 250,
+				observer: "_changeWidth",
+			},
+			height: {
+				type: Number,
+				value: 250,
+				observer: "_changeHeight",
+			},
+			cardhovercolor: {
+			    value: "#26C6DA",
+			    observer: "_changeCardhovercolor",
+			},
+			color: {
+			    value: "#26C6DA",
+			    observer: "_changeColor",
+			}
+		},
+		_changeWidth: function(data) {
+			this.$.content.style.width = data + "px";
+		},
+		_changeHeight: function(data) {
+			this.$.content.style.height = data + "px";
+		},
+		_changeCardhovercolor: function(data) {
+		    this.cardhovercolor = data;
+		},
+		_changeColor: function(data) {
+		    this.color = data;
+		},
+		classColor: function(color) {
+            return 'margin:2px; background-color:'+color;
+        },
+        handleOver: function() {
+            this.querySelector("paper-card").style.background = this.cardhovercolor;
+        },
+        handleOut: function() {
+            this.querySelector("paper-card").style.background = this.color;
+        },
+	});
+</script>

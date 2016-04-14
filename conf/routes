@@ -16,6 +16,7 @@ POST    /login                             controllers.Application.login()
 # Assets
 GET     /users                             controllers.Application.asset(file="/public/app/users.html")
 GET     /phones/polycom                    controllers.Application.asset(file="/public/app/polycom.html")
+GET     /provider/main                     controllers.Application.asset(file="/public/app/provider.html")
 
 # Templates
 GET     /phones/polycom/template/:key      controllers.Phones.polycomTemplate(key: String)

@@ -1,0 +1,146 @@
+<link rel="import" href="/assets/components/polymer/polymer.html">
+<link rel="import" href="/assets/components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="/assets/components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="/assets/components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/assets/components/iron-icons/iron-icons.html">
+<link rel="import" href="/assets/components/paper-styles/paper-styles.html">
+<link rel="import" href="/assets/components/paper-menu/paper-menu.html">
+<link rel="import" href="/assets/components/paper-item/paper-item.html">
+<link rel="import" href="/assets/components/iron-pages/iron-pages.html">
+<link rel="import" href="/assets/app/elements/custompaper-card.html">
+<link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
+
+<script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
+
+<dom-module id="menu-card">
+    <style>
+        paper-header-panel[main]{
+        background-color: var(--paper-grey-100);
+        }
+        paper-header-panel[drawer]{
+        background-color: var(--paper-grey-200);
+        }
+        paper-menu.menu{
+        background-color: var(--paper-grey-200);
+        }
+        paper-item.menu{
+        background-color: var(--paper-grey-200);
+        }
+        paper-toolbar.main{
+        background-color: var(--paper-green-300);
+        color: black;
+        font-size: 24px;
+        }
+        paper-toolbar.drawer{
+        background-color: var(--paper-green-300);
+        color: black;
+        font-size: 24px;
+        }
+        paper-toolbar.drawer{
+        background-color: var(--paper-green-300);
+        }
+        paper-button.colored {
+        color: black;
+        background-color: var(--paper-grey-400);
+        }
+        .container {
+        margin-top:10px;
+        margin-left:10px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-wrap);
+        }
+    </style>
+    <template>
+        <paper-drawer-panel force-narrow>
+            <paper-header-panel drawer>
+                <paper-toolbar class="drawer">
+                    <span title class="flex">Menu</span>
+                </paper-toolbar>
+                <paper-menu selected="{{selected}}" class="menu">
+                    <template is="dom-repeat" items="{{menu}}">
+                        <paper-item class="menu">
+                            <iron-icon icon="{{item.icon}}"></iron-icon>
+                            <paper-item-body>
+                                <div style="margin-left:10px;">{{item.title}}</div>
+                            </paper-item-body>
+                        </paper-item>
+                    </template>
+                </paper-menu>
+            </paper-header-panel>
+            <paper-header-panel main>
+                <paper-toolbar class="main">
+                    <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
+                    <span title class="flex">{{heading}}</span>
+                    <paper-icon-button id="home" icon="home"></paper-icon-button>
+                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <paper-icon-button id="more" icon="more-vert"></paper-icon-button>
+                </paper-toolbar>
+                <div id="content" >
+                    <div id="content-cards" class="container" hidden$="{{noCards}}">
+                        <template is="dom-repeat" items="{{menu}}">
+                            <custompaper-card
+                                    elevation="{{elevation}}"
+                                    width="{{item.width}}"
+                                    height="{{item.height}}"
+                                    cardhovercolor="{{cardhovercolor}}"
+                                    item="{{item.title}}"
+                                    description="{{item.description}}"
+                                    color="{{color}}"
+                                    icon="{{item.icon}}">
+                            </custompaper-card>
+                        </template>
+                    </div>
+                    <iron-pages selected="{{selected}}" on-iron-select="onIronSelect">
+                        <template is="dom-repeat" items="{{menu}}">
+                            <div id="content-item" class="container">
+                                <div class="row">
+                                    {{item.title}}
+                                </div>
+                            </div>
+                        </template>
+                    </iron-pages>
+                </div>
+            </paper-header-panel>
+        </paper-drawer-panel>
+    </template>
+    <script>
+    Polymer({
+      is: 'menu-card',
+      properties: {
+          menu: {
+              type:Array,
+              value: [
+              'One',
+              'Two',
+              'Tree'
+              ]
+          },
+          noCards: {
+              type: Boolean,
+              value: false
+          },
+          selected: {
+              type: Number,
+              value: -1
+          }
+      },
+      onIronSelect: function(e) {
+         this.noCards = true;
+      },
+      goHome: function() {
+         this.noCards = false;
+         this.selected = -1;
+      }
+    });
+
+    document.addEventListener('WebComponentsReady', function() {
+        menuCard = document.querySelector('#menuCard');
+        $("#home").click(function() {
+           menuCard.goHome();
+        });
+    })
+    </script>
+
+</dom-module>
