@@ -77,8 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public Client oidcClient() {
         final OidcClient oidcClient = new OidcClient();
-        oidcClient.setClientID("853489947804-mt2fl38a2f350f5sfijv1j49jgpruabd.apps.googleusercontent.com");
-        oidcClient.setSecret("FfWYSCxQ3o-aAfBjIcuXfULg");
+        oidcClient.setClientID(ApiConfig.configuration.getString("oidc.clientId"));
+        oidcClient.setSecret(ApiConfig.configuration.getString("oidc.secret"));
         oidcClient.setDiscoveryURI("https://accounts.google.com/.well-known/openid-configuration");
         oidcClient.addCustomParam("prompt", "consent");
 

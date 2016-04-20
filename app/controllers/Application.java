@@ -23,7 +23,7 @@ public class Application extends Controller {
 
     @Secure(clients = "OidcClient")
     public Result oidcIndex() {
-        return redirect("/provider/main");
+        return redirect("/main/config");
     }
 
     @Secure(clients = "FormClient")
@@ -33,7 +33,7 @@ public class Application extends Controller {
 
     @With(AuthenticationAction.class)
     @Security.Authenticated(OidcSecured.class)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
     public Result callback() {
         ClientAuthenticationToken token = (ClientAuthenticationToken) SecurityContextHolder.
                 getContext().getAuthentication();
@@ -42,7 +42,7 @@ public class Application extends Controller {
             appProfileManager.saveOidcUserProfile(ctx(), token);
             return oidcIndex();
         }
-        return redirect("/oidc");
+        return redirect("/main/oidc");
     }
 
     @With(AuthenticationAction.class)
@@ -56,7 +56,7 @@ public class Application extends Controller {
             appProfileManager.saveFormUserProfile(ctx(), token);
             return formIndex();
         }
-        return redirect("/");
+        return form();
     }
 
     public Result form() {
@@ -65,7 +65,7 @@ public class Application extends Controller {
 
     @With(AuthenticationAction.class)
     @Security.Authenticated(SessionSecured.class)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_SUPERADMIN')")
     public Result asset(String file) {
         return Results.ok(Play.application().getFile(file), true);
     }
