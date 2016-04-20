@@ -1,16 +1,18 @@
 package security.config;
 
 import api.config.ApiConfig;
+import org.pac4j.core.authorization.authorizer.Authorizer;
+import org.pac4j.core.authorization.authorizer.RequireAnyRoleAuthorizer;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
+import org.pac4j.core.context.WebContext;
+import org.pac4j.core.exception.RequiresHttpAction;
 import org.pac4j.http.client.direct.DirectBasicAuthClient;
 import org.pac4j.http.client.direct.DirectDigestAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.oidc.client.OidcClient;
 import org.pac4j.play.http.DefaultHttpActionAdapter;
-import org.pac4j.play.http.HttpActionAdapter;
-import org.pac4j.play.store.DataStore;
 import org.pac4j.play.store.PlayCacheStore;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public Client oidcClient() {
         final OidcClient oidcClient = new OidcClient();
-        oidcClient.setClientID("172969963356-1134oecdv3fkc68v7k6pa4trm9o7hu8b.apps.googleusercontent.com");
-        oidcClient.setSecret("4XAVEmpfMZhNhSDBbMGxz2RM");
+        oidcClient.setClientID("853489947804-mt2fl38a2f350f5sfijv1j49jgpruabd.apps.googleusercontent.com");
+        oidcClient.setSecret("FfWYSCxQ3o-aAfBjIcuXfULg");
         oidcClient.setDiscoveryURI("https://accounts.google.com/.well-known/openid-configuration");
         oidcClient.addCustomParam("prompt", "consent");
 
@@ -113,16 +115,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public Config config() {
         Config config = new Config(authClients());
+        config.addAuthorizer("admin", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN"));
+        config.setHttpActionAdapter(new DefaultHttpActionAdapter());
+        config.addAuthorizer("custom", new Authorizer() {
+            @Override
+            public boolean isAuthorized(WebContext webContext, List list) throws RequiresHttpAction {
+                return true;
+            }
+        });
         return config;
     }
 
     @Bean
-    public DataStore cacheStore() {
+    public PlayCacheStore cacheStore() {
         return new PlayCacheStore();
     }
 
     @Bean
-    public HttpActionAdapter httpActionAdapter() {
+    public DefaultHttpActionAdapter httpActionAdapter() {
         return new DefaultHttpActionAdapter();
     }
 

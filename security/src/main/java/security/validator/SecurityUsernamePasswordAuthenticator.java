@@ -5,6 +5,7 @@ import org.pac4j.core.credentials.UsernamePasswordCredentials;
 import org.pac4j.core.credentials.authenticator.Authenticator;
 import org.pac4j.core.credentials.authenticator.UsernamePasswordAuthenticator;
 import org.pac4j.core.exception.CredentialsException;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
 
@@ -26,7 +27,7 @@ public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAu
             this.throwsException("Password cannot be blank");
         }
 
-        UserProfile profile = new UserProfile();
+        CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute("username", username);
         credentials.setUserProfile(profile);

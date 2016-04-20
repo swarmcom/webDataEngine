@@ -9,7 +9,7 @@ import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.http.credentials.DigestCredentials;
 import org.pac4j.oidc.client.OidcClient;
 import org.pac4j.oidc.credentials.OidcCredentials;
-import org.pac4j.play.store.DataStore;
+import org.pac4j.play.store.PlayCacheStore;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +26,7 @@ import javax.inject.Inject;
 @Component
 public class AppTokenManager {
     @Inject
-    protected DataStore dataStore;
+    protected PlayCacheStore dataStore;
 
     @Inject
     private DirectBasicAuthClient basicClient;
@@ -108,7 +108,7 @@ public class AppTokenManager {
 
         Logger.info("Check oidc secured " + credentials);
         if (credentials != null) {
-            return new ClientAuthenticationToken(credentials, "OidcClient");
+            return new ClientAuthenticationToken(credentials, "OidcClient", profileContext);
         }
         return null;
     }

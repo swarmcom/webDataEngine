@@ -3,8 +3,8 @@ package controllers;
 
 import auth.*;
 import managers.AppProfileManager;
-import org.pac4j.play.java.RequiresAuthentication;
 
+import org.pac4j.play.java.Secure;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,12 +21,12 @@ public class Application extends Controller {
     @Inject
     AppProfileManager appProfileManager;
 
-    @RequiresAuthentication(clientName = "OidcClient")
+    @Secure(clients = "OidcClient")
     public Result oidcIndex() {
-        return redirect("/users");
+        return redirect("/provider/main");
     }
 
-    @RequiresAuthentication(clientName = "FormClient")
+    @Secure(clients = "FormClient")
     public Result formIndex() {
         return redirect("/users");
     }

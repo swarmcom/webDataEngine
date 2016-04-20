@@ -3,6 +3,7 @@ package security.validator;
 import org.pac4j.core.credentials.TokenCredentials;
 import org.pac4j.core.credentials.authenticator.TokenAuthenticator;
 import org.pac4j.core.exception.CredentialsException;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
 import org.pac4j.http.credentials.DigestCredentials;
@@ -21,7 +22,7 @@ public class SecurityDigestAuthenticator implements TokenAuthenticator {
             this.throwsException("Username cannot be blank");
         }
 
-        UserProfile profile = new UserProfile();
+        CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute("username", username);
         credentials.setUserProfile(profile);

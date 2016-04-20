@@ -1,7 +1,7 @@
 package auth;
 
 import managers.AppTokenManager;
-import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.java.Secure;
 import org.springframework.security.core.Authentication;
 import play.libs.F;
 import play.mvc.Http;
@@ -15,7 +15,7 @@ public class BasicAuthenticationAction extends AuthenticationAction {
     private AppTokenManager appTokenManager;
 
     @Override
-    @RequiresAuthentication(clientName = "DirectBasicAuthClient")
+    @Secure(clients = "DirectBasicAuthClient")
     public F.Promise<Result> call(Http.Context context) throws Throwable {
         Authentication token = createInitialToken(context);
         appTokenManager.applyInitialToken(context, token);

@@ -1,10 +1,11 @@
 package managers;
 
 import org.pac4j.core.context.WebContext;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.play.PlayWebContext;
-import org.pac4j.play.store.DataStore;
+import org.pac4j.play.store.PlayCacheStore;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 public class AppProfileManager {
 
     @Inject
-    protected DataStore dataStore;
+    protected PlayCacheStore dataStore;
 
     private void saveUserProfile(Http.Context ctx, UserProfile userProfile) {
         if (userProfile == null) {
@@ -27,7 +28,7 @@ public class AppProfileManager {
         PlayWebContext context = new PlayWebContext(ctx, this.dataStore);
         ProfileManager manager = new ProfileManager(context);
         if(userProfile != null) {
-            manager.save(true, userProfile);
+            manager.save(true, (CommonProfile)userProfile, false);
         }
     }
 
@@ -41,13 +42,13 @@ public class AppProfileManager {
     }
 
     public void saveFormUserProfile(Http.Context ctx, SecurityUsernamePasswordAuthenticationToken token) {
-        UserProfile userProfile = token.getUserPwdCredentials().getUserProfile();
+        UserProfile userProfile = token.getUserProfile();
         saveUserProfile(ctx, userProfile);
     }
 
     public UserProfile getUserProfile(WebContext context) {
         ProfileManager manager = new ProfileManager(context);
-        return manager.get(true);
+        return (UserProfile)manager.get(true).get();
     }
 
     public UserProfile getUserProfile(Http.Context ctx) {

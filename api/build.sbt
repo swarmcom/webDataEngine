@@ -11,5 +11,6 @@ libraryDependencies ++= Seq(
   "org.springframework" % "spring-core" % "4.2.2.RELEASE",
   "org.springframework" % "spring-context" % "4.2.2.RELEASE",
   "org.springframework.security" % "spring-security-core" % "4.0.3.RELEASE",
-  "org.springframework.security" % "spring-security-config" % "4.0.3.RELEASE"
+  "org.springframework.security" % "spring-security-config" % "4.0.3.RELEASE",
+  "commons-io" % "commons-io" % "2.4"
 )
