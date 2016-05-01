@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Provider</title>
+    <title>Main</title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,10 +17,11 @@
 
 <body>
 
-<menu-card id="menuCard" heading="Owner Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
+<menu-card id="menuCard" tableid="tableid" heading="Owner Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
            menu='[{"title":"Customers" , "icon":"supervisor-account", "description":"Add, rename and manage customers",
            "width":"150", "height":"100"},
            {"title":"Customer Groups" , "icon":"account-balance", "description":"Create and manage customer groups",
-           "width":"180", "height":"100"}]'></menu-card>
+           "width":"180", "height":"100"}]'
+           url="/api/accounts/list/array" columns='[{"name":"Account Name"},{"name":"DB Name"},{"name":"DB Type"},{"name":"DB URI"},{"name":"Superadmin username"}]'></menu-card>
 </body>
 </html>

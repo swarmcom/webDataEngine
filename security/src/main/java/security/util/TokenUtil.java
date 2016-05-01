@@ -36,7 +36,7 @@ public class TokenUtil {
         if (token instanceof ClientAuthenticationToken) {
             ClientAuthenticationToken clientToken = (ClientAuthenticationToken)token;
             if(StringUtils.equals(clientToken.getClientName(), ClientType.OidcClient.name())) {
-                return "amazon";
+                return (String)clientToken.getUserProfile().getAttribute("email");
             }
         } else if (token instanceof ClientToken) {
             ClientToken clientToken = (ClientToken) token;

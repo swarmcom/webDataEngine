@@ -15,7 +15,9 @@
     "paper-elements": "PolymerElements/paper-elements#~1.0.6",
     "iron-elements": "PolymerElements/iron-elements#~1.0.4",
     "polymer-elements": "Polymer/polymer-elements#~0.3.0",
-    "page": "page.js#~1.6.4"
+    "page": "page.js#~1.6.4",
+    "vaadin-grid": "^1.0.0",
+    "paper-datatable": "^0.9.8"
   },
   "resolutions": {
     "polymer": "^1.2.0",

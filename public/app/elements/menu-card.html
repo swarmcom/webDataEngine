@@ -9,6 +9,7 @@
 <link rel="import" href="/assets/components/paper-item/paper-item.html">
 <link rel="import" href="/assets/components/iron-pages/iron-pages.html">
 <link rel="import" href="/assets/app/elements/custompaper-card.html">
+<link rel="import" href="/assets/app/elements/custom-table.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
 
 <script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
@@ -96,7 +97,7 @@
                         <template is="dom-repeat" items="{{menu}}">
                             <div id="content-item" class="container">
                                 <div class="row">
-                                    {{item.title}}
+                                    <custom-table tableId="{{tableId}}" url="{{url}}" columns="{{columns}}"></custom-table>
                                 </div>
                             </div>
                         </template>
