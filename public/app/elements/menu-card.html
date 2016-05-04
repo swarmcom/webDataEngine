@@ -82,6 +82,7 @@
                     <div id="content-cards" class="container" hidden$="{{noCards}}">
                         <template is="dom-repeat" items="{{menu}}">
                             <custompaper-card
+                                    id="{{item.id}}"
                                     elevation="{{elevation}}"
                                     width="{{item.width}}"
                                     height="{{item.height}}"
@@ -97,7 +98,9 @@
                         <template is="dom-repeat" items="{{menu}}">
                             <div id="content-item" class="container">
                                 <div class="row">
-                                    <custom-table tableId="{{tableId}}" url="{{url}}" columns="{{columns}}"></custom-table>
+                                    <template is="dom-if" if="{{item.columns}}">
+                                        <custom-table url="{{item.url}}" columns="{{item.columns}}"></custom-table>
+                                    </template>
                                 </div>
                             </div>
                         </template>
@@ -137,7 +140,23 @@
     });
 
     document.addEventListener('WebComponentsReady', function() {
-        menuCard = document.querySelector('#menuCard');
+        menuCard = document.querySelector('menu-card');
+        menu = menuCard.menu;
+
+        var customCard;
+
+        customCard = document.getElementById(menu[0].id);
+        customCard.querySelector('paper-icon-button').addEventListener('tap', function() {
+            menuCard.noCards = true;
+            menuCard.selected = 0;
+        });
+
+        customCard = document.getElementById(menu[1].id);
+        customCard.querySelector('paper-icon-button').addEventListener('tap', function() {
+            menuCard.noCards = true;
+            menuCard.selected = 1;
+        });
+
         $("#home").click(function() {
            menuCard.goHome();
         });
