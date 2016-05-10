@@ -3,6 +3,9 @@ package api.domain;
 import api.type.DbType;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+import java.util.Map;
+
 public class Account {
     protected String id;
     protected String accountName;
@@ -55,6 +58,10 @@ public class Account {
         this.dbName = (StringUtils.isEmpty(dbName) ? "webDataEngine" : dbName);
         this.superadminUserName = (StringUtils.isEmpty(superadminUserName) ? "superadmin" : superadminUserName);
         this.superadminInitialPassword = (StringUtils.isEmpty(superadminInitialPassword) ? "123" : superadminInitialPassword);
+    }
+
+    public boolean isNew() {
+        return StringUtils.isEmpty(this.id);
     }
 
     public String getId() {
@@ -111,5 +118,37 @@ public class Account {
 
     public void setSuperadminInitialPassword(String superadminInitialPassword) {
         this.superadminInitialPassword = superadminInitialPassword;
+    }
+
+    public void merge(Account account) {
+        DbType type = account.getDbType();
+        String dbUri = account.getDbUri();
+        String accountName = account.getAccountName();
+        String dbName = account.getDbName();
+        String superadminUserName = account.getSuperadminUserName();
+        String superadminInitialPassword = account.getSuperadminInitialPassword();
+
+        if (type != null) {
+            setDbType(type);
+        }
+
+        if (dbUri != null) {
+            setDbUri(dbUri);
+        }
+        if (accountName != null) {
+            setAccountName(accountName);
+        }
+
+        if (dbName != null) {
+            setDbName(dbName);
+        }
+
+        if (superadminUserName != null) {
+            setSuperadminUserName(superadminUserName);
+        }
+
+        if (superadminInitialPassword != null) {
+            setSuperadminInitialPassword(superadminInitialPassword);
+        }
     }
 }

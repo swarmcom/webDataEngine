@@ -1,5 +1,7 @@
 package api.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,10 @@ public class User {
         } else {
             this.roles.add("ROLE_USER");
         }
+    }
+
+    public boolean isNew() {
+        return StringUtils.isEmpty(this.id);
     }
 
     public String getId() {

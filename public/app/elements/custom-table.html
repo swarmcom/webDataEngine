@@ -60,6 +60,7 @@
         grid.columns[i].sortable = true;
         grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
       }
+      grid.columns[0].hidden = true;
 
       // Re-order the data array on sort-order-changed event
       grid.addEventListener('sort-order-changed', function() {

@@ -9,10 +9,8 @@
 <link rel="import" href="/assets/components/paper-item/paper-item.html">
 <link rel="import" href="/assets/components/iron-pages/iron-pages.html">
 <link rel="import" href="/assets/app/elements/custompaper-card.html">
-<link rel="import" href="/assets/app/elements/custom-table.html">
+<link rel="import" href="/assets/app/elements/custom-form.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
-
-<script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
 
 <dom-module id="menu-card">
     <style>
@@ -46,8 +44,8 @@
         background-color: var(--paper-grey-400);
         }
         .container {
-        margin-top:10px;
-        margin-left:10px;
+        margin-top:7px;
+        margin-left:-10px;
         @apply(--layout-horizontal);
         @apply(--layout-center);
         @apply(--layout-wrap);
@@ -99,7 +97,7 @@
                             <div id="content-item" class="container">
                                 <div class="row">
                                     <template is="dom-if" if="{{item.columns}}">
-                                        <custom-table url="{{item.url}}" columns="{{item.columns}}"></custom-table>
+                                        <custom-form url="{{item.url}}" columns="{{item.columns}}"></custom-form>
                                     </template>
                                 </div>
                             </div>
@@ -157,7 +155,7 @@
             menuCard.selected = 1;
         });
 
-        $("#home").click(function() {
+        document.getElementById("home").addEventListener('click', function() {
            menuCard.goHome();
         });
     })

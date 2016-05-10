@@ -1,0 +1,104 @@
+<link rel="import" href="/assets/app/templates/customer-template.html">
+<link rel="import" href="/assets/app/elements/custom-table.html">
+<link rel="import" href="/assets/components/iron-icons/iron-icons.html"/>
+<link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
+
+<dom-module id="custom-form">
+    <style>
+        paper-fab.add{
+            position: absolute;
+            bottom: 10px;
+            right: 70px;
+            background-color: green;
+        }
+        paper-fab.delete{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: green;
+        }
+    </style>
+    <template>
+        <iron-ajax
+                id="deleteAccountAction"
+                url="/api/accounts/delete/ids"
+                method="POST"
+                content-type="application/json"
+                on-response="accountDeleted"
+                handle-as="json">
+        </iron-ajax>
+        <template is="dom-if" if="{{list}}">
+            <custom-table url="{{url}}" columns="{{columns}}"></custom-table>
+            <paper-fab icon="add" on-tap="handleTap" on-click="handleClick" class="add"></paper-fab>
+            <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+        </template>
+        <template is="dom-if" if="{{add}}">
+            <customer-template></customer-template>
+        </template>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+      is: 'custom-form',
+      properties: {
+        list: {
+          type: Boolean,
+          value: true
+        },
+        add: {
+          add: Boolean,
+          value: false
+        }
+      },
+
+      handleTap: function() {
+        this.list = false;
+        this.add = true;
+      },
+
+      accountDeleted: function() {
+        alert('deleted');
+        customTable = document.querySelector('custom-table');
+        customTable.querySelector('iron-ajax').generateRequest();
+      },
+
+      handleClick: function() {
+        form = document.querySelector('custom-form');
+        accountTemplate = document.querySelector('customer-template');
+        if (accountTemplate.selected == -1) {
+            accountTemplate.selected = 0;
+        }
+        accountName = $(location).attr('hash').replace("#","");
+        accountTemplate.accountName = accountName;
+        if (accountName) {
+            accountTemplate.getExisting();
+        } else {
+            accountTemplate.generateUI('{}');
+        }
+        accountTemplate.querySelector('#close').addEventListener('tap', function() {
+            form.list = true;
+            form.add = false;
+            customTable = document.querySelector('custom-table');
+            customTable.querySelector('iron-ajax').generateRequest();
+        });
+      },
+      handleDelete: function() {
+        var table = document.querySelector('custom-table');
+        var grid = table.querySelector('vaadin-grid');
+        var selectedItems = grid.selection.selected();
+        var jsonIds = {};
+        var ids = [];
+        var i;
+        for (i=0; i < selectedItems.length; i++) {
+           var id = grid.items[selectedItems[i]][0];
+           var jsonId = {};
+           jsonId['id'] = id;
+           ids.push(jsonId);
+        }
+        jsonIds['ids'] = ids;
+
+        this.$.deleteAccountAction.body = JSON.stringify(jsonIds);
+        this.$.deleteAccountAction.generateRequest();
+      }
+    });
+</script>

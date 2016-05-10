@@ -10,13 +10,14 @@
     "url": "git://github.com/gitana/alpaca.git"
   },
   "license": "Apache-2.0",
-  "version": "1.5.15",
+  "version": "1.5.16",
   "devDependencies": {
     "bower": "*",
     "stream-browserify": "*",
     "cucumber": "~0.3.3",
     "event-stream": "*",
     "express": "3.5.1",
+    "handlebars": "4.0.5",
     "grunt": "*",
     "grunt-aws-s3": "^0.9.4",
     "grunt-cloudfront": "^0.2.0",
@@ -35,6 +36,7 @@
     "gulp-notify": "*",
     "gulp-order": "*",
     "gulp-rename": "*",
+    "gulp-template": "^3.1.0",
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-watch": "*",
@@ -53,5 +55,6 @@
     "through2": "*",
     "wd": "",
     "wrench": "*"
-  }
+  },
+  "dependencies": {}
 }

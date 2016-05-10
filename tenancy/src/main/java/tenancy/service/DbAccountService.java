@@ -76,6 +76,23 @@ public class DbAccountService implements AccountService {
     }
 
     @Override
+    public void saveAccount(Account account) {
+        accountRepository.save(account);
+    }
+
+    @Override
+    public Long deleteAccount(String accountName) {
+        return accountRepository.deleteByAccountName(accountName);
+    }
+
+    @Override
+    public Long deleteAccounts(Collection<String> accountIds) {
+        List<Account> accounts = accountRepository.findByIdIn(accountIds);
+        Logger.info("MIRCEA AAAAAAAAAAAAAA " + accounts.toString());
+        return accountRepository.deleteByIdIn(accountIds);
+    }
+
+    @Override
     public List<? extends Account> getAccounts() {
         return accountRepository.findAll();
     }

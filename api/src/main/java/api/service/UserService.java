@@ -9,5 +9,7 @@ public interface UserService {
 
     void createUser(String accountId, String userName, String password, List<String> roles);
 
+    void saveUser(User user);
+
     public List<? extends User> getUsers(String accountId);
 }

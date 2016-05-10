@@ -128,3 +128,84 @@ $("#field5").alpaca({
 });
 </script>
 {% endraw %}
+
+
+## Example 6
+Checkbox Field for multiple values with it's selection options loaded from a data source.
+<div id="field6"> </div>
+{% raw %}
+<script type="text/javascript" id="field6-script">
+$("#field6").alpaca({
+    "data": ["Vanilla", "Chocolate"],    
+    "options": {
+        "label": "Ice cream",
+        "type": "checkbox",
+        "multiple": true,
+        "dataSource": "/data/icecream-list.json"
+    }
+});
+</script>
+{% endraw %}
+
+
+
+## Example 7
+A checkbox field that uses an enumerated value set on an array to specify the selection options.  This is in accordance
+with JSON schema v4.
+<div id="field7"> </div>
+{% raw %}
+<script type="text/javascript" id="field7-script">
+$("#field7").alpaca({
+    "schema": {
+        "type": "object",
+        "properties": {
+            "checkboxArrayEnum": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum": [
+                        "option1",
+                        "option2",
+                        "option3"
+                    ]
+                }
+            }
+        },
+        "required": [
+            "checkboxArrayEnum"
+        ]
+    },
+    "options": {
+        "fields": {
+            "checkboxArrayEnum": {
+                "label": "Checkbox Array Enum",
+                "type": "checkbox",
+                "items": {
+                    "optionLabels": [
+                        "Option #1",
+                        "Option #2",
+                        "Option #3"
+                    ]
+                }
+            }
+        },
+        "form": {
+            "buttons": {
+                "view": {
+                    "label": "View JSON",
+                    "click": function() {
+                        alert(JSON.stringify(this.getValue(), null, "  "));
+                    }
+                }
+            }        
+        }
+    },
+    "data": {
+        "checkboxArrayEnum": [
+            "option1",
+            "option3"
+        ]
+    }
+});
+</script>
+{% endraw %}

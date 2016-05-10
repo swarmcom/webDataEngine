@@ -25,6 +25,7 @@ var wrap        = require('gulp-wrap');
 var bump        = require('gulp-bump');
 var wrapUmd     = require("gulp-wrap-umd");
 var awspublish  = require('gulp-awspublish');
+var gulpTemplate = require('gulp-template');
 
 // custom builder_helper stripper to remove builder helper functions
 var stripper = require("./gulp/gulp-stripper");
@@ -225,7 +226,7 @@ gulp.task("build-templates", function(cb)
     // Mozilla
     var escapeRegExp = function(string){
             return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    }
+    };
 
     var processName = function(filepath)
     {
@@ -251,7 +252,7 @@ gulp.task("build-templates", function(cb)
 
         // web
         gulp.src(paths.templates["web"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -263,7 +264,7 @@ gulp.task("build-templates", function(cb)
 
         // bootstrap
         gulp.src(paths.templates["bootstrap"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -275,7 +276,7 @@ gulp.task("build-templates", function(cb)
 
         // jqueryui
         gulp.src(paths.templates["jqueryui"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -287,7 +288,7 @@ gulp.task("build-templates", function(cb)
 
         // jquerymobile
         gulp.src(paths.templates["jquerymobile"])
-            .pipe(handlebars())
+            .pipe(handlebars({ handlebars: require('handlebars') }))
             .pipe(wrap('Handlebars.template(<%= contents %>)'))
             .pipe(declare({
                 namespace: 'HandlebarsPrecompiled',
@@ -638,6 +639,7 @@ gulp.task("package", function(cb) {
 
 gulp.task("default", function(cb) {
     runSequence(
+        "update-release-txt",
         "build-templates",
         ["build-scripts", "build-styles", "package"],
         function() {
@@ -1016,3 +1018,21 @@ var doReplace = function(text, token, value)
 
     return text;
 };
+
+gulp.task("update-release-txt", function() {
+
+    if (fs.existsSync("license.txt"))
+    {
+        fs.unlinkSync("license.txt");
+    }
+
+    return gulp.src("license.txt.template", {
+        "cwd": "./config"
+    })
+        .pipe(gulpTemplate({
+            version: pkg.version
+        }))
+        .pipe(rename("license.txt"))
+        .pipe(gulp.dest("."));
+
+});

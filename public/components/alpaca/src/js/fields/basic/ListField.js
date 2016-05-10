@@ -23,18 +23,20 @@
                 // sort the enumerated values
                 self.sortEnum();
 
+                var optionLabels = self.getOptionLabels();
+
                 $.each(self.getEnum(), function(index, value)
                 {
                     var text = value;
-                    if (self.options.optionLabels)
+                    if (optionLabels)
                     {
-                        if (!Alpaca.isEmpty(self.options.optionLabels[index]))
+                        if (!Alpaca.isEmpty(optionLabels[index]))
                         {
-                            text = self.options.optionLabels[index];
+                            text = optionLabels[index];
                         }
-                        else if (!Alpaca.isEmpty(self.options.optionLabels[value]))
+                        else if (!Alpaca.isEmpty(optionLabels[value]))
                         {
-                            text = self.options.optionLabels[value];
+                            text = optionLabels[value];
                         }
                     }
 
@@ -50,12 +52,12 @@
              */
             if (self.isRequired() && !self.data)
             {
-                //if ((typeof(self.options.removeDefaultNone) == "undefined") || self.options.removeDefaultNone === true)
                 if ((self.options.removeDefaultNone === true))
                 {
-                    if (self.schema.enum && self.schema.enum.length > 0)
+                    var enumValues = self.getEnum();
+                    if (enumValues && enumValues.length > 0)
                     {
-                        self.data = self.schema.enum[0];
+                        self.data = enumValues[0];
                     }
                 }
             }
@@ -79,34 +81,25 @@
 
             this.base(function(model) {
 
-                model.noneLabel = self.getMessage("noneLabel");
-                if (typeof(self.options.noneLabel) !== "undefined")
+                if (typeof(self.options.noneLabel) === "undefined")
                 {
-                    model.noneLabel = self.options.noneLabel;
+                    self.options.noneLabel = self.getMessage("noneLabel");
                 }
 
-                model.hideNone = self.isRequired();
-                if (typeof(self.options.removeDefaultNone) !== "undefined")
+                if (typeof(self.options.hideNone) === "undefined")
                 {
-                    model.hideNone = self.options.removeDefaultNone;
+                    if (typeof(self.options.removeDefaultNone) !== "undefined")
+                    {
+                        self.options.hideNone = self.options.removeDefaultNone;
+                    }
+                    else
+                    {
+                        self.options.hideNone = self.isRequired();
+                    }
                 }
 
                 callback(model);
             });
-        },
-
-
-        /**
-         * Gets schema enum property.
-         *
-         * @returns {Array|String} Field schema enum property.
-         */
-        getEnum: function()
-        {
-            if (this.schema && this.schema["enum"])
-            {
-                return this.schema["enum"];
-            }
         },
 
         /**
@@ -154,219 +147,29 @@
 
                 if (self.options.dataSource)
                 {
-                    self.selectOptions = [];
+                    // clear the array
+                    self.selectOptions.length = 0;
 
-                    var completionFunction = function()
-                    {
-                        var self = this;
-
-                        // apply sorting to whatever we produce
-                        self.sortSelectableOptions(self.selectOptions);
+                    self.invokeDataSource(self.selectOptions, model, function() {
 
                         if (self.options.useDataSourceAsEnum)
                         {
                             // now build out the enum and optionLabels
-                            self.schema.enum = [];
-                            self.options.optionLabels = [];
+                            var _enum = [];
+                            var _optionLabels = [];
                             for (var i = 0; i < self.selectOptions.length; i++)
                             {
-                                self.schema.enum.push(self.selectOptions[i].value);
-                                self.options.optionLabels.push(self.selectOptions[i].text);
+                                _enum.push(self.selectOptions[i].value);
+                                _optionLabels.push(self.selectOptions[i].text);
                             }
-                        }
 
-                        // push back to model
-                        model.selectOptions = self.selectOptions;
+                            self.setEnum(_enum);
+                            self.setOptionLabels(_optionLabels);
+                        }
 
                         callback();
 
-                    }.bind(self);
-
-                    if (Alpaca.isFunction(self.options.dataSource))
-                    {
-                        self.options.dataSource.call(self, function(values) {
-
-                            if (Alpaca.isArray(values))
-                            {
-                                for (var i = 0; i < values.length; i++)
-                                {
-                                    if (typeof(values[i]) === "string")
-                                    {
-                                        self.selectOptions.push({
-                                            "text": values[i],
-                                            "value": values[i]
-                                        });
-                                    }
-                                    else if (Alpaca.isObject(values[i]))
-                                    {
-                                        self.selectOptions.push(values[i]);
-                                    }
-                                }
-
-                                completionFunction();
-                            }
-                            else if (Alpaca.isObject(values))
-                            {
-                                for (var k in values)
-                                {
-                                    self.selectOptions.push({
-                                        "text": k,
-                                        "value": values[k]
-                                    });
-                                }
-
-                                completionFunction();
-                            }
-                            else
-                            {
-                                completionFunction();
-                            }
-                        });
-                    }
-                    else if (Alpaca.isUri(self.options.dataSource))
-                    {
-                        $.ajax({
-                            url: self.options.dataSource,
-                            type: "get",
-                            dataType: "json",
-                            success: function(jsonDocument) {
-
-                                var ds = jsonDocument;
-                                if (self.options.dsTransformer && Alpaca.isFunction(self.options.dsTransformer))
-                                {
-                                    ds = self.options.dsTransformer(ds);
-                                }
-
-                                if (ds)
-                                {
-                                    if (Alpaca.isObject(ds))
-                                    {
-                                        // for objects, we walk through one key at a time
-                                        // the insertion order is the order of the keys from the map
-                                        // to preserve order, consider using an array as below
-                                        $.each(ds, function(key, value) {
-                                            self.selectOptions.push({
-                                                "value": key,
-                                                "text": value
-                                            });
-                                        });
-
-                                        completionFunction();
-                                    }
-                                    else if (Alpaca.isArray(ds))
-                                    {
-                                        // for arrays, we walk through one index at a time
-                                        // the insertion order is dictated by the order of the indices into the array
-                                        // this preserves order
-                                        $.each(ds, function(index, value) {
-                                            self.selectOptions.push({
-                                                "value": value.value,
-                                                "text": value.text
-                                            });
-                                        });
-
-                                        completionFunction();
-                                    }
-                                }
-                            },
-                            "error": function(jqXHR, textStatus, errorThrown) {
-
-                                self.errorCallback({
-                                    "message":"Unable to load data from uri : " + self.options.dataSource,
-                                    "stage": "DATASOURCE_LOADING_ERROR",
-                                    "details": {
-                                        "jqXHR" : jqXHR,
-                                        "textStatus" : textStatus,
-                                        "errorThrown" : errorThrown
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    else if (Alpaca.isArray(self.options.dataSource))
-                    {
-                        for (var i = 0; i < self.options.dataSource.length; i++)
-                        {
-                            if (typeof(self.options.dataSource[i]) === "string")
-                            {
-                                self.selectOptions.push({
-                                    "text": self.options.dataSource[i],
-                                    "value": self.options.dataSource[i]
-                                });
-                            }
-                            else if (Alpaca.isObject(self.options.dataSource[i]))
-                            {
-                                self.selectOptions.push(self.options.dataSource[i]);
-                            }
-                        }
-
-                        completionFunction();
-                    }
-                    else if (Alpaca.isObject(self.options.dataSource))
-                    {
-                        if (self.options.dataSource.connector)
-                        {
-                            var connector = self.connector;
-
-                            if (Alpaca.isObject(self.options.dataSource.connector))
-                            {
-                                var connectorId = self.options.dataSource.connector.id;
-                                var connectorConfig = self.options.dataSource.connector.config;
-                                if (!connectorConfig) {
-                                    connectorConfig = {};
-                                }
-
-                                var ConnectorClass = Alpaca.getConnectorClass(connectorId);
-                                if (ConnectorClass) {
-                                    connector = new ConnectorClass(connectorId, connectorConfig);
-                                }
-                            }
-
-                            var config = self.options.dataSource.config;
-                            if (!config) {
-                                config = {};
-                            }
-
-                            // load using connector
-                            connector.loadDataSource(config, function(array) {
-
-                                for (var i = 0; i < array.length; i++)
-                                {
-                                    if (typeof(array[i]) === "string")
-                                    {
-                                        self.selectOptions.push({
-                                            "text": array[i],
-                                            "value": array[i]
-                                        });
-                                    }
-                                    else if (Alpaca.isObject(array[i]))
-                                    {
-                                        self.selectOptions.push(array[i]);
-                                    }
-                                }
-
-                                completionFunction();
-                            });
-                        }
-                        else
-                        {
-                            // load from standard object
-                            for (var k in self.options.dataSource)
-                            {
-                                self.selectOptions.push({
-                                    "text": self.options.dataSource[k],
-                                    "value": k
-                                });
-                            }
-
-                            completionFunction();
-                        }
-
-                    }
-                    else
-                    {
-                        callback();
-                    }
+                    });
                 }
                 else
                 {
@@ -404,11 +207,6 @@
         getSchemaOfOptions: function() {
             return Alpaca.merge(this.base(), {
                 "properties": {
-                    "optionLabels": {
-                        "title": "Option Labels",
-                        "description": "Labels for options. It can either be a map object or an array field that maps labels to items defined by enum schema property one by one.",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "title": "Option Datasource",
                         "description": "Datasource for generating list of options.  This can be a string or a function.  If a string, it is considered to be a URI to a service that produces a object containing key/value pairs or an array of elements of structure {'text': '', 'value': ''}.  This can also be a function that is called to produce the same list.",
@@ -449,10 +247,6 @@
         getOptionsForOptions: function() {
             return Alpaca.merge(this.base(), {
                 "fields": {
-                    "optionLabels": {
-                        "itemLabel":"Label",
-                        "type": "array"
-                    },
                     "dataSource": {
                         "type": "text"
                     },

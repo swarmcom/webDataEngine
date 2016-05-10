@@ -43,4 +43,8 @@ public class CouchDBUserRepository extends CouchDbRepositorySupport<CouchDBUser>
     public void create(CouchDBUser user) {
         db.create(user);
     }
+
+    public void save(CouchDBUser user) {
+        db.update(user);
+    }
 }

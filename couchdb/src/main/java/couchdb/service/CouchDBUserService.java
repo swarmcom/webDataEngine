@@ -26,6 +26,11 @@ public class CouchDBUserService implements UserService {
     }
 
     @Override
+    public void saveUser(User user) {
+        userRepository.save((CouchDBUser)user);
+    }
+
+    @Override
     public List<? extends User> getUsers(String accountId) {
         return userRepository.getAllUsers(accountId);
     }

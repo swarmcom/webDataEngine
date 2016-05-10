@@ -1,0 +1,67 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "title": "Identification",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "accountName": {
+        "type": "string",
+        "title": "Account name"
+      },
+      "dbType": {
+        "type": "string",
+        "title": "DB Type",
+        "enum":[
+          "mongo",
+          "couchDB"
+        ]
+      },
+      "dbUri": {
+        "type": "string",
+        "title": "Db URI"
+      },
+      "dbName": {
+        "type": "string",
+        "title": "DB Name"
+      },
+      "superadminUserName": {
+        "type": "string",
+        "title": "Superadmin User Name"
+      },
+      "superadminInitialPassword": {
+        "type": "string",
+        "title": "Superadmin Initial Password"
+      }
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "fields": {
+      "id": {
+        "type": "hidden"
+      },
+      "accountName" : {
+        "helper": "Please enter the account name."
+      },
+      "dbType" : {
+        "helper": "Please select the database type",
+        "removeDefaultNone": true
+      },
+      "dbUri": {
+        "helper": "Please enter database URI"
+      },
+      "dbName": {
+        "helper": "Please enter database name"
+      },
+      "superadminUserName": {
+        "helper": "Please enter superadmin user name"
+      },
+      "superadminInitialPassword": {
+        "helper": "Please enter superadmin initial password"
+      }
+    }
+  }
+}

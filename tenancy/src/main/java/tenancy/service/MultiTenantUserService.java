@@ -35,6 +35,16 @@ public class MultiTenantUserService implements MultiUserService {
     }
 
     @Override
+    public void saveUser(User user) {
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        if (user.isNew()) {
+            user.setAccountId(currentAccountId);
+        }
+        UserService userService = multiService.getTenantUserService(currentAccountId);
+        userService.saveUser(user);
+    }
+
+    @Override
     public List<? extends User> getUsers(String accountId) {
         UserService userService = multiService.getCurrentTenantUserService();
         return userService.getUsers(accountId);

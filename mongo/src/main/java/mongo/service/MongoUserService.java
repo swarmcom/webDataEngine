@@ -39,6 +39,11 @@ public class MongoUserService implements UserService {
     }
 
     @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public List<? extends User> getUsers(String accountId) {
         return userRepository.findByAccountId(accountId);
     }
