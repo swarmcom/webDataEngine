@@ -134,6 +134,14 @@
       },
       accountModified: function() {
          alert("Account modified");
+         customerTemplate = document.querySelector('customer-template');
+         account = this.$.modifyAccountAction.body;
+         accountJson = JSON.parse(account);
+         //account modified, Identification form needs to be regenerated
+         $("#page_Identification").alpaca("destroy");
+         $('#create_identification').off("click");
+         accountTemplate.accountName = accountJson.accountName;
+         accountTemplate.getExisting();
       },
       accountRetrieved: function(request) {
         account = request.detail.response;

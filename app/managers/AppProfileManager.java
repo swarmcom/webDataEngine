@@ -9,6 +9,7 @@ import org.pac4j.play.store.PlayCacheStore;
 import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import play.Logger;
 import play.mvc.Http;
 import security.token.SecurityUsernamePasswordAuthenticationToken;
 
@@ -48,7 +49,8 @@ public class AppProfileManager {
 
     public UserProfile getUserProfile(WebContext context) {
         ProfileManager manager = new ProfileManager(context);
-        return (UserProfile)manager.get(true).get();
+
+        return manager.isAuthenticated() ? (UserProfile)manager.get(true).get() : null;
     }
 
     public UserProfile getUserProfile(Http.Context ctx) {

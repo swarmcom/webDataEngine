@@ -4,6 +4,7 @@ import managers.AppProfileManager;
 import managers.AppTokenManager;
 import org.pac4j.core.profile.UserProfile;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import play.Logger;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -23,6 +24,7 @@ public abstract class Secured extends Security.Authenticator {
     public String getUsername(Http.Context ctx) {
         try {
             Authentication token = retrieveExistingToken();
+
             if (token == null) {
                 token = appTokenManager.applyInitialToken(ctx, createInitialToken(ctx));
             }
