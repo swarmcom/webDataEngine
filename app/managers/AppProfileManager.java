@@ -21,7 +21,7 @@ public class AppProfileManager {
     @Inject
     protected PlayCacheStore dataStore;
 
-    private void saveUserProfile(Http.Context ctx, UserProfile userProfile) {
+    public void saveUserProfile(Http.Context ctx, UserProfile userProfile) {
         if (userProfile == null) {
             return;
         }

@@ -116,7 +116,11 @@ public class AppTokenManager {
     public Authentication createSessionInitialToken(Http.Context context) throws Exception {
         UserProfile profile = profileManager.getUserProfile(context);
         Logger.info("Check session secured " + profile);
+        //If profile found in cache, then user is already authenticated, create the initial token
         if (profile != null) {
+            //reset the session timeout. the default session timeout is 60 seconds.
+            //if rest calls are executed more frequently than 60 seconds, timeout is reset, session active
+            profileManager.saveUserProfile(context, profile);
             return new SessionAuthenticationToken(profile, ClientType.SessionClient);
         }
         return null;
