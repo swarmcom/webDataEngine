@@ -46,12 +46,18 @@
           value: true
         },
         add: {
-          add: Boolean,
+          type: Boolean,
           value: false
+        },
+        key: {
+          type: String,
+          value: ''
         }
       },
 
       handleTap: function() {
+        form = document.querySelector('custom-form');
+        form.key = '';
         this.list = false;
         this.add = true;
       },
@@ -64,15 +70,17 @@
 
       handleClick: function() {
         form = document.querySelector('custom-form');
+        var key = form.key;
+
         accountTemplate = document.querySelector('customer-template');
         if (accountTemplate.selected == -1) {
             accountTemplate.selected = 0;
         }
-        accountName = $(location).attr('hash').replace("#","");
-        accountTemplate.accountName = accountName;
-        if (accountName) {
+        if (key) {
+            accountTemplate.accountName = key;
             accountTemplate.getExisting();
         } else {
+            accountTemplate.accountName = '';
             accountTemplate.generateUI('{}');
         }
         accountTemplate.querySelector('#close').addEventListener('tap', function() {
@@ -99,6 +107,42 @@
 
         this.$.deleteAccountAction.body = JSON.stringify(jsonIds);
         this.$.deleteAccountAction.generateRequest();
+      },
+      handleDeleteOne: function(id) {
+        var jsonIds = {};
+        var ids = [];
+        var jsonId = {};
+        jsonId['id'] = id;
+        ids.push(jsonId);
+        jsonIds['ids'] = ids;
+
+        this.$.deleteAccountAction.body = JSON.stringify(jsonIds);
+        this.$.deleteAccountAction.generateRequest();
+      },
+      handleOp: function() {
+        var table = document.querySelector('custom-table');
+        alert(table.operation);
       }
     });
+
+    document.addEventListener('WebComponentsReady', function() {
+        var form = document.querySelector('custom-form');
+        var table = document.querySelector('custom-table');
+        var listBox = table.querySelector('#operationMenu').querySelector('paper-listbox');
+
+        var paperItem0 = listBox.querySelector('#id0');
+        paperItem0.addEventListener('tap', function() {
+            form.handleTap();
+        });
+        paperItem0.addEventListener('click', function() {
+            accountTemplate = document.querySelector('customer-template');
+            form.key = paperItem0.getAttribute("key");
+            form.handleClick();
+        });
+
+        var paperItem1 = listBox.querySelector('#id1');
+        paperItem1.addEventListener('tap', function() {
+            form.handleDeleteOne(paperItem1.getAttribute("key"));
+        });
+    })
 </script>

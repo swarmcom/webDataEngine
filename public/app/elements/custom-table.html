@@ -3,6 +3,11 @@
 <link rel="import" href="/assets/components/iron-list/iron-list.html">
 <link rel="import" href="/assets/components/iron-list/iron-list.html">
 <link rel="import" href="/assets/components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/assets/components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
+<link rel="import" href="/assets/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/assets/components/paper-item/paper-item.html">
 
 <dom-module id="custom-table">
     <style>
@@ -22,6 +27,7 @@
             padding: 0;
             width: 98%;
         }
+
     </style>
     <template>
         <iron-ajax
@@ -31,8 +37,15 @@
         </iron-ajax>
 
         <vaadin-grid items = "{{data}}" selection-mode="multi" class="content">
-
         </vaadin-grid>
+        <div id="operationMenu">
+          <paper-card animated elevation="3" fit layout vertical>
+              <paper-listbox selected={{operation}}>
+                <paper-item id="id0" value="0" key="">Modify</paper-item>
+                <paper-item id="id1" value="1" key="">Delete</paper-item>
+              </paper-listbox>
+          </paper-card>
+        </div>
     </template>
 </dom-module>
 <script>
@@ -45,11 +58,22 @@
            },
            data: {
              type: Array
+           },
+           menuColumn: {
+             type: Boolean,
+             value: true
+           },
+           operation: {
+             type: Number,
+             value: -1,
+             notify: true
            }
          }
     });
     document.addEventListener('WebComponentsReady', function() {
-      customTable = document.querySelector('custom-table');
+      var customTable = document.querySelector('custom-table');
+      var paperListbox = document.querySelector('paper-listbox');
+      $("#operationMenu").hide();
       columns = JSON.parse(customTable.columns);
       data = customTable.data;
       var grid = grid || document.querySelector('vaadin-grid');
@@ -61,7 +85,33 @@
         grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
       }
       grid.columns[0].hidden = true;
+      if (customTable.menuColumn == true) {
+        grid.addColumn({name: 'operation'}, columns.length);
+        grid.header.getCell(0, columns.length).content='';
+      }
 
+      grid.columns[grid.columns.length - 1].renderer = function(cell) {
+         cell.element.innerHTML = "";
+         var iconButton = document.createElement("paper-icon-button");
+         iconButton.setAttribute("icon", "more-vert");
+         var index = cell.row.index;
+         iconButton.setAttribute("id", "operation" + index);
+         iconButton.addEventListener('tap', function() {
+             var rectangle = iconButton.getBoundingClientRect();
+             customTable.operation = -1;
+             $("#operationMenu").hide();
+             $("#operationMenu").show(500);
+             $("#operationMenu").offset({ top: rectangle.top + 30, left: rectangle.left, right: rectangle.right, bottom: rectangle.bottom });
+             var paperItem0 = document.querySelector("#id0");
+             paperItem0.setAttribute("key",customTable.data[index][1]);
+             var paperItem1 = document.querySelector("#id1");
+             paperItem1.setAttribute("key",customTable.data[index][0]);
+         });
+         cell.element.appendChild(iconButton);
+         $("#operation" + index).click(function(e){
+           e.stopPropagation();
+         });
+      }
       // Re-order the data array on sort-order-changed event
       grid.addEventListener('sort-order-changed', function() {
         var idx = grid.sortOrder[0].column;
@@ -69,6 +119,9 @@
         data.sort(function(a, b) {
           return (a[idx] < b[idx]) ? lesser : -lesser;
         });
+      });
+      $(document).click( function() {
+        $('#operationMenu').hide();
       });
     })
 </script>

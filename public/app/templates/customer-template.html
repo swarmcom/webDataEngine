@@ -108,6 +108,10 @@
           selected: {
               type: Number,
               value: -1
+          },
+          accountName: {
+              type: String,
+              value: ''
           }
       },
       addNew: function(account) {
@@ -126,9 +130,6 @@
          customerTemplate = document.querySelector('customer-template');
          account = this.$.addAccountAction.body;
          accountJson = JSON.parse(account);
-         //account added, Identification form needs to be regenerated
-         $("#page_Identification").alpaca("destroy");
-         $('#create_identification').off("click");
          accountTemplate.accountName = accountJson.accountName;
          accountTemplate.getExisting();
       },
@@ -137,9 +138,6 @@
          customerTemplate = document.querySelector('customer-template');
          account = this.$.modifyAccountAction.body;
          accountJson = JSON.parse(account);
-         //account modified, Identification form needs to be regenerated
-         $("#page_Identification").alpaca("destroy");
-         $('#create_identification').off("click");
          accountTemplate.accountName = accountJson.accountName;
          accountTemplate.getExisting();
       },
@@ -159,6 +157,9 @@
     });
 
     function generateAlpacaForm(page, schemaName, optionsName, data, saveButton) {
+        //account added, Identification form needs to be regenerated
+        $(page).alpaca("destroy");
+        $(saveButton).off("click");
         var schema = "/customer/template/" + schemaName;
         var options = "/customer/template/" + optionsName;
         $(page).alpaca({
