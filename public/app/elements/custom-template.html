@@ -68,8 +68,8 @@
         <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-menu selected="{{selected}}" class="menu">
-                    <template is="dom-repeat" items="{{menu}}">
-                        <paper-item class="menu">{{item}}</paper-item>
+                    <template is="dom-repeat" items="{{pages}}">
+                        <paper-item class="menu">{{item.menuName}}</paper-item>
                     </template>
                 </paper-menu>
             </paper-header-panel>
@@ -102,10 +102,7 @@
       is: 'custom-template',
       properties: {
           menu: {
-              type:Array,
-              value: [
-              'Identification'
-              ]
+              type:Array
           },
           selected: {
               type: Number,
@@ -139,7 +136,6 @@
       },
       getExisting: function() {
          customTemplate = document.querySelector('custom-template');
-         alert('GET URL ' + customTemplate.getUrl);
          this.$.getAction.generateRequest();
       },
       added: function(request) {
