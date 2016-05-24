@@ -53,8 +53,7 @@
        is: "custom-table",
          properties: {
            columns: {
-             type: Array,
-             value: [{ name: 'Bob' }, { name: 'Doug' } ]
+             type: Array
            },
            data: {
              type: Array
@@ -103,7 +102,7 @@
              $("#operationMenu").show(500);
              $("#operationMenu").offset({ top: rectangle.top + 30, left: rectangle.left, right: rectangle.right, bottom: rectangle.bottom });
              var paperItem0 = document.querySelector("#id0");
-             paperItem0.setAttribute("key",customTable.data[index][1]);
+             paperItem0.setAttribute("key",customTable.data[index][0]);
              var paperItem1 = document.querySelector("#id1");
              paperItem1.setAttribute("key",customTable.data[index][0]);
          });

@@ -1,4 +1,4 @@
-<link rel="import" href="/assets/app/templates/customer-template.html">
+<link rel="import" href="/assets/app/elements/custom-template.html">
 <link rel="import" href="/assets/app/elements/custom-table.html">
 <link rel="import" href="/assets/components/iron-icons/iron-icons.html"/>
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
@@ -6,25 +6,25 @@
 <dom-module id="custom-form">
     <style>
         paper-fab.add{
-            position: absolute;
-            bottom: 10px;
-            right: 70px;
-            background-color: green;
+        position: absolute;
+        bottom: 10px;
+        right: 70px;
+        background-color: green;
         }
         paper-fab.delete{
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: green;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: green;
         }
     </style>
     <template>
         <iron-ajax
-                id="deleteAccountAction"
-                url="/api/accounts/delete/ids"
+                id="deleteAction"
+                url="{{deleteIdsUrl}}"
                 method="POST"
                 content-type="application/json"
-                on-response="accountDeleted"
+                on-response="deleted"
                 handle-as="json">
         </iron-ajax>
         <template is="dom-if" if="{{list}}">
@@ -33,7 +33,7 @@
             <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
         </template>
         <template is="dom-if" if="{{add}}">
-            <customer-template></customer-template>
+            <custom-template pages={{pages}}></custom-template>
         </template>
     </template>
 </dom-module>
@@ -52,6 +52,21 @@
         key: {
           type: String,
           value: ''
+        },
+        addUrl: {
+          type: String
+        },
+        modifyUrl: {
+          type: String
+        },
+        getUrl: {
+          type: String
+        },
+        deleteIdsUrl: {
+          type: String
+        },
+        pages: {
+          type: Array
         }
       },
 
@@ -62,7 +77,7 @@
         this.add = true;
       },
 
-      accountDeleted: function() {
+      deleted: function() {
         alert('deleted');
         customTable = document.querySelector('custom-table');
         customTable.querySelector('iron-ajax').generateRequest();
@@ -72,23 +87,25 @@
         form = document.querySelector('custom-form');
         var key = form.key;
 
-        accountTemplate = document.querySelector('customer-template').querySelector('custom-template');
+        customTemplate = document.querySelector('custom-template');
 
-        accountTemplate.addUrl = "/api/accounts/add";
+        customTemplate.addUrl = this.addUrl;
+        customTemplate.modifyUrl = this.modifyUrl;
+        customTemplate.getUrl = this.getUrl;
 
-        if (accountTemplate.selected == -1) {
-            accountTemplate.selected = 0;
+        if (customTemplate.selected == -1) {
+            customTemplate.selected = 0;
         }
         if (key) {
-            accountTemplate.name = key;
-            accountTemplate.modifyUrl = "/api/accounts/modify/" + key;
-            accountTemplate.getUrl = "/api/accounts/get/" + key;
-            accountTemplate.getExisting();
+            customTemplate.id = key;
+            customTemplate.modifyUrl = this.modifyUrl + key;
+            customTemplate.getUrl = this.getUrl + key;
+            customTemplate.getExisting();
         } else {
-            accountTemplate.name = '';
-            accountTemplate.generateUI('{}');
+            customTemplate.id = '';
+            customTemplate.generateUI('{}');
         }
-        accountTemplate.querySelector('#close').addEventListener('tap', function() {
+        customTemplate.querySelector('#close').addEventListener('tap', function() {
             form.list = true;
             form.add = false;
             customTable = document.querySelector('custom-table');
@@ -110,8 +127,8 @@
         }
         jsonIds['ids'] = ids;
 
-        this.$.deleteAccountAction.body = JSON.stringify(jsonIds);
-        this.$.deleteAccountAction.generateRequest();
+        this.$.deleteAction.body = JSON.stringify(jsonIds);
+        this.$.deleteAction.generateRequest();
       },
       handleDeleteOne: function(id) {
         var jsonIds = {};
@@ -121,12 +138,8 @@
         ids.push(jsonId);
         jsonIds['ids'] = ids;
 
-        this.$.deleteAccountAction.body = JSON.stringify(jsonIds);
-        this.$.deleteAccountAction.generateRequest();
-      },
-      handleOp: function() {
-        var table = document.querySelector('custom-table');
-        alert(table.operation);
+        this.$.deleteAction.body = JSON.stringify(jsonIds);
+        this.$.deleteAction.generateRequest();
       }
     });
 
@@ -140,7 +153,7 @@
             form.handleTap();
         });
         paperItem0.addEventListener('click', function() {
-            accountTemplate = document.querySelector('customer-template').querySelector('custom-template');
+            customTemplate = document.querySelector('custom-template');
             form.key = paperItem0.getAttribute("key");
             form.handleClick();
         });

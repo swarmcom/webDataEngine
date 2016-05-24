@@ -108,7 +108,7 @@
               type: Number,
               value: -1
           },
-          name: {
+          id: {
               type: String,
               value: ''
           },
@@ -140,10 +140,14 @@
       },
       added: function(request) {
          alert("Item added");
+         //make sure that a new apply will trigger a modify action
+         itemJson = request.detail.response;
+         this.id = itemJson.id;
+         this.modifyUrl = this.modifyUrl + this.id;
+         this.getUrl = this.getUrl + this.id;
       },
       modified: function() {
          alert("Item modified");
-         customTemplate = document.querySelector('custom-template');
       },
       retrieved: function(request) {
         itemJson = request.detail.response;
@@ -183,7 +187,8 @@
 
     function save(data) {
         customTemplate = document.querySelector('custom-template');
-        if(customTemplate.name) {
+        if(customTemplate.id) {
+            data.id = customTemplate.id;
             customTemplate.modifyExisting(data)
         } else {
             customTemplate.addNew(data);

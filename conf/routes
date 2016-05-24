@@ -3,42 +3,44 @@
 # ~~~~
 
 # Home page
-GET     /                                  controllers.Assets.at(path="/public", file="app/index.html")
-GET     /alpaca                            controllers.Assets.at(path="/public", file="app/index2.html")
-GET     /form                              controllers.Application.form()
-GET     /main/oidc                         controllers.Application.oidcIndex()
-GET     /callback                          controllers.Application.callback()
-POST    /callback                          controllers.Application.callback()
-GET     /logout                            org.pac4j.play.ApplicationLogoutController.logout()
+GET     /                                            controllers.Assets.at(path="/public", file="app/index.html")
+GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/index2.html")
+GET     /form                                        controllers.Application.form()
+GET     /main/oidc                                   controllers.Application.oidcIndex()
+GET     /callback                                    controllers.Application.callback()
+POST    /callback                                    controllers.Application.callback()
+GET     /logout                                      org.pac4j.play.ApplicationLogoutController.logout()
 
-POST    /login                             controllers.Application.login()
+POST    /login                                       controllers.Application.login()
 
 # Assets
-GET     /users                             controllers.Application.asset(file="/public/app/users.html")
-GET     /phones/polycom                    controllers.Application.asset(file="/public/app/polycom.html")
-GET     /main/config                       controllers.Application.asset(file="/public/app/main.html")
+GET     /users                                       controllers.Application.asset(file="/public/app/users.html")
+GET     /phones/polycom                              controllers.Application.asset(file="/public/app/polycom.html")
+GET     /main/config                                 controllers.Application.asset(file="/public/app/main.html")
 
 # Templates
-GET     /phones/polycom/template/:key      controllers.Phones.polycomTemplate(key: String)
-GET     /customer/template/:key            controllers.Accounts.accountTemplate(key: String)
+GET     /phones/polycom/template/:key                controllers.Phones.polycomTemplate(key: String)
+GET     /customer/template/:key                      controllers.Accounts.accountTemplate(key: String)
 
 # REST apis
-GET     /api/users/list                    controllers.Users.list
-POST    /api/users/add                     controllers.Users.add
+GET     /api/users/list                              controllers.Users.list
+POST    /api/users/add                               controllers.Users.add
 
-GET     /api/accounts/list                 controllers.Accounts.list
-GET     /api/accounts/list/array           controllers.Accounts.listArray
-POST    /api/accounts/add                  controllers.Accounts.add
-POST    /api/accounts/modify/:accountName  controllers.Accounts.modify(accountName: String)
-GET     /api/accounts/get/:accountName     controllers.Accounts.get(accountName: String)
-DELETE  /api/accounts/delete/:accountName  controllers.Accounts.delete(accountName: String)
-POST    /api/accounts/delete/ids           controllers.Accounts.deleteAccounts
+GET     /api/accounts/list                           controllers.Accounts.list
+GET     /api/accounts/list/array                     controllers.Accounts.listArray
+POST    /api/accounts/add                            controllers.Accounts.add
+POST    /api/accounts/modify/name/:accountName       controllers.Accounts.modifyByName(accountName: String)
+GET     /api/accounts/get/name/:accountName          controllers.Accounts.getByName(accountName: String)
+POST    /api/accounts/modify/id/:accountId           controllers.Accounts.modifyById(accountId: String)
+GET     /api/accounts/get/id/:accountId              controllers.Accounts.getById(accountId: String)
+DELETE  /api/accounts/delete/:accountName            controllers.Accounts.delete(accountName: String)
+POST    /api/accounts/delete/ids                     controllers.Accounts.deleteAccounts
 
-POST    /api/phones/add                    controllers.Phones.add
-GET     /api/phones/get/:serialNumber      controllers.Phones.get(serialNumber: String)
-POST    /api/phones/modify/:serialNumber   controllers.Phones.modify(serialNumber: String)
+POST    /api/phones/add                              controllers.Phones.add
+GET     /api/phones/get/:serialNumber                controllers.Phones.get(serialNumber: String)
+POST    /api/phones/modify/:serialNumber             controllers.Phones.modify(serialNumber: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                      controllers.Assets.versioned(path="/public", file: Asset)
-GET     /*file                             controllers.Assets.at(path="/public", file)
+GET     /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET     /*file                                       controllers.Assets.at(path="/public", file)
 

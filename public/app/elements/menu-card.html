@@ -80,7 +80,7 @@
                     <div id="content-cards" class="container" hidden$="{{noCards}}">
                         <template is="dom-repeat" items="{{menu}}">
                             <custompaper-card
-                                    id="{{item.id}}"
+                                    id="{{item.cardId}}"
                                     elevation="{{elevation}}"
                                     width="{{item.width}}"
                                     height="{{item.height}}"
@@ -97,7 +97,7 @@
                             <div id="content-item" class="container">
                                 <div class="row">
                                     <template is="dom-if" if="{{item.columns}}">
-                                        <custom-form url="{{item.url}}" columns="{{item.columns}}"></custom-form>
+                                        <custom-form id="{{item.formId}}" url="{{item.url}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
                                     </template>
                                 </div>
                             </div>
@@ -138,26 +138,38 @@
     });
 
     document.addEventListener('WebComponentsReady', function() {
-        menuCard = document.querySelector('menu-card');
-        menu = menuCard.menu;
+        var menuCard = document.querySelector('menu-card');
+        var menu = menuCard.menu;
+        var i;
 
-        var customCard;
+        function bindCardTap(i) {
+            var customCard = document.getElementById(menu[i].cardId);
+            var paperIconButton = customCard.querySelector('paper-icon-button');
+            paperIconButton.addEventListener('tap', function() {
+                menuCard.noCards = true;
+                menuCard.selected = i;
+            });
+        }
 
-        customCard = document.getElementById(menu[0].id);
-        customCard.querySelector('paper-icon-button').addEventListener('tap', function() {
-            menuCard.noCards = true;
-            menuCard.selected = 0;
-        });
-
-        customCard = document.getElementById(menu[1].id);
-        customCard.querySelector('paper-icon-button').addEventListener('tap', function() {
-            menuCard.noCards = true;
-            menuCard.selected = 1;
-        });
+        for (i=0; i < menu.length; i++) {
+            bindCardTap(i);
+        }
 
         document.getElementById("home").addEventListener('click', function() {
            menuCard.goHome();
         });
+
+
+        for (i=0; i < menu.length; i++) {
+            var item = menu[i];
+            var customForm = document.getElementById(item.formId);
+            if(customForm) {
+                customForm.deleteIdsUrl = item.deleteIdsUrl;
+                customForm.addUrl = item.addUrl;
+                customForm.modifyUrl = item.modifyUrl;
+                customForm.getUrl = item.getUrl;
+            }
+        }
     })
     </script>
 

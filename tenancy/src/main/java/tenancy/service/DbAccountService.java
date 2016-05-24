@@ -58,8 +58,13 @@ public class DbAccountService implements AccountService {
     }
 
     @Override
-    public void createAccount(String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword) {
-        accountRepository.save(new Account(accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword));
+    public Account getAccountById(String accountId) {
+        return accountRepository.findById(accountId);
+    }
+
+    @Override
+    public Account createAccount(String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword) {
+        Account savedAccount = accountRepository.save(new Account(accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword));
         refreshTenantSpringContexts();
         String adminRole = "ROLE_ADMIN";
         String userRole = "ROLE_USER";
@@ -73,11 +78,12 @@ public class DbAccountService implements AccountService {
         }
         userService.createUser(accountName, superadminUserName,
                 EncoderUtil.digestEncodePassword(superadminUserName, "testRealm", superadminPassword), new ArrayList<String>(Arrays.asList(adminRole, userRole)));
+        return savedAccount;
     }
 
     @Override
-    public void saveAccount(Account account) {
-        accountRepository.save(account);
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
     }
 
     @Override

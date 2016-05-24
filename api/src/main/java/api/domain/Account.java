@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 import java.util.Map;
 
-public class Account {
+public class Account extends BeanDomain<Account> {
     protected String id;
     protected String accountName;
     protected DbType dbType;

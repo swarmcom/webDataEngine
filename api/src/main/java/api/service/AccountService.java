@@ -9,9 +9,11 @@ public interface AccountService {
 
     Account getAccount (String accountName);
 
-    void createAccount (String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword);
+    Account getAccountById (String accountId);
 
-    void saveAccount(Account account);
+    Account createAccount (String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword);
+
+    Account saveAccount(Account account);
 
     Long deleteAccount(String accountName);
 

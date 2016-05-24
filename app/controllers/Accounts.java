@@ -30,7 +30,7 @@ import java.util.Map;
 @DigestAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-public class Accounts extends Controller {
+public class Accounts extends BaseController {
     @Inject
     AccountService accountService;
 
@@ -39,24 +39,27 @@ public class Accounts extends Controller {
         Http.RequestBody body = request().body();
         JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
+        Account savedAccount = null;
         try {
             Account account = objectMapper.readValue(node.toString(), Account.class);
-            accountService.createAccount(account.getAccountName(), account.getDbType().toString(),
+            savedAccount = accountService.createAccount(account.getAccountName(), account.getDbType().toString(),
                     account.getDbUri(), account.getDbName(), account.getSuperadminUserName(), account.getSuperadminInitialPassword());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ok("created");
+
+        return convert(savedAccount);
     }
 
-    public Result get(String accountName) {
+    public Result getByName(String accountName) {
         Account account = accountService.getAccount(accountName);
-        if (account != null) {
-            JsonNode node = Json.toJson(account);
-            return ok(node.toString());
-        } else {
-            return ok("");
-        }
+        return convert(account);
+    }
+
+    public Result getById(String accountId) {
+        Account account = accountService.getAccountById(accountId);
+        return convert(account);
     }
 
     public Result delete(String accountName) {
@@ -86,20 +89,19 @@ public class Accounts extends Controller {
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public Result modify(String accountName) {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String dataToUpdate = node.toString();
-            Account existingAccount = accountService.getAccount(accountName);
-            Account account = objectMapper.readValue(dataToUpdate, Account.class);
-            existingAccount.merge(account);
-            accountService.saveAccount(account);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ok("created");
+    public Result modifyByName(String accountName) {
+        Account existingAccount = accountService.getAccount(accountName);
+        Account account = (Account)merge(existingAccount);
+        Account modifiedAccount = (account != null ? modifiedAccount = accountService.saveAccount(account) : null);
+        return convert(modifiedAccount);
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result modifyById(String accountId) {
+        Account existingAccount = accountService.getAccountById(accountId);
+        Account account = (Account)merge(existingAccount);
+        Account modifiedAccount = (account != null ? modifiedAccount = accountService.saveAccount(account) : null);
+        return convert(modifiedAccount);
     }
 
     public Result list() {
