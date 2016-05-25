@@ -25,13 +25,11 @@ public class SecurityDaoUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userService.getUser(TokenUtil.getCurrentAccountId(), userName);
-        Logger.info("MIRCEA user " + user);
         if (user != null) {
             List<GrantedAuthority> rolesList = new ArrayList<GrantedAuthority>();
             for (String role : user.getRoles()) {
                 rolesList.add(new SimpleGrantedAuthority(role));
             }
-            Logger.info("MIRCEA RET " + user);
             return new SecurityUserDetails(user.getUserName(), user.getPassword(), rolesList);
         }
         return null;

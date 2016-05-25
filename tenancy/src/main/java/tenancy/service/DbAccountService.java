@@ -93,8 +93,6 @@ public class DbAccountService implements AccountService {
 
     @Override
     public Long deleteAccounts(Collection<String> accountIds) {
-        List<Account> accounts = accountRepository.findByIdIn(accountIds);
-        Logger.info("MIRCEA AAAAAAAAAAAAAA " + accounts.toString());
         return accountRepository.deleteByIdIn(accountIds);
     }
 

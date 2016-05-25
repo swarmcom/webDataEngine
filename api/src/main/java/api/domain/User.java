@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends BeanDomain<User>{
 
     protected String id;
 
@@ -18,9 +18,6 @@ public class User {
     protected List<String> roles = new ArrayList<String>();
 
     public User() {
-        this.userName = "Anonymous";
-        this.password = "123";
-        this.accountId = "AnonymousTenant";
     }
 
     public User(String userName, String password) {
@@ -84,6 +81,29 @@ public class User {
     public void setRoles(List<String> roles) {
         if (roles != null) {
             this.roles.addAll(roles);
+        }
+    }
+
+    @Override
+    public void merge(User user) {
+        String accountId = user.getAccountId();
+        String userName = user.getUserName();
+        String userPassword = user.getPassword();
+        List<String> roles = user.getRoles();
+
+        if (accountId != null) {
+            setAccountId(accountId);
+        }
+
+        if (userName != null) {
+            setUserName(userName);
+        }
+        if (userPassword != null) {
+            setPassword(userPassword);
+        }
+
+        if (roles != null) {
+            setRoles(roles);
         }
     }
 }

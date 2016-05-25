@@ -69,39 +69,33 @@ public class Accounts extends BaseController {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result deleteAccounts() {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        String dataToDelete = node.toString();
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            HashMap values = objectMapper.readValue(dataToDelete, HashMap.class);
-            Logger.info(values.get("ids").getClass().getName());
-            List<Map<String, String>> ids = (List)values.get("ids");
-            List<String> idsArray = new ArrayList<String>();
-            for (Map id : ids) {
-                idsArray.add((String)id.get("id"));
-            }
-            Long result = accountService.deleteAccounts(idsArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ok("deleted");
+        List<String> idsArray = convertIds();
+        Long result = accountService.deleteAccounts(idsArray);
+        return ok(String.valueOf(result));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result modifyByName(String accountName) {
         Account existingAccount = accountService.getAccount(accountName);
-        Account account = (Account)merge(existingAccount);
-        Account modifiedAccount = (account != null ? modifiedAccount = accountService.saveAccount(account) : null);
-        return convert(modifiedAccount);
+        try {
+            merge(existingAccount);
+            Account modifiedAccount = (existingAccount != null ? modifiedAccount = accountService.saveAccount(existingAccount) : null);
+            return convert(modifiedAccount);
+        } catch (Exception ex) {
+            return convert(null);
+        }
     }
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result modifyById(String accountId) {
         Account existingAccount = accountService.getAccountById(accountId);
-        Account account = (Account)merge(existingAccount);
-        Account modifiedAccount = (account != null ? modifiedAccount = accountService.saveAccount(account) : null);
-        return convert(modifiedAccount);
+        try {
+            merge(existingAccount);
+            Account modifiedAccount = (existingAccount != null ? modifiedAccount = accountService.saveAccount(existingAccount) : null);
+            return convert(modifiedAccount);
+        } catch (Exception ex) {
+            return convert(null);
+        }
     }
 
     public Result list() {
@@ -127,17 +121,6 @@ public class Accounts extends BaseController {
     }
 
     public Result accountTemplate(String key) {
-        return ok(getAccountTemplate(key));
-    }
-
-    private String getAccountTemplate(String key) {
-        String schema = StringUtils.EMPTY;
-        try {
-            JsonNode node = new ObjectMapper().readTree(Play.application().getFile("/public/app/templates/customer-template.json"));
-            schema = node.get(key).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return schema;
+        return ok(getTemplate(key,"/public/app/templates/account-template.json"));
     }
 }

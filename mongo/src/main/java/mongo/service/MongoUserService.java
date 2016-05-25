@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import api.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -34,17 +35,33 @@ public class MongoUserService implements UserService {
     }
 
     @Override
-    public void createUser(String accountId, String userName, String password, List<String> roles) {
-        userRepository.save(new User(accountId, userName, password, roles));
+    public User createUser(String accountId, String userName, String password, List<String> roles) {
+        return userRepository.save(new User(accountId, userName, password, roles));
     }
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override
     public List<? extends User> getUsers(String accountId) {
         return userRepository.findByAccountId(accountId);
     }
+
+    @Override
+    public User getUserById(String accountId, String userId) {
+        return userRepository.findByAccountIdAndId(accountId, userId);
+    }
+
+    @Override
+    public Long deleteUser(String accountId, String userName) {
+        return userRepository.deleteByAccountIdAndUserName(accountId, userName);
+    }
+
+    @Override
+    public Long deleteUsers(String accountId, Collection<String> userIds) {
+        return userRepository.deleteByAccountIdAndIdIn(accountId, userIds);
+    }
+
 }

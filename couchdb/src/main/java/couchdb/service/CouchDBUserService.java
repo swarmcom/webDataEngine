@@ -7,6 +7,7 @@ import couchdb.domain.CouchDBUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -21,17 +22,36 @@ public class CouchDBUserService implements UserService {
     }
 
     @Override
-    public void createUser(String accountId, String userName, String password, List<String> roles) {
+    public User createUser(String accountId, String userName, String password, List<String> roles) {
         userRepository.create(new CouchDBUser(accountId, userName, password, roles));
+        //TODO return saved user
+        return null;
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         userRepository.save((CouchDBUser)user);
+        //TODO return saved user
+        return null;
     }
 
     @Override
     public List<? extends User> getUsers(String accountId) {
         return userRepository.getAllUsers(accountId);
+    }
+
+    @Override
+    public User getUserById(String accountId, String userId) {
+        return null;
+    }
+
+    @Override
+    public Long deleteUser(String accountId, String userName) {
+        return null;
+    }
+
+    @Override
+    public Long deleteUsers(String accountId, Collection<String> userIds) {
+        return null;
     }
 }

@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <title>Main</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
-    <script src="../components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="/assets/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/assets/app/elements/menu-card.html">
 
-    <link rel="import" href="app/userService.html">
+    <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/assets/components/alpaca/dist/alpaca/bootstrap/alpaca.min.css">
+
+    <script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/components/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="/assets/components/alpaca/dist/alpaca/bootstrap/alpaca.min.js"></script>
+
+    <style type="text/css">
+
+    </style>
 </head>
 
 <body>
-<user-service id="userService"></user-service>
+
+<menu-card heading="Users Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
+           menu='[{"cardId":"User", "formId":"formUser","title":"Users" , "icon":"supervisor-account", "description":"Add, rename and manage users",
+           "width":"150", "height":"150", "url":"/api/users/list/array", "addUrl":"/api/users/add", "getUrl":"/api/users/get/id/", "modifyUrl":"/api/users/modify/id/",
+           "deleteIdsUrl":"/api/users/delete/ids",
+           "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"User Name\"},{\"name\":\"Roles\"}]",
+           "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"}]}
+           ]'></menu-card>
 </body>
 </html>

@@ -1,0 +1,35 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "title": "Identification",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "userName": {
+        "type": "string",
+        "title": "User name"
+      },
+      "password": {
+        "type": "string",
+        "format": "password",
+        "title": "Password"
+      }
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "fields": {
+      "id": {
+        "type": "hidden"
+      },
+      "userName" : {
+        "helper": "Please enter the user name."
+      },
+      "password": {
+        "helper": "Please enter user password"
+      }
+    }
+  }
+}

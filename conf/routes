@@ -21,10 +21,18 @@ GET     /main/config                                 controllers.Application.ass
 # Templates
 GET     /phones/polycom/template/:key                controllers.Phones.polycomTemplate(key: String)
 GET     /customer/template/:key                      controllers.Accounts.accountTemplate(key: String)
+GET     /user/template/:key                          controllers.Users.userTemplate(key: String)
 
 # REST apis
 GET     /api/users/list                              controllers.Users.list
+GET     /api/users/list/array                        controllers.Users.listArray
 POST    /api/users/add                               controllers.Users.add
+POST    /api/users/modify/name/:userName             controllers.Users.modifyByName(userName: String)
+GET     /api/users/get/name/:userName                controllers.Users.getByName(userName: String)
+POST    /api/users/modify/id/:userId                 controllers.Users.modifyById(userId: String)
+GET     /api/users/get/id/:userId                    controllers.Users.getById(userId: String)
+DELETE  /api/users/delete/:userName                  controllers.Users.delete(userName: String)
+POST    /api/users/delete/ids                        controllers.Users.deleteUsers
 
 GET     /api/accounts/list                           controllers.Accounts.list
 GET     /api/accounts/list/array                     controllers.Accounts.listArray
