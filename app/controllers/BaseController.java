@@ -26,6 +26,7 @@ public class BaseController extends Controller {
     protected Result convert(Object obj) {
         if (obj != null) {
             JsonNode node = Json.toJson(obj);
+            Logger.info("MIRCEA " + node.toString());
             return ok(node.toString());
         } else {
             return internalServerError();

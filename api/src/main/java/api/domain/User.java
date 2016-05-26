@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class User extends BeanDomain<User>{
 
@@ -15,19 +17,12 @@ public class User extends BeanDomain<User>{
 
     protected String accountId;
 
-    protected List<String> roles = new ArrayList<String>();
+    protected Set<String> roles = new TreeSet<String>();
 
     public User() {
     }
 
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-        this.roles.add("ROLE_USER");
-        this.accountId = "AnonymousTenant";
-    }
-
-    public User(String accountId, String userName, String password, List<String> roles) {
+    public User(String accountId, String userName, String password, Set<String> roles) {
         this.accountId = accountId;
         this.userName = userName;
         this.password = password;
@@ -58,7 +53,7 @@ public class User extends BeanDomain<User>{
         return password;
     }
 
-    public List<String> getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 
@@ -78,8 +73,9 @@ public class User extends BeanDomain<User>{
         this.accountId = accountId;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(Set<String> roles) {
         if (roles != null) {
+            this.roles.clear();
             this.roles.addAll(roles);
         }
     }
@@ -89,7 +85,7 @@ public class User extends BeanDomain<User>{
         String accountId = user.getAccountId();
         String userName = user.getUserName();
         String userPassword = user.getPassword();
-        List<String> roles = user.getRoles();
+        Set<String> roles = user.getRoles();
 
         if (accountId != null) {
             setAccountId(accountId);

@@ -68,6 +68,7 @@ public class DbAccountService implements AccountService {
         refreshTenantSpringContexts();
         String adminRole = "ROLE_ADMIN";
         String userRole = "ROLE_USER";
+        String superadminRole = "ROLE_SUPERADMIN";
         Role existingRole = roleService.getRole(accountName, adminRole);
         if (existingRole == null) {
             roleService.createRole(accountName, adminRole);
@@ -76,8 +77,12 @@ public class DbAccountService implements AccountService {
         if (existingRole == null) {
             roleService.createRole(accountName, userRole);
         }
+        existingRole = roleService.getRole(accountName, superadminRole);
+        if (existingRole == null) {
+            roleService.createRole(accountName, superadminRole);
+        }
         userService.createUser(accountName, superadminUserName,
-                EncoderUtil.digestEncodePassword(superadminUserName, "testRealm", superadminPassword), new ArrayList<String>(Arrays.asList(adminRole, userRole)));
+                passwordEncoder.encode(superadminPassword), new TreeSet<String>(Arrays.asList(adminRole, userRole, superadminRole)));
         return savedAccount;
     }
 

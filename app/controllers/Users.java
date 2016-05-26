@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
@@ -21,10 +20,7 @@ import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @With(AuthenticationAction.class)
@@ -87,6 +83,7 @@ public class Users extends BaseController {
         User existingUser = userService.getUser(userName);
         try {
             merge(existingUser);
+            existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
             User modifiedUser = (existingUser != null ? modifiedUser = userService.saveUser(existingUser) : null);
             return convert(modifiedUser);
         } catch(Exception ex) {
@@ -99,6 +96,7 @@ public class Users extends BaseController {
         User existingUser = userService.getUserById(userId);
         try {
             merge(existingUser);
+            existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
             User modifiedUser = (existingUser != null ? modifiedUser = userService.saveUser(existingUser) : null);
             return convert(modifiedUser);
         } catch (Exception ex) {

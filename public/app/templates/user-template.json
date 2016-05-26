@@ -15,6 +15,9 @@
         "type": "string",
         "format": "password",
         "title": "Password"
+      },
+      "roles": {
+        "enum": ["ROLE_ADMIN","ROLE_SUPERADMIN", "ROLE_USER"]
       }
     }
   },
@@ -29,6 +32,14 @@
       },
       "password": {
         "helper": "Please enter user password"
+      },
+      "roles": {
+        "label":"User Role",
+        "optionLabels": ["Admin", "Superadmin", "User"],
+        "helper": "Please select user role(s)",
+        "multiple": true,
+        "type": "select",
+        "removeDefaultNone": true
       }
     }
   }

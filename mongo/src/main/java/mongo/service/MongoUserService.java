@@ -13,6 +13,7 @@ import api.service.UserService;
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class MongoUserService implements UserService {
@@ -35,7 +36,7 @@ public class MongoUserService implements UserService {
     }
 
     @Override
-    public User createUser(String accountId, String userName, String password, List<String> roles) {
+    public User createUser(String accountId, String userName, String password, Set<String> roles) {
         return userRepository.save(new User(accountId, userName, password, roles));
     }
 

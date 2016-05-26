@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,11 +19,7 @@ public class CouchDBUser extends User {
         super();
     }
 
-    public CouchDBUser(String userName, String password) {
-        super(userName, password);
-    }
-
-    public CouchDBUser(String accountId, String userName, String password, List<String> roles) {
+    public CouchDBUser(String accountId, String userName, String password, Set<String> roles) {
         super(accountId, userName, password, roles);
     }
 

@@ -11,6 +11,8 @@ import security.util.TokenUtil;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Component
 public class MultiTenantUserService implements MultiUserService {
@@ -24,7 +26,7 @@ public class MultiTenantUserService implements MultiUserService {
     }
 
     @Override
-    public User createUser(String userName, String password, List<String> roles) {
+    public User createUser(String userName, String password, Set<String> roles) {
         String currentAccountId = TokenUtil.getCurrentAccountId();
         return createUser(currentAccountId, userName, password, roles);
     }
@@ -60,7 +62,7 @@ public class MultiTenantUserService implements MultiUserService {
     }
 
     @Override
-    public User createUser(String tenantId, String userName, String password, List<String> roles) {
+    public User createUser(String tenantId, String userName, String password, Set<String> roles) {
         UserService userService = multiService.getTenantUserService(tenantId);
         return userService.createUser(tenantId, userName, password, roles);
     }

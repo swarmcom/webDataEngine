@@ -1,34 +1,45 @@
-<link rel="import" href="../components/polymer/polymer.html">
-<link rel="import" href="../components/paper-button/paper-button.html">
-<link rel="import" href="../components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/polymer/polymer.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/paper-card/paper-card.html">
 <style>
     paper-input {
-    color:#000000;
-    text-align:left;
+        color:#000000;
+        text-align:left;
     }
-    .centered {
-    display:block;
-    text-align:center;
-    width:100%;
-    }
+
     paper-button.colored {
-    color: black;
-    background: lightblue;
+        color: black;
+        background: lightgreen;
+    }
+
+    paper-card.centered {
+        position:absolute;
+        top: 30%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -100px;
+        width:300px;
+        height:300px;
     }
 </style>
 <dom-module id="login-form">
 
     <template>
         <form is="iron-form" id="form" method="post" action="/login">
-          <paper-input name="accountid" label="Account Id">
-          </paper-input>
-          <paper-input name="username" label="Username">
-          </paper-input>
-          <paper-input name="password" type="password" label="Password">
-          </paper-input>
-          <div class="centered">
-            <paper-button id="login" on-click="doSend" raisedButton class="colored" label="Login">Login</paper-button>
-          </div>
+            <paper-card animated elevation="3" class="centered" fit layout vertical>
+                <div class="card-content">
+                    <paper-input name="accountid" label="Account Id">
+                    </paper-input>
+                    <paper-input name="username" label="Username">
+                    </paper-input>
+                    <paper-input name="password" type="password" label="Password">
+                    </paper-input>
+                </div>
+                <div class="card-actions">
+                  <paper-button id="login" on-click="doSend" raisedButton class="colored" label="Login">Login</paper-button>
+                </div>
+            </paper-card>
         </form>
     </template>
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class CouchDBUserService implements UserService {
@@ -22,7 +23,7 @@ public class CouchDBUserService implements UserService {
     }
 
     @Override
-    public User createUser(String accountId, String userName, String password, List<String> roles) {
+    public User createUser(String accountId, String userName, String password, Set<String> roles) {
         userRepository.create(new CouchDBUser(accountId, userName, password, roles));
         //TODO return saved user
         return null;
