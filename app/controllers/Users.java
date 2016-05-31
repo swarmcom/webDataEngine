@@ -43,17 +43,15 @@ public class Users extends BaseController {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
-        RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        ObjectMapper objectMapper = new ObjectMapper();
-        User savedUser = null;
+        User userToAdd = new User();
         try {
-            User user = objectMapper.readValue(node.toString(), User.class);
-            savedUser = userService.createUser(user.getUserName(), passwordEncoder.encode(user.getPassword()), user.getRoles());
-        } catch (IOException e) {
-            e.printStackTrace();
+            merge(userToAdd);
+            userToAdd.setPassword(userToAdd.getPassword());
+            User savedUser = userService.saveUser(userToAdd);
+            return convert(savedUser);
+        } catch (Exception e) {
+            return convert(null);
         }
-        return convert(savedUser);
     }
 
     public Result getByName(String userName) {

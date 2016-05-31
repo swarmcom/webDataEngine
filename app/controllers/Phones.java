@@ -33,18 +33,16 @@ public class Phones extends BaseController {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Phone phoneWithDefaults = null;
+
+        Phone phoneToAdd = new Phone();
         try {
-            Phone phone = objectMapper.readValue(node.toString(), Phone.class);
-            phoneWithDefaults = objectMapper.readerForUpdating(phone).readValue(getPolycomDefaultsJSON());
-            phoneService.savePhone(phoneWithDefaults);
-        } catch (IOException e) {
-            e.printStackTrace();
+            mergeDefaults(phoneToAdd, getPolycomDefaultsJSON());
+            merge(phoneToAdd);
+            Phone savedPhone = phoneService.savePhone(phoneToAdd);
+            return convert(savedPhone);
+        } catch (Exception e) {
+            return convert(null);
         }
-        return convert(phoneWithDefaults);
     }
 
     public Result getById(String userId) {
@@ -120,5 +118,10 @@ public class Phones extends BaseController {
 
     private String getPolycomDefaultsJSON() {
         return getTemplate("settings_defaults", "/public/app/templates/devices/polycom/polycomTemplate.json");
+    }
+
+    @Override
+    public Result getDefaults() {
+        return polycomTemplate("settings_defaults");
     }
 }

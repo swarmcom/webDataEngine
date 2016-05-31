@@ -31,6 +31,7 @@ POST    /api/users/modify/name/:userName             controllers.Users.modifyByN
 GET     /api/users/get/name/:userName                controllers.Users.getByName(userName: String)
 POST    /api/users/modify/id/:userId                 controllers.Users.modifyById(userId: String)
 GET     /api/users/get/id/:userId                    controllers.Users.getById(userId: String)
+GET     /api/users/get/defaults                      controllers.Users.getDefaults
 DELETE  /api/users/delete/:userName                  controllers.Users.delete(userName: String)
 POST    /api/users/delete/ids                        controllers.Users.deleteUsers
 
@@ -51,6 +52,7 @@ POST    /api/phones/modify/serial/:serialNumber      controllers.Phones.modifyBy
 GET     /api/phones/get/serial/:serialNumber         controllers.Phones.getBySerialNumber(serialNumber: String)
 POST    /api/phones/modify/id/:phoneId               controllers.Phones.modifyById(phoneId: String)
 GET     /api/phones/get/id/:phoneId                  controllers.Phones.getById(phoneId: String)
+GET     /api/phones/get/defaults                     controllers.Phones.getDefaults
 DELETE  /api/phones/delete/:accountName              controllers.Phones.delete(accountName: String)
 POST    /api/phones/delete/ids                       controllers.Phones.deletePhones
 

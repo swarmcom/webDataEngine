@@ -20,6 +20,11 @@
     </style>
     <template>
         <iron-ajax
+                url="{{defaultsUrl}}"
+                last-response="{{defaultData}}"
+                auto>
+        </iron-ajax>
+        <iron-ajax
                 id="deleteAction"
                 url="{{deleteIdsUrl}}"
                 method="POST"
@@ -99,7 +104,7 @@
             customTemplate.getExisting();
         } else {
             customTemplate.id = '';
-            customTemplate.generateUI('{}');
+            customTemplate.generateUI(JSON.stringify(this.defaultData));
         }
         var customForm = this;
         var customTable = customForm.querySelector('custom-table');

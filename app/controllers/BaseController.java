@@ -26,7 +26,6 @@ public class BaseController extends Controller {
     protected Result convert(Object obj) {
         if (obj != null) {
             JsonNode node = Json.toJson(obj);
-            Logger.info("MIRCEA " + node.toString());
             return ok(node.toString());
         } else {
             return internalServerError();
@@ -34,12 +33,14 @@ public class BaseController extends Controller {
     }
 
     protected void merge(BeanDomain existingBean) throws Exception {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
-        String dataToUpdate = node.toString();
-        BeanDomain bean = objectMapper.readValue(dataToUpdate, existingBean.getClass());
+        BeanDomain bean = objectMapper.readValue(getDataToUpdateJSON(), existingBean.getClass());
         existingBean.merge(bean);
+    }
+
+    protected void mergeDefaults(BeanDomain bean, String defaults) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.readerForUpdating(bean).readValue(defaults);
     }
 
     protected List<String> convertIds() {
@@ -70,5 +71,15 @@ public class BaseController extends Controller {
             e.printStackTrace();
         }
         return schema;
+    }
+
+    private String getDataToUpdateJSON() {
+        Http.RequestBody body = request().body();
+        JsonNode node = body.asJson();
+        return node.toString();
+    }
+
+    public Result getDefaults() {
+        return ok("{}");
     }
 }
