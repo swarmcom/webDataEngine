@@ -26,11 +26,27 @@
 <body>
 
 <menu-card heading="Users Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
-           menu='[{"cardId":"User", "formId":"formUser","title":"Users" , "icon":"supervisor-account", "description":"Add, rename and manage users",
+           menu='[{"cardId":"User", "formId":"formUser", "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
            "width":"150", "height":"150", "url":"/api/users/list/array", "addUrl":"/api/users/add", "getUrl":"/api/users/get/id/", "modifyUrl":"/api/users/modify/id/",
            "deleteIdsUrl":"/api/users/delete/ids",
            "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"User Name\"},{\"name\":\"Roles\"}]",
-           "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"}]}
+           "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"}]},
+           {"cardId":"Phone", "formId":"formPhone", "tableId":"tablePhone", "operationId":"operationPhone", "title":"Phones", "icon":"perm-device-information", "description":"Add, modify, manage phones",
+           "width":"150", "height":"150", "url":"/api/phones/list/array", "addUrl":"/api/phones/add", "getUrl":"/api/phones/get/id/", "modifyUrl":"/api/phones/modify/id/",
+           "deleteIdsUrl":"/api/phones/delete/ids",
+           "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"Serial Number\"},{\"name\":\"Firmware version\"},{\"name\":\"Lines\"}]",
+           "pages":[{"menuName":"Identification","pageId":"page_IdentificationPhone","schema":"/phones/polycom/template/identification_schema","options":"/phones/polycom/template/identification_options","buttonId":"create_identificationPhone"},
+           {"menuName":"Lines","pageId":"page_Lines","schema":"/phones/polycom/template/lines_schema","options":"/phones/polycom/template/lines_options","buttonId":"create_lines"},
+           {"menuName":"Date Time","pageId":"page_DateTime","schema":"/phones/polycom/template/dateTime_settings_schema","options":"/phones/polycom/template/dateTime_settings_options","buttonId":"create_dateTime"},
+           {"menuName":"User Preferences","pageId":"page_UserPreferences","schema":"/phones/polycom/template/userPreferences_settings_schema","options":"/phones/polycom/template/userPreferences_settings_options","buttonId":"create_userPreferences"},
+           {"menuName":"DTMF","pageId":"page_Dtmf","schema":"/phones/polycom/template/dtmf_settings_schema","options":"/phones/polycom/template/dtmf_settings_options","buttonId":"create_dtmf"},
+           {"menuName":"Sound Effects","pageId":"page_SoundEffects","schema":"/phones/polycom/template/soundEffects_settings_schema","options":"/phones/polycom/template/soundEffects_settings_options","buttonId":"create_soundEffects"},
+           {"menuName":"Voice Codecs","pageId":"page_VoiceCodecs","schema":"/phones/polycom/template/voiceCodecs_settings_schema","options":"/phones/polycom/template/voiceCodecs_settings_options","buttonId":"create_voiceCodecs"},
+           {"menuName":"Video","pageId":"page_Video","schema":"/phones/polycom/template/video_settings_schema","options":"/phones/polycom/template/video_settings_options","buttonId":"create_video"},
+           {"menuName":"Voice Q Monitoring","pageId":"page_VoiceQMonitoring","schema":"/phones/polycom/template/voiceQMonitoring_settings_schema","options":"/phones/polycom/template/voiceQMonitoring_settings_options","buttonId":"create_voiceQMonitoring"},
+           {"menuName":"Quality Of Service","pageId":"page_QualityOfService","schema":"/phones/polycom/template/qualityOfService_settings_schema","options":"/phones/polycom/template/qualityOfService_settings_options","buttonId":"create_qualityOfService"},
+           {"menuName":"Sntp","pageId":"page_Sntp","schema":"/phones/polycom/template/sntp_settings_schema","options":"/phones/polycom/template/sntp_settings_options","buttonId":"create_sntp"},
+           {"menuName":"Rtp","pageId":"page_Rtp","schema":"/phones/polycom/template/rtp_settings_schema","options":"/phones/polycom/template/rtp_settings_options","buttonId":"create_rtp"}]}
            ]'></menu-card>
 </body>
 </html>

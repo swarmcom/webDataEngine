@@ -28,7 +28,7 @@
                 handle-as="json">
         </iron-ajax>
         <template is="dom-if" if="{{list}}">
-            <custom-table url="{{url}}" columns="{{columns}}"></custom-table>
+            <custom-table id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
             <paper-fab icon="add" on-tap="handleTap" on-click="handleClick" class="add"></paper-fab>
             <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
         </template>
@@ -71,23 +71,19 @@
       },
 
       handleTap: function() {
-        form = document.querySelector('custom-form');
-        form.key = '';
+        this.key = '';
         this.list = false;
         this.add = true;
       },
 
       deleted: function() {
         alert('deleted');
-        customTable = document.querySelector('custom-table');
+        customTable = this.querySelector('custom-table');
         customTable.querySelector('iron-ajax').generateRequest();
       },
 
       handleClick: function() {
-        form = document.querySelector('custom-form');
-        var key = form.key;
-
-        customTemplate = document.querySelector('custom-template');
+        customTemplate = this.querySelector('custom-template');
 
         customTemplate.addUrl = this.addUrl;
         customTemplate.modifyUrl = this.modifyUrl;
@@ -96,24 +92,25 @@
         if (customTemplate.selected == -1) {
             customTemplate.selected = 0;
         }
-        if (key) {
-            customTemplate.id = key;
-            customTemplate.modifyUrl = this.modifyUrl + key;
-            customTemplate.getUrl = this.getUrl + key;
+        if (this.key) {
+            customTemplate.id = this.key;
+            customTemplate.modifyUrl = this.modifyUrl + this.key;
+            customTemplate.getUrl = this.getUrl + this.key;
             customTemplate.getExisting();
         } else {
             customTemplate.id = '';
             customTemplate.generateUI('{}');
         }
+        var customForm = this;
+        var customTable = customForm.querySelector('custom-table');
         customTemplate.querySelector('#close').addEventListener('tap', function() {
-            form.list = true;
-            form.add = false;
-            customTable = document.querySelector('custom-table');
+            customForm.list = true;
+            customForm.add = false;
             customTable.querySelector('iron-ajax').generateRequest();
         });
       },
       handleDelete: function() {
-        var table = document.querySelector('custom-table');
+        var table = this.querySelector('custom-table');
         var grid = table.querySelector('vaadin-grid');
         var selectedItems = grid.selection.selected();
         var jsonIds = {};
@@ -140,27 +137,27 @@
 
         this.$.deleteAction.body = JSON.stringify(jsonIds);
         this.$.deleteAction.generateRequest();
-      }
-    });
+      },
+      configure: function() {
+        var table = this.querySelector('custom-table');
+        table.configure();
+        var listBox = table.querySelector('#' + this.operationId).querySelector('paper-listbox');
 
-    document.addEventListener('WebComponentsReady', function() {
-        var form = document.querySelector('custom-form');
-        var table = document.querySelector('custom-table');
-        var listBox = table.querySelector('#operationMenu').querySelector('paper-listbox');
-
-        var paperItem0 = listBox.querySelector('#id0');
+        var paperItem0 = listBox.querySelector("#id0" + this.operationId);
+        var customForm = this;
         paperItem0.addEventListener('tap', function() {
-            form.handleTap();
+            customForm.handleTap();
         });
         paperItem0.addEventListener('click', function() {
-            customTemplate = document.querySelector('custom-template');
-            form.key = paperItem0.getAttribute("key");
-            form.handleClick();
+            customTemplate = customForm.querySelector('custom-template');
+            customForm.key = paperItem0.getAttribute("key");
+            customForm.handleClick();
         });
 
-        var paperItem1 = listBox.querySelector('#id1');
+        var paperItem1 = listBox.querySelector("#id1" + this.operationId);
         paperItem1.addEventListener('tap', function() {
-            form.handleDeleteOne(paperItem1.getAttribute("key"));
+            customForm.handleDeleteOne(paperItem1.getAttribute("key"));
         });
-    })
+      }
+    });
 </script>

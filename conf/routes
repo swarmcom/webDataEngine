@@ -44,9 +44,16 @@ GET     /api/accounts/get/id/:accountId              controllers.Accounts.getByI
 DELETE  /api/accounts/delete/:accountName            controllers.Accounts.delete(accountName: String)
 POST    /api/accounts/delete/ids                     controllers.Accounts.deleteAccounts
 
+GET     /api/phones/list                             controllers.Phones.list
+GET     /api/phones/list/array                       controllers.Phones.listArray
 POST    /api/phones/add                              controllers.Phones.add
-GET     /api/phones/get/:serialNumber                controllers.Phones.get(serialNumber: String)
-POST    /api/phones/modify/:serialNumber             controllers.Phones.modify(serialNumber: String)
+POST    /api/phones/modify/serial/:serialNumber      controllers.Phones.modifyBySerialNumber(serialNumber: String)
+GET     /api/phones/get/serial/:serialNumber         controllers.Phones.getBySerialNumber(serialNumber: String)
+POST    /api/phones/modify/id/:phoneId               controllers.Phones.modifyById(phoneId: String)
+GET     /api/phones/get/id/:phoneId                  controllers.Phones.getById(phoneId: String)
+DELETE  /api/phones/delete/:accountName              controllers.Phones.delete(accountName: String)
+POST    /api/phones/delete/ids                       controllers.Phones.deletePhones
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)

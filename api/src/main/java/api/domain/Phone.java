@@ -2,17 +2,18 @@ package api.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Phone {
+public class Phone extends BeanDomain<Phone> {
     protected String id;
     protected String accountId;
     protected String serialNumber;
     protected String description;
     protected String firmwareVersion;
-    protected List<String> lines;
+    protected List<String> lines = new ArrayList<String>();
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
     public Phone() {

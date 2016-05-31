@@ -135,7 +135,6 @@
          this.$.modifyAction.generateRequest();
       },
       getExisting: function() {
-         customTemplate = document.querySelector('custom-template');
          this.$.getAction.generateRequest();
       },
       added: function(request) {
@@ -152,48 +151,43 @@
       retrieved: function(request) {
         itemJson = request.detail.response;
         item = JSON.stringify(itemJson);
-        customTemplate = document.querySelector('custom-template');
-        customTemplate.generateUI(item);
+        this.generateUI(item);
       },
       generateUI: function(item) {
-          customTemplate = document.querySelector('custom-template');
           var i;
-          var pages = customTemplate.pages;
+          var pages = this.pages;
           var page;
-
           for (i = 0; i < pages.length; i++) {
-              page = customTemplate.pages[i];
-              generateAlpacaForm(page.pageId, page.schema, page.options, item, page.buttonId);
+              page = pages[i];
+              this.generateAlpacaForm(page.pageId, page.schema, page.options, item, page.buttonId);
           }
-      }
-    });
-
-    function generateAlpacaForm(page, schema, options, data, saveButton) {
+      },
+      generateAlpacaForm: function(page, schema,options,data,saveButton) {
         //item added, form needs to be regenerated
         $('#' + page).alpaca("destroy");
         $('#' + saveButton).off("click");
-
+        var customTemplate = this;
         $('#' + page).alpaca({
             "schemaSource": schema,
             "optionsSource": options,
             "dataSource": data,
             "postRender": function(control) {
                 $('#' + saveButton).click(function() {
-                    save(control.getValue());
+                    customTemplate.save(control.getValue(), customTemplate);
                 });
             }
         });
-    }
-
-    function save(data) {
-        customTemplate = document.querySelector('custom-template');
-        if(customTemplate.id) {
-            data.id = customTemplate.id;
-            customTemplate.modifyExisting(data)
+      },
+      save: function(data, template) {
+        if(template.id) {
+            data.id = template.id;
+            template.modifyExisting(data)
         } else {
-            customTemplate.addNew(data);
+            template.addNew(data);
         }
-    }
+      }
+    });
+
     </script>
 
 </dom-module>

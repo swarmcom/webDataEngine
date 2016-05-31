@@ -7,15 +7,18 @@ import auth.BasicAuthentication;
 import auth.SessionSecured;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import play.Play;
 import play.libs.Json;
 import play.mvc.*;
+import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 
 
 @Component
@@ -23,69 +26,99 @@ import java.io.IOException;
 @BasicAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
-public class Phones extends Controller {
+public class Phones extends BaseController {
 
     @Inject
     MultiPhoneService phoneService;
-
-    public Result polycomTemplate(String key) {
-        return ok(getPolycomTemplate(key));
-    }
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
         Http.RequestBody body = request().body();
         JsonNode node = body.asJson();
         ObjectMapper objectMapper = new ObjectMapper();
+        Phone phoneWithDefaults = null;
         try {
             Phone phone = objectMapper.readValue(node.toString(), Phone.class);
-            Phone phoneWithDefaults = objectMapper.readerForUpdating(phone).readValue(getPolycomDefaultsJSON());
+            phoneWithDefaults = objectMapper.readerForUpdating(phone).readValue(getPolycomDefaultsJSON());
             phoneService.savePhone(phoneWithDefaults);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ok("created");
+        return convert(phoneWithDefaults);
     }
 
-    public Result get(String serialNumber) {
+    public Result getById(String userId) {
+        Phone phone = phoneService.getPhoneById(userId);
+        return convert(phone);
+    }
+
+    public Result getBySerialNumber(String serialNumber) {
         Phone phone = phoneService.getPhone(serialNumber);
-        if (phone != null) {
-            JsonNode node = Json.toJson(phone);
-            return ok(node.toString());
-        } else {
-            return ok("");
+        return convert(phone);
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result modifyBySerialNumber(String serialNumber) {
+        Phone existingPhone = phoneService.getPhone(serialNumber);
+        try {
+            merge(existingPhone);
+            Phone modifiedPhone = (existingPhone != null ? modifiedPhone = phoneService.savePhone(existingPhone) : null);
+            return convert(modifiedPhone);
+        } catch (Exception ex) {
+            return convert(null);
         }
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public Result modify(String serialNumber) {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        ObjectMapper objectMapper = new ObjectMapper();
+    public Result modifyById(String userId) {
+        Phone existingPhone = phoneService.getPhoneById(userId);
         try {
-            String dataToUpdate = node.toString();
-            Phone existingPhone = phoneService.getPhone(serialNumber);
-            Phone phone = objectMapper.readValue(dataToUpdate, Phone.class);
-            existingPhone.merge(phone);
-            phoneService.savePhone(existingPhone);
-        } catch (IOException e) {
-            e.printStackTrace();
+            merge(existingPhone);
+            Phone modifiedPhone = (existingPhone != null ? modifiedPhone = phoneService.savePhone(existingPhone) : null);
+            return convert(modifiedPhone);
+        } catch (Exception ex) {
+            return convert(null);
         }
-        return ok("created");
     }
 
-    private String getPolycomTemplate(String key) {
-        String schema = StringUtils.EMPTY;
-        try {
-            JsonNode node = new ObjectMapper().readTree(Play.application().getFile("/public/app/devices/polycom/polycomTemplate.json"));
-            schema = node.get(key).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public Result list() {
+        List<? extends Phone> phones = phoneService.getPhones(TokenUtil.getCurrentAccountId());
+        JsonNode node = Json.toJson(phones);
+        return ok(node.toString());
+    }
+
+    public Result delete(String serialNumber) {
+        Long result = phoneService.deletePhone(serialNumber);
+        return ok(String.valueOf(result));
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result deletePhones() {
+        List<String> idsArray = convertIds();
+        Long result = phoneService.deletePhones(idsArray);
+        return ok(String.valueOf(result));
+    }
+
+    public Result listArray() {
+        List<? extends Phone> phones = phoneService.getPhones();
+        ArrayNode node = Json.newArray();
+        for (Phone phone : phones) {
+            ArrayNode itemNode = Json.newArray();
+            itemNode.add(phone.getId());
+            itemNode.add(phone.getAccountId());
+            itemNode.add(phone.getSerialNumber());
+            itemNode.add(phone.getFirmwareVersion());
+            itemNode.add(phone.getLines().size());
+            node.add(itemNode);
         }
-        return schema;
+        return ok(node.toString());
+    }
+
+    public Result polycomTemplate(String key) {
+        return ok(getTemplate(key, "/public/app/templates/devices/polycom/polycomTemplate.json"));
     }
 
     private String getPolycomDefaultsJSON() {
-        return getPolycomTemplate("settings_defaults");
+        return getTemplate("settings_defaults", "/public/app/templates/devices/polycom/polycomTemplate.json");
     }
 }
