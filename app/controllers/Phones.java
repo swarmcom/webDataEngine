@@ -1,5 +1,6 @@
 package controllers;
 
+import api.domain.BeanDomain;
 import api.domain.Phone;
 import api.service.MultiPhoneService;
 import auth.AuthenticationAction;
@@ -31,73 +32,56 @@ public class Phones extends BaseController {
     @Inject
     MultiPhoneService phoneService;
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result add() {
-
+    @Override
+    protected BeanDomain addAbstract() throws Exception {
         Phone phoneToAdd = new Phone();
-        try {
-            mergeDefaults(phoneToAdd, getPolycomDefaultsJSON());
-            merge(phoneToAdd);
-            Phone savedPhone = phoneService.savePhone(phoneToAdd);
-            return convert(savedPhone);
-        } catch (Exception e) {
-            return convert(null);
-        }
+        mergeDefaults(phoneToAdd, getPolycomDefaultsJSON());
+        merge(phoneToAdd);
+        return phoneService.savePhone(phoneToAdd);
     }
 
-    public Result getById(String userId) {
-        Phone phone = phoneService.getPhoneById(userId);
-        return convert(phone);
+    @Override
+    protected BeanDomain getByNameAbstract(String name) throws Exception {
+        return phoneService.getPhone(name);
     }
 
-    public Result getBySerialNumber(String serialNumber) {
-        Phone phone = phoneService.getPhone(serialNumber);
-        return convert(phone);
+    @Override
+    protected BeanDomain getByIdAbstract(String id) throws Exception {
+        return phoneService.getPhoneById(id);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyBySerialNumber(String serialNumber) {
-        Phone existingPhone = phoneService.getPhone(serialNumber);
-        try {
-            merge(existingPhone);
-            Phone modifiedPhone = (existingPhone != null ? modifiedPhone = phoneService.savePhone(existingPhone) : null);
-            return convert(modifiedPhone);
-        } catch (Exception ex) {
-            return convert(null);
-        }
+    @Override
+    protected Long deleteByNameAbstract(String name) throws Exception {
+        return phoneService.deletePhone(name);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyById(String userId) {
-        Phone existingPhone = phoneService.getPhoneById(userId);
-        try {
-            merge(existingPhone);
-            Phone modifiedPhone = (existingPhone != null ? modifiedPhone = phoneService.savePhone(existingPhone) : null);
-            return convert(modifiedPhone);
-        } catch (Exception ex) {
-            return convert(null);
-        }
-    }
-
-    public Result list() {
-        List<? extends Phone> phones = phoneService.getPhones(TokenUtil.getCurrentAccountId());
-        JsonNode node = Json.toJson(phones);
-        return ok(node.toString());
-    }
-
-    public Result delete(String serialNumber) {
-        Long result = phoneService.deletePhone(serialNumber);
-        return ok(String.valueOf(result));
-    }
-
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result deletePhones() {
+    @Override
+    protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
-        Long result = phoneService.deletePhones(idsArray);
-        return ok(String.valueOf(result));
+        return phoneService.deletePhones(idsArray);
     }
 
-    public Result listArray() {
+    @Override
+    protected BeanDomain modifyByNameAbstract(String name) throws Exception {
+        Phone existingPhone = phoneService.getPhone(name);
+        merge(existingPhone);
+        return (existingPhone != null ? phoneService.savePhone(existingPhone) : null);
+    }
+
+    @Override
+    protected BeanDomain modifyByIdAbstract(String id) throws Exception {
+        Phone existingPhone = phoneService.getPhoneById(id);
+        merge(existingPhone);
+        return (existingPhone != null ? phoneService.savePhone(existingPhone) : null);
+    }
+
+    @Override
+    protected List<? extends BeanDomain> listAbstract() throws Exception {
+        return phoneService.getPhones(TokenUtil.getCurrentAccountId());
+    }
+
+    @Override
+    protected ArrayNode listArrayAbstract() throws Exception {
         List<? extends Phone> phones = phoneService.getPhones();
         ArrayNode node = Json.newArray();
         for (Phone phone : phones) {
@@ -109,7 +93,7 @@ public class Phones extends BaseController {
             itemNode.add(phone.getLines().size());
             node.add(itemNode);
         }
-        return ok(node.toString());
+        return node;
     }
 
     public Result polycomTemplate(String key) {

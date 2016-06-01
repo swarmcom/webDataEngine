@@ -1,5 +1,6 @@
 package controllers;
 
+import api.domain.BeanDomain;
 import api.domain.User;
 import api.service.MultiUserService;
 import auth.AuthenticationAction;
@@ -35,74 +36,58 @@ public class Users extends BaseController {
     @Inject
     private SecurityPasswordEncoder passwordEncoder;
 
-    public Result list() {
-        List<? extends User> users = userService.getUsers(TokenUtil.getCurrentAccountId());
-        JsonNode node = Json.toJson(users);
-        return ok(node.toString());
-    }
-
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result add() {
+    @Override
+    protected BeanDomain addAbstract() throws Exception {
         User userToAdd = new User();
-        try {
-            merge(userToAdd);
-            userToAdd.setPassword(userToAdd.getPassword());
-            User savedUser = userService.saveUser(userToAdd);
-            return convert(savedUser);
-        } catch (Exception e) {
-            return convert(null);
-        }
+        merge(userToAdd);
+        userToAdd.setPassword(userToAdd.getPassword());
+        return userService.saveUser(userToAdd);
     }
 
-    public Result getByName(String userName) {
-        User user = userService.getUser(userName);
-        return convert(user);
+    @Override
+    protected BeanDomain getByNameAbstract(String name) throws Exception {
+        return userService.getUser(name);
     }
 
-    public Result getById(String userId) {
-        User user = userService.getUserById(userId);
-        return convert(user);
+    @Override
+    protected BeanDomain getByIdAbstract(String id) throws Exception {
+        return userService.getUserById(id);
     }
 
-    public Result delete(String userName) {
-        Long result = userService.deleteUser(userName);
-        return ok(String.valueOf(result));
+    @Override
+    protected Long deleteByNameAbstract(String name) throws Exception {
+        return userService.deleteUser(name);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result deleteUsers() {
+    @Override
+    protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
-        Long result = userService.deleteUsers(idsArray);
-        return ok(String.valueOf(result));
+        return userService.deleteUsers(idsArray);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyByName(String userName) {
-        User existingUser = userService.getUser(userName);
-        try {
-            merge(existingUser);
-            existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
-            User modifiedUser = (existingUser != null ? modifiedUser = userService.saveUser(existingUser) : null);
-            return convert(modifiedUser);
-        } catch(Exception ex) {
-            return convert(null);
-        }
+    @Override
+    protected BeanDomain modifyByNameAbstract(String name) throws Exception {
+        User existingUser = userService.getUser(name);
+        merge(existingUser);
+        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
+        return (existingUser != null ? userService.saveUser(existingUser) : null);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyById(String userId) {
-        User existingUser = userService.getUserById(userId);
-        try {
-            merge(existingUser);
-            existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
-            User modifiedUser = (existingUser != null ? modifiedUser = userService.saveUser(existingUser) : null);
-            return convert(modifiedUser);
-        } catch (Exception ex) {
-            return convert(null);
-        }
+    @Override
+    protected BeanDomain modifyByIdAbstract(String id) throws Exception {
+        User existingUser = userService.getUserById(id);
+        merge(existingUser);
+        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
+        return (existingUser != null ? userService.saveUser(existingUser) : null);
     }
 
-    public Result listArray() {
+    @Override
+    protected List<? extends BeanDomain> listAbstract() throws Exception {
+        return userService.getUsers(TokenUtil.getCurrentAccountId());
+    }
+
+    @Override
+    protected ArrayNode listArrayAbstract() throws Exception {
         List<? extends User> users = userService.getUsers();
         ArrayNode node = Json.newArray();
         for (User user : users) {
@@ -113,7 +98,7 @@ public class Users extends BaseController {
             itemNode.add(StringUtils.join(user.getRoles()));
             node.add(itemNode);
         }
-        return ok(node.toString());
+        return node;
     }
 
     public Result userTemplate(String key) {

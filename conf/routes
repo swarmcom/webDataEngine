@@ -32,8 +32,8 @@ GET     /api/users/get/name/:userName                controllers.Users.getByName
 POST    /api/users/modify/id/:userId                 controllers.Users.modifyById(userId: String)
 GET     /api/users/get/id/:userId                    controllers.Users.getById(userId: String)
 GET     /api/users/get/defaults                      controllers.Users.getDefaults
-DELETE  /api/users/delete/:userName                  controllers.Users.delete(userName: String)
-POST    /api/users/delete/ids                        controllers.Users.deleteUsers
+DELETE  /api/users/delete/:userName                  controllers.Users.deleteByName(userName: String)
+POST    /api/users/delete/ids                        controllers.Users.deleteList
 
 GET     /api/accounts/list                           controllers.Accounts.list
 GET     /api/accounts/list/array                     controllers.Accounts.listArray
@@ -42,19 +42,20 @@ POST    /api/accounts/modify/name/:accountName       controllers.Accounts.modify
 GET     /api/accounts/get/name/:accountName          controllers.Accounts.getByName(accountName: String)
 POST    /api/accounts/modify/id/:accountId           controllers.Accounts.modifyById(accountId: String)
 GET     /api/accounts/get/id/:accountId              controllers.Accounts.getById(accountId: String)
-DELETE  /api/accounts/delete/:accountName            controllers.Accounts.delete(accountName: String)
-POST    /api/accounts/delete/ids                     controllers.Accounts.deleteAccounts
+GET     /api/accounts/get/defaults                   controllers.Accounts.getDefaults
+DELETE  /api/accounts/delete/:accountName            controllers.Accounts.deleteByName(accountName: String)
+POST    /api/accounts/delete/ids                     controllers.Accounts.deleteList
 
 GET     /api/phones/list                             controllers.Phones.list
 GET     /api/phones/list/array                       controllers.Phones.listArray
 POST    /api/phones/add                              controllers.Phones.add
-POST    /api/phones/modify/serial/:serialNumber      controllers.Phones.modifyBySerialNumber(serialNumber: String)
-GET     /api/phones/get/serial/:serialNumber         controllers.Phones.getBySerialNumber(serialNumber: String)
+POST    /api/phones/modify/serial/:serialNumber      controllers.Phones.modifyByName(serialNumber: String)
+GET     /api/phones/get/serial/:serialNumber         controllers.Phones.getByName(serialNumber: String)
 POST    /api/phones/modify/id/:phoneId               controllers.Phones.modifyById(phoneId: String)
 GET     /api/phones/get/id/:phoneId                  controllers.Phones.getById(phoneId: String)
 GET     /api/phones/get/defaults                     controllers.Phones.getDefaults
-DELETE  /api/phones/delete/:accountName              controllers.Phones.delete(accountName: String)
-POST    /api/phones/delete/ids                       controllers.Phones.deletePhones
+DELETE  /api/phones/delete/:accountName              controllers.Phones.deleteByName(accountName: String)
+POST    /api/phones/delete/ids                       controllers.Phones.deleteList
 
 
 # Map static resources from the /public folder to the /assets URL path

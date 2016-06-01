@@ -16,12 +16,6 @@ public class Account extends BeanDomain<Account> {
     protected String superadminInitialPassword;
 
     public Account() {
-        this.accountName = "AnonymousTenant";
-        this.dbType = DbType.mongo;
-        this.dbUri = "mongodb://localhost:27017/";
-        this.dbName = "webDataEngine";
-        this.superadminUserName = "superadmin";
-        this.superadminInitialPassword = "123";
     }
 
     public Account(String accountName) {

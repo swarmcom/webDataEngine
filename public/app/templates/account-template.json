@@ -63,5 +63,9 @@
         "helper": "Please enter superadmin initial password"
       }
     }
+  },
+  "settings_defaults": {
+    "dbType":"mongo",
+    "dbUri": "mongodb://localhost:27017/"
   }
 }

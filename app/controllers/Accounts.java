@@ -1,6 +1,7 @@
 package controllers;
 
 import api.domain.Account;
+import api.domain.BeanDomain;
 import api.service.AccountService;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -29,77 +31,58 @@ public class Accounts extends BaseController {
     @Inject
     AccountService accountService;
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result add() {
-        Http.RequestBody body = request().body();
-        JsonNode node = body.asJson();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Account savedAccount = null;
-        try {
-            Account account = objectMapper.readValue(node.toString(), Account.class);
-            savedAccount = accountService.createAccount(account.getAccountName(), account.getDbType().toString(),
-                    account.getDbUri(), account.getDbName(), account.getSuperadminUserName(), account.getSuperadminInitialPassword());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return convert(savedAccount);
+    @Override
+    protected BeanDomain addAbstract() throws Exception {
+        Account accountToAdd = new Account();
+        mergeDefaults(accountToAdd, getAccountsDefaultsJSON());
+        merge(accountToAdd);
+        Logger.info("MIRCEA " + accountToAdd.getDbName());
+        Account savedAccount = accountService.saveAccount(accountToAdd);
+        return savedAccount;
     }
 
-    public Result getByName(String accountName) {
-        Account account = accountService.getAccount(accountName);
-        return convert(account);
+    @Override
+    protected BeanDomain getByNameAbstract(String name) throws Exception {
+        return accountService.getAccount(name);
     }
 
-    public Result getById(String accountId) {
-        Account account = accountService.getAccountById(accountId);
-        return convert(account);
+    @Override
+    protected BeanDomain getByIdAbstract(String id) throws Exception {
+        return accountService.getAccountById(id);
     }
 
-    public Result delete(String accountName) {
-        Long result = accountService.deleteAccount(accountName);
-        return ok(String.valueOf(result));
+    @Override
+    protected Long deleteByNameAbstract(String name) throws Exception {
+        return accountService.deleteAccount(name);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result deleteAccounts() {
+    @Override
+    protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
-        Long result = accountService.deleteAccounts(idsArray);
-        return ok(String.valueOf(result));
+        return accountService.deleteAccounts(idsArray);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyByName(String accountName) {
-        Account existingAccount = accountService.getAccount(accountName);
-        try {
-            merge(existingAccount);
-            Account modifiedAccount = (existingAccount != null ? modifiedAccount = accountService.saveAccount(existingAccount) : null);
-            return convert(modifiedAccount);
-        } catch (Exception ex) {
-            return convert(null);
-        }
+    @Override
+    protected BeanDomain modifyByNameAbstract(String name) throws Exception {
+        Account existingAccount = accountService.getAccount(name);
+        merge(existingAccount);
+        return (existingAccount != null ? accountService.saveAccount(existingAccount) : null);
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result modifyById(String accountId) {
-        Account existingAccount = accountService.getAccountById(accountId);
-        try {
-            merge(existingAccount);
-            Account modifiedAccount = (existingAccount != null ? modifiedAccount = accountService.saveAccount(existingAccount) : null);
-            return convert(modifiedAccount);
-        } catch (Exception ex) {
-            return convert(null);
-        }
+    @Override
+    protected BeanDomain modifyByIdAbstract(String id) throws Exception {
+        Account existingAccount = accountService.getAccountById(id);
+        merge(existingAccount);
+        return (existingAccount != null ? accountService.saveAccount(existingAccount) : null);
     }
 
-    public Result list() {
-        List<? extends Account> accounts = accountService.getAccounts();
-        JsonNode node = Json.toJson(accounts);
-        return ok(node.toString());
+    @Override
+    protected List<? extends BeanDomain> listAbstract() throws Exception {
+        return accountService.getAccounts();
     }
 
-    public Result listArray() {
+    @Override
+    protected ArrayNode listArrayAbstract() throws Exception {
         List<? extends Account> accounts = accountService.getAccounts();
         ArrayNode node = Json.newArray();
         for (Account account : accounts) {
@@ -112,10 +95,19 @@ public class Accounts extends BaseController {
             itemNode.add(account.getSuperadminUserName());
             node.add(itemNode);
         }
-        return ok(node.toString());
+        return node;
     }
 
     public Result accountTemplate(String key) {
         return ok(getTemplate(key,"/public/app/templates/account-template.json"));
+    }
+
+    private String getAccountsDefaultsJSON() {
+        return getTemplate("settings_defaults", "/public/app/templates/account-template.json");
+    }
+
+    @Override
+    public Result getDefaults() {
+        return accountTemplate("settings_defaults");
     }
 }
