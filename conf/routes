@@ -20,6 +20,7 @@ GET     /main/config                                 controllers.Application.ass
 
 # Templates
 GET     /phones/polycom/template/:key                controllers.Phones.polycomTemplate(key: String)
+GET     /gateways/gateway/template/:key              controllers.Gateways.gatewayTemplate(key: String)
 GET     /customer/template/:key                      controllers.Accounts.accountTemplate(key: String)
 GET     /user/template/:key                          controllers.Users.userTemplate(key: String)
 
@@ -56,6 +57,17 @@ GET     /api/phones/get/id/:phoneId                  controllers.Phones.getById(
 GET     /api/phones/get/defaults                     controllers.Phones.getDefaults
 DELETE  /api/phones/delete/:accountName              controllers.Phones.deleteByName(accountName: String)
 POST    /api/phones/delete/ids                       controllers.Phones.deleteList
+
+GET     /api/gateways/list                           controllers.Gateways.list
+GET     /api/gateways/list/array                     controllers.Gateways.listArray
+POST    /api/gateways/add                            controllers.Gateways.add
+POST    /api/gateways/modify/serial/:serialNumber    controllers.Gateways.modifyByName(serialNumber: String)
+GET     /api/gateways/get/serial/:serialNumber       controllers.Gateways.getByName(serialNumber: String)
+POST    /api/gateways/modify/id/:gatewayId           controllers.Gateways.modifyById(gatewayId: String)
+GET     /api/gateways/get/id/:gatewayId              controllers.Gateways.getById(gatewayId: String)
+GET     /api/gateways/get/defaults                   controllers.Gateways.getDefaults
+DELETE  /api/gateways/delete/:accountName            controllers.Gateways.deleteByName(accountName: String)
+POST    /api/gateways/delete/ids                     controllers.Gateways.deleteList
 
 
 # Map static resources from the /public folder to the /assets URL path

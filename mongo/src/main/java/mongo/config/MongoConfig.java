@@ -50,4 +50,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
     public DBCollection phoneCollection() throws Exception {
         return mongo().getDB(getDatabaseName()).getCollection("phone");
     }
+
+    @Bean
+    public DBCollection gatewayCollection() throws Exception {
+        return mongo().getDB(getDatabaseName()).getCollection("gateway");
+    }
 }

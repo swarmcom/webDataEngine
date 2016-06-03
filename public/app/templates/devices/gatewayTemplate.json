@@ -1,0 +1,78 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "accountId": {
+        "type": "string",
+        "title": "Account"
+      },
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "address": {
+        "format": "ip-address"
+      },
+      "serialNumber": {
+        "type": "string",
+        "title": "Serial number"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "firmwareVersion": {
+        "type":"string",
+        "title":"Firmware version",
+        "enum": [
+          "6.0",
+          "5.8",
+          "5.6",
+          "5.4",
+          "5.2",
+          "5.0"
+        ]
+      },
+      "shared": {
+        "title": "Shared",
+        "type": "boolean"
+      }
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "helper": "Identification",
+    "fields": {
+      "description" : {
+        "type": "textarea",
+        "rows": 5,
+        "cols": 40,
+        "helper": "Please enter your description."
+      },
+      "id": {
+        "type": "hidden"
+      },
+      "accountId": {
+        "type": "hidden"
+      },
+      "address": {
+        "label": "IP Address",
+        "helper": "For a PSTN gateway: IP address of the gateway (example: 10.1.1.1) or the fully qualified hostname of the gateway (example: gateway.example.com). The gateway can be on any routed subnet without NAT. For an ITSP SIP Trunk: External IP address or fully qualified hostname of the Internet Telephony Service Provider (e.g. itsp.example.com). Note: An SBC Route needs to be defined in the field below. For a Direct SIP Trunk: To interconnect two VoIP systems using SIP enter the IP address or fully qualified name of the other system."
+      },
+      "serialNumber": {
+        "helper": "Usually the serial number is set to the device's MAC address, for example: 0040214131fa."
+      },
+      "shared": {
+        "helper": "If checked this gateway can be used by any user in any location, even if a specific location is selected. This setting is checked by default so that users in an identified location still use their preferred gateway, but the gateway can also be used by other users in other locations."
+      }
+    }
+  }
+}

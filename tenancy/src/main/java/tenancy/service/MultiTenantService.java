@@ -2,10 +2,7 @@ package tenancy.service;
 
 
 import api.config.ApiConfig;
-import api.service.MultiService;
-import api.service.PhoneService;
-import api.service.RoleService;
-import api.service.UserService;
+import api.service.*;
 import org.springframework.stereotype.Component;
 import security.util.TokenUtil;
 
@@ -35,6 +32,16 @@ public class MultiTenantService implements MultiService {
     @Override
     public PhoneService getTenantPhoneService(String tenantId) {
         return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(PhoneService.class);
+    }
+
+    @Override
+    public GatewayService getCurrentTenantGatewayService() {
+        return ApiConfig.tenantSpringContextMap.get(TokenUtil.getCurrentAccountId()).getBean(GatewayService.class);
+    }
+
+    @Override
+    public GatewayService getTenantGatewayService(String tenantId) {
+        return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(GatewayService.class);
     }
 
     @Override
