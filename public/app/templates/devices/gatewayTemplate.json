@@ -72,6 +72,467 @@
       },
       "shared": {
         "helper": "If checked this gateway can be used by any user in any location, even if a specific location is selected. This setting is checked by default so that users in an identified location still use their preferred gateway, but the gateway can also be used by other users in other locations."
+      },
+      "firmwareVersion": {
+        "removeDefaultNone": true
+      }
+    }
+  },
+  "callerid_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "callerIdSettings": {
+            "type": "object",
+            "properties": {
+              "defaultCallerId": {
+                "title": "Default Caller ID",
+                "type": "boolean"
+              },
+              "displayName": {
+                "title": "Display name",
+                "type": "string"
+              },
+              "urlParameters": {
+                "title": "URL parameters",
+                "type": "string"
+              },
+              "blockCallerId": {
+                "title": "Block Caller ID",
+                "type": "boolean"
+              },
+              "ignoreUserCallerId": {
+                "title": "Ignore user Caller ID",
+                "type": "boolean"
+              },
+              "transformExtension": {
+                "title": "Transform Extension",
+                "type": "boolean"
+              },
+              "callerIdPrefix": {
+                "title": "Caller ID prefix",
+                "type": "string"
+              },
+              "keepDigits": {
+                "title": "Keep digits",
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "callerid_settings_options": {
+    "helper": "Caller ID",
+    "fields": {
+      "settings": {
+        "fields": {
+          "callerIdSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "defaultCallerId": {
+                "helper": "Caller ID used for all the calls connected through this gateway, unless more specific caller ID is specified for the user making the call."
+              },
+              "displayName": {
+                "helper": "Name that appears on the phone when the call is received. Different gateways or ITSPs handle this field differently, so that actual results will vary. Some phones may not support displaying this value correctly."
+              },
+              "urlParameters": {
+                "helper": "Optional SIP URI parameters of the following form: key1=value1;key2=value2"
+              },
+              "blockCallerId": {
+                "helper": "If checked all calls connected through this gateway will have Caller ID blocked, unless more specific Caller ID is specified for the user."
+              },
+              "ignoreUserCallerId": {
+                "helper": "If checked only gateway default Caller ID and Block Caller ID options are considered by this gateway."
+              },
+              "transformExtension": {
+                "helper": "If checked gateway will produce Caller ID by transforming the user extension using the rules for Caller ID prefix and number of digits to keep. If not checked the Caller ID specified for the user or for the gateway will be used."
+              },
+              "callerIdPrefix": {
+                "helper": "Optional prefix added to the user extension to create the Caller ID."
+              },
+              "keepDigits": {
+                "helper": "Number of extension digits that are kept before adding the Caller ID prefix. If the user extension has more digits than configured here, leading digits are dropped when creating the Caller ID. The default value of 0 means keeping all digits."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dialPlan_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "dialPlanSettings": {
+            "type": "object",
+            "properties": {
+              "prefix": {
+                "title": "Prefix",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dialPlan_settings_options": {
+    "helper": "Dial Plan",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dialPlanSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "prefix": {
+                "helper": "Prefix that will be added to all numbers for calls connected through this gateway."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sip_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "sipSettings": {
+            "type": "object",
+            "properties": {
+              "snmip": {
+                "title": "Source Number Map from IP to Tel",
+                "type": "string"
+              },
+              "remCliRestricted": {
+                "title": "Remove CLI when restricted",
+                "type": "boolean"
+              },
+              "prackMode": {
+                "title": "PRACK Mode",
+                "type": "string",
+                "enum": [
+                  "D",
+                  "S",
+                  "R"
+                ]
+              },
+              "enableEarlyMedia": {
+                "title": "Enable Early Media",
+                "type": "boolean"
+              },
+              "assertedIdMode": {
+                "title": "Asserted ID Mode",
+                "type": "string",
+                "enum": [
+                  "Disabled",
+                  "PAsserted",
+                  "PPreferred"
+                ]
+              },
+              "telUriAssertedId": {
+                "title": "Tel URI for Asserted Identity",
+                "type": "boolean"
+              },
+              "faxSignaling": {
+                "title": "Fax Signaling",
+                "type": "string",
+                "enum": [
+                  "N",
+                  "T38",
+                  "P",
+                  "T38P"
+                ]
+              },
+              "detectFaxOnAnswerTone": {
+                "title": "Detect Fax on Answer Tone",
+                "type": "string",
+                "enum": [
+                  "T38P",
+                  "T38CED"
+                ]
+              },
+              "sipTransportType": {
+                "title": "SIP Transport Type",
+                "type": "string",
+                "enum": [
+                  "UDP",
+                  "TCP",
+                  "TLS"
+                ]
+              },
+              "udpSipPort": {
+                "title": "UDP SIP Port",
+                "type": "number"
+              },
+              "tcpSipPort": {
+                "title": "TCP SIP Port",
+                "type": "number"
+              },
+              "tlsSipPort": {
+                "title": "TLS SIP Port",
+                "type": "number"
+              },
+              "tcpConnReuse": {
+                "title": "TCP Connection Reuse",
+                "type": "boolean"
+              },
+              "telToIpNoAnswerTimeout": {
+                "title": "Tel to IP No Answer Timeout",
+                "type": "number"
+              },
+              "remotePartyId": {
+                "title": "Remote Party ID",
+                "type": "boolean"
+              },
+              "rpiHeaderContent": {
+                "title": "RPI Header Content",
+                "type": "string",
+                "enum": [
+                  "NO",
+                  "YES"
+                ]
+              },
+              "historyInfoHeader": {
+                "title": "History-Info Header",
+                "type": "boolean"
+              },
+              "useSNAsDisplayName": {
+                "title": "Use Source Number as Display Name",
+                "type": "string",
+                "enum": [
+                  "No",
+                  "Yes",
+                  "Overwrite"
+                ]
+              },
+              "useDNAsSourceNumber": {
+                "title": "Use Display Name as Source Number",
+                "type": "boolean"
+              },
+              "progressIndicatorToIp": {
+                "title": "Progress Indicator to IP",
+                "type": "string",
+                "enum": [
+                  "NoConf",
+                  "NoPi",
+                  "Pi1",
+                  "Pi8"
+                ]
+              },
+              "playRingbackToIp": {
+                "title": "Play Ringback Tone to IP",
+                "type": "boolean"
+              },
+              "playRingbackToTel": {
+                "title": "Play Ringback Tone to Tel",
+                "type": "string",
+                "enum": [
+                  "No",
+                  "Always",
+                  "Play180_183",
+                  "PlayPI"
+                ]
+              },
+              "enableGRUU": {
+                "title": "Enable GRUU",
+                "type": "boolean"
+              },
+              "userAgentInfo": {
+                "title": "User-Agent Information",
+                "type": "string"
+              },
+              "sdpSessionOwner": {
+                "title": "SDP Session Owner",
+                "type": "string"
+              },
+              "subject": {
+                "title": "Subject",
+                "type": "string"
+              },
+              "multiplePTFormat": {
+                "title": "Multiple Packetization Time Format",
+                "type": "boolean"
+              },
+              "semiAttTransfer": {
+                "title": "Semi-Attended Transfer",
+                "type": "boolean"
+              },
+              "reasonHeader": {
+                "title": "Reason Header",
+                "type": "boolean"
+              },
+              "3xxBehavior": {
+                "title": "3xxBehavior",
+                "type": "boolean"
+              },
+              "sipReroutingMode": {
+                "title": "SIP Rerouting Mode",
+                "type": "number"
+              },
+              "enablePCVector": {
+                "title": "Enable P-Charging-Vector",
+                "type": "boolean"
+              },
+              "enableVoicemailURI": {
+                "title": "Enable Voicemail URI",
+                "type": "boolean"
+              },
+              "sipT1RetransmissionTimer": {
+                "title": "SIP T1 Retransmission Timer [msec]",
+                "type": "number"
+              },
+              "sipT2RetransmissionTimer": {
+                "title": "SIP T2 Retransmission Timer [msec]",
+                "type": "number"
+              },
+              "sipMaximumRTX": {
+                "title": "SIP Maximum RTX",
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sip_settings_options": {
+    "helper": "SIP",
+    "fields": {
+      "settings": {
+        "fields": {
+          "sipSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "snmip": {
+                "helper": "Manipulate the source number for IP to Tel calls (see Audicodes documentation for details). When certain NI-2 protocol configured central offices require calling name to be disabled. Set this to: *,0,$$,$$,$$,$$,*,1,*"
+              },
+              "remCliRestricted": {
+                "helper": "The Remove CLI when restricted (for IP to Tel calls) determines whether the Calling Number IE and Calling Name IE are removed from the outgoing ISDN Setup message if the presentation is set to Restricted. Typically used in certain NI-2 protocol enabled carriers."
+              },
+              "prackMode": {
+                "helper": "",
+                "removeDefaultNone": true,
+                "optionLabels": ["Disabled",
+                  "Supported",
+                  "Required"]
+              },
+              "assertedIdMode": {
+                "helper": "The Asserted ID mode defines the header that is used in the generated INVITE request. The header also depends on the calling Privacy: allowed or restricted",
+                "removeDefaultNone": true,
+                "optionLabels": ["Disabled",
+                  "P-Asserted",
+                  "P-Preferred"]
+              },
+              "faxSignaling": {
+                "removeDefaultNone": true,
+                "optionLabels":["No SIP Signaling for FAX", "T38", "Passthru(G711)", "T38 + Passthru"]
+              },
+              "detectFaxOnAnswerTone": {
+                "removeDefaultNone": true,
+                "optionLabels": [
+                  "T.38 on Preamble",
+                  "T.38 on CED"
+                ]
+              },
+              "useSNAsDisplayName": {
+                "removeDefaultNone": true
+              },
+              "udpSipPort": {
+                "helper": "UDP Port for SIP signaling"
+              },
+              "tcpSipPort": {
+                "helper": "TCP Port for SIP signaling"
+              },
+              "tlsSipPort": {
+                "helper": "TLS Port for SIP signaling"
+              },
+              "rpiHeaderContent": {
+                "optionLabels": ["Don't include Number Plan and Type", "Include Number Plan and Type"],
+                "removeDefaultNone": true
+              },
+              "progressIndicatorToIp": {
+                "removeDefaultNone": true,
+                "optionLabels": [
+                  "Not configured",
+                  "No PI",
+                  "PI=1",
+                  "PI=8"
+                ]
+              },
+
+              "playRingbackToTel": {
+                "removeDefaultNone": true,
+                "optionLabels": [
+                  "Don't Play",
+                  "Always Play",
+                  "Play According to 180/183",
+                  "Play According to PI"
+                ]
+              },
+              "sdpSessionOwner": {
+                "helper": "The value of the Session Owner line (\"o\" field) in outgoing SDP bodies. May be up to 39 characters."
+              },
+              "3xxBehavior": {
+                "helper": "Determines the gateway's behavior when a 3xx response is received for an outgoing INVITE request. The gateway can either use the same call identifiers (CallID, branch, to and from tags) or change them in the new initiated INVITE. When enabled gateway will use the same call identifiers."
+              },
+              "sipReroutingMode": {
+                "helper": "Determines the routing mode after a call redirection or transfer. [0]: Standard = INVITE messages that are generated as a result of Transfer or Redirect are sent directly to the URI, according to the Refer-To header in the REFER message or Contact header in the 3xx response (default). [1]: Proxy = Sends a new INVITE to the Proxy. Note: Applicable only if a Proxy server is used and the parameter AlwaysSendtoProxy is set to 0. [2]: Routing Table = Uses the Routing table to locate the destination and then sends a new INVITE to this destination"
+              },
+              "enablePCVector": {
+                "helper": "If checked, adds a P-Charging-Vector header to outgoing INVITE messages."
+              },
+              "enableVoicemailURI": {
+                "helper": "Enables or disables the interworking of target and cause for redirection from Tel to IP and vice versa, according to RFC 4468."
+              },
+              "sipT1RetransmissionTimer": {
+                "title": "SIP T1 Retransmission Timer [msec]",
+                "type": "number"
+              },
+              "sipTransportType": {
+                "removeDefaultNone": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings_defaults": {
+    "settings": {
+      "callerIdSettings": {
+        "keepDigits": 0
+      },
+      "sipSettings": {
+        "prackMode": "S",
+        "enableEarlyMedia": true,
+        "assertedIdMode": "Disabled",
+        "faxSignaling": "N",
+        "detectFaxOnAnswerTone": "T38P",
+        "sipTransportType": "UDP",
+        "udpSipPort": 5060,
+        "tcpSipPort": 5060,
+        "tlsSipPort": 5061,
+        "telToIpNoAnswerTimeout":180,
+        "rpiHeaderContent": "NO",
+        "useSNAsDisplayName": "No",
+        "progressIndicatorToIp": "NoConf",
+        "playRingbackToTel": "PlayPI",
+        "sdpSessionOwner": "AudiocodesGW",
+        "reasonHeader": true,
+        "3xxBehavior": true,
+        "sipReroutingMode": 0,
+        "sipT1RetransmissionTimer": 500,
+        "sipT2RetransmissionTimer": 4000,
+        "sipMaximumRTX": 7
       }
     }
   }

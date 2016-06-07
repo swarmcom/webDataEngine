@@ -34,7 +34,7 @@ public class Gateways extends BaseController {
     @Override
     protected BeanDomain addAbstract() throws Exception {
         Gateway gatewayToAdd = new Gateway();
-        //mergeDefaults(gatewayToAdd, getGatewayDefaultsJSON());
+        mergeDefaults(gatewayToAdd, getGatewayDefaultsJSON());
         merge(gatewayToAdd);
         return gatewayService.saveGateway(gatewayToAdd);
     }
@@ -98,12 +98,12 @@ public class Gateways extends BaseController {
         return ok(getTemplate(key, "/public/app/templates/devices/gatewayTemplate.json"));
     }
 
-    //private String getGatewayDefaultsJSON() {
-        //return getTemplate("settings_defaults", "/public/app/templates/devices/gatewayTemplate.json");
-    //}
+    private String getGatewayDefaultsJSON() {
+        return getTemplate("settings_defaults", "/public/app/templates/devices/gatewayTemplate.json");
+    }
 
-    //@Override
-    //public Result getDefaults() {
-        //return polycomTemplate("settings_defaults");
-    //}
+    @Override
+    public Result getDefaults() {
+        return gatewayTemplate("settings_defaults");
+    }
 }

@@ -151,10 +151,10 @@ public class Gateway extends BeanDomain<Gateway> {
 
         Map<String, Map<String, Object>> settings = gateway.getSettings();
         if (settings != null) {
-            for (Map.Entry entry : this.settings.entrySet()) {
+            for (Map.Entry entry : settings.entrySet()) {
                 Map<String, Object> entryToMerge = settings.get(entry.getKey());
                 if (entryToMerge != null) {
-                    entry.setValue(entryToMerge);
+                    this.settings.put((String)entry.getKey(), entryToMerge);
                 }
             }
         }

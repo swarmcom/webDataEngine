@@ -54,7 +54,10 @@
            "width":"150", "height":"150", "url":"/api/gateways/list/array", "defaultsUrl":"/api/gateways/get/defaults", "addUrl":"/api/gateways/add", "getUrl":"/api/gateways/get/id/", "modifyUrl":"/api/gateways/modify/id/",
            "deleteIdsUrl":"/api/gateways/delete/ids",
            "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"Name\"},{\"name\":\"IP Address\"}]",
-           "pages":[{"menuName":"Identification","pageId":"page_IdentificationGateway","schema":"/gateways/gateway/template/identification_schema","options":"/gateways/gateway/template/identification_options","buttonId":"create_identificationGateway"}]}
+           "pages":[{"menuName":"Identification","pageId":"page_IdentificationGateway","schema":"/gateways/gateway/template/identification_schema","options":"/gateways/gateway/template/identification_options","buttonId":"create_identificationGateway"},
+           {"menuName":"Caller ID","pageId":"page_CallerId","schema":"/gateways/gateway/template/callerid_settings_schema","options":"/gateways/gateway/template/callerid_settings_options","buttonId":"create_callerid"},
+           {"menuName":"Dial Plan","pageId":"page_DialPlan","schema":"/gateways/gateway/template/dialPlan_settings_schema","options":"/gateways/gateway/template/dialPlan_settings_options","buttonId":"create_dialPlan"},
+           {"menuName":"SIP","pageId":"page_gateway_Sip","schema":"/gateways/gateway/template/sip_settings_schema","options":"/gateways/gateway/template/sip_settings_options","buttonId":"create_gateway_sip"}]}
            ]'></menu-card>
 </body>
 </html>
