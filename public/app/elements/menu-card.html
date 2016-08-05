@@ -73,7 +73,10 @@
                     <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
                     <span title class="flex">{{heading}}</span>
                     <paper-icon-button id="home" icon="home"></paper-icon-button>
-                    <paper-icon-button icon="refresh"></paper-icon-button>
+                    <template is="dom-if" if="{{backButton}}">
+                        <page-redirector url="{{backUrl}}"></page-redirector>
+                        <paper-icon-button id="back" icon="arrow-back" on-tap="handleBackTap"></paper-icon-button>
+                    </template>
                     <paper-icon-button id="more" icon="more-vert"></paper-icon-button>
                 </paper-toolbar>
                 <div id="content" >
@@ -97,7 +100,7 @@
                             <div id="content-item" class="container">
                                 <div class="row">
                                     <template is="dom-if" if="{{item.columns}}">
-                                        <custom-form id="{{item.formId}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
+                                        <custom-form id="{{item.formId}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
                                     </template>
                                 </div>
                             </div>
@@ -130,10 +133,22 @@
       },
       onIronSelect: function(e) {
          this.noCards = true;
+         var item = this.menu[this.selected];
+         var customForm = document.getElementById(item.formId);
+         var pageRedirector = customForm.querySelector('page-redirector')
+         if (pageRedirector) {
+             pageRedirector.redirect();
+         }
       },
       goHome: function() {
          this.noCards = false;
          this.selected = -1;
+      },
+      handleBackTap: function() {
+         var backRedirector = this.querySelector('page-redirector');
+         if (backRedirector) {
+             backRedirector.redirect();
+         }
       }
     });
 
@@ -168,7 +183,10 @@
                 customForm.addUrl = item.addUrl;
                 customForm.modifyUrl = item.modifyUrl;
                 customForm.getUrl = item.getUrl;
-                customForm.configure();
+
+                if (!customForm.menuCard) {
+                    customForm.configure();
+                }
             }
         }
     })

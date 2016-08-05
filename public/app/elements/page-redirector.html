@@ -1,0 +1,18 @@
+<dom-module id="page-redirector">
+    <template>
+    </template>
+    <script>
+    Polymer({
+      is: 'page-redirector',
+      properties: {
+        url: {
+          type: String,
+          value: ''
+        }
+      },
+      redirect: function() {
+          window.location.href = this.url;
+      }
+    });
+  </script>
+</dom-module>

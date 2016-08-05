@@ -15,6 +15,7 @@ POST    /login                                       controllers.Application.log
 
 # Assets
 GET     /users                                       controllers.Application.asset(file="/public/app/users.html")
+GET     /gateway                                     controllers.Application.asset(file="/public/app/gateway.html")
 GET     /phones/polycom                              controllers.Application.asset(file="/public/app/polycom.html")
 GET     /main/config                                 controllers.Application.asset(file="/public/app/main.html")
 
