@@ -39,8 +39,191 @@
         "helper": "Please select user role(s)",
         "multiple": true,
         "type": "select",
+        "size": 3,
         "removeDefaultNone": true
       }
+    }
+  },
+  "contactInf_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "contactInf": {
+            "type": "object",
+            "properties": {
+              "useExtImg": {
+                "title": "Use External Image",
+                "type": "boolean"
+              },
+              "url": {
+                "title": "URL",
+                "type": "string",
+                "dependencies": "useExtImg"
+              },
+              "jobTitle": {
+                "title": "Job title",
+                "type": "string"
+              },
+              "department": {
+                "title": "Department",
+                "type": "string"
+              },
+              "compName": {
+                "title": "Company name",
+                "type": "string"
+              },
+              "assistName": {
+                "title": "Assistant name",
+                "type": "string"
+              },
+              "cellPhoneNumber": {
+                "title": "Cell phone number",
+                "type": "string"
+              },
+              "homePhoneNumber": {
+                "title": "Home phone number",
+                "type": "string"
+              },
+              "assistPhoneNumber": {
+                "title": "Assistant phone number",
+                "type": "string"
+              },
+              "faxNumber": {
+                "title": "Fax number",
+                "type": "string"
+              },
+              "didNumber": {
+                "title": "DID number",
+                "type": "string"
+              },
+              "emailAddr": {
+                "title": "E-mail address",
+                "type": "string"
+              },
+              "imAccount": {
+                "title": "IM account",
+                "type": "string"
+              },
+              "altEmailAddr": {
+                "title": "Alternative E-mail address",
+                "type": "string"
+              },
+              "emailAlliases": {
+                "title": "E-mail aliases",
+                "type": "string"
+              },
+              "altImAccount": {
+                "title": "Alternative IM account",
+                "type": "string"
+              },
+              "location": {
+                "title": "Location",
+                "type": "string"
+              },
+              "homeAddr": {
+                "title": "Home address",
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "title": "Street",
+                    "type": "string"
+                  },
+                  "city": {
+                    "title": "City",
+                    "type": "string"
+                  },
+                  "stateProvince": {
+                    "title": "State/Province",
+                    "type": "string"
+                  },
+                  "country": {
+                    "title": "Country",
+                    "type": "string"
+                  },
+                  "zipPostalCode": {
+                    "title": "Zip/Postal Code",
+                    "type": "string"
+                  },
+                  "mailStop": {
+                    "title": "Mail stop",
+                    "type": "string"
+                  }
+                }
+              },
+              "officeAddr": {
+                "title": "Office address",
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "title": "Street",
+                    "type": "string"
+                  },
+                  "city": {
+                    "title": "City",
+                    "type": "string"
+                  },
+                  "stateProvince": {
+                    "title": "State/Province",
+                    "type": "string"
+                  },
+                  "country": {
+                    "title": "Country",
+                    "type": "string"
+                  },
+                  "zipPostalCode": {
+                    "title": "Zip/Postal Code",
+                    "type": "string"
+                  },
+                  "mailStop": {
+                    "title": "Mail stop",
+                    "type": "string"
+                  }
+                }
+              },
+              "socMedia": {
+                "title": "Social Media",
+                "type": "object",
+                "properties": {
+                  "twitterAccount": {
+                    "title": "Twitter Account",
+                    "type": "string"
+                  },
+                  "linkedinAccount": {
+                    "title": "Linkedin Account",
+                    "type": "string"
+                  },
+                  "facebookAccount": {
+                    "title": "Facebook Account",
+                    "type": "string"
+                  },
+                  "xingAccount": {
+                    "title": "Xing Account",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "contactInf_settings_options": {
+    "helper": "Contact Information",
+    "fields": {
+      "settings": {
+        "fields": {
+          "contactInf": {
+            "toolbarSticky": true
+          }
+        }
+      }
+    }
+  },
+  "settings_defaults": {
+    "settings": {
     }
   }
 }

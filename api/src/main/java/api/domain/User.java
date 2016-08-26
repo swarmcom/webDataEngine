@@ -1,11 +1,10 @@
 package api.domain;
 
 import org.apache.commons.lang3.StringUtils;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class User extends BeanDomain<User>{
 
@@ -18,6 +17,8 @@ public class User extends BeanDomain<User>{
     protected String accountId;
 
     protected Set<String> roles = new TreeSet<String>();
+
+    protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
     public User() {
     }
@@ -80,6 +81,14 @@ public class User extends BeanDomain<User>{
         }
     }
 
+    public Map<String, Map<String, Object>> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Map<String, Map<String, Object>> settings) {
+        this.settings = settings;
+    }
+
     @Override
     public void merge(User user) {
         String accountId = user.getAccountId();
@@ -100,6 +109,16 @@ public class User extends BeanDomain<User>{
 
         if (roles != null) {
             setRoles(roles);
+        }
+
+        Map<String, Map<String, Object>> settings = user.getSettings();
+        if (settings != null) {
+            for (Map.Entry entry : settings.entrySet()) {
+                Map<String, Object> entryToMerge = settings.get(entry.getKey());
+                if (entryToMerge != null) {
+                    this.settings.put((String)entry.getKey(), entryToMerge);
+                }
+            }
         }
     }
 }
