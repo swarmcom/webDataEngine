@@ -39,6 +39,7 @@ public class Users extends BaseController {
     @Override
     protected BeanDomain addAbstract() throws Exception {
         User userToAdd = new User();
+        mergeDefaults(userToAdd, getUserDefaultsJSON());
         merge(userToAdd);
         userToAdd.setPassword(userToAdd.getPassword());
         return userService.saveUser(userToAdd);
@@ -103,5 +104,14 @@ public class Users extends BaseController {
 
     public Result userTemplate(String key) {
         return ok(getTemplate(key,"/public/app/templates/user-template.json"));
+    }
+
+    private String getUserDefaultsJSON() {
+        return getTemplate("settings_defaults", "/public/app/templates/user-template.json");
+    }
+
+    @Override
+    public Result getDefaults() {
+        return userTemplate("settings_defaults");
     }
 }
