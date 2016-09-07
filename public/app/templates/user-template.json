@@ -224,7 +224,237 @@
       }
     }
   },
+  "unifiedMsg_settings_schema":{
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "unifiedMsg": {
+            "type": "object",
+            "properties": {
+              "activeGreeting": {
+                "type": "string",
+                "title": "Active greeting",
+                "enum": [
+                  "Default system greeting",
+                  "Standard",
+                  "Out of office",
+                  "Extended absence"
+                ]
+              },
+              "language": {
+                "type": "string",
+                "title": "Language",
+                "enum": [
+                  "Default",
+                  "English"
+                ]
+              },
+              "externalMWI": {
+                "type": "string",
+                "title": "External MWI",
+                "pattern": "(^[0-9]+)|(^(([a-zA-Z0-9]+)@([a-zA-Z0-9.]+))+)$"
+              },
+              "frwdDltMsgVmInbox": {
+                "type": "boolean",
+                "title": "Forward and Delete Message from Voicemail Inbox"
+              },
+              "primaryEmail": {
+                "type": "object",
+                "title": "Primary E-mail",
+                "properties": {
+                  "adEmailAddr": {
+                    "type": "string",
+                    "title": "E-mail address"
+                  },
+                  "vmNotification": {
+                    "type": "string",
+                    "title": "Voicemail notification",
+                    "enum": ["No notification","E-mail notification"]
+                  },
+                  "emailFormat": {
+                    "type": "string",
+                    "title": "E-mail format",
+                    "enum": ["Full","Medium", "Brief"]
+                  },
+                  "attachAudio": {
+                    "type": "boolean",
+                    "title": "Attach audio"
+                  }
+                }
+              },
+              "additionalEmail": {
+                "type": "object",
+                "title": "Additional E-mail",
+                "properties": {
+                  "adEmailAddr": {
+                    "type": "string",
+                    "title": "Additional E-mail address"
+                  },
+                  "vmNotification": {
+                    "type": "string",
+                    "title": "Voicemail notification",
+                    "enum": ["No notification","E-mail notification"]
+                  },
+                  "emailFormat": {
+                    "type": "string",
+                    "title": "E-mail format",
+                    "enum": ["Full","Medium", "Brief"]
+                  },
+                  "attachAudio": {
+                    "type": "boolean",
+                    "title": "Attach audio"
+                  },
+                  "vmServer": {
+                    "type": "string",
+                    "title": "Voicemail Server",
+                    "enum": ["Use default value","Internal Voicemail Server", "Microsoft Exchange UM Voicemail Server"]
+                  }
+                }
+              },
+              "faxService": {
+                "type": "object",
+                "title": "Fax Service",
+                "properties": {
+                  "faxExtension": {
+                    "type": "string",
+                    "title": "Fax Extension"
+                  },
+                  "faxDidNumber": {
+                    "type": "string",
+                    "title": "Fax DID Number"
+                  }
+                }
+              },
+              "security": {
+                "type": "object",
+                "title": "Security",
+                "properties": {
+                  "forcePinChange": {
+                    "type": "boolean",
+                    "title": "Force PIN Change"
+                  },
+                  "autoEnterPinFUserExt": {
+                    "type": "boolean",
+                    "title": "Auto Enter PIN from user Extension"
+                  },
+                  "autoEnterPinFExternal": {
+                    "type": "boolean",
+                    "title": "Auto Enter PIN from External #"
+                  },
+                  "daysToKeepVmAndConfRec": {
+                    "type": "number",
+                    "title": "Days to keep voicemails and conference recordings"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "faxService.faxExtension": ["primaryEmail.attachAudio"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "unifiedMsg_settings_options":{
+    "helper":"Unified Messaging",
+    "fields": {
+      "settings": {
+        "fields": {
+          "unifiedMsg": {
+            "toolbarSticky": true,
+            "fields": {
+              "activeGreeting": {
+                "helper": "Voicemail prompt callers will hear before leaving a message.",
+                "removeDefaultNone": true
+              },
+              "language": {
+                "removeDefaultNone": true
+              },
+              "externalMWI": {
+                "helper": "The dialed number used to send Message Waiting Indication to an external user."
+              },
+              "frwdDltMsgVmInbox": {
+                "helper": "If checked, the voicemails that were succesfully emailed will be deleted."
+              },
+              "primaryEmail": {
+                "fields": {
+                  "vmNotification": {
+                    "helper": "The voicemail messages can be attached to the notification e-mail or not.",
+                    "removeDefaultNone": true
+                  },
+                  "emailFormat": {
+                    "helper": "This controls the format of the email sent for voicemail message notification. The formats are:",
+                    "removeDefaultNone": true
+                  },
+                  "attachAudio": {
+                    "helper": "If checked, the voicemail message will be attached to the notification e-mail. Otherwise, the e-mail will contain a link to retrieve voicemail message."
+                  }
+                }
+              },
+              "additionalEmail": {
+                "fields": {
+                  "vmNotification": {
+                    "removeDefaultNone": true
+                  },
+                  "emailFormat": {
+                    "removeDefaultNone": true
+                  },
+                  "attachAudio": {
+                    "helper": "If checked, the voicemail message will be attached to the notification e-mail. Otherwise, the e-mail will contain a link to retrieve voicemail message."
+                  },
+                  "vmServer": {
+                    "helper": "Specify what kind of voicemail server to be used (internal or external) or inherit the default value."
+                  }
+                }
+              },
+              "faxService": {
+                "fields": {
+                  "faxExtension": {
+                    "helper": "Faxes cannot be received until a primary or alternate email address is defined",
+                    "dependencies" : {
+                      "primaryEmail.attachAudio": true
+                    }
+                  },
+                  "faxDidNumber": {
+                    "helper": "Direct Inward Dialing number. Used to call from an external line"
+                  }
+                }
+              },
+              "security": {
+                "fields": {
+                  "forcePinChange": {
+                    "helper": "User is forced to change PIN after logging in to Voicemail."
+                  },
+                  "autoEnterPinFUserExt": {
+                    "helper": "When a user dials voicemail pilot number from their extension this option will not require user to enter PIN but instead directly access their voicemail."
+                  },
+                  "autoEnterPinFExternal": {
+                    "helper": "When a user dials voicemail pilot number from their Cell Phone or Home Phone (as defined on user's contact information) this option will not require user to enter PIN but instead directly access their voicemail."
+                  },
+                  "daysToKeepVmAndConfRec": {
+                    "helper": "The amount of days a voicemail will be stored before automatically removed. This expiration limit would be imposed on any voicemail within any folder and would also be applied to conference recordings. If set to default(0) the voicemails will be kept indefinitely."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "settings_defaults": {
-    "roles": ["ROLE_USER"]
+    "roles": ["ROLE_USER"],
+    "settings":{
+      "unifiedMsg": {
+        "activeGreeting": ["Default system greeting"],
+        "language": ["Default"],
+        "security": {
+          "daysToKeepVmAndConfRec": 0
+        }
+      }
+    }
   }
 }
