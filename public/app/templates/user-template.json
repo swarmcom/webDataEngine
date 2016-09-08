@@ -349,9 +349,6 @@
                   }
                 }
               }
-            },
-            "dependencies": {
-              "faxService.faxExtension": ["primaryEmail.attachAudio"]
             }
           }
         }
@@ -413,10 +410,7 @@
               "faxService": {
                 "fields": {
                   "faxExtension": {
-                    "helper": "Faxes cannot be received until a primary or alternate email address is defined",
-                    "dependencies" : {
-                      "primaryEmail.attachAudio": true
-                    }
+                    "helper": "Faxes cannot be received until a primary or alternate email address is defined"
                   },
                   "faxDidNumber": {
                     "helper": "Direct Inward Dialing number. Used to call from an external line"
@@ -445,8 +439,72 @@
       }
     }
   },
-  "settings_defaults": {
-    "roles": ["ROLE_USER"],
+  "speedDial_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "speedDial": {
+            "type": "object",
+            "properties": {
+              "speedDials": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "title": "Name"
+                    },
+                    "number": {
+                      "type": "string",
+                      "title": "Number",
+                      "pattern": "(^[0-9]+)|(^[*][0-9]+)|(^[+][0-9]+)|(^(([a-zA-Z0-9]+)@([a-zA-Z0-9.]+))+)$"
+                    },
+                    "subscribe": {
+                      "type": "boolean",
+                      "title": "Subscribe to presence"
+                    }
+                  }
+                },
+                "dependencies": "useGroupSpeedDials"
+              },
+              "useGroupSpeedDials": {
+                "type": "boolean",
+                "title": "Use Group Speed Dials"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "speedDial_settings_options": {
+    "helper":"Speed Dial",
+    "fields": {
+      "settings": {
+        "fields": {
+          "speedDial": {
+            "toolbarSticky": true,
+            "fields": {
+              "speedDials": {
+                "dependencies": {
+                  "useGroupSpeedDials": false
+                },
+                "type": "table"
+              },
+              "useGroupSpeedDials": {
+                "helper": "Warning:Enabling this option will delete all your existing Speed Dials and replace them with the Group Speed Dials"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+"settings_defaults": {
+  "roles": ["ROLE_USER"],
     "settings":{
       "unifiedMsg": {
         "activeGreeting": ["Default system greeting"],
