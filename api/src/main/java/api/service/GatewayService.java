@@ -16,6 +16,8 @@ public interface GatewayService {
 
     public List<? extends Gateway> getGateways(String accountId);
 
+    public List<? extends Gateway> getGateways(String accountId, String model);
+
     Gateway getGatewayById (String accountId, String gatewayId);
 
     Long deleteGateway(String gatewayId, String serialNumber);

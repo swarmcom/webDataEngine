@@ -1,5 +1,6 @@
 package api.domain;
 
+import api.type.PhoneModel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Phone extends BeanDomain<Phone> {
     protected String firmwareVersion;
     protected List<String> lines = new ArrayList<String>();
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
+    protected PhoneModel model;
 
     public Phone() {
     }
@@ -86,6 +88,14 @@ public class Phone extends BeanDomain<Phone> {
         this.settings = settings;
     }
 
+    public PhoneModel getModel() {
+        return model;
+    }
+
+    public void setModel(PhoneModel model) {
+        this.model = model;
+    }
+
     public void merge(Phone phone) {
         String description = phone.getDescription();
         if (description != null) {
@@ -103,14 +113,7 @@ public class Phone extends BeanDomain<Phone> {
         if (lines != null) {
             setLines(lines);
         }
-        Map<String, Map<String, Object>> settings = phone.getSettings();
-        if (settings != null) {
-            for (Map.Entry entry : this.settings.entrySet()) {
-                Map<String, Object> entryToMerge = settings.get(entry.getKey());
-                if (entryToMerge != null) {
-                    entry.setValue(entryToMerge);
-                }
-            }
-        }
+
+        mergeSettings(phone.getSettings(), this.settings);
     }
 }

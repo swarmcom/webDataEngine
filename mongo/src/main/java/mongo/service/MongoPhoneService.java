@@ -47,6 +47,11 @@ public class MongoPhoneService implements PhoneService {
     }
 
     @Override
+    public List<? extends Phone> getPhones(String accountId, String model) {
+        return phoneRepository.findByAccountIdAndModel(accountId, model);
+    }
+
+    @Override
     public Phone getPhoneById(String accountId, String phoneId) {
         return phoneRepository.findByAccountIdAndId(accountId, phoneId);
     }

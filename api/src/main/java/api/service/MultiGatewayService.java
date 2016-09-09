@@ -15,6 +15,8 @@ public interface MultiGatewayService extends GatewayService {
 
     public List<? extends Gateway> getGateways();
 
+    public List<? extends Gateway> getGatewaysByModel(String model);
+
     Gateway getGatewayById (String gatewayId);
 
     Long deleteGateway(String serialNumber);

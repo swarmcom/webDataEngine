@@ -111,14 +111,6 @@ public class User extends BeanDomain<User>{
             setRoles(roles);
         }
 
-        Map<String, Map<String, Object>> settings = user.getSettings();
-        if (settings != null) {
-            for (Map.Entry entry : settings.entrySet()) {
-                Map<String, Object> entryToMerge = settings.get(entry.getKey());
-                if (entryToMerge != null) {
-                    this.settings.put((String)entry.getKey(), entryToMerge);
-                }
-            }
-        }
+        mergeSettings(user.getSettings(), this.settings);
     }
 }

@@ -1,5 +1,6 @@
 package api.domain;
 
+import api.type.GatewayModel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class Gateway extends BeanDomain<Gateway> {
     protected String firmwareVersion;
     protected Boolean shared;
     protected String description;
+    protected GatewayModel model;
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
     public Gateway(){
@@ -110,6 +112,14 @@ public class Gateway extends BeanDomain<Gateway> {
         this.description = description;
     }
 
+    public GatewayModel getModel() {
+        return model;
+    }
+
+    public void setModel(GatewayModel model) {
+        this.model = model;
+    }
+
     public Map<String, Map<String, Object>> getSettings() {
         return settings;
     }
@@ -149,14 +159,11 @@ public class Gateway extends BeanDomain<Gateway> {
             setShared(shared);
         }
 
-        Map<String, Map<String, Object>> settings = gateway.getSettings();
-        if (settings != null) {
-            for (Map.Entry entry : settings.entrySet()) {
-                Map<String, Object> entryToMerge = settings.get(entry.getKey());
-                if (entryToMerge != null) {
-                    this.settings.put((String)entry.getKey(), entryToMerge);
-                }
-            }
+        GatewayModel model = gateway.getModel();
+        if (model != null) {
+            setModel(model);
         }
+
+        mergeSettings(gateway.getSettings(), this.settings);
     }
 }

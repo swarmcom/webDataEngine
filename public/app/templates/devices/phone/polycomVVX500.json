@@ -1178,6 +1178,7 @@
     }
   },
   "settings_defaults": {
+    "model": "PolycomVVX500",
     "settings": {
       "dateTimeSettings": {
         "dateFormat": "D,Md",

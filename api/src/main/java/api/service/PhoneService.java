@@ -14,6 +14,8 @@ public interface PhoneService {
 
     public List<? extends Phone> getPhones(String accountId);
 
+    public List<? extends Phone> getPhones(String accountId, String model);
+
     Phone getPhoneById (String accountId, String phoneId);
 
     Long deletePhone(String accountId, String serialNumber);

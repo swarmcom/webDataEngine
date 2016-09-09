@@ -22,27 +22,19 @@ import java.util.Map;
 /**
  * Created by mirceac on 5/23/16.
  */
-public abstract class BaseController extends Controller {
+public abstract class EntityController extends Controller {
 
-    protected abstract BeanDomain addAbstract() throws Exception;
     protected abstract BeanDomain getByNameAbstract(String name) throws Exception;
-    protected abstract BeanDomain getByIdAbstract(String id) throws Exception;
-    protected abstract Long deleteByNameAbstract(String name)throws Exception;
-    protected abstract Long deleteListAbstract() throws Exception;
-    protected abstract BeanDomain modifyByNameAbstract(String name) throws Exception;
-    protected abstract BeanDomain modifyByIdAbstract(String id) throws Exception;
-    protected abstract List<? extends BeanDomain> listAbstract() throws Exception;
-    protected abstract ArrayNode listArrayAbstract() throws Exception;
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result add() {
-        try {
-            return convert(addAbstract());
-        } catch (Exception e) {
-            Logger.error("error ", e);
-            return convert(null);
-        }
-    }
+    protected abstract BeanDomain getByIdAbstract(String id) throws Exception;
+
+    protected abstract Long deleteByNameAbstract(String name)throws Exception;
+
+    protected abstract Long deleteListAbstract() throws Exception;
+
+    protected abstract BeanDomain modifyByNameAbstract(String name) throws Exception;
+
+    protected abstract BeanDomain modifyByIdAbstract(String id) throws Exception;
 
     public Result getByName(String name) {
         try {
@@ -101,27 +93,6 @@ public abstract class BaseController extends Controller {
         }
     }
 
-    public Result list() {
-        try {
-            List<? extends BeanDomain> beans = listAbstract();
-            JsonNode node = Json.toJson(beans);
-            return ok(node.toString());
-        } catch (Exception e) {
-            Logger.error("error ", e);
-            return convert(null);
-        }
-    }
-
-    public Result listArray() {
-        try {
-            ArrayNode node = listArrayAbstract();
-            return ok(node.toString());
-        } catch (Exception e) {
-            Logger.error("error ", e);
-            return convert(null);
-        }
-    }
-
     protected Result convert(Object obj) {
         if (obj != null) {
             JsonNode node = Json.toJson(obj);
@@ -161,7 +132,7 @@ public abstract class BaseController extends Controller {
         return idsArray;
     }
 
-    protected String getTemplate(String key, String templateFile) {
+    protected String getTemplateJSON(String key, String templateFile) {
         String schema = StringUtils.EMPTY;
         try {
             JsonNode node = new ObjectMapper().readTree(Play.application().getFile(templateFile));
@@ -178,7 +149,7 @@ public abstract class BaseController extends Controller {
         return node.toString();
     }
 
-    public Result getDefaults() {
-        return ok("{}");
+    protected Result getTemplate(String key, String file) {
+        return ok(getTemplateJSON(key, file));
     }
 }

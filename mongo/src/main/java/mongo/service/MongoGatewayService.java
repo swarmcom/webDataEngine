@@ -45,6 +45,11 @@ public class MongoGatewayService implements GatewayService {
     }
 
     @Override
+    public List<? extends Gateway> getGateways(String accountId, String model) {
+        return gatewayRepository.findByAccountIdAndModel(accountId, model);
+    }
+
+    @Override
     public Gateway getGatewayById(String accountId, String gatewayId) {
         return gatewayRepository.findByAccountIdAndId(accountId, gatewayId);
     }

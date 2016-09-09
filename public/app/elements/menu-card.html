@@ -99,9 +99,7 @@
                         <template is="dom-repeat" items="{{menu}}">
                             <div id="content-item" class="container">
                                 <div class="row">
-                                    <template is="dom-if" if="{{item.columns}}">
-                                        <custom-form id="{{item.formId}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
-                                    </template>
+                                    <custom-form id="{{item.formId}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
                                 </div>
                             </div>
                         </template>

@@ -2039,6 +2039,7 @@
     }
   },
   "settings_defaults": {
+    "model": "AudioCodesMediant1000",
     "settings": {
       "callerIdSettings": {
         "keepDigits": 0

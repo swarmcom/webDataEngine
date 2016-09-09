@@ -34,6 +34,12 @@ public class MultiTenantGatewayService implements MultiGatewayService {
     }
 
     @Override
+    public List<? extends Gateway> getGatewaysByModel(String model) {
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        return getGateways(currentAccountId, model);
+    }
+
+    @Override
     public Gateway getGatewayById(String gatewayId) {
         String currentAccountId = TokenUtil.getCurrentAccountId();
         return getGatewayById(currentAccountId, gatewayId);
@@ -71,6 +77,12 @@ public class MultiTenantGatewayService implements MultiGatewayService {
     public List<? extends Gateway> getGateways(String accountId) {
         GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
         return gatewayService.getGateways(accountId);
+    }
+
+    @Override
+    public List<? extends Gateway> getGateways(String accountId, String model) {
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
+        return gatewayService.getGateways(accountId, model);
     }
 
     @Override

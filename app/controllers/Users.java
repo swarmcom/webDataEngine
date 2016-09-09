@@ -7,20 +7,16 @@ import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.DigestAuthentication;
 import auth.SessionSecured;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
-import play.mvc.Http.*;
 import security.encoder.SecurityPasswordEncoder;
 import security.util.TokenUtil;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -29,7 +25,7 @@ import java.util.List;
 @DigestAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
-public class Users extends BaseController {
+public class Users extends SimpleEntityController {
     @Inject
     MultiUserService userService;
 
@@ -102,8 +98,13 @@ public class Users extends BaseController {
         return node;
     }
 
-    public Result userTemplate(String key) {
-        return ok(getTemplate(key,"/public/app/templates/user-template.json"));
+    public Result getTemplate(String key) {
+        return getTemplate(key,"/public/app/templates/user-template.json");
+    }
+
+    @Override
+    protected String getDefaultsJSON() {
+        return getTemplateJSON("settings_defaults", "/public/app/templates/user-template.json");
     }
 
     private String getUserDefaultsJSON() {

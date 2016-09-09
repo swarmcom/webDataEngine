@@ -46,6 +46,12 @@ public class MultiTenantPhoneService implements MultiPhoneService {
     }
 
     @Override
+    public List<? extends Phone> getPhones(String accountId, String model) {
+        PhoneService phoneService = multiService.getTenantPhoneService(accountId);
+        return phoneService.getPhones(accountId, model);
+    }
+
+    @Override
     public Phone getPhoneById(String accountId, String phoneId) {
         PhoneService phoneService = multiService.getCurrentTenantPhoneService();
         return phoneService.getPhoneById(accountId, phoneId);
@@ -79,6 +85,12 @@ public class MultiTenantPhoneService implements MultiPhoneService {
     public List<? extends Phone> getPhones() {
         String currentAccountId = TokenUtil.getCurrentAccountId();
         return getPhones(currentAccountId);
+    }
+
+    @Override
+    public List<? extends Phone> getPhonesByModel(String model) {
+        String currentAccountId = TokenUtil.getCurrentAccountId();
+        return getPhones(currentAccountId, model);
     }
 
     @Override

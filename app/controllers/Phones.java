@@ -3,22 +3,17 @@ package controllers;
 import api.domain.BeanDomain;
 import api.domain.Phone;
 import api.service.MultiPhoneService;
+import api.type.PhoneModel;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.SessionSecured;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import play.Play;
 import play.libs.Json;
 import play.mvc.*;
-import security.util.TokenUtil;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -27,15 +22,15 @@ import java.util.List;
 @BasicAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
-public class Phones extends BaseController {
+public class Phones extends ModeledEntityController {
 
     @Inject
     MultiPhoneService phoneService;
 
     @Override
-    protected BeanDomain addAbstract() throws Exception {
+    protected BeanDomain addAbstract(String model) throws Exception {
         Phone phoneToAdd = new Phone();
-        mergeDefaults(phoneToAdd, getPolycomDefaultsJSON());
+        mergeDefaults(phoneToAdd, getDefaultsJSON(model));
         merge(phoneToAdd);
         return phoneService.savePhone(phoneToAdd);
     }
@@ -75,14 +70,44 @@ public class Phones extends BaseController {
         return (existingPhone != null ? phoneService.savePhone(existingPhone) : null);
     }
 
-    @Override
-    protected List<? extends BeanDomain> listAbstract() throws Exception {
-        return phoneService.getPhones(TokenUtil.getCurrentAccountId());
+    protected String getDefaultsJSON(String model) {
+        String result;
+        switch (PhoneModel.valueOf(model)) {
+            case PolycomVVX500:
+                result = getTemplateJSON("settings_defaults", "/public/app/templates/devices/phone/polycomVVX500.json");
+                break;
+            default:
+                result = null;
+        }
+        return result;
     }
 
     @Override
-    protected ArrayNode listArrayAbstract() throws Exception {
-        List<? extends Phone> phones = phoneService.getPhones();
+    protected List<? extends BeanDomain> listAbstract(String model) throws Exception {
+        return phoneService.getPhones(model);
+    }
+
+    @Override
+    protected ArrayNode listArrayAbstract(String model) throws Exception {
+        List<? extends Phone> phones = phoneService.getPhonesByModel(model);
+        return createPhoneArrayJson(phones);
+    }
+
+    @Override
+    public Result getTemplateByModel(String key, String model) {
+        Result result;
+        switch (PhoneModel.valueOf(model)) {
+            case PolycomVVX500:
+                result = getTemplate(key, "/public/app/templates/devices/phone/polycomVVX500.json");
+                break;
+            default:
+                result = null;
+        }
+
+        return result;
+    }
+
+    protected ArrayNode createPhoneArrayJson(List<? extends Phone> phones) {
         ArrayNode node = Json.newArray();
         for (Phone phone : phones) {
             ArrayNode itemNode = Json.newArray();
@@ -94,18 +119,5 @@ public class Phones extends BaseController {
             node.add(itemNode);
         }
         return node;
-    }
-
-    public Result polycomTemplate(String key) {
-        return ok(getTemplate(key, "/public/app/templates/devices/polycom/polycomTemplate.json"));
-    }
-
-    private String getPolycomDefaultsJSON() {
-        return getTemplate("settings_defaults", "/public/app/templates/devices/polycom/polycomTemplate.json");
-    }
-
-    @Override
-    public Result getDefaults() {
-        return polycomTemplate("settings_defaults");
     }
 }

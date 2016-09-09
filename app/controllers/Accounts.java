@@ -7,8 +7,6 @@ import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.DigestAuthentication;
 import auth.SessionSecured;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,6 @@ import play.libs.Json;
 import play.mvc.*;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -27,16 +24,15 @@ import java.util.List;
 @DigestAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-public class Accounts extends BaseController {
+public class Accounts extends SimpleEntityController {
     @Inject
     AccountService accountService;
 
     @Override
     protected BeanDomain addAbstract() throws Exception {
         Account accountToAdd = new Account();
-        mergeDefaults(accountToAdd, getAccountsDefaultsJSON());
+        mergeDefaults(accountToAdd, getDefaultsJSON());
         merge(accountToAdd);
-        Logger.info("MIRCEA " + accountToAdd.getDbName());
         Account savedAccount = accountService.saveAccount(accountToAdd);
         return savedAccount;
     }
@@ -98,16 +94,11 @@ public class Accounts extends BaseController {
         return node;
     }
 
-    public Result accountTemplate(String key) {
-        return ok(getTemplate(key,"/public/app/templates/account-template.json"));
+    public Result getTemplate(String key) {
+        return getTemplate(key,"/public/app/templates/account-template.json");
     }
 
-    private String getAccountsDefaultsJSON() {
-        return getTemplate("settings_defaults", "/public/app/templates/account-template.json");
-    }
-
-    @Override
-    public Result getDefaults() {
-        return accountTemplate("settings_defaults");
+    protected String getDefaultsJSON() {
+        return getTemplateJSON("settings_defaults", "/public/app/templates/account-template.json");
     }
 }

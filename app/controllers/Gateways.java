@@ -3,6 +3,7 @@ package controllers;
 import api.domain.BeanDomain;
 import api.domain.Gateway;
 import api.service.MultiGatewayService;
+import api.type.GatewayModel;
 import auth.AuthenticationAction;
 import auth.BasicAuthentication;
 import auth.SessionSecured;
@@ -13,7 +14,6 @@ import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
-import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -26,17 +26,53 @@ import java.util.List;
 @BasicAuthentication
 @Security.Authenticated(SessionSecured.class)
 @PreAuthorize("hasRole('ROLE_USER')")
-public class Gateways extends BaseController {
+public class Gateways extends ModeledEntityController {
 
     @Inject
     MultiGatewayService gatewayService;
 
-    @Override
-    protected BeanDomain addAbstract() throws Exception {
+    protected BeanDomain addAbstract(String model) throws Exception {
         Gateway gatewayToAdd = new Gateway();
-        mergeDefaults(gatewayToAdd, getGatewayDefaultsJSON());
+        mergeDefaults(gatewayToAdd, getDefaultsJSON(model));
         merge(gatewayToAdd);
         return gatewayService.saveGateway(gatewayToAdd);
+    }
+
+    @Override
+    protected List<? extends BeanDomain> listAbstract(String model) throws Exception {
+        return gatewayService.getGatewaysByModel(model);
+    }
+
+    @Override
+    protected ArrayNode listArrayAbstract(String model) throws Exception {
+        List<? extends Gateway> gateways = gatewayService.getGatewaysByModel(model);
+        return createGatewayArrayJson(gateways);
+    }
+
+    @Override
+    public Result getTemplateByModel(String key, String model) {
+        Result result;
+        switch (GatewayModel.valueOf(model)) {
+            case AudioCodesMediant1000:
+                result = getTemplate(key, "/public/app/templates/devices/gateway/audioCodesMediant1000.json");
+                break;
+            default:
+                result = null;
+        }
+
+        return result;
+    }
+
+    protected String getDefaultsJSON(String model) {
+        String result;
+        switch (GatewayModel.valueOf(model)) {
+            case AudioCodesMediant1000:
+                result = getTemplateJSON("settings_defaults", "/public/app/templates/devices/gateway/audioCodesMediant1000.json");
+                break;
+            default:
+                result = null;
+        }
+        return result;
     }
 
     @Override
@@ -74,14 +110,16 @@ public class Gateways extends BaseController {
         return (existingGateway != null ? gatewayService.saveGateway(existingGateway) : null);
     }
 
-    @Override
     protected List<? extends BeanDomain> listAbstract() throws Exception {
-        return gatewayService.getGateways(TokenUtil.getCurrentAccountId());
+        return gatewayService.getGateways();
     }
 
-    @Override
     protected ArrayNode listArrayAbstract() throws Exception {
         List<? extends Gateway> gateways = gatewayService.getGateways();
+        return createGatewayArrayJson(gateways);
+    }
+
+    protected ArrayNode createGatewayArrayJson(List<? extends Gateway> gateways) {
         ArrayNode node = Json.newArray();
         for (Gateway gateway : gateways) {
             ArrayNode itemNode = Json.newArray();
@@ -94,16 +132,4 @@ public class Gateways extends BaseController {
         return node;
     }
 
-    public Result gatewayTemplate(String key) {
-        return ok(getTemplate(key, "/public/app/templates/devices/gatewayTemplate.json"));
-    }
-
-    private String getGatewayDefaultsJSON() {
-        return getTemplate("settings_defaults", "/public/app/templates/devices/gatewayTemplate.json");
-    }
-
-    @Override
-    public Result getDefaults() {
-        return gatewayTemplate("settings_defaults");
-    }
 }

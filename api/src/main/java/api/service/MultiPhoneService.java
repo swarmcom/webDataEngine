@@ -11,7 +11,9 @@ public interface MultiPhoneService extends PhoneService {
 
     Phone getPhone(String serialNumber);
 
-    public List<? extends Phone> getPhones();
+    List<? extends Phone> getPhones();
+
+    List<? extends Phone> getPhonesByModel(String model);
 
     Phone getPhoneById (String phoneId);
 
