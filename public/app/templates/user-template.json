@@ -503,8 +503,417 @@
       }
     }
   },
-"settings_defaults": {
-  "roles": ["ROLE_USER"],
+  "hoteling_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "hoteling": {
+            "type": "object",
+            "properties": {
+              "enable": {
+                "type": "boolean",
+                "title": "Enable"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "hoteling_settings_options": {
+    "helper":"Hoteling",
+    "fields": {
+      "settings": {
+        "fields": {
+          "hoteling": {
+            "fields": {
+              "enable": {
+                "helper": "When enabling, a user profile will be created in tftproot folder. User will be able to log in on any Polycom phone in the system that has the hoteling feature enabled."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "permissions_settings_schema":{
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "type": "object",
+            "properties": {
+              "general": {
+                "type": "object",
+                "title": "General Permission",
+                "properties": {
+                  "superadminAccess": {
+                    "type": "boolean",
+                    "title": "Supeadmin Access"
+                  },
+                  "localAuthOnly": {
+                    "type": "boolean",
+                    "title": "Local authentication only"
+                  },
+                  "changePINfromIVR": {
+                    "type": "boolean",
+                    "title": "Change PIN from IVR"
+                  },
+                  "configPersAutoAttendant": {
+                    "type": "boolean",
+                    "title": "Configure Personal Auto Attendant"
+                  },
+                  "configMusicOnHold": {
+                    "type": "boolean",
+                    "title": "Configure Music on Hold"
+                  },
+                  "configGroupMusicOnHold": {
+                    "type": "boolean",
+                    "title": "Configure Group Music on Hold"
+                  },
+                  "subscribeToPresence": {
+                    "type": "boolean",
+                    "title": "Subscribe to Presence"
+                  }
+                }
+              },
+              "call": {
+                "type": "object",
+                "title": "Call Permission",
+                "properties": {
+                  "900dialing": {
+                    "type": "boolean",
+                    "title": "900 Dialing"
+                  },
+                  "attendantDir": {
+                    "type": "boolean",
+                    "title": "Attendant Directory"
+                  },
+                  "internationalDial": {
+                    "type": "boolean",
+                    "title": "International Dialing"
+                  },
+                  "localDial": {
+                    "type": "boolean",
+                    "title": "Local Dialing"
+                  },
+                  "longDistDial": {
+                    "type": "boolean",
+                    "title": "Long Distance Dialing"
+                  },
+                  "mobileDial": {
+                    "type": "boolean",
+                    "title": "Mobile Dialing"
+                  },
+                  "tollFree": {
+                    "type": "boolean",
+                    "title": "Toll Free"
+                  },
+                  "voiceMail": {
+                    "type": "boolean",
+                    "title": "Voice Mail"
+                  },
+                  "recordSystemPrompts": {
+                    "type": "boolean",
+                    "title": "Record System Prompts"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "permissions_settings_options": {
+    "helper":"Permissions",
+    "fields": {
+      "settings": {
+        "fields": {
+          "permissions": {
+            "fields": {
+              "general": {
+                "fields": {
+                  "superadminAccess": {
+                    "helper": "User can log into administration interface."
+                  },
+                  "localAuthOnly": {
+                    "helper": "Ignores the configured system authentication scheme (ex: 'LDAP Only', 'LDAP and Password', etc) and performs local database authentication only"
+                  },
+                  "changePINfromIVR": {
+                    "helper": "User can change PIN value from Voicemail system. PIN is used to log into voicemail system and web interface. PIN does not affect the password phones use to authenticate with registration server."
+                  },
+                  "configPersAutoAttendant": {
+                    "helper": "User can configure personal auto attendant"
+                  },
+                  "configMusicOnHold": {
+                    "helper": "User can configure music on hold"
+                  },
+                  "configGroupMusicOnHold": {
+                    "helper": "User can override group settings for Music on Hold"
+                  },
+                  "subscribeToPresence": {
+                    "helper": "User can monitor the presence status of other users"
+                  }
+                }
+              },
+              "call": {
+                "fields": {
+                  "900dialing": {
+                    "helper": "User can dial 900 numbers"
+                  },
+                  "attendantDir": {
+                    "helper": "List user in Auto Attendant"
+                  },
+                  "internationalDial": {
+                    "helper": "User can dial international numbers"
+                  },
+                  "localDial": {
+                    "helper": "User can dial local numbers"
+                  },
+                  "longDistDial": {
+                    "helper": "User can dial long distance numbers"
+                  },
+                  "mobileDial": {
+                    "helper": "User can dial mobile numbers"
+                  },
+                  "tollFree": {
+                    "helper": "User can dial toll free numbers"
+                  },
+                  "voiceMail": {
+                    "helper": "User has voicemail inbox"
+                  },
+                  "recordSystemPrompts": {
+                    "helper": "User can record system prompts"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "callerId_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "callerId": {
+            "type": "object",
+            "properties": {
+              "callerId": {
+                "type": "string",
+                "title": "Caller ID"
+              },
+              "blockCallerId": {
+                "type": "boolean",
+                "title": "Block Caller ID"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "callerId_settings_options": {
+    "helper": "Caller ID",
+    "fields": {
+      "settings": {
+        "fields": {
+          "callerId": {
+            "fields": {
+              "callerId": {
+                "helper": "Externally visible user Caller ID. If it is not specified the gateway will create a Caller ID based on the caller's extension and additional gateway parameters."
+              },
+              "blockCallerId": {
+                "helper": "Block Caller ID for external calls for all calls made by this user."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "domain_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "title": "Domain"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "domain_settings_options": {
+    "helper": "Domain",
+    "fields": {
+      "settings": {
+        "fields": {
+          "domain": {
+            "fields": {
+              "domain": {
+                "helper": "Specify user domain."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "instantMessaging_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "instantMessaging": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "title": "Enabled"
+              },
+              "imId": {
+                "type": "string",
+                "title": "IM ID"
+              },
+              "phonePresenceIMStatus": {
+                "type": "boolean",
+                "title": "Phone presence in IM status"
+              },
+              "callInfoIMSTatus": {
+                "type": "boolean",
+                "title": "Call info in IM status"
+              },
+              "statusMsg": {
+                "type": "string",
+                "title": "Status Message"
+              },
+              "voicemailDnD": {
+                "type": "boolean",
+                "title": "Voicemail on DnD"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "instantMessaging_settings_options": {
+    "helper": "Instant Messaging",
+    "fields": {
+      "settings": {
+        "fields": {
+          "instantMessaging": {
+            "fields": {
+              "imId": {
+                "helper": "User name to be used when creating account for Instant Messaging service and Instant Messaging client. IM ID can also be used as an alias of an user when IM account is enabled."
+              },
+              "phonePresenceIMStatus": {
+                "helper": "If checked advertise the user's busy status in the XMPP status message."
+              },
+              "callInfoIMSTatus": {
+                "helper": "If checked include the caller info in the busy status of the XMPP status message."
+              },
+              "statusMsg": {
+                "helper": "The content of the message used as XMPP status when user is busy."
+              },
+              "voicemailDnD": {
+                "helper": "If checked, all calls received when Do Not Disturb status is set through XMPP client are forwarded directly to Voicemail."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "myBuddy_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "myBuddy": {
+            "type": "object",
+            "properties": {
+              "confEntryIM": {
+                "type": "boolean",
+                "title": "Conference Entry IM"
+              },
+              "confExitIM": {
+                "type": "boolean",
+                "title": "Conference Exit IM"
+              },
+              "voicemailStartIM": {
+                "type": "boolean",
+                "title": "VoiceMail Start IM"
+              },
+              "voicemailEndIM": {
+                "type": "boolean",
+                "title": "VoiceMail End IM"
+              },
+              "call": {
+                "type": "boolean",
+                "title": "Call"
+              },
+              "callFromAny": {
+                "type": "boolean",
+                "title": "Call From Any"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "myBuddy_settings_options": {
+    "helper": "MyBuddy",
+    "fields": {
+      "settings": {
+        "fields": {
+          "myBuddy": {
+            "fields": {
+              "confEntryIM": {
+                "helper": "Send me an Instant Messages as participants arrive"
+              },
+              "confExitIM": {
+                "helper": "Send me an Instant Messages as participants depart"
+              },
+              "voicemailStartIM": {
+                "helper": "Send me an Instant Message when a caller begins a call answering session"
+              },
+              "voicemailEndIM": {
+                "helper": "Send me an Instant Message when a caller finishes a call answering session"
+              },
+              "call": {
+                "helper": "Ability to perform calls"
+              },
+              "callFromAny": {
+                "helper": "Ability to perform calls from any number, not only from cell, work, home. The 'Call' option must be enabled for this option to take effect"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings_defaults": {
+    "roles": ["ROLE_USER"],
     "settings":{
       "unifiedMsg": {
         "activeGreeting": ["Default system greeting"],
@@ -512,6 +921,32 @@
         "security": {
           "daysToKeepVmAndConfRec": 0
         }
+      },
+      "permissions": {
+        "general": {
+          "changePINfromIVR": true,
+          "configPersAutoAttendant": true,
+          "configMusicOnHold": true,
+          "configGroupMusicOnHold": true,
+          "subscribeToPresence": true
+        },
+        "call": {
+          "internationalDial": true,
+          "localDial": true,
+          "longDistDial": true,
+          "mobileDial": true,
+          "tollFree": true,
+          "voiceMail": true
+        }
+      },
+      "instantMessaging": {
+        "enabled": true,
+        "phonePresenceIMStatus": true,
+        "statusMsg": "On the phone"
+      },
+      "myBuddy": {
+        "confEntryIM": true,
+        "confExitIM": true
       }
     }
   }
