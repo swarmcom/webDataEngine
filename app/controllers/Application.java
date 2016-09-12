@@ -28,7 +28,7 @@ public class Application extends Controller {
 
     @Secure(clients = "FormClient")
     public Result formIndex() {
-        return redirect("/users");
+        return redirect("/account");
     }
 
     @With(AuthenticationAction.class)

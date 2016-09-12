@@ -35,7 +35,7 @@ public class Users extends SimpleEntityController {
     @Override
     protected BeanDomain addAbstract() throws Exception {
         User userToAdd = new User();
-        mergeDefaults(userToAdd, getUserDefaultsJSON());
+        mergeDefaults(userToAdd, getDefaultsJSON());
         merge(userToAdd);
         userToAdd.setPassword(userToAdd.getPassword());
         return userService.saveUser(userToAdd);
@@ -105,14 +105,5 @@ public class Users extends SimpleEntityController {
     @Override
     protected String getDefaultsJSON() {
         return getTemplateJSON("settings_defaults", "/public/app/templates/user-template.json");
-    }
-
-    private String getUserDefaultsJSON() {
-        return getTemplate("settings_defaults", "/public/app/templates/user-template.json");
-    }
-
-    @Override
-    public Result getDefaults() {
-        return userTemplate("settings_defaults");
     }
 }

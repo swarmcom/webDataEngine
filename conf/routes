@@ -14,7 +14,7 @@ GET     /logout                                      org.pac4j.play.ApplicationL
 POST    /login                                       controllers.Application.login()
 
 # Assets
-GET     /users                                       controllers.Application.asset(file="/public/app/users.html")
+GET     /account                                     controllers.Application.asset(file="/public/app/account.html")
 GET     /gateway                                     controllers.Application.asset(file="/public/app/gateway.html")
 GET     /phone                                       controllers.Application.asset(file="/public/app/phone.html")
 GET     /main/config                                 controllers.Application.asset(file="/public/app/main.html")

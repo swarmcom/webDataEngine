@@ -1,0 +1,18 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "properties": {
+
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "helper": "Identification",
+    "fields": {
+      
+    }
+  },
+  "settings_defaults": {
+    "model": "PolycomVVX300"
+  }
+}
