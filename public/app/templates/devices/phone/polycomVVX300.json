@@ -2,17 +2,1173 @@
   "identification_schema": {
     "type": "object",
     "properties": {
-
+      "id": {
+      "type": "string",
+      "title": "Id"
+      },
+      "accountId": {
+        "type": "string",
+        "title": "Account"
+      },
+      "serialNumber": {
+        "type": "string",
+        "title": "Serial number"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "firmwareVersion": {
+        "type":"string",
+        "title":"Firmware version",
+        "enum": [
+          "4.1.X",
+          "4.1.0",
+          "4.1.2",
+          "4.1.3",
+          "4.1.4",
+          "4.1.5",
+          "4.1.6",
+          "4.1.7",
+          "4.1.8",
+          "5.0.0",
+          "5.0.1",
+          "5.0.2",
+          "5.1.1",
+          "5.1.2",
+          "5.1.3",
+          "5.2.0",
+          "5.2.1",
+          "5.2.2",
+          "5.2.3",
+          "5.3.0",
+          "5.3.1",
+          "5.4.0",
+          "5.4.1",
+          "5.4.3"
+        ]
+      }
     }
   },
   "identification_options": {
     "renderForm":true,
     "helper": "Identification",
     "fields": {
-      
+      "description" : {
+        "type": "textarea",
+        "rows": 5,
+        "cols": 40,
+        "helper": "Please enter your description."
+      },
+      "id": {
+        "type": "hidden"
+      },
+      "accountId": {
+        "type": "hidden"
+      }
+    }
+  },
+  "lines_schema": {
+    "type": "object",
+    "properties": {
+      "lines": {
+        "type": "array",
+        "title": "Lines"
+      }
+    }
+  },
+  "lines_options": {
+    "renderForm":true,
+    "helper": "Lines",
+    "fields": {
+    }
+  },
+  "dateTime_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "dateTimeSettings": {
+            "type": "object",
+            "properties": {
+              "timeFormat": {
+                "type": "object",
+                "title": "Time Format",
+                "properties": {
+                  "hourFormat": {
+                    "title": "24 Hour Format",
+                    "type": "boolean"
+                  }
+                }
+              },
+              "dateFormat": {
+                "type": "object",
+                "title": "Date Format",
+                "properties": {
+                  "format": {
+                    "title": "Format",
+                    "type": "string"
+                  },
+                  "dateLongFormat": {
+                    "title": "Date Long Format",
+                    "type": "boolean"
+                  },
+                  "dateTop": {
+                    "title": "Date Top",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dateTime_settings_options": {
+    "helper": "Date/Time",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dateTimeSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "timeFormat": {
+                "fields": {
+                  "hourFormat": {
+                    "helper": "If checked the time is in the 24h format, otherwise 12h AM/PM format."
+                  }
+                }
+              },
+              "dateFormat": {
+                "fields": {
+                  "format": {
+                    "helper": "Controls the format of the date string (D = day of week, d = day of the month, M = month), e.g. D,dM = \"Thursday, 3 July\" or \"Md,D = July 3, Thursday\". The field may contain 0, 1 or 2 commas, which can occur only between characters and only one at a time i.e. 'D,,dM' is illegal."
+                  },
+                  "dateLongFormat": {
+                    "helper": "If checked, display the day and month in long format (Friday/November). Otherwise use abbreviations (Fri/Nov)"
+                  },
+                  "dateTop": {
+                    "helper": "If checked, display date above time, else display time above date."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dateTime_settings_options": {
+    "helper": "Date/Time",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dateTimeSettings": {
+            "toolbarSticky": true,
+            "fields": {
+              "hourFormat": {
+                "helper": "If checked the time is in the 24h format, otherwise 12h AM/PM format."
+              },
+              "dateFormat": {
+                "helper": "Controls the format of the date string (D = day of week, d = day of the month, M = month), e.g. D,dM = \"Thursday, 3 July\" or \"Md,D = July 3, Thursday\". The field may contain 0, 1 or 2 commas, which can occur only between characters and only one at a time i.e. 'D,,dM' is illegal."
+              },
+              "dateLongFormat": {
+                "helper": "If checked, display the day and month in long format (Friday/November). Otherwise use abbreviations (Fri/Nov)"
+              },
+              "dateTop": {
+                "helper": "If checked, display date above time, else display time above date."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "userPreferences_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "userPreferences": {
+            "type": "object",
+            "properties": {
+              "analogHeadsetOption": {
+                "title": "Analog Headset Option",
+                "type": "boolean"
+              },
+              "headsetMode": {
+                "title": "Headset Mode",
+                "type": "boolean"
+              },
+              "handsfreeMode": {
+                "title": "Handsfree Mode",
+                "type": "boolean"
+              },
+              "useDirectoryNames": {
+                "title": "Use Directory Names",
+                "type": "boolean"
+              },
+              "oneTouchVoiceMail": {
+                "title": "One Touch Voice Mail",
+                "type": "boolean"
+              },
+              "welcomeSoundEnabled": {
+                "title": "Welcome Sound Enabled",
+                "type": "boolean"
+              },
+              "welcomeSoundOnWarmBootEnabled": {
+                "title": "Welcome Sound On Warm Boot Enabled",
+                "type": "boolean"
+              },
+              "localClockEnabled": {
+                "title": "Local Clock Enabled",
+                "type": "boolean"
+              },
+              "idleTimeout": {
+                "title": "Idle Timeout",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "userPreferences_settings_options": {
+    "helper": "User Preferences",
+    "fields": {
+      "settings": {
+        "fields": {
+          "userPreferences": {
+            "toolbarSticky": true,
+            "fields": {
+              "analogHeadsetOption": {
+                "helper": "If checked, an attached DHSG-compatible headset will be used as an electronic hookswitch"
+              },
+              "headsetMode": {
+                "helper": "If checked, the headset will be selected as the preferred transducer after its first use until the headset key is pressed again; otherwise, handsfree will be selected preferentially over the headset."
+              },
+              "handsfreeMode": {
+                "helper": "Leave checked to enable the hands-free speakerphone. If unchecked, the hands-free speakerphone will be disabled."
+              },
+              "useDirectoryNames": {
+                "helper": "If checked, the name fields of directory entries which match incoming calls will be used for caller identification display and in the call lists instead of the name provided via network signaling."
+              },
+              "oneTouchVoiceMail": {
+              },
+              "welcomeSoundEnabled": {
+                "helper": "If checked, play welcome sound effect after a reboot."
+              },
+              "welcomeSoundOnWarmBootEnabled": {
+                "helper": "If checked, play welcome sound effect on warm as well as cold boots, otherwise only a cold boot will trigger the welcome sound effect."
+              },
+              "localClockEnabled": {
+                "helper": "If checked, display the date and time on the idle display"
+              },
+              "idleTimeout": {
+                "helper": "Timeout for the idle display or default call handling display. If set to 0, there is no timeout. If set to Null, the default timeout of 20 seconds is used. If set to value greater than 0, the timeout is for that number of seconds (maximum 65536)."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dtmf_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "dtmf": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "title": "Level",
+                "type": "string"
+              },
+              "onTime": {
+                "title": "On Time",
+                "type": "string"
+              },
+              "offTime": {
+                "title": "Off Time",
+                "type": "string"
+              },
+              "chassisMasking": {
+                "title": "Chassis Masking",
+                "type": "boolean"
+              },
+              "viaRtp": {
+                "title": "Via Rtp",
+                "type": "boolean"
+              },
+              "rfc2833Control": {
+                "title": "RFC 2833 Control",
+                "type": "boolean"
+              },
+              "rfc2833Payload": {
+                "title": "RFC 2833 Payload",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dtmf_settings_options": {
+    "helper": "DTMF",
+    "fields": {
+      "settings": {
+        "fields": {
+          "dtmf": {
+            "toolbarSticky": true,
+            "fields": {
+              "level": {
+                "helper": "Level of the high frequency component of the DTMF digit measured in dBm0; the low frequency tone will be two dB lower."
+              },
+              "onTime": {
+                "helper": "When a sequence of DTMF tones is played out automatically, this is the length of time in milliseconds the tones will be generated for; this is also the minimum time the tone will be played for when dialing manually (even if key press is shorter)."
+              },
+              "offTime": {
+                "helper": "When a sequence of DTMF tones is played out automatically, this is the length of time in milliseconds the phone will pause between digits; this is also the minimum inter-digit time when dialing manually."
+              },
+              "chassisMasking": {
+                "helper": "If checked, DTMF tones will be substituted with a non-DTMF pacifier tone when dialing in hands-free mode. This prevents DTMF digits being broadcast to other surrounding telephony log.device.s or being inadvertently transmitted in-band due to local acoustic echo. Note: tone.dtmf.chassis.masking should only be enabled when tone.dtmf.viaRtp is disabled."
+              },
+              "viaRtp": {
+                "helper": "If checked, encode DTMF in the active RTP stream, otherwise, DTMF may be encoded within the signaling protocol only when the protocol offers the option. Note: tone.dtmf.chassis.masking should be enabled when tone.dtmf.viaRtp is disabled."
+              },
+              "rfc2833Control": {
+                "helper": "If checked, the phone will indicate a preference for encoding DTMF via RFC 2833 format in its Session Description Protocol (SDP) offers by showing support for the phone-event payload type; this does not affect SDP answers, these will always honor the DTMF format present in the offer since the phone has native support for RFC 2833."
+              },
+              "rfc2833Payload": {
+                "helper": "The phone-event payload encoding in the dynamic range to be used in SDP offers."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "soundEffects_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "soundEffects": {
+            "type": "object",
+            "properties": {
+              "stutterOnVoiceMail": {
+                "title": "Stutter On VoiceMail",
+                "type": "boolean"
+              },
+              "appLocalEnabled": {
+                "title": "App Local Enabled",
+                "type": "boolean"
+              },
+              "messageWaitingType": {
+                "title": "Message Waiting Type",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "callWaitingType": {
+                "title": "Call Waiting Type",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "callWaitingValue": {
+                "title": "Call Waiting Value",
+                "type": "string"
+              },
+              "longCallWaitingType1": {
+                "title": "Type 1",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue1": {
+                "title": "Value 1",
+                "type": "string"
+              },
+              "longCallWaitingType2": {
+                "title": "Type 2",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue2": {
+                "title": "Value 2",
+                "type": "string"
+              },
+              "longCallWaitingType3": {
+                "title": "Type 3",
+                "type": "string",
+                "enum": ["Chord", "Silence"]
+              },
+              "longCallWaitingValue3": {
+                "title": "Value 3",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "soundEffects_settings_options": {
+    "helper": "Sound Effects",
+    "fields": {
+      "settings": {
+        "fields": {
+          "soundEffects": {
+            "toolbarSticky": true,
+            "helper": "SoundPoint(R) IP uses both synthesized (based on the chord-sets described earlier) and sampled audio sound effects. Sound effects are defined by patterns: rudimentary sequences of chord-sets, silence periods, and wave files.",
+            "fields": {
+              "stutterOnVoiceMail": {
+                "helper": "If checked, stuttered dial tone is used in place of normal dial tone to indicate that one or more messages (voice-mail) are waiting at the message center."
+              },
+              "appLocalEnabled": {
+                "helper": "If checked, local user interface sound effects such as confirmation/error tones, will be enabled."
+              },
+              "messageWaitingType": {
+                "removeDefaultNone": true
+              },
+              "callWaitingType": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType1": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType2": {
+                "removeDefaultNone": true
+              },
+              "longCallWaitingType3": {
+                "removeDefaultNone": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "voiceCodecs_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "voiceCodecs": {
+            "type": "object",
+            "properties": {
+              "txPacketFilter": {
+                "title": "Tx Packet Filter",
+                "type": "boolean"
+              },
+              "codec": {
+                "title": "Codec preference",
+                "type": "array",
+                "items": {
+                  "enum": ["G711_A", "iLBC.13_33kbps", "iLBC.15_2kbps", "G.722", "G.722.1 (32 kbps)", "G7221_C.48kbps", "G729_AB", "G711_Mu"]
+                }
+              },
+              "g711Mu_payloadSize": {
+                "title": "G711MU Payload Size",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferMin": {
+                "title": "G711MU Jitter Buffer Min",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferShrink": {
+                "title": "G711MU Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g711Mu_jitterBufferMax": {
+                "title": "G711MU Jitter Buffer Max",
+                "type": "string"
+              },
+              "g711A_payloadSize": {
+                "title": "G711A Payload Size",
+                "type": "string"
+              },
+              "g711A_jitterBufferMin": {
+                "title": "G711A Jitter Buffer Min",
+                "type": "string"
+              },
+              "g711A_jitterBufferShrink": {
+                "title": "G711A Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g711A_jitterBufferMax": {
+                "title": "G711A Jitter Buffer Max",
+                "type": "string"
+              },
+              "g729AB_payloadSize": {
+                "title": "G729AB Payload Size",
+                "type": "string"
+              },
+              "g729AB_jitterBufferMin": {
+                "title": "G729AB Jitter Buffer Min",
+                "type": "string"
+              },
+              "g729AB_jitterBufferShrink": {
+                "title": "G729AB Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g729AB_jitterBufferMax": {
+                "title": "G729AB Jitter Buffer Max",
+                "type": "string"
+              },
+              "g722_payloadSize": {
+                "title": "G722 Payload Size",
+                "type": "string"
+              },
+              "g722_jitterBufferMin": {
+                "title": "G722 Jitter Buffer Min",
+                "type": "string"
+              },
+              "g722_jitterBufferShrink": {
+                "title": "G722 Jitter Buffer Shrink",
+                "type": "string"
+              },
+              "g722_jitterBufferMax": {
+                "title": "G722 Jitter Buffer Max",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsPayloadSize": {
+                "title": "iLBC 13_33kbps Payload Size",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferMin": {
+                "title": "iLBC 13_33kbps Buffer Min",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferShrink": {
+                "title": "iLBC 13_33kbps Buffer Shrink",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferMax": {
+                "title": "iLBC 13_33kbps Buffer Max",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsPayloadSize": {
+                "title": "iLBC 13_33kbps Payload Size",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsBufferMin": {
+                "title": "iLBC 13_33kbps Buffer Min",
+                "type": "string"
+              },
+              "iLBC_13_33kbpsBufferShrink": {
+                "title": "iLBC 13_33kbps Buffer Shrink",
+                "type": "string"
+              },
+              "iLBC_15_2kbpsBufferMax": {
+                "title": "iLBC 13_33kbps Buffer Max",
+                "type": "string"
+              },
+              "persistHandset": {
+                "title": "Persist Handset",
+                "type": "boolean"
+              },
+              "persistHeadset": {
+                "title": "Persist Headset",
+                "type": "boolean"
+              },
+              "persistHandsfree": {
+                "title": "Persist Handsfree",
+                "type": "boolean"
+              },
+              "vadEnable": {
+                "title": "Enable voice activity Detection",
+                "type": "boolean"
+              },
+              "vadTresh": {
+                "title": "Voice activity Treshold",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "voiceCodecs_settings_options": {
+    "helper": "Voice/Codecs",
+    "fields": {
+      "settings": {
+        "fields": {
+          "voiceCodecs": {
+            "toolbarSticky": true,
+            "fields": {
+              "txPacketFilter": {
+                "helper": "Flag to determine whether or not narrowband Tx high-pass filtering should be enabled."
+              },
+              "codec": {
+                "items": {
+                  "removeDefaultNone": true
+                }
+              },
+              "persistHandset": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "persistHeadset": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "persistHandsfree": {
+                "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
+              },
+              "vadEnable": {
+                "helper": "If checked, enable VAD."
+              },
+              "vadThresh": {
+                "helper": "The threshold for determining what is active voice and what is background noise in dB. This does not apply to G.729AB codec operation which has its own built-in VAD function."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "voiceQMonitoring_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "voiceQMonitoring": {
+            "type": "object",
+            "properties": {
+              "centralReportCollector": {
+                "type": "object",
+                "title": "Central Report Collector",
+                "properties": {
+                  "genQRep": {
+                    "title": "Generate periodic quality reports",
+                    "type": "boolean"
+                  },
+                  "genQRepAfterCalls": {
+                    "title": "Generate quality report after calls",
+                    "type": "boolean"
+                  },
+                  "alertStatesForReportGen": {
+                    "title": "Alert states for report generation",
+                    "type": "string",
+                    "enum": [
+                      "Critical",
+                      "Warning or Critical"
+                    ]
+                  },
+                  "reportInterval": {
+                    "title": "Report Interval",
+                    "type": "number"
+                  }
+                }
+              },
+              "alertReports": {
+                "type": "object",
+                "title": "Alert Reports",
+                "properties": {
+                  "mosLqAlertThreshold": {
+                    "title": "MOS-LQ alert threshold",
+                    "type": "number"
+                  },
+                  "mosLqCriticalAlertThreshold": {
+                    "title": "MOS-LQ critical alert threshold",
+                    "type": "number"
+                  },
+                  "oneWayDelayAlertThreshold": {
+                    "title": "One way delay alert threshold",
+                    "type": "number"
+                  },
+                  "oneWayDelayCriticalAlertThreshold": {
+                    "title": "One way delay critical alert threshold",
+                    "type": "number"
+                  }
+                }
+              },
+              "reportCollectorServer": {
+                "type": "object",
+                "title": "Report Collector Server",
+                "properties": {
+                  "serverAddress": {
+                    "title": "Server Address",
+                    "type": "string"
+                  },
+                  "serverPort": {
+                    "title": "Server Port",
+                    "type": "number"
+                  }
+                }
+              },
+              "rtcpXr": {
+                "type": "object",
+                "title": "RTCP-XR",
+                "properties": {
+                  "enableRtcpXr": {
+                    "title": "Enable RTCP-XR",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "voiceQMonitoring_settings_options": {
+    "helper": "Voice Quality Monitoring",
+    "fields": {
+      "settings": {
+        "fields": {
+          "voiceQMonitoring": {
+            "toolbarSticky": true,
+            "helper": "The SoundPoint IP phones can be configured to generate various quality metrics for listening and conversational quality. These metrics can be sent between the phones in RTCP XR packets. The metrics can also be downloaded in SIP messages to a central voice quality report collector. This feature requires a license key from Polycom to activate.",
+            "fields": {
+              "centralReportCollector": {
+                "fields": {
+                  "genQRep": {
+                    "helper": "If checked, periodic quality reports will be generated throughout a call."
+                  },
+                  "genQRepAfterCalls": {
+                    "helper": "If checked, quality reports will be generated at the end of each call."
+                  },
+                  "alertStatesForReportGen": {
+                    "helper": "Controls the generation of periodic quality reports triggered by alert states."
+                  },
+                  "reportInterval": {
+                    "helper": "The time interval between successive periodic quality reports."
+                  }
+                }
+              },
+              "alertReports": {
+                "fields": {
+                  "mosLqAlertThreshold": {
+                    "helper": "Threshold value of listening MOS score (MOS-LQ) that causes phone to send a warning alert quality report. Configure the desired MOS value multiplied by 10. If left blank, warning alerts are not generated due to MOS-LQ. For example, a configured value of 35 corresponds to the MOS score 3.5."
+                  },
+                  "mosLqCriticalAlertThreshold": {
+                    "helper": "Threshold value of listening MOS score (MOS-LQ) that causes phone to send a critical alert quality report. Configure the desired MOS value multiplied by 10. If left blank, critical alerts are not generated due to MOS-LQ. For example, a configured value of 28 corresponds to the MOS score 2.8."
+                  },
+                  "oneWayDelayAlertThreshold": {
+                    "helper": "Threshold value of one way delay (in ms) that causes phone to send a critical alert quality report. If left blank, warning alerts are not generated due to one way delay. One-way delay includes both network delay and end system delay."
+                  },
+                  "oneWayDelayCriticalAlertThreshold": {
+                    "helper": "Threshold value of one way delay (in ms) that causes phone to send a critical alert quality report. If left blank, critical alerts are not generated due to one way delay. One-way delay includes both network delay and end system delay."
+                  }
+                }
+              },
+              "reportCollectorServer": {
+                "fields": {
+                  "serverAddress": {
+                    "helper": "IP address or host name of the report collector SIP server."
+                  },
+                  "serverPort": {
+                    "helper": "Port of the report collector SIP server."
+                  }
+                }
+              },
+              "rtcpXr": {
+                "fields": {
+                  "enableRtcpXr": {
+                    "helper": "If checked, RTCP XR (RTP Control Protocol Extended Reports) packets will be generated."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "qualityOfService_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "qualityOfService": {
+            "type": "object",
+            "properties": {
+              "ethernet": {
+                "type": "object",
+                "title": "Ethernet",
+                "properties": {
+                  "videoRtpUserPriority": {
+                    "title": "Video RTP User Priority",
+                    "type": "number"
+                  },
+                  "callControlUserPriority": {
+                    "title": "Call Control User Priority",
+                    "type": "number"
+                  },
+                  "otherUserPriority": {
+                    "title": "Other User Priority",
+                    "type": "number"
+                  }
+                }
+              },
+              "rtp": {
+                "type": "object",
+                "title": "RTP",
+                "properties": {
+                  "minDelay": {
+                    "title": "Min Delay",
+                    "type": "boolean"
+                  },
+                  "maxThroughput": {
+                    "title": "Max Throughput",
+                    "type": "boolean"
+                  },
+                  "maxReliability": {
+                    "title": "Max reliability",
+                    "type": "boolean"
+                  },
+                  "minCost": {
+                    "title": "Min cost",
+                    "type": "boolean"
+                  },
+                  "precedence": {
+                    "title": "Precedence",
+                    "type": "number"
+                  }
+                }
+              },
+              "callControl": {
+                "type": "object",
+                "title": "Call Control",
+                "properties": {
+                  "minDelay": {
+                    "title": "Min Delay",
+                    "type": "boolean"
+                  },
+                  "maxThroughput": {
+                    "title": "Max Throughput",
+                    "type": "boolean"
+                  },
+                  "maxReliability": {
+                    "title": "Max Reliability",
+                    "type": "boolean"
+                  },
+                  "minCost": {
+                    "title": "Min Cost",
+                    "type": "boolean"
+                  },
+                  "precedence": {
+                    "title": "Precedence",
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "qualityOfService_settings_options": {
+    "helper": "Quality of Service",
+    "fields": {
+      "settings": {
+        "fields": {
+          "qualityOfService": {
+            "toolbarSticky": true,
+            "fields": {
+              "ethernet": {
+                "fields": {
+                  "videoRtpUserPriority": {
+                    "helper": "User-priority used for Video RTP packets."
+                  },
+                  "callControlUserPriority": {
+                    "helper": "User-priority used for call control packets."
+                  }
+                }
+              },
+              "rtp": {
+                "helper": "The default RTP equates to a DSCP of 46.",
+                "fields": {
+                  "minDelay": {
+                    "helper": "If checked, set min-delay bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "maxThroughput": {
+                    "helper": "If checked, set max-throughput bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "maxReliability": {
+                    "helper": "If checked, set max-reliability bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "minCost": {
+                    "helper": "If checked, set min-cost bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "precedence": {
+                    "helper": "If checked, set precedence bits in the IP TOS field of the IP header, or else don't set them."
+                  }
+                }
+              },
+              "callControl": {
+                "fields": {
+                  "minDelay": {
+                    "helper": "If checked, set min-delay bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "maxThroughput": {
+                    "helper": "If checked, set max-throughput bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "maxReliability": {
+                    "helper": "If checked, set max-reliability bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "minCost": {
+                    "helper": "If checked, set min-cost bit in the IP TOS field of the IP header, or else don't set it."
+                  },
+                  "precedence": {
+                    "helper": "If checked, set precedence bits in the IP TOS field of the IP header, or else don't set them."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sntp_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "sntp": {
+            "type": "object",
+            "properties": {
+              "resyncPeriod": {
+                "title": "Resync Period",
+                "type": "number"
+              },
+              "address": {
+                "title": "SNTP Server address",
+                "type": "string"
+              },
+              "ignoreSntpAddress": {
+                "title": "Ignore SNTP Address from DHCP",
+                "type": "boolean"
+              },
+              "gmtOffset": {
+                "title": "GMT Offset",
+                "type": "number"
+              },
+              "ignoreDhcpOffset": {
+                "title": "Ignore DHCP Offset",
+                "type": "boolean"
+              },
+              "enableDST": {
+                "title": "Enable DST",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sntp_settings_options": {
+    "helper": "SNTP",
+    "fields": {
+      "settings": {
+        "fields": {
+          "sntp": {
+            "toolbarSticky": true,
+            "helper": "The following table describes the parameters used to set up time synchronization and daylight savings time. The defaults shown will enable daylight savings time for North America. Daylight savings defaults",
+            "fields": {
+              "resyncPeriod": {
+                "helper": "Time in seconds between SNTP re-syncs."
+              },
+              "address": {
+                "helper": "Address of the SNTP server."
+              },
+              "ignoreSntpAddress": {
+                "helper": "Use the SNTP server address configured on the phone instead of an address found via DHCP"
+              },
+              "gmtOffset": {
+                "helper": "Offset in seconds of the local time zone from GMT. Note: 3600 seconds per hour"
+              },
+              "ignoreDhcpOffset": {
+                "helper": "Ignore GMT Offset from DHCP"
+              },
+              "enableDST": {
+                "helper": "If checked, apply daylight savings rules to displayed time."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "rtp_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "rtp": {
+            "type": "object",
+            "properties": {
+              "filterByIp": {
+                "title": "Filter by Ip",
+                "type": "boolean"
+              },
+              "filterByPort": {
+                "title": "Filter by port",
+                "type": "boolean"
+              },
+              "forceSend": {
+                "title": "Force Send",
+                "type": "number"
+              },
+              "mediaPortRangeStart": {
+                "title": "Media Port Range Start",
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "rtp_settings_options": {
+    "helper": "RTP",
+    "fields": {
+      "settings": {
+        "fields": {
+          "rtp": {
+            "toolbarSticky": true,
+            "fields": {
+              "filterByIp": {
+                "helper": "If checked, reject RTP packets arriving from (sent from) a non-negotiated (via SDP) IP address."
+              },
+              "filterByPort": {
+                "helper": "If checked, reject RTP packets arriving from (sent from) a non-negotiated (via SDP) port."
+              },
+              "forceSend": {
+                "helper": "When not empty, send all RTP packets to, and expect all RTP packets to arrive on, the specified port. Note: both tcpIpApp.port.rtp.filterByIp and tcpIpApp.port.rtp.filterByPort must be enabled for this to work."
+              },
+              "mediaPortRangeStart": {
+                "helper": "If empty, the value 2222 will be used for the first allocated RTP port, otherwise, the specified port will be used. Subsequent ports will be allocated from a pool starting with the specified port plus two up to a value of (start-port + 46), after which the port number will wrap back to the starting value."
+              }
+            }
+          }
+        }
+      }
     }
   },
   "settings_defaults": {
-    "model": "PolycomVVX300"
+    "model": "PolycomVVX300",
+    "settings": {
+      "dateTimeSettings": {
+        "dateFormat": {
+          "format": "D,Md",
+          "dateLongFormat": true,
+          "dateTop": true
+        }
+      },
+      "userPreferences": {
+        "handsfreeMode": true,
+        "oneTouchVoiceMail": true,
+        "welcomeSoundEnabled": true,
+        "localClockEnabled": true,
+        "idleTimeout": 40
+      },
+      "dtmf": {
+        "level": -15,
+        "onTime": 50,
+        "offTime": 50,
+        "viaRtp": true,
+        "rfc2833Control": true,
+        "rfc2833Payload": 101
+      },
+      "soundEffects": {
+        "stutterOnVoiceMail": true,
+        "appLocalEnabled": true,
+        "messageWaitingType": "Silence",
+        "callWaitingType": "Chord",
+        "callWaitingValue": "callWaiting",
+        "longCallWaitingType1": "Chord",
+        "longCallWaitingValue1": "callWaitingLong",
+        "longCallWaitingType2": "Silence",
+        "longCallWaitingValue2": 150,
+        "longCallWaitingType3": "Chord",
+        "longCallWaitingValue3": 6
+      },
+      "voiceCodecs": {
+        "codec": ["G.722", "G.722.1 (32 kbps)", "G7221_C.48kbps", "G729_AB", "G711_Mu"],
+        "g711Mu_payloadSize": 20,
+        "g711Mu_jitterBufferMin": 40,
+        "g711Mu_jitterBufferShrink": 500,
+        "g711Mu_jitterBufferMax": 160,
+        "g711A_payloadSize": 20,
+        "g711A_jitterBufferMin": 40,
+        "g711A_jitterBufferShrink": 500,
+        "g711A_jitterBufferMax": 160,
+        "g729AB_payloadSize": 20,
+        "g729AB_jitterBufferMin": 40,
+        "g729AB_jitterBufferShrink": 500,
+        "g729AB_jitterBufferMax": 160,
+        "g722_payloadSize": 20,
+        "g722_jitterBufferMin": 40,
+        "g722_jitterBufferShrink": 1500,
+        "g722_jitterBufferMax": 200,
+        "iLBC_13_33kbpsPayloadSize":30,
+        "iLBC_13_33kbpsBufferMin": 40,
+        "iLBC_13_33kbpsBufferShrink":500,
+        "iLBC_13_33kbpsBufferMax": 160,
+        "iLBC_15_2kbpsPayloadSize":20,
+        "iLBC_15_2kbpsBufferMin": 40,
+        "iLBC_15_2kbpsBufferShrink":500,
+        "iLBC_15_2kbpsBufferMax": 160,
+        "persistHandsfree": true,
+        "vadTresh": 15
+      },
+      "voiceQMonitoring": {
+        "centralReportCollector": {
+          "reportInterval": 20
+        },
+        "alertReports": {
+          "mosLqAlertThreshold": 0,
+          "mosLqCriticalAlertThreshold": 0,
+          "oneWayDelayAlertThreshold": 0,
+          "oneWayDelayCriticalAlertThreshold": 0
+        },
+        "reportCollectorServer": {
+          "serverPort": 5060
+        }
+      },
+      "qualityOfService": {
+        "ethernet": {
+          "videoRtpUserPriority": 5,
+          "callControlUserPriority": 5,
+          "otherUserPriority": 2
+        },
+        "rtp": {
+          "minDelay": true,
+          "maxThroughput": true,
+          "precedence": 5
+        },
+        "callControl": {
+          "precedence": 3
+        }
+      },
+      "sntp": {
+        "resyncPeriod": 86400,
+        "address": "0.pool.ntp.org",
+        "gmtOffset": -18000,
+        "enableDST": true
+      },
+      "rtp": {
+        "filterByIp": true,
+        "forceSend": 0,
+        "mediaPortRangeStart": 2222
+      }
+    }
   }
 }

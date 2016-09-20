@@ -41,8 +41,8 @@
            {"menuName":"Video","pageId":"page_Video","schema":"/phones/template/PolycomVVX500/video_settings_schema","options":"/phones/template/PolycomVVX500/video_settings_options","buttonId":"create_video"},
            {"menuName":"Voice Q Monitoring","pageId":"page_VoiceQMonitoring","schema":"/phones/template/PolycomVVX500/voiceQMonitoring_settings_schema","options":"/phones/template/PolycomVVX500/voiceQMonitoring_settings_options","buttonId":"create_voiceQMonitoring"},
            {"menuName":"Quality Of Service","pageId":"page_QualityOfService","schema":"/phones/template/PolycomVVX500/qualityOfService_settings_schema","options":"/phones/template/PolycomVVX500/qualityOfService_settings_options","buttonId":"create_qualityOfService"},
-           {"menuName":"Sntp","pageId":"page_Sntp","schema":"/phones/template/PolycomVVX500/sntp_settings_schema","options":"/phones/template/PolycomVVX500/sntp_settings_options","buttonId":"create_sntp"},
-           {"menuName":"Rtp","pageId":"page_Rtp","schema":"/phones/template/PolycomVVX500/rtp_settings_schema","options":"/phones/template/PolycomVVX500/rtp_settings_options","buttonId":"create_rtp"},
+           {"menuName":"SNTP","pageId":"page_Sntp","schema":"/phones/template/PolycomVVX500/sntp_settings_schema","options":"/phones/template/PolycomVVX500/sntp_settings_options","buttonId":"create_sntp"},
+           {"menuName":"RTP","pageId":"page_Rtp","schema":"/phones/template/PolycomVVX500/rtp_settings_schema","options":"/phones/template/PolycomVVX500/rtp_settings_options","buttonId":"create_rtp"},
            {"menuName":"TCP Keep-Alive","pageId":"page_TcpKeepAlive","schema":"/phones/template/PolycomVVX500/tcpKeepAlive_settings_schema","options":"/phones/template/PolycomVVX500/tcpKeepAlive_settings_options","buttonId":"create_tcpKeepAlive"},
            {"menuName":"Web Server","pageId":"page_WebServer","schema":"/phones/template/PolycomVVX500/webServer_settings_schema","options":"/phones/template/PolycomVVX500/webServer_settings_options","buttonId":"create_webServer"},
            {"menuName":"Call Handling","pageId":"page_CallHandling","schema":"/phones/template/PolycomVVX500/callHandling_settings_schema","options":"/phones/template/PolycomVVX500/callHandling_settings_options","buttonId":"create_callHandling"},
@@ -81,7 +81,17 @@
            "width":"160", "height":"180", "url":"/api/phones/list/array/PolycomVVX300", "defaultsUrl":"/api/phones/get/defaults/PolycomVVX300", "addUrl":"/api/phones/add/PolycomVVX300", "getUrl":"/api/phones/get/id/", "modifyUrl":"/api/phones/modify/id/",
            "deleteIdsUrl":"/api/phones/delete/ids",
            "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"Serial Number\"},{\"name\":\"Firmware version\"},{\"name\":\"Lines\"}]",
-           "pages":[{"menuName":"Identification","pageId":"page_IdentificationPhone","schema":"/phones/template/PolycomVVX300/identification_schema","options":"/phones/template/PolycomVVX300/identification_options","buttonId":"create_identificationPhone"}]}
+           "pages":[{"menuName":"Identification","pageId":"page_IdentificationPhone","schema":"/phones/template/PolycomVVX300/identification_schema","options":"/phones/template/PolycomVVX300/identification_options","buttonId":"create_identificationPhone"},
+           {"menuName":"Lines","pageId":"page_Lines","schema":"/phones/template/PolycomVVX300/lines_schema","options":"/phones/template/PolycomVVX300/lines_options","buttonId":"create_lines"},
+           {"menuName":"Date Time","pageId":"page_DateTime","schema":"/phones/template/PolycomVVX300/dateTime_settings_schema","options":"/phones/template/PolycomVVX300/dateTime_settings_options","buttonId":"create_dateTime"},
+           {"menuName":"User Preferences","pageId":"page_UserPreferences","schema":"/phones/template/PolycomVVX300/userPreferences_settings_schema","options":"/phones/template/PolycomVVX300/userPreferences_settings_options","buttonId":"create_userPreferences"},
+           {"menuName":"DTMF","pageId":"page_Dtmf","schema":"/phones/template/PolycomVVX300/dtmf_settings_schema","options":"/phones/template/PolycomVVX300/dtmf_settings_options","buttonId":"create_dtmf"},
+           {"menuName":"Sound Effects","pageId":"page_SoundEffects","schema":"/phones/template/PolycomVVX300/soundEffects_settings_schema","options":"/phones/template/PolycomVVX300/soundEffects_settings_options","buttonId":"create_soundEffects"},
+           {"menuName":"Voice Codecs","pageId":"page_VoiceCodecs","schema":"/phones/template/PolycomVVX300/voiceCodecs_settings_schema","options":"/phones/template/PolycomVVX300/voiceCodecs_settings_options","buttonId":"create_voiceCodecs"},
+           {"menuName":"Voice Q Monitoring","pageId":"page_VoiceQMonitoring","schema":"/phones/template/PolycomVVX300/voiceQMonitoring_settings_schema","options":"/phones/template/PolycomVVX300/voiceQMonitoring_settings_options","buttonId":"create_voiceQMonitoring"},
+           {"menuName":"Quality Of Service","pageId":"page_QualityOfService","schema":"/phones/template/PolycomVVX300/qualityOfService_settings_schema","options":"/phones/template/PolycomVVX300/qualityOfService_settings_options","buttonId":"create_qualityOfService"},
+           {"menuName":"SNTP","pageId":"page_Sntp","schema":"/phones/template/PolycomVVX300/sntp_settings_schema","options":"/phones/template/PolycomVVX300/sntp_settings_options","buttonId":"create_sntp"},
+           {"menuName":"RTP","pageId":"page_Rtp","schema":"/phones/template/PolycomVVX300/rtp_settings_schema","options":"/phones/template/PolycomVVX300/rtp_settings_options","buttonId":"create_rtp"}]}
            ]' back-button = true back-url="/account"></menu-card>
 </body>
 </html>
