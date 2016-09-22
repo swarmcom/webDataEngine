@@ -3770,6 +3770,10 @@
               "mediaPortRangeStart": {
                 "type": "number",
                 "title": "Media Port Range Start"
+              },
+              "keepaliveInterval": {
+                "type": "number",
+                "title": "Keepalive Interval"
               }
             }
           }
@@ -3794,6 +3798,9 @@
               },
               "mediaPortRangeStart": {
                 "helper": "If non-Null, this attribute will be used to set the initially allocated RTP port, overriding the value set in RTP Settings."
+              },
+              "keepaliveInterval": {
+                "helper": "The interval (in seconds) at which phones will send a keep-alive packet to the gateway/NAT log.device. to keep the communication port open. When set to 0 or empty the keep-alive packets are not sent."
               }
             }
           }
@@ -6696,7 +6703,7 @@
         "ringBackTimeout": 60,
         "lastCallReturnString": "*69",
         "callsPerLine": "24",
-        "dialToneTimeout": "60",
+        "dialtoneTimeout": "60",
         "directedCallPickupString": "*78",
         "sharedLines": {
           "disableDivert": true,
@@ -6861,11 +6868,11 @@
       },
       "dialPlan": {
         "ImpossibleMatchHandling": "allow user to dispatch",
-        "removeEndOfDial": true
-      },
-      "emergencyRouting": {
-        "port": 5060,
-        "emergencyNumbers": 911
+        "removeEndOfDial": true,
+        "emergencyRouting": {
+          "port": 5060,
+          "emergencyNumbers": 911
+        }
       },
       "localization": {
         "language": "English (Internal)"
