@@ -19,8 +19,8 @@
         "title": "Description"
       },
       "firmwareVersion": {
-        "type":"string",
-        "title":"Firmware version",
+        "type": "string",
+        "title": "Firmware version",
         "enum": [
           "4.1.X",
           "4.1.0",
@@ -41,16 +41,20 @@
           "5.2.1",
           "5.2.2",
           "5.2.3",
-          "5.3.0"
+          "5.3.0",
+          "5.3.1",
+          "5.4.0",
+          "5.4.1",
+          "5.4.3"
         ]
       }
     }
   },
   "identification_options": {
-    "renderForm":true,
+    "renderForm": true,
     "helper": "Identification",
     "fields": {
-      "description" : {
+      "description": {
         "type": "textarea",
         "rows": 5,
         "cols": 40,
@@ -61,6 +65,9 @@
       },
       "accountId": {
         "type": "hidden"
+      },
+      "firmwareVersion": {
+        "removeDefaultNone": true
       }
     }
   },
@@ -602,9 +609,9 @@
                 "helper": "Flag to determine whether or not narrowband Tx high-pass filtering should be enabled."
               },
               "codec": {
-                  "items": {
-                    "removeDefaultNone": true
-                  }
+                "items": {
+                  "removeDefaultNone": true
+                }
               },
               "persistHandset": {
                 "helper": "If checked, the receive volume will be remembered between calls. If set to 0, the receive volume will be reset to nominal at the start of each call."
@@ -707,7 +714,7 @@
               "fullscreenMode": {
                 "title": "Fullscreen Mode",
                 "type": "string",
-                "enum": ["side-by-side", "pip"]
+                "enum": [ "side-by-side", "pip"]
               }
             }
           }
@@ -1197,14 +1204,6 @@
               "mediaPortRangeStart": {
                 "title": "Media Port Range Start",
                 "type": "number"
-              },
-              "videoPort": {
-                "title": "Video port",
-                "type": "boolean"
-              },
-              "videoPortRangeStart": {
-                "title": "Video Port Range Start",
-                "type": "number"
               }
             }
           }
@@ -1231,12 +1230,6 @@
               },
               "mediaPortRangeStart": {
                 "helper": "If empty, the value 2222 will be used for the first allocated RTP port, otherwise, the specified port will be used. Subsequent ports will be allocated from a pool starting with the specified port plus two up to a value of (start-port + 46), after which the port number will wrap back to the starting value."
-              },
-              "videoPort": {
-                "helper": "Sets a separate port for the video stream."
-              },
-              "videoPortRangeStart": {
-                "helper": "Sets the port number for transmitting the video frames when tcpIpApp.port.rtp.videoPortRangeStart.enable is enabled."
               }
             }
           }
@@ -4019,10 +4012,6 @@
                 "type": "boolean",
                 "title": "Enable"
               },
-              "enableVvx500": {
-                "type": "boolean",
-                "title": "Enable VVX500"
-              },
               "officeHours": {
                 "type": "object",
                 "title": "Office Hours",
@@ -4455,58 +4444,6 @@
                   "serverPort": {
                     "type": "number",
                     "title": "Server Port"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "applications_settings_options": {
-    "helper": "Applications",
-    "fields": {
-      "settings": {
-        "fields": {
-          "applications": {
-            "toolbarSticky": true,
-            "fields": {
-              "push": {
-                "fields": {
-                  "pushMessageType": {
-                    "removeDefaultNone": true,
-                    "helper": "0: (None) Discard push messages 1: (Normal) Allows only Normal priority push messages 2: (Important) Allows only Important priority push messages 3: (High) Allows only High priority push messages 4: (Critical) Allows only Critical priority push 5: (All) Allows all push messages of any priority"
-                  }
-                }
-              },
-              "statePolling": {
-                "fields": {
-                  "responseMode": {
-                    "removeDefaultNone": true,
-                    "helper": "The mode of sending requested polled data. If 1, requested polled data is sent to a configured URL. If 0, the data is sent in the HTTP response back to the requestor."
-                  }
-                }
-              },
-              "desktopIntegration": {
-                "fields": {
-                  "adminEnabled": {
-                    "helper": "Turn the desktop connector on or off for administrators"
-                  },
-                  "desktopUserName": {
-                    "helper": "Specify the user name of the user's computer"
-                  },
-                  "enabled": {
-                    "helper": "Turn the desktop connector on or off for users"
-                  },
-                  "orientation": {
-                    "helper": "Specify if the phone is positioned to the left or right of your computer"
-                  },
-                  "serverAddress": {
-                    "helper": "Specify the server address of the user's computer"
-                  },
-                  "serverPort": {
-                    "helper": "Specify the server port number for the connection"
                   }
                 }
               }
@@ -6558,8 +6495,61 @@
       }
     }
   },
+  "applications_settings_options": {
+    "helper": "Applications",
+    "fields": {
+      "settings": {
+        "fields": {
+          "applications": {
+            "toolbarSticky": true,
+            "fields": {
+              "push": {
+                "fields": {
+                  "pushMessageType": {
+                    "removeDefaultNone": true,
+                    "helper": "0: (None) Discard push messages 1: (Normal) Allows only Normal priority push messages 2: (Important) Allows only Important priority push messages 3: (High) Allows only High priority push messages 4: (Critical) Allows only Critical priority push 5: (All) Allows all push messages of any priority"
+                  }
+                }
+              },
+              "statePolling": {
+                "fields": {
+                  "responseMode": {
+                    "removeDefaultNone": true,
+                    "helper": "The mode of sending requested polled data. If 1, requested polled data is sent to a configured URL. If 0, the data is sent in the HTTP response back to the requestor."
+                  }
+                }
+              },
+              "desktopIntegration": {
+                "fields": {
+                  "adminEnabled": {
+                    "helper": "Turn the desktop connector on or off for administrators"
+                  },
+                  "desktopUserName": {
+                    "helper": "Specify the user name of the user's computer"
+                  },
+                  "enabled": {
+                    "helper": "Turn the desktop connector on or off for users"
+                  },
+                  "orientation": {
+                    "helper": "Specify if the phone is positioned to the left or right of your computer"
+                  },
+                  "serverAddress": {
+                    "helper": "Specify the server address of the user's computer"
+                  },
+                  "serverPort": {
+                    "helper": "Specify the server port number for the connection"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "settings_defaults": {
-    "model": "PolycomVVX500",
+    "model": "PolycomVVX600",
+    "firmwareVersion": "4.1.5",
     "settings": {
       "dateTimeSettings": {
         "dateFormat": {
@@ -6572,7 +6562,7 @@
         "handsfreeMode": true,
         "oneTouchVoiceMail": true,
         "welcomeSoundEnabled": true,
-        "welcomeSoundOnWarmBootEnabled": true,
+        "localClockEnabled": true,
         "idleTimeout": 40,
         "pfTimePerImage": 5,
         "screenSaverWaitTime": 15
@@ -6624,7 +6614,6 @@
         "iLBC_15_2kbpsBufferMin": 40,
         "iLBC_15_2kbpsBufferShrink":500,
         "iLBC_15_2kbpsBufferMax": 160,
-        "persistHandset": true,
         "persistHandsfree": true,
         "vadTresh": 15
       },
@@ -6672,8 +6661,7 @@
         "videoMaxReliability": 0,
         "videoMinCost": 0,
         "videoPrecedence": 5,
-        "callControlMinDelay": true,
-        "callControlPrecedence": 5
+        "callControlPrecedence": 3
       },
       "sntp": {
         "resyncPeriod": 86400,
@@ -6684,8 +6672,7 @@
       "rtp": {
         "filterByIp": true,
         "forceSend": 0,
-        "mediaPortRangeStart": 2222,
-        "videoPortRangeStart": 2272
+        "mediaPortRangeStart": 2222
       },
       "tcpKeepAlive": {
         "idleTransmitInterval": 30
@@ -6899,7 +6886,7 @@
         }
       },
       "powerSaving": {
-        "enableVvx500": true,
+        "enable": true,
         "officeHours": {
           "startHour": {
             "monday": 8,

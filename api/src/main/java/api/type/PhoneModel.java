@@ -5,5 +5,6 @@ package api.type;
  */
 public enum PhoneModel {
     PolycomVVX500,
-    PolycomVVX300
+    PolycomVVX300,
+    PolycomVVX600
 }

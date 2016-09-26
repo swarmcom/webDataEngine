@@ -79,6 +79,9 @@ public class Phones extends ModeledEntityController {
             case PolycomVVX300:
                 result = getTemplateJSON("settings_defaults", "/public/app/templates/devices/phone/polycomVVX300.json");
                 break;
+            case PolycomVVX600:
+                result = getTemplateJSON("settings_defaults", "/public/app/templates/devices/phone/polycomVVX600.json");
+                break;
             default:
                 result = null;
         }
@@ -105,6 +108,9 @@ public class Phones extends ModeledEntityController {
                 break;
             case PolycomVVX300:
                 result = getTemplate(key, "/public/app/templates/devices/phone/polycomVVX300.json");
+                break;
+            case PolycomVVX600:
+                result = getTemplate(key, "/public/app/templates/devices/phone/polycomVVX600.json");
                 break;
             default:
                 result = null;
