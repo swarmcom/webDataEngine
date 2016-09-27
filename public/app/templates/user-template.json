@@ -439,6 +439,97 @@
       }
     }
   },
+  "schedules_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "schedules": {
+            "type": "object",
+            "properties": {
+              "schedulesTable": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "title": "Enabled"
+                    },
+                    "scheduleName": {
+                      "type": "string",
+                      "title": "Name",
+                      "required": true
+                    },
+                    "scheduleDescription": {
+                      "type": "string",
+                      "title": "Description"
+                    },
+                    "day": {
+                      "type": "string",
+                      "title": "Day",
+                      "enum": [
+                        "Weekend",
+                        "Week days",
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday"
+                      ]
+                    },
+                    "from": {
+                      "type": "string",
+                      "title": "From",
+                      "format": "time"
+                    },
+                    "to": {
+                      "type": "string",
+                      "title": "To",
+                      "format": "time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "schedules_settings_options": {
+    "helper":"Schedules",
+    "fields": {
+      "settings": {
+        "fields": {
+          "schedules": {
+            "toolbarSticky": true,
+            "fields": {
+              "schedulesTable": {
+                "type": "table",
+                "items": {
+                  "fields": {
+                    "day": {
+                      "removeDefaultNone": true
+                    },
+                    "from": {
+                      "dateFormat": "HH:mm"
+                    },
+                    "to": {
+                      "dateFormat": "HH:mm"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "speedDial_settings_schema": {
     "type": "object",
     "properties": {
@@ -448,7 +539,7 @@
           "speedDial": {
             "type": "object",
             "properties": {
-              "speedDials": {
+              "speedDialTable": {
                 "type": "array",
                 "items": {
                   "type": "object",
@@ -488,7 +579,7 @@
           "speedDial": {
             "toolbarSticky": true,
             "fields": {
-              "speedDials": {
+              "speedDialTable": {
                 "dependencies": {
                   "useGroupSpeedDials": false
                 },
