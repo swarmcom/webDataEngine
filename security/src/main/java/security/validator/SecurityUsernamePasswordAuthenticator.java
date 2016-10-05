@@ -1,18 +1,33 @@
 package security.validator;
 
-import org.pac4j.core.credentials.Credentials;
+import api.domain.User;
+import api.service.UserService;
+import org.apache.commons.lang3.StringUtils;
+import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.UsernamePasswordCredentials;
 import org.pac4j.core.credentials.authenticator.Authenticator;
-import org.pac4j.core.credentials.authenticator.UsernamePasswordAuthenticator;
 import org.pac4j.core.exception.CredentialsException;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.core.util.CommonHelper;
 
+import play.Logger;
+import security.encoder.SecurityPasswordEncoder;
+import security.util.EncoderUtil;
 
-public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAuthenticator {
+import javax.inject.Inject;
+import org.springframework.stereotype.Component;
 
-    public void validate(UsernamePasswordCredentials credentials) {
+@Component
+public class SecurityUsernamePasswordAuthenticator implements Authenticator<UsernamePasswordCredentials> {
+
+    @Inject
+    UserService userService;
+
+    @Inject
+    private SecurityPasswordEncoder securityPasswordEncoder;
+
+    public void validate(UsernamePasswordCredentials credentials, WebContext context) {
         if (credentials == null) {
             this.throwsException("No credential");
         }
@@ -27,9 +42,25 @@ public class SecurityUsernamePasswordAuthenticator implements UsernamePasswordAu
             this.throwsException("Password cannot be blank");
         }
 
+        String currentAccountId = context.getRequestParameter("accountid");
+        User user = userService.getUser(currentAccountId, username);
+
+        if (user == null) {
+            this.throwsException("User not found");
+        }
+
+        if (!this.securityPasswordEncoder.matches(password, user.getPassword()) &&
+                !StringUtils.equals(EncoderUtil.digestEncodePassword(username, EncoderUtil.DIGEST_REALM, password), user.getPassword())) {
+            this.throwsException("Password does not match");
+        }
         CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute("username", username);
+        profile.addAttribute("accountid", currentAccountId);
+        for (String role : user.getRoles()) {
+            profile.addRole(role);
+        }
+
         credentials.setUserProfile(profile);
     }
 

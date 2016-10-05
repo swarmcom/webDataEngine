@@ -15,8 +15,8 @@ public class CouchDBRole extends Role {
         super();
     }
 
-    public CouchDBRole(String roleName) {
-        super(roleName);
+    public CouchDBRole(String accountId, String roleName) {
+        super(accountId, roleName);
     }
 
     @JsonProperty("_id")

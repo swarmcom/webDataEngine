@@ -41,7 +41,8 @@ public class MongoUserService implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(String accountId, User user) {
+        user.setAccountId(accountId);
         return userRepository.save(user);
     }
 

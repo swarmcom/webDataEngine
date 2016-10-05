@@ -1,7 +1,6 @@
 package tenancy.service;
 
 import api.domain.Role;
-import api.service.MultiRoleService;
 import api.service.MultiService;
 import api.service.RoleService;
 import org.springframework.stereotype.Component;
@@ -10,38 +9,26 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Component
-public class MultiTenantRoleService implements MultiRoleService {
+public class MultiTenantRoleService implements RoleService {
 
     @Inject
     MultiService multiService;
 
     @Override
-    public Role getRole(String roleName) {
-        RoleService currentRoleService = multiService.getCurrentTenantRoleService();
-        return currentRoleService.getRole(roleName);
-    }
-
-    @Override
-    public void createRole(String roleName) {
-        RoleService currentRoleService = multiService.getCurrentTenantRoleService();
-        currentRoleService.createRole(roleName);
-    }
-
-    @Override
-    public List<? extends Role> getRoles() {
-        RoleService currentRoleService = multiService.getCurrentTenantRoleService();
-        return currentRoleService.getRoles();
+    public List<? extends Role> getRoles(String accountId) {
+        RoleService currentRoleService = multiService.getTenantRoleService(accountId);
+        return currentRoleService.getRoles(accountId);
     }
 
     @Override
     public void createRole(String tenantId, String roleName) {
         RoleService roleService = multiService.getTenantRoleService(tenantId);
-        roleService.createRole(roleName);
+        roleService.createRole(tenantId, roleName);
     }
 
     @Override
     public Role getRole(String tenantId, String roleName) {
         RoleService roleService = multiService.getTenantRoleService(tenantId);
-        return roleService.getRole(roleName);
+        return roleService.getRole(tenantId, roleName);
     }
 }

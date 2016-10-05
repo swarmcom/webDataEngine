@@ -1,6 +1,8 @@
 package api.domain;
 
 import org.apache.commons.lang3.StringUtils;
+import play.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,8 @@ public class User extends BeanDomain<User>{
     protected String accountId;
 
     protected Set<String> roles = new TreeSet<String>();
+
+    protected Boolean digestEncoded;
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
@@ -70,6 +74,14 @@ public class User extends BeanDomain<User>{
         return accountId;
     }
 
+    public Boolean isDigestEncoded() {
+        return digestEncoded;
+    }
+
+    public void setDigestEncoded(Boolean digestEncoded) {
+        this.digestEncoded = digestEncoded;
+    }
+
     public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
@@ -95,6 +107,7 @@ public class User extends BeanDomain<User>{
         String userName = user.getUserName();
         String userPassword = user.getPassword();
         Set<String> roles = user.getRoles();
+        Boolean digestEncoded = user.isDigestEncoded();
 
         if (accountId != null) {
             setAccountId(accountId);
@@ -109,6 +122,10 @@ public class User extends BeanDomain<User>{
 
         if (roles != null) {
             setRoles(roles);
+        }
+
+        if (digestEncoded != null) {
+            setDigestEncoded(digestEncoded);
         }
 
         mergeSettings(user.getSettings(), this.settings);

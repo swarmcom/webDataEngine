@@ -3,15 +3,11 @@ package controllers;
 import api.domain.Account;
 import api.domain.BeanDomain;
 import api.service.AccountService;
-import auth.AuthenticationAction;
-import auth.BasicAuthentication;
-import auth.DigestAuthentication;
-import auth.SessionSecured;
+import auth.SessionAuthenticatedAction;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.pac4j.play.java.Secure;
 import org.springframework.stereotype.Component;
 
-import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -19,11 +15,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Component
-@With(AuthenticationAction.class)
-@BasicAuthentication
-@DigestAuthentication
-@Security.Authenticated(SessionSecured.class)
-@PreAuthorize("hasRole('ROLE_SUPERADMIN')")
+
+@With(SessionAuthenticatedAction.class)
+@Secure(clients = "DirectBasicAuthClient, DirectDigestAuthClient", authorizers = "superadmin")
 public class Accounts extends SimpleEntityController {
     @Inject
     AccountService accountService;

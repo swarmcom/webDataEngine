@@ -18,6 +18,10 @@
         "title": "Password",
         "required": true
       },
+      "digestEncoded": {
+        "type": "boolean",
+        "title": "Digest"
+      },
       "roles": {
         "enum": ["ROLE_ADMIN","ROLE_SUPERADMIN", "ROLE_USER"]
       }
@@ -34,6 +38,9 @@
       },
       "password": {
         "helper": "Please enter user password"
+      },
+      "digestEncoded": {
+        "helper": "If checked, the password will be encoded in digest format"
       },
       "roles": {
         "label":"User Role",

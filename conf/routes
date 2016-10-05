@@ -3,21 +3,24 @@
 # ~~~~
 
 # Home page
-GET     /                                            controllers.Assets.at(path="/public", file="app/index.html")
-GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/index2.html")
-GET     /form                                        controllers.Application.form()
-GET     /main/oidc                                   controllers.Application.oidcIndex()
-GET     /callback                                    controllers.Application.callback()
-POST    /callback                                    controllers.Application.callback()
+
+#GET     /main/oidc                                  controllers.Application.mainOidcIndex()
+
+# Callback
+GET     /callback                                    @org.pac4j.play.CallbackController.callback()
+POST    /callback                                    @org.pac4j.play.CallbackController.callback()
+GET     /defaultCallbackEndpoint                     controllers.Application.defaultCallbackEndpoint()
+
+# Logout
 GET     /logout                                      org.pac4j.play.ApplicationLogoutController.logout()
 
-POST    /login                                       controllers.Application.login()
-
 # Assets
-GET     /account                                     controllers.Application.asset(file="/public/app/account.html")
-GET     /gateway                                     controllers.Application.asset(file="/public/app/gateway.html")
-GET     /phone                                       controllers.Application.asset(file="/public/app/phone.html")
-GET     /main/config                                 controllers.Application.asset(file="/public/app/main.html")
+GET     /loginform                                   controllers.Assets.at(path="/public", file="app/index.html")
+
+GET     /main                                        controllers.Application.googleSuperadminAsset(file="/public/app/main.html")
+GET     /main/account                                controllers.Application.adminAsset(file="/public/app/account.html")
+GET     /main/account/gateway                        controllers.Application.adminAsset(file="/public/app/gateway.html")
+GET     /main/account/phone                          controllers.Application.adminAsset(file="/public/app/phone.html")
 
 # Templates
 GET     /phones/template/:model/:key                 controllers.Phones.getTemplateByModel(key: String, model: String)

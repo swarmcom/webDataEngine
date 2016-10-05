@@ -11,7 +11,7 @@ public interface UserService {
 
     User createUser(String accountId, String userName, String password, Set<String> roles);
 
-    User saveUser(User user);
+    User saveUser(String accountId, User user);
 
     public List<? extends User> getUsers(String accountId);
 

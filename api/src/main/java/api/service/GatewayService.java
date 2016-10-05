@@ -12,7 +12,7 @@ public interface GatewayService {
 
     Gateway getGateway(String accountId, String serialNumber);
 
-    Gateway saveGateway(Gateway gateway);
+    Gateway saveGateway(String accountId, Gateway gateway);
 
     public List<? extends Gateway> getGateways(String accountId);
 
@@ -20,7 +20,7 @@ public interface GatewayService {
 
     Gateway getGatewayById (String accountId, String gatewayId);
 
-    Long deleteGateway(String gatewayId, String serialNumber);
+    Long deleteGateway(String accountId, String serialNumber);
 
-    Long deleteGateways(String gatewayId, Collection<String> gatewayIds);
+    Long deleteGateways(String accountId, Collection<String> gatewayIds);
 }

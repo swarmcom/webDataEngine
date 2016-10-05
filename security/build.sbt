@@ -19,11 +19,11 @@ libraryDependencies ++= Seq(
   "org.springframework.security" % "spring-security-web" % "4.0.3.RELEASE",
   "com.nimbusds" % "oauth2-oidc-sdk" % "5.7",
   "com.nimbusds" % "nimbus-jose-jwt" % "4.16.1",
-  "org.pac4j" % "play-pac4j-java" % "2.0.1",
-  "org.pac4j" % "pac4j-core" % "1.8.6",
-  "org.pac4j" % "pac4j-oidc" % "1.8.6",
-  "org.pac4j" % "pac4j-http" % "1.8.6",
-  "org.pac4j" % "spring-security-pac4j" % "1.2.5"
+  "org.pac4j" % "play-pac4j" % "2.3.1",
+  "org.pac4j" % "pac4j-core" % "1.9.2",
+  "org.pac4j" % "pac4j-oidc" % "1.9.2",
+  "org.pac4j" % "pac4j-http" % "1.9.2",
+  "org.pac4j" % "spring-security-pac4j" % "2.0.1"
 )
 
 dependencyOverrides += "commons-io" % "commons-io" % "2.4"

@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.pac4j.http.credentials.DigestCredentials;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import play.Logger;
 
 @Component
 public class DigestPasswordEncoder implements PasswordEncoder {

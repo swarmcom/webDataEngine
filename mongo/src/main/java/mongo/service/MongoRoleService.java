@@ -29,17 +29,17 @@ public class MongoRoleService implements RoleService {
     }
 
     @Override
-    public Role getRole(String roleName) {
-        return roleRepository.findByRoleName(roleName);
+    public Role getRole(String accountId, String roleName) {
+        return roleRepository.findByAccountIdAndRoleName(accountId, roleName);
     }
 
     @Override
-    public void createRole(String roleName) {
-        roleRepository.save(new Role(roleName));
+    public void createRole(String accountId, String roleName) {
+        roleRepository.save(new Role(accountId, roleName));
     }
 
     @Override
-    public List<Role> getRoles() {
-        return roleRepository.findAll();
+    public List<Role> getRoles(String accountId) {
+        return roleRepository.findByAccountId(accountId);
     }
 }

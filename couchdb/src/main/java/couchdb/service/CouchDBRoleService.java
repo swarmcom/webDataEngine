@@ -16,17 +16,17 @@ public class CouchDBRoleService implements RoleService {
     CouchDBRoleRepository roleRepository;
 
     @Override
-    public Role getRole(String userName) {
-        return roleRepository.findByRoleName(userName);
+    public Role getRole(String accountId, String userName) {
+        return roleRepository.findByAccountIdAndRoleName(accountId, userName);
     }
 
     @Override
-    public void createRole(String roleName) {
-        roleRepository.create(new CouchDBRole(roleName));
+    public void createRole(String accountId, String roleName) {
+        roleRepository.create(new CouchDBRole(accountId, roleName));
     }
 
     @Override
-    public List<? extends Role> getRoles() {
-        return roleRepository.getAllRoles();
+    public List<? extends Role> getRoles(String accountId) {
+        return roleRepository.getAllRoles(accountId);
     }
 }

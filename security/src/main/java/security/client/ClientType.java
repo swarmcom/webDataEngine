@@ -1,9 +1,8 @@
-package security.token;
+package security.client;
 
 public enum ClientType {
     OidcClient,
     FormClient,
-    SessionClient,
     DirectBasicAuthClient,
     DirectDigestAuthClient
 }

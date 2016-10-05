@@ -35,7 +35,8 @@ public class MongoGatewayService implements GatewayService {
     }
 
     @Override
-    public Gateway saveGateway(Gateway gateway) {
+    public Gateway saveGateway(String accountId, Gateway gateway) {
+        gateway.setAccountId(accountId);
         return gatewayRepository.save(gateway);
     }
 

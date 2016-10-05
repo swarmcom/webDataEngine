@@ -3,62 +3,23 @@ package tenancy.service;
 
 import api.domain.User;
 import api.service.MultiService;
-import api.service.MultiUserService;
 import api.service.UserService;
 import org.springframework.stereotype.Component;
-import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Component
-public class MultiTenantUserService implements MultiUserService {
+public class MultiTenantUserService implements UserService {
     @Inject
     MultiService multiService;
 
     @Override
     public User getUser(String accountId, String userName) {
-        UserService userService = multiService.getCurrentTenantUserService();
+        UserService userService = multiService.getTenantUserService(accountId);
         return userService.getUser(accountId, userName);
-    }
-
-    @Override
-    public User createUser(String userName, String password, Set<String> roles) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return createUser(currentAccountId, userName, password, roles);
-    }
-
-    @Override
-    public User getUser(String userName) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getUser(currentAccountId, userName);
-    }
-
-    @Override
-    public List<? extends User> getUsers() {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getUsers(currentAccountId);
-    }
-
-    @Override
-    public User getUserById(String userId) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getUserById(currentAccountId, userId);
-    }
-
-    @Override
-    public Long deleteUser(String userName) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return deleteUser(currentAccountId, userName);
-    }
-
-    @Override
-    public Long deleteUsers(Collection<String> userIds) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return deleteUsers(currentAccountId, userIds);
     }
 
     @Override
@@ -68,36 +29,35 @@ public class MultiTenantUserService implements MultiUserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
+    public User saveUser(String accountId, User user) {
         if (user.isNew()) {
-            user.setAccountId(currentAccountId);
+            user.setAccountId(accountId);
         }
-        UserService userService = multiService.getTenantUserService(currentAccountId);
-        return userService.saveUser(user);
+        UserService userService = multiService.getTenantUserService(accountId);
+        return userService.saveUser(accountId, user);
     }
 
     @Override
     public List<? extends User> getUsers(String accountId) {
-        UserService userService = multiService.getCurrentTenantUserService();
+        UserService userService = multiService.getTenantUserService(accountId);
         return userService.getUsers(accountId);
     }
 
     @Override
     public User getUserById(String accountId, String userId) {
-        UserService userService = multiService.getCurrentTenantUserService();
+        UserService userService = multiService.getTenantUserService(accountId);
         return userService.getUserById(accountId, userId);
     }
 
     @Override
     public Long deleteUser(String accountId, String userName) {
-        UserService userService = multiService.getCurrentTenantUserService();
+        UserService userService = multiService.getTenantUserService(accountId);
         return userService.deleteUser(accountId, userName);
     }
 
     @Override
     public Long deleteUsers(String accountId, Collection<String> userIds) {
-        UserService userService = multiService.getCurrentTenantUserService();
+        UserService userService = multiService.getTenantUserService(accountId);
         return userService.deleteUsers(accountId, userIds);
     }
 }

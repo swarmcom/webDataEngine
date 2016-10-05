@@ -6,12 +6,8 @@ import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
 import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.store.PlayCacheStore;
-import org.pac4j.springframework.security.authentication.ClientAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import play.Logger;
 import play.mvc.Http;
-import security.token.SecurityUsernamePasswordAuthenticationToken;
 
 import javax.inject.Inject;
 
@@ -33,32 +29,23 @@ public class AppProfileManager {
         }
     }
 
-    public void saveOidcUserProfile(Http.Context ctx, ClientAuthenticationToken token) {
-        UserProfile userProfile = token.getUserProfile();
-        saveUserProfile(ctx, userProfile);
-        //save roles as we cannot extend ClientAuthenticationProvider as we should to save roles in there
-        for (GrantedAuthority authority : token.getAuthorities()) {
-            userProfile.addRole(authority.getAuthority());
-        }
-    }
-
-    public void saveFormUserProfile(Http.Context ctx, SecurityUsernamePasswordAuthenticationToken token) {
-        UserProfile userProfile = token.getUserProfile();
-        saveUserProfile(ctx, userProfile);
-    }
-
-    public UserProfile getUserProfile(WebContext context) {
+    public UserProfile getAuthenticatedUserProfile(WebContext context) {
         ProfileManager manager = new ProfileManager(context);
 
         return manager.isAuthenticated() ? (UserProfile)manager.get(true).get() : null;
     }
 
-    public UserProfile getUserProfile(Http.Context ctx) {
-        return getUserProfile(getProfileContext(ctx));
+    public UserProfile getAuthenticatedUserProfile(Http.Context ctx) {
+        return getAuthenticatedUserProfile(getProfileContext(ctx));
     }
 
     public WebContext getProfileContext(Http.Context context) {
         PlayWebContext webCtx = new PlayWebContext(context, dataStore);
         return webCtx;
+    }
+
+    public String getSessionAccountId(Http.Context ctx) {
+        UserProfile profile = getAuthenticatedUserProfile(ctx);
+        return (String) profile.getAttribute("accountid");
     }
 }

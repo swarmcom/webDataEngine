@@ -2,13 +2,12 @@ package controllers;
 
 import api.domain.BeanDomain;
 import api.domain.Phone;
-import api.service.MultiPhoneService;
+import api.service.PhoneService;
 import api.type.PhoneModel;
-import auth.AuthenticationAction;
-import auth.BasicAuthentication;
-import auth.SessionSecured;
+import auth.SessionAuthenticatedAction;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.springframework.security.access.prepost.PreAuthorize;
+import managers.AppProfileManager;
+import org.pac4j.play.java.Secure;
 import org.springframework.stereotype.Component;
 import play.libs.Json;
 import play.mvc.*;
@@ -18,56 +17,58 @@ import java.util.List;
 
 
 @Component
-@With(AuthenticationAction.class)
-@BasicAuthentication
-@Security.Authenticated(SessionSecured.class)
-@PreAuthorize("hasRole('ROLE_USER')")
+
+@With(SessionAuthenticatedAction.class)
+@Secure(clients = "DirectBasicAuthClient, DirectDigestAuthClient", authorizers = "admin")
 public class Phones extends ModeledEntityController {
 
     @Inject
-    MultiPhoneService phoneService;
+    PhoneService phoneService;
+
+    @Inject
+    protected AppProfileManager appProfileManager;
 
     @Override
     protected BeanDomain addAbstract(String model) throws Exception {
         Phone phoneToAdd = new Phone();
         mergeDefaults(phoneToAdd, getDefaultsJSON(model));
         merge(phoneToAdd);
-        return phoneService.savePhone(phoneToAdd);
+        return phoneService.savePhone(appProfileManager.getSessionAccountId(ctx()), phoneToAdd);
     }
 
     @Override
     protected BeanDomain getByNameAbstract(String name) throws Exception {
-        return phoneService.getPhone(name);
+        return phoneService.getPhone(appProfileManager.getSessionAccountId(ctx()), name);
     }
 
     @Override
     protected BeanDomain getByIdAbstract(String id) throws Exception {
-        return phoneService.getPhoneById(id);
+        return phoneService.getPhoneById(appProfileManager.getSessionAccountId(ctx()), id);
     }
 
     @Override
     protected Long deleteByNameAbstract(String name) throws Exception {
-        return phoneService.deletePhone(name);
+        return phoneService.deletePhone(appProfileManager.getSessionAccountId(ctx()), name);
     }
 
     @Override
     protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
-        return phoneService.deletePhones(idsArray);
+        return phoneService.deletePhones(appProfileManager.getSessionAccountId(ctx()), idsArray);
     }
 
     @Override
     protected BeanDomain modifyByNameAbstract(String name) throws Exception {
-        Phone existingPhone = phoneService.getPhone(name);
+        Phone existingPhone = phoneService.getPhone(appProfileManager.getSessionAccountId(ctx()), name);
         merge(existingPhone);
-        return (existingPhone != null ? phoneService.savePhone(existingPhone) : null);
+        return (existingPhone != null ? phoneService.savePhone(appProfileManager.getSessionAccountId(ctx()), existingPhone) : null);
     }
 
     @Override
     protected BeanDomain modifyByIdAbstract(String id) throws Exception {
-        Phone existingPhone = phoneService.getPhoneById(id);
+        Phone existingPhone = phoneService.getPhoneById(appProfileManager.getSessionAccountId(ctx()), id);
         merge(existingPhone);
-        return (existingPhone != null ? phoneService.savePhone(existingPhone) : null);
+        return (existingPhone != null ? phoneService.savePhone(appProfileManager.getSessionAccountId(ctx()), existingPhone) : null);
     }
 
     protected String getDefaultsJSON(String model) {
@@ -98,7 +99,7 @@ public class Phones extends ModeledEntityController {
 
     @Override
     protected ArrayNode listArrayAbstract(String model) throws Exception {
-        List<? extends Phone> phones = phoneService.getPhonesByModel(model);
+        List<? extends Phone> phones = phoneService.getPhones(appProfileManager.getSessionAccountId(ctx()), model);
         return createPhoneArrayJson(phones);
     }
 

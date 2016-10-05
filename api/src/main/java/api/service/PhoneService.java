@@ -10,7 +10,7 @@ public interface PhoneService {
 
     Phone createPhone(String accountId, String serialNumber, String description, String firmwareVersion);
 
-    Phone savePhone(Phone phone);
+    Phone savePhone(String accountId, Phone phone);
 
     public List<? extends Phone> getPhones(String accountId);
 

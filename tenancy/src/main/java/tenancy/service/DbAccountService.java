@@ -2,11 +2,11 @@ package tenancy.service;
 
 import api.config.ApiConfig;
 import api.domain.Account;
+import api.service.RoleService;
+import api.service.UserService;
 import api.type.DbType;
 import api.domain.Role;
 import api.service.AccountService;
-import api.service.MultiRoleService;
-import api.service.MultiUserService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -36,10 +36,10 @@ public class DbAccountService implements AccountService {
     DBCollection accountCollection;
 
     @Inject
-    MultiUserService userService;
+    UserService userService;
 
     @Inject
-    MultiRoleService roleService;
+    RoleService roleService;
 
     @Inject
     private SecurityPasswordEncoder passwordEncoder;

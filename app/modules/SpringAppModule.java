@@ -29,18 +29,18 @@ public class SpringAppModule extends ApiModule {
         }
     }
 
-    @Provides
-    Users providesUsersController() {
-        return masterSpringContext.getBean(Users.class);
-    }
+//    @Provides
+//    Users providesUsersController() {
+//        return masterSpringContext.getBean(Users.class);
+//    }
+//
+//    @Provides
+//    Application providesApplicationController() {
+//        return masterSpringContext.getBean(Application.class);
+//    }
 
-    @Provides
-    Application providesApplicationController() {
-        return masterSpringContext.getBean(Application.class);
-    }
-
-    @Provides
-    Phones providesPhonesController() {
-        return masterSpringContext.getBean(Phones.class);
-    }
+//    @Provides
+//    Phones providesPhonesController() {
+//        return masterSpringContext.getBean(Phones.class);
+//    }
 }

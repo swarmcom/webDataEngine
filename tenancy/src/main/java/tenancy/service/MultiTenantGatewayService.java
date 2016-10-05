@@ -2,10 +2,8 @@ package tenancy.service;
 
 import api.domain.Gateway;
 import api.service.GatewayService;
-import api.service.MultiGatewayService;
 import api.service.MultiService;
 import org.springframework.stereotype.Component;
-import security.util.TokenUtil;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -16,46 +14,10 @@ import java.util.List;
  */
 
 @Component
-public class MultiTenantGatewayService implements MultiGatewayService {
+public class MultiTenantGatewayService implements GatewayService {
 
     @Inject
     MultiService multiService;
-
-    @Override
-    public Gateway getGateway(String serialNumber) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getGateway(currentAccountId, serialNumber);
-    }
-
-    @Override
-    public List<? extends Gateway> getGateways() {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getGateways(currentAccountId);
-    }
-
-    @Override
-    public List<? extends Gateway> getGatewaysByModel(String model) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getGateways(currentAccountId, model);
-    }
-
-    @Override
-    public Gateway getGatewayById(String gatewayId) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return getGatewayById(currentAccountId, gatewayId);
-    }
-
-    @Override
-    public Long deleteGateway(String serialNumber) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return deleteGateway(currentAccountId, serialNumber);
-    }
-
-    @Override
-    public Long deleteGateways(Collection<String> gatewayIds) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
-        return deleteGateways(currentAccountId, gatewayIds);
-    }
 
     @Override
     public Gateway getGateway(String accountId, String serialNumber) {
@@ -64,13 +26,12 @@ public class MultiTenantGatewayService implements MultiGatewayService {
     }
 
     @Override
-    public Gateway saveGateway(Gateway gateway) {
-        String currentAccountId = TokenUtil.getCurrentAccountId();
+    public Gateway saveGateway(String accountId, Gateway gateway) {
         if (gateway.isNew()) {
-            gateway.setAccountId(currentAccountId);
+            gateway.setAccountId(accountId);
         }
-        GatewayService gatewayService = multiService.getTenantGatewayService(currentAccountId);
-        return gatewayService.saveGateway(gateway);
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
+        return gatewayService.saveGateway(accountId, gateway);
     }
 
     @Override
@@ -87,20 +48,20 @@ public class MultiTenantGatewayService implements MultiGatewayService {
 
     @Override
     public Gateway getGatewayById(String accountId, String gatewayId) {
-        GatewayService gatewayService = multiService.getCurrentTenantGatewayService();
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
         return gatewayService.getGatewayById(accountId, gatewayId);
     }
 
     @Override
     public Long deleteGateway(String accountId, String serialNumber) {
-        GatewayService gatewayService = multiService.getCurrentTenantGatewayService();
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
         return gatewayService.deleteGateway(accountId, serialNumber);
 
     }
 
     @Override
     public Long deleteGateways(String accountId, Collection<String> gatewayIds) {
-        GatewayService gatewayService = multiService.getCurrentTenantGatewayService();
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
         return gatewayService.deleteGateways(accountId, gatewayIds);
     }
 }
