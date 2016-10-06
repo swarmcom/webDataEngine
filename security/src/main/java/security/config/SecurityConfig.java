@@ -10,6 +10,7 @@ import org.pac4j.http.client.direct.DirectDigestAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.oidc.client.GoogleOidcClient;
 import org.pac4j.oidc.config.OidcConfiguration;
+import org.pac4j.play.ApplicationLogoutController;
 import org.pac4j.play.CallbackController;
 import org.pac4j.play.http.DefaultHttpActionAdapter;
 import org.pac4j.play.store.PlayCacheStore;
@@ -77,7 +78,7 @@ public class SecurityConfig {
 
     @Bean
     public Config config() {
-        Config config = new Config(authClients());
+        final Config config = new Config(authClients());
         config.addAuthorizer("googleSuperadmin", new GoogleSuperadminAuthorizer());
         config.addAuthorizer("superadmin", new RequireAnyRoleAuthorizer<>("ROLE_SUPERADMIN"));
         config.addAuthorizer("admin", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN","ROLE_SUPERADMIN"));
@@ -90,9 +91,16 @@ public class SecurityConfig {
     @Bean
     public CallbackController callbackController() {
         final CallbackController callbackController = new CallbackController();
-        callbackController.setDefaultUrl("/defaultCallbackEndpoint");
+        callbackController.setDefaultUrl("/main/account");
         callbackController.setMultiProfile(true);
         return callbackController;
+    }
+
+    @Bean
+    public ApplicationLogoutController applicationLogoutController() {
+        final ApplicationLogoutController logoutController = new ApplicationLogoutController();
+        logoutController.setDefaultUrl("/loginform");
+        return logoutController;
     }
 
     @Bean

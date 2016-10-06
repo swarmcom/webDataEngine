@@ -33,8 +33,4 @@ public class Application extends Controller {
     public Result onlyUserAsset(String file) {
         return Results.ok(Play.application().getFile(file), true);
     }
-
-    public Result defaultCallbackEndpoint() {
-        return redirect("/main/account");
-    }
 }

@@ -9,10 +9,9 @@
 # Callback
 GET     /callback                                    @org.pac4j.play.CallbackController.callback()
 POST    /callback                                    @org.pac4j.play.CallbackController.callback()
-GET     /defaultCallbackEndpoint                     controllers.Application.defaultCallbackEndpoint()
 
 # Logout
-GET     /logout                                      org.pac4j.play.ApplicationLogoutController.logout()
+GET     /logout                                      @org.pac4j.play.ApplicationLogoutController.logout()
 
 # Assets
 GET     /loginform                                   controllers.Assets.at(path="/public", file="app/index.html")
