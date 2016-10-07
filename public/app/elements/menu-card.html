@@ -72,12 +72,13 @@
                 <paper-toolbar class="main">
                     <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
                     <span title class="flex">{{heading}}</span>
-                    <paper-icon-button id="home" icon="home"></paper-icon-button>
+                    <template is="dom-if" if="{{noCards}}">
+                        <paper-icon-button id="home" icon="arrow-back" on-tap="goHome"></paper-icon-button>
+                    </template>
                     <template is="dom-if" if="{{backButton}}">
                         <page-redirector id ="back" url="{{backUrl}}"></page-redirector>
-                        <paper-icon-button id="back" icon="arrow-back" on-tap="handleBackTap"></paper-icon-button>
+                        <paper-icon-button id="back" icon="home" on-tap="handleBackTap"></paper-icon-button>
                     </template>
-                    <paper-icon-button id="more" icon="more-vert"></paper-icon-button>
                     <paper-icon-button id="exit" icon="exit-to-app" on-tap="handleExitTap"></paper-icon-button>
                     <page-redirector id ="logout" url="/logout"></page-redirector>
                 </paper-toolbar>
@@ -129,20 +130,34 @@
           selected: {
               type: Number,
               value: -1
+          },
+          cardName: {
+              type: String,
+              value: ''
+          },
+          parentHeading: {
+              type: String,
+              value: ''
           }
       },
       onIronSelect: function(e) {
-         this.noCards = true;
          var item = this.menu[this.selected];
+
          var customForm = document.getElementById(item.formId);
          var pageRedirector = customForm.querySelector('page-redirector')
+
+         this.heading = this.parentHeading + " > " + item.cardId;
+
          if (pageRedirector) {
              pageRedirector.redirect();
+         } else {
+             this.noCards = true;
          }
       },
       goHome: function() {
          this.noCards = false;
          this.selected = -1;
+         this.heading = this.parentHeading;
       },
       handleBackTap: function() {
          var backRedirector = document.getElementById('back');
@@ -151,9 +166,9 @@
          }
       },
       handleExitTap: function() {
-         var backRedirector = document.getElementById('logout');
-         if (backRedirector) {
-             backRedirector.redirect();
+         var logoutRedirector = document.getElementById('logout');
+         if (logoutRedirector) {
+             logoutRedirector.redirect();
          }
       }
     });
@@ -161,13 +176,14 @@
     document.addEventListener('WebComponentsReady', function() {
         var menuCard = document.querySelector('menu-card');
         var menu = menuCard.menu;
+        menuCard.parentHeading = menuCard.heading;
+
         var i;
 
         function bindCardTap(i) {
             var customCard = document.getElementById(menu[i].cardId);
             var paperIconButton = customCard.querySelector('paper-icon-button');
             paperIconButton.addEventListener('tap', function() {
-                menuCard.noCards = true;
                 menuCard.selected = i;
             });
         }
@@ -175,11 +191,6 @@
         for (i=0; i < menu.length; i++) {
             bindCardTap(i);
         }
-
-        document.getElementById("home").addEventListener('click', function() {
-           menuCard.goHome();
-        });
-
 
         for (i=0; i < menu.length; i++) {
             var item = menu[i];

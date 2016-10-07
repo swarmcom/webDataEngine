@@ -32,7 +32,7 @@
 
 <menu-card heading="Users Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
            menu='[
-           {"cardId":"User", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
+           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
            "width":"150", "height":"150", "url":"/api/users/list/array", "defaultsUrl":"/api/users/get/defaults", "addUrl":"/api/users/add", "getUrl":"/api/users/get/id/", "modifyUrl":"/api/users/modify/id/",
            "deleteIdsUrl":"/api/users/delete/ids",
            "columns":"[{\"name\":\"Id\"},{\"name\":\"Account\"},{\"name\":\"User Name\"},{\"name\":\"Roles\"}]",
@@ -48,10 +48,10 @@
            {"menuName":"Instant Messaging","pageId":"page_InstantMessaging","schema":"/user/template/instantMessaging_settings_schema","options":"/user/template/instantMessaging_settings_options","buttonId":"create_instantMessaging"},
            {"menuName":"MyBuddy","pageId":"page_MyBuddy","schema":"/user/template/myBuddy_settings_schema","options":"/user/template/myBuddy_settings_options","buttonId":"create_myBuddy"}]},
 
-           {"cardId":"Phone", "formId":"formPhone", "list":false, "menuCard":true, "menuCardUrl":"/main/account/phone", "title":"Phones", "icon":"supervisor-account", "description":"Add, rename and manage phones",
+           {"cardId":"Phones", "formId":"formPhone", "list":false, "menuCard":true, "menuCardUrl":"/main/account/phone", "title":"Phones", "icon":"supervisor-account", "description":"Add, rename and manage phones",
            "width":"150", "height":"150"},
 
-           {"cardId":"Gateway", "formId":"formGateway", "list":false, "menuCard":true, "menuCardUrl":"/main/account/gateway", "title":"Gateways", "icon":"supervisor-account", "description":"Add, rename and manage gateways",
+           {"cardId":"Gateways", "formId":"formGateway", "list":false, "menuCard":true, "menuCardUrl":"/main/account/gateway", "title":"Gateways", "icon":"supervisor-account", "description":"Add, rename and manage gateways",
            "width":"150", "height":"150"}]'></menu-card>
 </body>
 </html>
