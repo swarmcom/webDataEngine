@@ -14,6 +14,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,8 @@ import java.util.Map;
  * Created by mirceac on 5/23/16.
  */
 public abstract class EntityController extends Controller {
+
+    protected static final String DATE_FORMAT_1 = "dd/MM/yyyy";
 
     protected abstract BeanDomain getByNameAbstract(String name) throws Exception;
 
@@ -95,6 +98,7 @@ public abstract class EntityController extends Controller {
 
     protected Result convert(Object obj) {
         if (obj != null) {
+            Json.mapper().setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
             JsonNode node = Json.toJson(obj);
             return ok(node.toString());
         } else {
@@ -104,6 +108,7 @@ public abstract class EntityController extends Controller {
 
     protected void merge(BeanDomain existingBean) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
         BeanDomain bean = objectMapper.readValue(getDataToUpdateJSON(), existingBean.getClass());
         existingBean.merge(bean);
     }

@@ -1,7 +1,6 @@
 package api.domain;
 
 import org.apache.commons.lang3.StringUtils;
-import play.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +20,8 @@ public class User extends BeanDomain<User>{
     protected Set<String> roles = new TreeSet<String>();
 
     protected Boolean digestEncoded;
+
+    protected Date birthDate;
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
@@ -82,6 +83,14 @@ public class User extends BeanDomain<User>{
         this.digestEncoded = digestEncoded;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
@@ -108,6 +117,7 @@ public class User extends BeanDomain<User>{
         String userPassword = user.getPassword();
         Set<String> roles = user.getRoles();
         Boolean digestEncoded = user.isDigestEncoded();
+        Date birthDate = user.getBirthDate();
 
         if (accountId != null) {
             setAccountId(accountId);
@@ -126,6 +136,10 @@ public class User extends BeanDomain<User>{
 
         if (digestEncoded != null) {
             setDigestEncoded(digestEncoded);
+        }
+
+        if (birthDate != null) {
+            setBirthDate(birthDate);
         }
 
         mergeSettings(user.getSettings(), this.settings);

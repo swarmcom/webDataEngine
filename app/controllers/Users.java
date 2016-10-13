@@ -7,6 +7,7 @@ import auth.SessionAuthenticatedAction;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import managers.AppProfileManager;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.pac4j.play.java.Secure;
 import org.springframework.stereotype.Component;
 import play.libs.Json;
@@ -15,6 +16,7 @@ import security.encoder.SecurityPasswordEncoder;
 import security.util.EncoderUtil;
 
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -95,6 +97,8 @@ public class Users extends SimpleEntityController {
             itemNode.add(user.getAccountId());
             itemNode.add(user.getUserName());
             itemNode.add(StringUtils.join(user.getRoles()));
+            Date birthDate = user.getBirthDate();
+            itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
             node.add(itemNode);
         }
         return node;

@@ -18,6 +18,11 @@
         "title": "Password",
         "required": true
       },
+      "birthDate": {
+        "type": "string",
+        "format": "date",
+        "title": "Birth Date"
+      },
       "digestEncoded": {
         "type": "boolean",
         "title": "Digest"
@@ -38,6 +43,12 @@
       },
       "password": {
         "helper": "Please enter user password"
+      },
+      "birthDate": {
+        "type": "date",
+        "helper": "Birth date",
+        "dateFormat": "DD/MM/YYYY",
+        "manualEntry": true
       },
       "digestEncoded": {
         "helper": "If checked, the password will be encoded in digest format"
