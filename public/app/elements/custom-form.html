@@ -35,7 +35,7 @@
                 handle-as="json">
         </iron-ajax>
         <template is="dom-if" if="{{list}}">
-            <custom-table id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
+            <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
             <paper-fab icon="add" on-tap="handleTap" on-click="handleClick" class="add"></paper-fab>
             <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
         </template>
@@ -149,7 +149,7 @@
         this.$.deleteAction.generateRequest();
       },
       configure: function() {
-        var table = this.querySelector('custom-table');
+        var table = document.getElementById(this.tableId);
         table.configure();
         var listBox = table.querySelector('#' + this.operationId).querySelector('paper-listbox');
 

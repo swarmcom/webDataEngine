@@ -71,6 +71,37 @@
              type: String
            }
          },
+         createFilterElement: function(columnName, grid, i, tableId) {
+             var filterElement = document.createElement("paper-input");
+             filterElement.id = columnName + tableId;
+             filterElement.label = "Filter by " + columnName;
+             grid.header.getCell(1, i).content = filterElement;
+         },
+         filterData: function(columns, grid, tableId) {
+             for(i=1; i < columns.length; i++) {
+                 colName = columns[i].name;
+                 filterElement = document.getElementById(colName + tableId);
+                 filterElement.addEventListener('value-changed', function() {
+                   filterTextArray = [];
+                   for(j=1; j < columns.length; j++) {
+                       colName = columns[j].name;
+                       filterElement = document.getElementById(colName + tableId);
+                       filterTextArray.push(filterElement.value.toLowerCase());
+                   }
+
+                   grid.items = document.getElementById(tableId).data.filter(function(val) {
+                     var valToReturn = true;
+                     for (k=0; k < filterTextArray.length; k++) {
+                       filterText = filterTextArray[k];
+                       if (filterText && (val[k+1].toLowerCase()).indexOf(filterText) == -1) {
+                         valToReturn = false;
+                       }
+                     }
+                     return valToReturn;
+                   });
+                 });
+             }
+         },
          configure: function() {
              var paperListbox = this.querySelector('paper-listbox');
              $("#" + this.operationId).hide();
@@ -78,18 +109,30 @@
              var grid = grid || this.querySelector('vaadin-grid');
              var i;
              grid.sortOrder = [];
+
+             var customTable = this;
+
+             grid.header.addRow();
+
              for(i=0; i < columns.length; i++) {
-               grid.addColumn({name: columns[i].name}, i);
+               var colName = columns[i].name;
+               grid.addColumn({name: colName}, i);
                grid.columns[i].sortable = true;
                grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
+               if (i >=1) {
+                   this.createFilterElement(colName, grid, i, this.tableId);
+               }
              }
+
+             this.filterData(columns, grid, this.tableId);
+
              grid.columns[0].hidden = true;
              if (this.menuColumn == true) {
                grid.addColumn({name: 'operation'}, columns.length);
                grid.header.getCell(0, columns.length).content='';
              }
+
              var opId = this.operationId;
-             var customTable = this;
              grid.columns[grid.columns.length - 1].renderer = function(cell) {
                 cell.element.innerHTML = "";
                 var iconButton = document.createElement("paper-icon-button");
@@ -116,8 +159,9 @@
              // Re-order the data array on sort-order-changed event
              grid.addEventListener('sort-order-changed', function() {
                var idx = grid.sortOrder[0].column;
+
                var lesser = grid.sortOrder[0].direction == 'asc' ? -1 : 1;
-               customTable.data.sort(function(a, b) {
+               grid.items.sort(function(a, b) {
                  return (a[idx] < b[idx]) ? lesser : -lesser;
                });
              });
