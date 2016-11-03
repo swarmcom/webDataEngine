@@ -16,6 +16,7 @@ import security.encoder.SecurityPasswordEncoder;
 import security.util.EncoderUtil;
 
 import javax.inject.Inject;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -90,13 +91,14 @@ public class Users extends SimpleEntityController {
     @Override
     protected ArrayNode listArrayAbstract() throws Exception {
         List<? extends User> users = userService.getUsers(appProfileManager.getSessionAccountId(ctx()));
+        Json.mapper().setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
         ArrayNode node = Json.newArray();
         for (User user : users) {
             ArrayNode itemNode = Json.newArray();
             itemNode.add(user.getId());
             itemNode.add(user.getAccountId());
             itemNode.add(user.getUserName());
-            itemNode.add(StringUtils.join(user.getRoles()));
+            itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
             Date birthDate = user.getBirthDate();
             itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
             node.add(itemNode);

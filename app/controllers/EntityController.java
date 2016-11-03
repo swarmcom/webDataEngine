@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public abstract class EntityController extends Controller {
 
-    protected static final String DATE_FORMAT_1 = "dd/MM/yyyy";
+    protected static final String DATE_FORMAT_1 = "MM/dd/yyyy";
 
     protected abstract BeanDomain getByNameAbstract(String name) throws Exception;
 

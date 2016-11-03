@@ -1,0 +1,29 @@
+<dom-module id="array-picker">
+    <template>
+        <paper-input id="arrayFilter{{idPrefix}}" label="{{label}}"></paper-input>
+    </template>
+    <script>
+    Polymer({
+      is: 'array-picker',
+      properties: {
+         componentType: {
+             type: String,
+             value: 'array'
+         }
+      },
+      configure: function() {
+        var id = this.idPrefix;
+        var arrayId = "arrayFilter" + id;
+        var arrayPicker = this;
+        var inputArray = document.getElementById(arrayId);
+        inputArray.addEventListener('value-changed', function() {
+            val = inputArray.value.split(',');
+            if (val == '') {
+                val = new Array();
+            }
+            arrayPicker.fire('array-change', {array: val});
+        });
+      }
+    });
+  </script>
+</dom-module>

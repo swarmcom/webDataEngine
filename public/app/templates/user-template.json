@@ -47,7 +47,7 @@
       "birthDate": {
         "type": "date",
         "helper": "Birth date",
-        "dateFormat": "DD/MM/YYYY",
+        "dateFormat": "MM/DD/YYYY",
         "manualEntry": true
       },
       "digestEncoded": {

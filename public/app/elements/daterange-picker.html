@@ -1,0 +1,70 @@
+<dom-module id="daterange-picker">
+    <template>
+        <input id="datefilterStart{{idPrefix}}" label="{{label}}" readonly/>
+        <input id="datefilterEnd{{idPrefix}}" label="{{label}}" readonly/>
+    </template>
+    <script>
+    Polymer({
+      is: 'daterange-picker',
+      properties: {
+         label: {
+             type: String,
+             value: ''
+         },
+         componentType: {
+             type: String,
+             value: 'daterange'
+         },
+         startDate: {
+             type: String,
+             value:''
+         },
+         endDate: {
+             type: String,
+             value:''
+         }
+      },
+      configure: function() {
+        var idPrefix = this.idPrefix;
+        var inputIdStart = "datefilterStart" + idPrefix;
+        var inputIdEnd = "datefilterEnd" + idPrefix;
+        var daterangePicker = this;
+        $(function() {
+            if(!$("input[id=" + inputIdStart + "]").daterangepicker) {
+                return;
+            }
+            if(!$("input[id=" + inputIdEnd + "]").daterangepicker) {
+                return;
+            }
+            $("input[id=" + inputIdStart + "]").daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            },
+            function(start, end, label) {
+                var startDateVal = start.format('MM/DD/YYYY');
+                var endDateVal = daterangePicker.endDate;
+                daterangePicker.fire('daterange-change', {startDate: startDateVal, endDate: endDateVal});
+            });
+            $("input[id=" + inputIdEnd + "]").daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                showDropdowns: true,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            },
+            function(start, end, label) {
+                var endDateVal = start.format('MM/DD/YYYY');
+                var startDateVal = daterangePicker.startDate;
+                daterangePicker.fire('daterange-change', {startDate: startDateVal, endDate: endDateVal});
+            });
+        });
+        //$('input[id="datefilter"]').val('');
+      }
+    });
+  </script>
+</dom-module>

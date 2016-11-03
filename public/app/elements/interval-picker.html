@@ -1,0 +1,43 @@
+<dom-module id="interval-picker">
+    <template>
+        Min<input id="minId{{idPrefix}}" type="number" value="{{min}}"/>
+        Max<input id="maxId{{idPrefix}}" type="number" value="{{max}}"/>
+    </template>
+    <script>
+    Polymer({
+      is: 'interval-picker',
+      properties: {
+         label: {
+             type: String,
+             value: ''
+         },
+         componentType: {
+             type: String,
+             value: 'interval'
+         },
+         min: {
+             type: String,
+             value:''
+         },
+         max: {
+             type: String,
+             value:''
+         }
+      },
+      configure: function() {
+        var id = this.idPrefix;
+        var minId = "minId" + id;
+        var maxId = "maxId" + id;
+        var intervalPicker = this;
+        $("input[id=" + minId + "]").on('input', function() {
+            minVal = $(this).val();
+            intervalPicker.fire('interval-change', {min: minVal, max: intervalPicker.max});
+        });
+        $("input[id=" + maxId + "]").on('input', function() {
+            maxVal = $(this).val();
+            intervalPicker.fire('interval-change', {min: intervalPicker.min, max: maxVal});
+        });
+      }
+    });
+  </script>
+</dom-module>

@@ -8,6 +8,9 @@
 <link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
 <link rel="import" href="/assets/components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="/assets/components/paper-item/paper-item.html">
+<link rel="import" href="/assets/app/elements/daterange-picker.html">
+<link rel="import" href="/assets/app/elements/interval-picker.html">
+<link rel="import" href="/assets/app/elements/array-picker.html">
 
 <dom-module id="custom-table">
     <style>
@@ -46,6 +49,20 @@
               </paper-listbox>
           </paper-card>
         </div>
+        <template is="dom-repeat" items="{{columns}}">
+            <template is="dom-if" if="{{isTypeDate(item)}}">
+                <daterange-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></daterange-picker>
+            </template>
+            <template is="dom-if" if="{{isTypeInput(item)}}">
+                <paper-input id="{{tableId}}{{item.key}}"></paper-input>
+            </template>
+            <template is="dom-if" if="{{isTypeNumber(item)}}">
+                <interval-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></interval-picker>
+            </template>
+            <template is="dom-if" if="{{isTypeArray(item)}}">
+                <array-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></array-picker>
+            </template>
+        </template>
     </template>
 </dom-module>
 <script>
@@ -71,41 +88,114 @@
              type: String
            }
          },
-         createFilterElement: function(columnName, grid, i, tableId) {
-             var filterElement = document.createElement("paper-input");
-             filterElement.id = columnName + tableId;
-             filterElement.label = "Filter by " + columnName;
-             grid.header.getCell(1, i).content = filterElement;
+         isTypeDate: function(item) {
+             return item.type == 'date';
          },
-         filterData: function(columns, grid, tableId) {
-             for(i=1; i < columns.length; i++) {
-                 colName = columns[i].name;
-                 filterElement = document.getElementById(colName + tableId);
-                 filterElement.addEventListener('value-changed', function() {
-                   filterTextArray = [];
-                   for(j=1; j < columns.length; j++) {
-                       colName = columns[j].name;
-                       filterElement = document.getElementById(colName + tableId);
-                       filterTextArray.push(filterElement.value.toLowerCase());
-                   }
-
-                   grid.items = document.getElementById(tableId).data.filter(function(val) {
-                     var valToReturn = true;
-                     for (k=0; k < filterTextArray.length; k++) {
-                       filterText = filterTextArray[k];
-                       if (filterText && (val[k+1].toLowerCase()).indexOf(filterText) == -1) {
-                         valToReturn = false;
-                       }
+         isTypeNumber: function(item) {
+             return item.type == 'number';
+         },
+         isTypeInput: function(item) {
+             return item.name != 'Id' && item.type == undefined;
+         },
+         isTypeArray: function(item) {
+             return item.type == 'array';
+         },
+         intersect: function(a, b) {
+             var t;
+             if (b.length > a.length) t = b, b = a, a = t;
+             return a.filter(function (e) {
+                 if (b.indexOf(e) !== -1) return true;
+             });
+         },
+         contains: function(a,b) {
+             result = this.intersect(a,b);
+             length = result.length;
+             if (length != a.length) {
+                 return false;
+             }
+             return true;
+         },
+         createFilterElement: function(column, grid, i, tableId) {
+             name = column.name;
+             key = column.key;
+             type = column.type;
+             var filterElement = document.getElementById(tableId+key);
+             filterElement.label = "Filter by " + name;
+             grid.header.getCell(1, i).content = filterElement;
+             return filterElement;
+         },
+         onFilterData: function(columns, grid, tableId, filterElement) {
+             filterTextArray = [];
+             var table = this;
+             for(j=1; j < columns.length; j++) {
+                 currentColKey = columns[j].key;
+                 currentFilterElement = document.getElementById(tableId+currentColKey);
+                 if (currentFilterElement.componentType == 'interval') {
+                     if (currentFilterElement.min && currentFilterElement.max) {
+                         interval = {type:'interval', min:currentFilterElement.min, max:currentFilterElement.max};
+                         filterTextArray.push(interval);
                      }
-                     return valToReturn;
-                   });
+                 } else if (currentFilterElement.componentType == 'daterange') {
+                     daterange = {type:'daterange', startDate:currentFilterElement.startDate, endDate:currentFilterElement.endDate};
+                     filterTextArray.push(daterange);
+                 } else if (currentFilterElement.componentType == 'array') {
+                     arrayValue = {type:'array', arrayData:currentFilterElement.arrayValue};
+                     filterTextArray.push(arrayValue);
+                 } else {
+                     filterTextArray.push(currentFilterElement.value.toLowerCase());
+                 }
+             }
+             grid.items = table.data.filter(function(val) {
+               var valToReturn = true;
+               for (k=0; k < filterTextArray.length; k++) {
+                 filterText = filterTextArray[k];
+                 if (filterText.type == 'interval' && filterText.min && filterText.max && !isNaN(filterText.min) && !isNaN(filterText.max) &&
+                   (isNaN(val[k+1]) || (filterText.min > val[k+1] || filterText.max < val[k+1]))) {
+                   valToReturn = false;
+                 } else if (filterText.type == 'daterange' && filterText.startDate && filterText.endDate &&
+                       (!val[k+1] || (new Date(val[k+1]) < new Date(filterText.startDate) || new Date(val[k+1]) > new Date(filterText.endDate)))) {
+                   valToReturn = false;
+                 } else if (filterText.type == 'array' && filterText.arrayData && filterText.arrayData.length>0 && (!val[k+1] || !table.contains(filterText.arrayData, val[k+1].split(',')))) {
+                   valToReturn = false;
+                 } else if (filterText.type == undefined && filterText && (!val[k+1] || val[k+1].toLowerCase()).indexOf(filterText) == -1) {
+                   valToReturn = false;
+                 }
+               }
+               return valToReturn;
+             });
+         },
+         bindFilterData: function(filterElement, grid, tableId) {
+             var customTable = this;
+             if (filterElement.componentType=='daterange') {
+                 filterElement.configure();
+                 filterElement.addEventListener('daterange-change', function(event) {
+                     filterElement.startDate = event.detail.startDate;
+                     filterElement.endDate = event.detail.endDate;
+                     customTable.onFilterData(columns, grid, tableId, filterElement);
+                 });
+             } else if (filterElement.componentType=='interval') {
+                 filterElement.configure();
+                 filterElement.addEventListener('interval-change', function(event) {
+                     filterElement.min = event.detail.min;
+                     filterElement.max = event.detail.max;
+                     customTable.onFilterData(columns, grid, tableId, filterElement);
+                 });
+             } else if (filterElement.componentType=='array') {
+                 filterElement.configure();
+                 filterElement.addEventListener('array-change', function(event) {
+                     filterElement.arrayValue = event.detail.array;
+                     customTable.onFilterData(columns, grid, tableId, filterElement);
+                 });
+             } else {
+                 filterElement.addEventListener('value-changed', function() {
+                     customTable.onFilterData(columns, grid, tableId, filterElement);
                  });
              }
          },
          configure: function() {
              var paperListbox = this.querySelector('paper-listbox');
              $("#" + this.operationId).hide();
-             columns = JSON.parse(this.columns);
+             columns = this.columns;
              var grid = grid || this.querySelector('vaadin-grid');
              var i;
              grid.sortOrder = [];
@@ -115,16 +205,16 @@
              grid.header.addRow();
 
              for(i=0; i < columns.length; i++) {
-               var colName = columns[i].name;
+               var col = columns[i];
+               var colName = col.name;
                grid.addColumn({name: colName}, i);
                grid.columns[i].sortable = true;
                grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
                if (i >=1) {
-                   this.createFilterElement(colName, grid, i, this.tableId);
+                   var filterElement = this.createFilterElement(col, grid, i, this.tableId);
+                   this.bindFilterData(filterElement, grid, this.tableId);
                }
              }
-
-             this.filterData(columns, grid, this.tableId);
 
              grid.columns[0].hidden = true;
              if (this.menuColumn == true) {
