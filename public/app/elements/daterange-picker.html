@@ -1,7 +1,10 @@
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+
 <dom-module id="daterange-picker">
     <template>
-        <input id="datefilterStart{{idPrefix}}" label="{{label}}" readonly/>
-        <input id="datefilterEnd{{idPrefix}}" label="{{label}}" readonly/>
+        <input id="datefilterStart{{idPrefix}}" label="{{label}}" value="" />
+        <input id="datefilterEnd{{idPrefix}}" label="{{label}}" value="" />
+        <paper-icon-button id="clear{{idPrefix}}" icon="clear" class="clear" on-tap="clear"></paper-icon-button>
     </template>
     <script>
     Polymer({
@@ -24,6 +27,14 @@
              value:''
          }
       },
+      clear: function() {
+        var idPrefix = this.idPrefix;
+        var inputIdStart = "datefilterStart" + idPrefix;
+        var inputIdEnd = "datefilterEnd" + idPrefix;
+        $("input[id=" + inputIdStart + "]").val('');
+        $("input[id=" + inputIdEnd + "]").val('');
+        this.fire('daterange-change', {startDate: '', endDate: ''});
+      },
       configure: function() {
         var idPrefix = this.idPrefix;
         var inputIdStart = "datefilterStart" + idPrefix;
@@ -37,9 +48,9 @@
                 return;
             }
             $("input[id=" + inputIdStart + "]").daterangepicker({
-                autoUpdateInput: false,
                 singleDatePicker: true,
                 showDropdowns: true,
+                 autoUpdateInput: false,
                 locale: {
                     cancelLabel: 'Clear'
                 }
@@ -47,12 +58,17 @@
             function(start, end, label) {
                 var startDateVal = start.format('MM/DD/YYYY');
                 var endDateVal = daterangePicker.endDate;
+                if (!endDateVal || startDateVal < endDateVal) {
+                    $("input[id=" + inputIdStart + "]").val(startDateVal);
+                } else {
+                    $(this).val('');
+                }
                 daterangePicker.fire('daterange-change', {startDate: startDateVal, endDate: endDateVal});
             });
             $("input[id=" + inputIdEnd + "]").daterangepicker({
-                autoUpdateInput: false,
                 singleDatePicker: true,
                 showDropdowns: true,
+                autoUpdateInput: false,
                 locale: {
                     cancelLabel: 'Clear'
                 }
@@ -60,10 +76,14 @@
             function(start, end, label) {
                 var endDateVal = start.format('MM/DD/YYYY');
                 var startDateVal = daterangePicker.startDate;
+                if (!startDateVal || startDateVal < endDateVal) {
+                    $("input[id=" + inputIdEnd + "]").val(endDateVal);
+                } else {
+                    $(this).val('');
+                }
                 daterangePicker.fire('daterange-change', {startDate: startDateVal, endDate: endDateVal});
             });
         });
-        //$('input[id="datefilter"]').val('');
       }
     });
   </script>
