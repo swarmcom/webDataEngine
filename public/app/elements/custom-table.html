@@ -54,7 +54,7 @@
                 <daterange-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></daterange-picker>
             </template>
             <template is="dom-if" if="{{isTypeInput(item)}}">
-                <paper-input id="{{tableId}}{{item.key}}"></paper-input>
+                <paper-input id="{{tableId}}{{item.key}}" size="10"></paper-input>
             </template>
             <template is="dom-if" if="{{isTypeNumber(item)}}">
                 <interval-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></interval-picker>
@@ -120,7 +120,7 @@
              key = column.key;
              type = column.type;
              var filterElement = document.getElementById(tableId+key);
-             filterElement.label = "Filter by " + name;
+             filterElement.label = "Filter by ";
              grid.header.getCell(1, i).content = filterElement;
              return filterElement;
          },

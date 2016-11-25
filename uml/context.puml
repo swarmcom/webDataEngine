@@ -1,0 +1,35 @@
+@startuml
+
+annotation Configuration
+annotation EnableMongoRepositories
+annotation ComponentScan
+
+interface api.service.GatewayService {
+    Gateway getGateway(String accountId, String serialNumber);
+    Gateway saveGateway(String accountId, Gateway gateway);
+    public List<? extends Gateway> getGateways(String accountId);
+    public List<? extends Gateway> getGateways(String accountId, String model);
+    Gateway getGatewayById (String accountId, String gatewayId);
+    Long deleteGateway(String accountId, String serialNumber);
+    Long deleteGateways(String accountId, Collection<String> gatewayIds);
+}
+
+
+class MongoConfig extends org.springframework.data.mongodb.config.AbstractMongoConfiguration
+interface mongo.dao.MongoGatewayRepository extends org.springframework.data.mongodb.repository.MongoRepository {
+    Gateway findByAccountIdAndSerialNumber(String accountId, String serialNumber);
+    List<Gateway> findByAccountId(String accountId);
+    List<Gateway> findByAccountIdAndModel(String accountId, String model);
+    Gateway findByAccountIdAndId(String accountId, String id);
+    Long deleteByAccountIdAndSerialNumber(String accountId, String serialNumber);
+    Long deleteByAccountIdAndIdIn(String accountId, Collection<String> ids);
+}
+class mongo.service.MongoGatewayService implements api.service.GatewayService
+mongo.dao.MongoGatewayRepository "1" --> "1" mongo.service.MongoGatewayService : use
+
+Configuration -- MongoConfig
+EnableMongoRepositories "mongo.dao" -- MongoConfig
+ComponentScan "mongo.service" -- MongoConfig
+
+
+@enduml

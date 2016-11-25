@@ -46,6 +46,7 @@ public class SecurityConfig {
         oidcConfiguration.addCustomParam("prompt", "consent");
         final GoogleOidcClient oidcClient = new GoogleOidcClient(oidcConfiguration);
         oidcClient.setName("OidcClient");
+        oidcClient.setCallbackUrl(ApiConfig.configuration.getString("oidc.callback.url"));
 
         return oidcClient;
     }

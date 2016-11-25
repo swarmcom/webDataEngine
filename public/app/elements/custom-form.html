@@ -36,7 +36,7 @@
         </iron-ajax>
         <template is="dom-if" if="{{list}}">
             <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
-            <paper-fab icon="add" on-tap="handleTap" on-click="handleClick" class="add"></paper-fab>
+            <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
             <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
         </template>
         <template is="dom-if" if="{{add}}">
@@ -94,7 +94,6 @@
 
       handleClick: function() {
         customTemplate = this.querySelector('custom-template');
-
         customTemplate.addUrl = this.addUrl;
         customTemplate.modifyUrl = this.modifyUrl;
         customTemplate.getUrl = this.getUrl;
@@ -149,16 +148,26 @@
         this.$.deleteAction.generateRequest();
       },
       configure: function() {
+        //on click event is not recognized in Android, so we use jQuerry support for onClick, which is touchend
+        var customForm = this;
+        var addButton = $('#' + this.tableId + 'add');
+        addButton.on("tap touchstart", function() {
+            customForm.handleTap();
+        });
+        addButton.on("click touchend", function() {
+            customForm.handleClick();
+        });
         var table = document.getElementById(this.tableId);
         table.configure();
         var listBox = table.querySelector('#' + this.operationId).querySelector('paper-listbox');
 
         var paperItem0 = listBox.querySelector("#id0" + this.operationId);
-        var customForm = this;
-        paperItem0.addEventListener('tap', function() {
+
+        $('#id0' + this.operationId).on("tap touchstart", function() {
             customForm.handleTap();
         });
-        paperItem0.addEventListener('click', function() {
+
+        $('#id0' + this.operationId).on("click touchend", function() {
             customTemplate = customForm.querySelector('custom-template');
             customForm.key = paperItem0.getAttribute("key");
             customForm.handleClick();

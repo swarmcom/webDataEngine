@@ -1,0 +1,54 @@
+@startuml
+
+abstract class controllers.EntityController extends play.mvc.Controller {
+    abstract BeanDomain getByNameAbstract(String name)
+    abstract BeanDomain getByIdAbstract(String id)
+    abstract Long deleteByNameAbstract(String name)
+    abstract Long deleteListAbstract()
+    abstract BeanDomain modifyByNameAbstract(String name)
+    abstract BeanDomain modifyByIdAbstract(String id)
+}
+
+abstract class controllers.ModeledEntityController extends controllers.EntityController {
+    protected abstract BeanDomain addAbstract(String model)
+    protected abstract List<? extends BeanDomain> listAbstract(String model)
+    protected abstract ArrayNode listArrayAbstract(String model)
+    public abstract Result getTemplateByModel(String key, String model);
+    protected abstract String getDefaultsJSON(String model);
+}
+abstract class controllers.SimpleEntityController extends controllers.EntityController {
+    protected abstract BeanDomain addAbstract()
+    protected abstract List<? extends BeanDomain> listAbstract()
+    protected abstract ArrayNode listArrayAbstract()
+    public abstract Result getTemplate(String key);
+    protected abstract String getDefaultsJSON();
+}
+interface api.service.AccountService {
+    Account getAccount (String accountName);
+    Account getAccountById (String accountId);
+    Account createAccount ();
+    Account saveAccount(Account account);
+    Long deleteAccount(String accountName);
+    Long deleteAccounts(Collection<String> accountIds);
+    List<? extends Account> getAccounts();
+}
+interface api.service.PhoneService {
+    Phone getPhone(String accountId ...);
+    Phone createPhone(String accountId ...);
+    Phone savePhone(String accountId ...);
+    getPhones(String accountId);
+    getPhones(String accountId, String model);
+    Phone getPhoneById (String accountId ...);
+    Long deletePhone(String accountId ...);
+    Long deletePhones(String accountId ...);
+}
+class controllers.Accounts extends controllers.SimpleEntityController {
+    AccountService accountService
+}
+class controllers.Phones extends controllers.ModeledEntityController {
+    PhoneService phoneService
+}
+api.service.AccountService .> controllers.Accounts
+api.service.PhoneService .> controllers.Phones
+
+@enduml

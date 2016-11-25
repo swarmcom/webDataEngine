@@ -1,0 +1,53 @@
+@startuml
+
+interface api.service.UserService {
+    User getUser(String accountId, String userName);
+    User createUser(String accountId, String userName, String password, Set<String> roles);
+    User saveUser(String accountId, User user);
+    public List<? extends User> getUsers(String accountId);
+    User getUserById (String accountId, String userId);
+    Long deleteUser(String accountId, String userName);
+    Long deleteUsers(String accountId, Collection<String> userIds);
+}
+interface api.service.MultiService {
+    public UserService getTenantUserService(String tenantId);
+    public RoleService getTenantRoleService(String tenantId);
+    public PhoneService getTenantPhoneService(String tenantId);
+    public GatewayService getTenantGatewayService(String tenantId);
+}
+class tenancy.service.MultiTenantService implements api.service.MultiService {
+ UserService getTenantUserService(String tenantId)
+}
+class tenancy.service.MultiTenantUserService implements api.service.UserService {
+ MultiService multiService;
+ User getUser(String accountId, String userName)
+}
+abstract class api.domain.BeanDomain {
+    abstract void merge(T beanDomain);
+}
+class api.domain.User extends api.domain.BeanDomain {
+    protected String id;
+    protected String userName;
+    protected String password;
+    protected String accountId;
+    protected Set<String> roles
+    protected Boolean digestEncoded;
+    protected Date birthDate;
+}
+note as n2
+    UserService getTenantUserService(String tenantId) {
+        return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(UserService.class);
+    }
+end note
+note as n3
+    User getUser(String accountId, String userName) {
+        UserService userService = multiService.getTenantUserService(accountId);
+        return userService.getUser(accountId, userName);
+    }
+end note
+tenancy.service.MultiTenantService .. n2
+api.service.UserService .> tenancy.service.MultiTenantService : getTenantUserService(String tenantId)
+api.service.MultiService .> tenancy.service.MultiTenantUserService
+tenancy.service.MultiTenantUserService ..n3
+api.domain.User .> tenancy.service.MultiTenantUserService
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class controllers.Application extends play.mvc.Controller {
+    @Secure(clients = "OidcClient", authorizers = "googleSuperadmin")
+    public Result googleSuperadminAsset(String file)
+    @Secure(clients = "FormClient", authorizers = "superadmin")
+    public Result superadminAsset(String file)
+    @Secure(clients = "FormClient", authorizers = "admin")
+    public Result adminAsset(String file)
+    @Secure(clients = "FormClient", authorizers = "user")
+    public Result userAsset(String file)
+}
+@enduml

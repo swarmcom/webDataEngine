@@ -1,0 +1,36 @@
+@startuml
+
+
+class DbAccountService implements AccountService {
+    DbAccountRepository accountRepository
+    HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap
+    init()
+}
+interface DbAccountRepository extends org.springframework.data.mongodb.repository.MongoRepository {
+    Account findByAccountName(String accountName);
+    Account findById(String accountId);
+    List<Account> findByIdIn(Collection<String> ids);
+    Long deleteByAccountName(String accountName);
+    Long deleteByIdIn(Collection<String> ids);
+}
+class org.springframework.context.annotation.AnnotationConfigApplicationContext
+class Account extends BeanDomain {
+    protected String id;
+    protected String accountName;
+    protected DbType dbType;
+    protected String dbUri;
+    protected String dbName;
+    protected String superadminUserName;
+    protected String superadminInitialPassword;
+}
+abstract class BeanDomain {
+    public abstract void merge(T beanDomain);
+    protected void mergeSettings(Map<String, Map<String, Object>> settingsGet, Map<String, Map<String, Object>> settingsPut)
+}
+
+DbAccountService "1" --> "1" DbAccountRepository: use
+DbAccountService "1" *--"*" org.springframework.context.annotation.AnnotationConfigApplicationContext : contains
+Account -- DbAccountRepository
+Account "1"<.."1" org.springframework.context.annotation.AnnotationConfigApplicationContext
+
+@enduml
