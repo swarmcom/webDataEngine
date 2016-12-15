@@ -26,12 +26,35 @@
 <body>
 
 <menu-card heading="Owner Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
-           menu='[{"cardId":"Cust", "formId":"formCust", "list":true, "menuCard":false, "tableId":"tableCust", "operationId":"operationCust","title":"Customers" , "icon":"supervisor-account", "description":"Add, rename and manage customers",
-           "width":"150", "height":"140", "url":"/api/accounts/list/array", "defaultsUrl":"/api/accounts/get/defaults", "addUrl":"/api/accounts/add", "getUrl":"/api/accounts/get/id/", "modifyUrl":"/api/accounts/modify/id/",
+           menu='[
+           {"cardId":"Cust", "formId":"formCust", "list":true, "menuCard":false, "tableId":"tableCust", "operationId":"operationCust","title":"Providers" , "icon":"account-balance", "description":"Add, rename and manage customers",
+           "width":"180", "height":"140", "url":"/api/accounts/list/array", "defaultsUrl":"/api/accounts/get/defaults", "addUrl":"/api/accounts/add", "getUrl":"/api/accounts/get/id/", "modifyUrl":"/api/accounts/modify/id/",
            "deleteIdsUrl":"/api/accounts/delete/ids",
            "columns":[{"name":"Id","key":"Id"},{"name":"Account Name","key":"AccountName"},{"name":"DB Name","key":"DBName"},{"name":"DB Type","key":"DBType"},{"name":"DB URI","key":"DBURI"},{"name":"Superadmin username","key":"superUserName"}],
            "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/customer/template/identification_schema","options":"/customer/template/identification_options","buttonId":"create_identification"}]},
-           {"cardId":"CustGroups", "formId":"formCustGroups" , "list":true, "menuCard":false, "tableId":"tableCustGr", "operationId":"operationCustGr", "title":"Customer Groups" , "icon":"account-balance", "description":"Create and manage customer groups",
-           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]}]'></menu-card>
+           {"cardId":"CustGroups", "formId":"formCustGroups" , "list":true, "menuCard":false, "tableId":"tableCustGr", "operationId":"operationCustGr", "title":"Providers Groups" , "icon":"account-balance", "description":"Create and manage customer groups",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"Biling", "formId":"formBiling", "list":true, "menuCard":false, "tableId":"tableBiling", "operationId":"operationBiling", "title":"Biling", "icon":"credit-card", "description":"View System Bilings and make changes",
+           "width":"180", "height":"140"},
+
+           {"cardId":"Security", "formId":"formSecurity", "list":true, "menuCard":false, "tableId":"tableSecurity", "operationId":"operationSecurity", "title":"Security", "icon":"hardware:security", "description":"Manage system security settings",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"Settings", "formId":"formSettings", "list":true, "menuCard":false, "tableId":"tableSettings", "operationId":"operationSettings", "title":"Settings", "icon":"settings", "description":"Manage system settings",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"Support", "formId":"formSupport", "list":true, "menuCard":false, "tableId":"tableSupport", "operationId":"operationSupport", "title":"Support", "icon":"help", "description":"Learn more and get help",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"Users", "formId":"formUsers", "list":true, "menuCard":false, "tableId":"tableUsers", "operationId":"operationUsers", "title":"Users", "icon":"supervisor-account", "description":"Manage owner user",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"UsersGroups", "formId":"formUsersGroups", "list":true, "menuCard":false, "menuCard":false, "tableId":"tableUsersGroups", "operationId":"operationUsersGroups", "title":"Users Groups", "icon":"supervisor-account", "description":"Manage owner user groups",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]},
+
+           {"cardId":"Reports", "formId":"formReports", "list":true, "menuCard":false, "tableId":"tableReports", "operationId":"operationReports", "title":"Reports", "icon":"assessment", "description":"Track usage of services",
+           "width":"180", "height":"140", "columns":[{"name":"Id","key":"Id"}]}
+           ]'></menu-card>
 </body>
 </html>
