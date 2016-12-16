@@ -38,7 +38,7 @@
 			.ebook .buyp a iframe{ margin-bottom: -5px; }
 		</style> 
 		
-		<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-rest.css" />
 		<link rel="stylesheet" media="all" type="text/css" href="jquery-ui-timepicker-addon.css" />
 		
 	</head> 
@@ -113,7 +113,7 @@
 .ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
 </pre>
 	
-	<p>If you prefer a hosted CDN there are a couple available: <a href="http://cdnjs.com/libraries/jquery-ui-timepicker-addon" title="Timepicker on CDNJS">CDNJS</a>, <a href="http://www.jsdelivr.com/#!jquery.ui.timepicker.addon" title="Timepicker on jsDelivr">jsDelivr</a>.</p>
+	<p>If you prefer a hosted CDN there are a couple available: <a href="http://cdnjs.com/libraries/jquery-ui-timepicker-addon" title="Timepicker on CDNJS">CDNJS</a>, <a href="http://www.jsdelivr.com/#!jquery.rest.timepicker.addon" title="Timepicker on jsDelivr">jsDelivr</a>.</p>
 	<br />
 
 	<h3>Requirements</h3>
@@ -716,7 +716,7 @@ $('#slider_example_4').datetimepicker({
 						tp_inst._onSelectHandler();
 					},
 				spin: function(e,ui){ // spin events
-						tp_inst.control.value(tp_inst, obj, unit, ui.value);
+						tp_inst.control.value(tp_inst, obj, unit, rest.value);
 						tp_inst._onTimeChange();
 						tp_inst._onSelectHandler();
 					}
@@ -1052,7 +1052,7 @@ $('#utility_example_3').text(JSON.stringify(
 
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-rest.min.js"></script>
 		<script type="text/javascript" src="jquery-ui-timepicker-addon.js"></script>
 		<script type="text/javascript" src="i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
 		<script type="text/javascript" src="jquery-ui-sliderAccess.js"></script>

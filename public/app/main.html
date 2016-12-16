@@ -26,9 +26,8 @@
 <body>
 
 <menu-card heading="Owner Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
-           menu='[
-           {"cardId":"Cust", "formId":"formCust", "list":true, "menuCard":false, "tableId":"tableCust", "operationId":"operationCust","title":"Providers" , "icon":"account-balance", "description":"Add, rename and manage customers",
-           "width":"180", "height":"140", "url":"/api/accounts/list/array", "defaultsUrl":"/api/accounts/get/defaults", "addUrl":"/api/accounts/add", "getUrl":"/api/accounts/get/id/", "modifyUrl":"/api/accounts/modify/id/",
+           menu='[{"cardId":"Cust", "formId":"formCust", "list":true, "menuCard":false, "tableId":"tableCust", "operationId":"operationCust","title":"Customers" , "icon":"supervisor-account", "description":"Add, rename and manage customers",
+           "width":"150", "height":"140", "url":"/api/accounts/array", "defaultsUrl":"/api/accounts/defaults", "addUrl":"/api/accounts", "getUrl":"/api/accounts/id/", "modifyUrl":"/api/accounts/id/",
            "deleteIdsUrl":"/api/accounts/delete/ids",
            "columns":[{"name":"Id","key":"Id"},{"name":"Account Name","key":"AccountName"},{"name":"DB Name","key":"DBName"},{"name":"DB Type","key":"DBType"},{"name":"DB URI","key":"DBURI"},{"name":"Superadmin username","key":"superUserName"}],
            "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/customer/template/identification_schema","options":"/customer/template/identification_options","buttonId":"create_identification"}]},

@@ -2,6 +2,7 @@ package auth;
 
 import managers.AppProfileManager;
 import org.pac4j.core.profile.UserProfile;
+import play.Logger;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;

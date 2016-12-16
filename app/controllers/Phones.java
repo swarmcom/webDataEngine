@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import managers.AppProfileManager;
 import org.pac4j.play.java.Secure;
 import org.springframework.stereotype.Component;
+import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 

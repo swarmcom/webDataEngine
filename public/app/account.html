@@ -33,8 +33,8 @@
 
 <menu-card heading="Users Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
            menu='[
-           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Manage users",
-           "width":"175", "height":"175", "url":"/api/users/list/array", "defaultsUrl":"/api/users/get/defaults", "addUrl":"/api/users/add", "getUrl":"/api/users/get/id/", "modifyUrl":"/api/users/modify/id/",
+           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
+           "width":"150", "height":"150", "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/", "modifyUrl":"/api/users/id/",
            "deleteIdsUrl":"/api/users/delete/ids",
            "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"User Name", "key":"UserName"},{"name":"Roles","type":"array","key":"Roles"},{"name":"Birth Date","type":"date", "key":"BirthDate"}],
            "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"},

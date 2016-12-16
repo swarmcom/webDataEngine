@@ -1,10 +1,10 @@
 package api.domain;
 
 import api.type.DbType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
-import java.util.Map;
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Account extends BeanDomain<Account> {
     protected String id;

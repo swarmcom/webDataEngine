@@ -1,0 +1,77 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+# Callback
+GET     /callback                                    @org.pac4j.play.CallbackController.callback()
+POST    /callback                                    @org.pac4j.play.CallbackController.callback()
+
+# Logout
+GET     /logout                                      @org.pac4j.play.ApplicationLogoutController.logout()
+
+# Assets
+GET     /loginform                                   controllers.Assets.at(path="/public", file="app/index.html")
+GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/sample.html")
+
+GET     /main                                        controllers.Application.googleSuperadminAsset(file="/public/app/main.html")
+GET     /main/account                                controllers.Application.adminAsset(file="/public/app/account.html")
+GET     /main/account/gateway                        controllers.Application.adminAsset(file="/public/app/gateway.html")
+GET     /main/account/phone                          controllers.Application.adminAsset(file="/public/app/phone.html")
+
+# Templates
+GET     /phones/template/:model/:key                 controllers.Phones.getTemplateByModel(key: String, model: String)
+GET     /gateways/template/:model/:key               controllers.Gateways.getTemplateByModel(key: String, model:String)
+GET     /customer/template/:key                      controllers.Accounts.getTemplate(key: String)
+GET     /user/template/:key                          controllers.Users.getTemplate(key: String)
+
+# REST apis
+GET     /api/users                                   controllers.Users.list
+GET     /api/users/array                             controllers.Users.listArray
+POST    /api/users                                   controllers.Users.add
+PUT     /api/users/name/:userName                    controllers.Users.modifyByName(userName: String)
+GET     /api/users/name/:userName                    controllers.Users.getByName(userName: String)
+PUT     /api/users/id/:userId                        controllers.Users.modifyById(userId: String)
+GET     /api/users/id/:userId                        controllers.Users.getById(userId: String)
+GET     /api/users/defaults                          controllers.Users.getDefaults
+DELETE  /api/users/:userName                         controllers.Users.deleteByName(userName: String)
+DELETE  /api/users/delete/ids                        controllers.Users.deleteList
+
+GET     /api/accounts                                controllers.Accounts.list
+GET     /api/accounts/array                          controllers.Accounts.listArray
+POST    /api/accounts                                controllers.Accounts.add
+PUT     /api/accounts/name/:accountName              controllers.Accounts.modifyByName(accountName: String)
+GET     /api/accounts/name/:accountName              controllers.Accounts.getByName(accountName: String)
+PUT     /api/accounts/id/:accountId                  controllers.Accounts.modifyById(accountId: String)
+GET     /api/accounts/id/:accountId                  controllers.Accounts.getById(accountId: String)
+GET     /api/accounts/defaults                       controllers.Accounts.getDefaults
+DELETE  /api/accounts/:accountName                   controllers.Accounts.deleteByName(accountName: String)
+DELETE  /api/accounts/delete/ids                     controllers.Accounts.deleteList
+
+GET     /api/phones/:model                           controllers.Phones.list(model: String)
+GET     /api/phones/array/:model                     controllers.Phones.listArray(model: String)
+POST    /api/phones/:model                           controllers.Phones.add(model: String)
+PUT     /api/phones/serial/:serialNumber             controllers.Phones.modifyByName(serialNumber: String)
+GET     /api/phones/serial/:serialNumber             controllers.Phones.getByName(serialNumber: String)
+PUT     /api/phones/id/:phoneId                      controllers.Phones.modifyById(phoneId: String)
+GET     /api/phones/id/:phoneId                      controllers.Phones.getById(phoneId: String)
+GET     /api/phones/defaults/:model                  controllers.Phones.getDefaults(model: String)
+DELETE  /api/phones/:accountName                     controllers.Phones.deleteByName(accountName: String)
+DELETE  /api/phones/delete/ids                       controllers.Phones.deleteList
+
+GET     /api/gateways/:model                         controllers.Gateways.list(model: String)
+GET     /api/gateways/array/:model                   controllers.Gateways.listArray(model: String)
+POST    /api/gateways/:model                         controllers.Gateways.add(model: String)
+PUT     /api/gateways/serial/:serialNumber           controllers.Gateways.modifyByName(serialNumber: String)
+GET     /api/gateways/serial/:serialNumber           controllers.Gateways.getByName(serialNumber: String)
+PUT     /api/gateways/id/:gatewayId                  controllers.Gateways.modifyById(gatewayId: String)
+GET     /api/gateways/id/:gatewayId                  controllers.Gateways.getById(gatewayId: String)
+GET     /api/gateways/defaults/:model                controllers.Gateways.getDefaults(model: String)
+DELETE  /api/gateways/:accountName                   controllers.Gateways.deleteByName(accountName: String)
+DELETE  /api/gateways/delete/ids                     controllers.Gateways.deleteList
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET     /*file                                       controllers.Assets.at(path="/public", file)

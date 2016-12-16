@@ -34,5 +34,8 @@ libraryDependencies ++= Seq(
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
 
+javaOptions in Test ++= Seq("-Dconfig.file=conf/test.application.conf",
+  "-Dplay.http.router=test.Routes"
+)
 
 fork in run := false
