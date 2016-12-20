@@ -1,5 +1,6 @@
 package api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import java.util.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends BeanDomain<User>{
 
     protected String id;

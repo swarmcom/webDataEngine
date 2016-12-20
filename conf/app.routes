@@ -27,6 +27,7 @@ GET     /customer/template/:key                      controllers.Accounts.getTem
 GET     /user/template/:key                          controllers.Users.getTemplate(key: String)
 
 # REST apis
+
 GET     /api/users                                   controllers.Users.list
 GET     /api/users/array                             controllers.Users.listArray
 POST    /api/users                                   controllers.Users.add
@@ -36,7 +37,20 @@ PUT     /api/users/id/:userId                        controllers.Users.modifyByI
 GET     /api/users/id/:userId                        controllers.Users.getById(userId: String)
 GET     /api/users/defaults                          controllers.Users.getDefaults
 DELETE  /api/users/:userName                         controllers.Users.deleteByName(userName: String)
+DELETE  /api/users/account/:accountName              controllers.Users.deleteByAccountName(accountName: String)
 DELETE  /api/users/delete/ids                        controllers.Users.deleteList
+
+GET     /api/roles                                   controllers.Roles.list
+GET     /api/roles/array                             controllers.Roles.listArray
+POST    /api/roles                                   controllers.Roles.add
+PUT     /api/roles/name/:roleName                    controllers.Roles.modifyByName(roleName: String)
+GET     /api/roles/name/:roleName                    controllers.Roles.getByName(roleName: String)
+PUT     /api/roles/id/:roleId                        controllers.Roles.modifyById(roleId: String)
+GET     /api/roles/id/:roleId                        controllers.Roles.getById(roleId: String)
+GET     /api/roles/defaults                          controllers.Roles.getDefaults
+DELETE  /api/roles/:roleName                         controllers.Roles.deleteByName(roleName: String)
+DELETE  /api/roles/account/:accountName              controllers.Roles.deleteByAccountName(accountName: String)
+DELETE  /api/roles/delete/ids                        controllers.Roles.deleteList
 
 GET     /api/accounts                                controllers.Accounts.list
 GET     /api/accounts/array                          controllers.Accounts.listArray
@@ -57,7 +71,8 @@ GET     /api/phones/serial/:serialNumber             controllers.Phones.getByNam
 PUT     /api/phones/id/:phoneId                      controllers.Phones.modifyById(phoneId: String)
 GET     /api/phones/id/:phoneId                      controllers.Phones.getById(phoneId: String)
 GET     /api/phones/defaults/:model                  controllers.Phones.getDefaults(model: String)
-DELETE  /api/phones/:accountName                     controllers.Phones.deleteByName(accountName: String)
+DELETE  /api/phones/:phoneName                       controllers.Phones.deleteByName(phoneName: String)
+DELETE  /api/phones/account/:accountName             controllers.Phones.deleteByAccountName(accountName: String)
 DELETE  /api/phones/delete/ids                       controllers.Phones.deleteList
 
 GET     /api/gateways/:model                         controllers.Gateways.list(model: String)
@@ -68,7 +83,8 @@ GET     /api/gateways/serial/:serialNumber           controllers.Gateways.getByN
 PUT     /api/gateways/id/:gatewayId                  controllers.Gateways.modifyById(gatewayId: String)
 GET     /api/gateways/id/:gatewayId                  controllers.Gateways.getById(gatewayId: String)
 GET     /api/gateways/defaults/:model                controllers.Gateways.getDefaults(model: String)
-DELETE  /api/gateways/:accountName                   controllers.Gateways.deleteByName(accountName: String)
+DELETE  /api/gateways/:gatewayName                   controllers.Gateways.deleteByName(gatewayName: String)
+DELETE  /api/gateways/account/:accountName           controllers.Gateways.deleteByAccountName(accountName: String)
 DELETE  /api/gateways/delete/ids                     controllers.Gateways.deleteList
 
 

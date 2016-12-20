@@ -21,4 +21,6 @@ public interface PhoneService {
     Long deletePhone(String accountId, String serialNumber);
 
     Long deletePhones(String accountId, Collection<String> phoneIds);
+
+    Long deletePhones(String accountId);
 }

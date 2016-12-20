@@ -66,4 +66,9 @@ public class MongoPhoneService implements PhoneService {
     public Long deletePhones(String accountId, Collection<String> phoneIds) {
         return phoneRepository.deleteByAccountIdAndIdIn(accountId, phoneIds);
     }
+
+    @Override
+    public Long deletePhones(String accountId) {
+        return phoneRepository.deleteByAccountId(accountId);
+    }
 }

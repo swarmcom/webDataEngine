@@ -53,6 +53,11 @@ public class Phones extends ModeledEntityController {
     }
 
     @Override
+    protected Long deleteByAccountNameAbstract(String accountName) throws Exception {
+        return phoneService.deletePhones(accountName);
+    }
+
+    @Override
     protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
         return phoneService.deletePhones(appProfileManager.getSessionAccountId(ctx()), idsArray);

@@ -2,17 +2,24 @@ package common;
 
 import api.domain.Account;
 import api.domain.BeanDomain;
+import api.domain.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.*;
 
 import play.Application;
+import play.Logger;
 import play.Mode;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
@@ -22,6 +29,7 @@ public abstract class BaseRestTest implements TestConstants {
     protected Application application;
     protected Http.Session session;
     protected Account testAccount;
+    protected User testSuperadmin;
 
     @Before
     public void setUp() throws Exception {
@@ -40,7 +48,7 @@ public abstract class BaseRestTest implements TestConstants {
 
         assertEquals(OK, result.status());
 
-        testAccount = (Account) convertResult(result, Account.class);//(new ObjectMapper()).readValue(Helpers.contentAsString(result), Account.class);
+        testAccount = (Account) TestUtil.convertResult(result, Account.class);//(new ObjectMapper()).readValue(Helpers.contentAsString(result), Account.class);
 
         String uri = "/callback?client_name=FormClient&accountid=" + TEST_ACCOUNT + "&username=" + TEST_SUPERADMIN + "&password=" + TEST_SUPERADMIN_PASSWORD;
         result = sendRequest("POST", uri, null, false);
@@ -48,6 +56,10 @@ public abstract class BaseRestTest implements TestConstants {
         assertEquals(SEE_OTHER, result.status());
 
         session = result.session();
+
+        result = sendRequestInSession("GET", "/api/users/name/" + TEST_SUPERADMIN, null);
+
+        testSuperadmin = (User) TestUtil.convertResult(result, User.class);
     }
 
     //{"ids":[{"id":"5697a1402736ddb092bb7b69"}]}
@@ -82,16 +94,27 @@ public abstract class BaseRestTest implements TestConstants {
         return sendRequest(method, uri, bodyJson, true);
     }
 
-    protected BeanDomain convertResult(Result result, Class<? extends BeanDomain> classDomain) throws Exception {
-        return (new ObjectMapper()).readValue(Helpers.contentAsString(result), classDomain);
-    }
 
     @After
     public void tearDown() throws Exception {
-        Result result = sendRequestInSession("DELETE", "/api/accounts/" + TEST_ACCOUNT, null);
+        //Result result = sendRequestInSession("GET", "/api/roles", null);
+        //assertEquals(OK, result.status());
+
+        //List<Map<String,String>> roles = TestUtil.convertListResult(result, List.class);
+        //Collection ids = TestUtil.getFieldList(roles, "id");
+        //String idsJson = TestUtil.createIdsJson(ids);
+        //Logger.info("MIRCEA idsJson " + idsJson);
+
+        //result = sendRequestInSession("DELETE", "/api/roles/delete/ids", idsJson);
+        //assertEquals(OK, result.status());
+
+        Result result = sendRequestInSession("DELETE", "/api/users/" + TEST_SUPERADMIN, null);
         assertEquals(OK, result.status());
 
-        result = sendRequestInSession("DELETE", "/api/users/" + TEST_SUPERADMIN, null);
+        result = sendRequestInSession("DELETE", "/api/roles/account/" + TEST_ACCOUNT, null);
+        assertEquals(OK, result.status());
+
+        result = sendRequestInSession("DELETE", "/api/accounts/" + TEST_ACCOUNT, null);
         assertEquals(OK, result.status());
 
         Helpers.stop(application);

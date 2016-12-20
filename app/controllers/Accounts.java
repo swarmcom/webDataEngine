@@ -48,6 +48,11 @@ public class Accounts extends SimpleEntityController {
     }
 
     @Override
+    protected Long deleteByAccountNameAbstract(String accountName) throws Exception {
+        return deleteByNameAbstract(accountName);
+    }
+
+    @Override
     protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
         return accountService.deleteAccounts(idsArray);

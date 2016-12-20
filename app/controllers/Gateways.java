@@ -91,6 +91,11 @@ public class Gateways extends ModeledEntityController {
     }
 
     @Override
+    protected Long deleteByAccountNameAbstract(String accountName) throws Exception {
+        return gatewayService.deleteGateways(accountName);
+    }
+
+    @Override
     protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
         return gatewayService.deleteGateways(appProfileManager.getSessionAccountId(ctx()), idsArray);

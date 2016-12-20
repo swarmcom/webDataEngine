@@ -23,4 +23,6 @@ public interface GatewayService {
     Long deleteGateway(String accountId, String serialNumber);
 
     Long deleteGateways(String accountId, Collection<String> gatewayIds);
+
+    Long deleteGateways(String accountId);
 }

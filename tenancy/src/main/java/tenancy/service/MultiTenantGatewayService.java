@@ -64,4 +64,10 @@ public class MultiTenantGatewayService implements GatewayService {
         GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
         return gatewayService.deleteGateways(accountId, gatewayIds);
     }
+
+    @Override
+    public Long deleteGateways(String accountId) {
+        GatewayService gatewayService = multiService.getTenantGatewayService(accountId);
+        return gatewayService.deleteGateways(accountId);
+    }
 }

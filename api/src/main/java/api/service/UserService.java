@@ -20,4 +20,6 @@ public interface UserService {
     Long deleteUser(String accountId, String userName);
 
     Long deleteUsers(String accountId, Collection<String> userIds);
+
+    Long deleteUsers(String accountId);
 }

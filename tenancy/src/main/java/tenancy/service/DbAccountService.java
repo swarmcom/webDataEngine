@@ -14,11 +14,9 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.StandardEnvironment;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import play.Logger;
 import security.encoder.SecurityPasswordEncoder;
-import security.util.EncoderUtil;
 import tenancy.dao.DbAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

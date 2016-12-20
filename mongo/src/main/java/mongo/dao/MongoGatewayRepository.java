@@ -22,4 +22,6 @@ public interface MongoGatewayRepository extends MongoRepository<Gateway, String>
     Long deleteByAccountIdAndSerialNumber(String accountId, String serialNumber);
 
     Long deleteByAccountIdAndIdIn(String accountId, Collection<String> ids);
+
+    Long deleteByAccountId(String accountId);
 }

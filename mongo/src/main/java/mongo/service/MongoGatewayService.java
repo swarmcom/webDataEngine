@@ -64,4 +64,9 @@ public class MongoGatewayService implements GatewayService {
     public Long deleteGateways(String accountId, Collection<String> gatewayIds) {
         return gatewayRepository.deleteByAccountIdAndIdIn(accountId, gatewayIds);
     }
+
+    @Override
+    public Long deleteGateways(String accountId) {
+        return gatewayRepository.deleteByAccountId(accountId);
+    }
 }

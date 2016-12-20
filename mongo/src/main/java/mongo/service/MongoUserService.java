@@ -66,4 +66,9 @@ public class MongoUserService implements UserService {
         return userRepository.deleteByAccountIdAndIdIn(accountId, userIds);
     }
 
+    @Override
+    public Long deleteUsers(String accountId) {
+        return userRepository.deleteByAccountId(accountId);
+    }
+
 }

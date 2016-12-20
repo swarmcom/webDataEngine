@@ -31,7 +31,9 @@ public abstract class EntityController extends Controller {
 
     protected abstract BeanDomain getByIdAbstract(String id) throws Exception;
 
-    protected abstract Long deleteByNameAbstract(String name)throws Exception;
+    protected abstract Long deleteByNameAbstract(String name) throws Exception;
+
+    protected abstract Long deleteByAccountNameAbstract(String accountName) throws Exception;
 
     protected abstract Long deleteListAbstract() throws Exception;
 
@@ -60,6 +62,15 @@ public abstract class EntityController extends Controller {
     public Result deleteByName(String name) {
         try {
             return ok(String.valueOf(deleteByNameAbstract(name)));
+        } catch (Exception e) {
+            Logger.error("error ", e);
+            return convert(null);
+        }
+    }
+
+    public Result deleteByAccountName(String accountName) {
+        try {
+            return ok(String.valueOf(deleteByAccountNameAbstract(accountName)));
         } catch (Exception e) {
             Logger.error("error ", e);
             return convert(null);

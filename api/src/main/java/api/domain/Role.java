@@ -1,7 +1,7 @@
 package api.domain;
 
 
-public class Role {
+public class Role extends BeanDomain<Role>{
 
     protected String id;
 
@@ -40,5 +40,19 @@ public class Role {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    @Override
+    public void merge(Role role) {
+        String accountId = role.getAccountId();
+        String roleName = role.getRoleName();
+
+        if (accountId != null) {
+            setAccountId(accountId);
+        }
+
+        if (roleName != null) {
+            setRoleName(roleName);
+        }
     }
 }

@@ -65,4 +65,10 @@ public class MultiTenantPhoneService implements PhoneService {
         PhoneService phoneService = multiService.getTenantPhoneService(accountId);
         return phoneService.deletePhones(accountId, phoneIds);
     }
+
+    @Override
+    public Long deletePhones(String accountId) {
+        PhoneService phoneService = multiService.getTenantPhoneService(accountId);
+        return phoneService.deletePhones(accountId);
+    }
 }

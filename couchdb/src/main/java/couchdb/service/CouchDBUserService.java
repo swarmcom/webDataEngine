@@ -56,4 +56,9 @@ public class CouchDBUserService implements UserService {
     public Long deleteUsers(String accountId, Collection<String> userIds) {
         return null;
     }
+
+    @Override
+    public Long deleteUsers(String accountId) {
+        return null;
+    }
 }

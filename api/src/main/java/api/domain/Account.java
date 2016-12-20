@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.StringUtils;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Account extends BeanDomain<Account> {
     protected String id;
     protected String accountName;

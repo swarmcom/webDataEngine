@@ -62,6 +62,11 @@ public class Users extends SimpleEntityController {
     }
 
     @Override
+    protected Long deleteByAccountNameAbstract(String accountName) throws Exception {
+        return userService.deleteUsers(accountName);
+    }
+
+    @Override
     protected Long deleteListAbstract() throws Exception {
         List<String> idsArray = convertIds();
         return userService.deleteUsers(appProfileManager.getSessionAccountId(ctx()), idsArray);

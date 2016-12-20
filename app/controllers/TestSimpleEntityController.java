@@ -62,6 +62,11 @@ public class TestSimpleEntityController extends SimpleEntityController {
     }
 
     @Override
+    protected Long deleteByAccountNameAbstract(String accountName) throws Exception {
+        return null;
+    }
+
+    @Override
     protected Long deleteListAbstract() throws Exception {
         return null;
     }

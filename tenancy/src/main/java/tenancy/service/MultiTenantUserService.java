@@ -60,4 +60,10 @@ public class MultiTenantUserService implements UserService {
         UserService userService = multiService.getTenantUserService(accountId);
         return userService.deleteUsers(accountId, userIds);
     }
+
+    @Override
+    public Long deleteUsers(String accountId) {
+        UserService userService = multiService.getTenantUserService(accountId);
+        return userService.deleteUsers(accountId);
+    }
 }

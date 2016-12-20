@@ -19,4 +19,6 @@ public interface MongoPhoneRepository extends MongoRepository<Phone, String> {
     Long deleteByAccountIdAndSerialNumber(String accountId, String serialNumber);
 
     Long deleteByAccountIdAndIdIn(String accountId, Collection<String> ids);
+
+    Long deleteByAccountId(String accountId);
 }
