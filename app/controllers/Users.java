@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.pac4j.play.java.Secure;
 import org.springframework.stereotype.Component;
+import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import security.encoder.SecurityPasswordEncoder;

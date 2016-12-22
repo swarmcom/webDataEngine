@@ -34,14 +34,14 @@ public class TestUtil {
     }
 
     public static String createIdsJson(Collection<String> ids) {
-        StringBuilder idsJson = new StringBuilder("{\"ids\":[{");
+        StringBuilder idsJson = new StringBuilder("{\"ids\":[");
         String[] arrayString = new String[ids.size()];
         int i=0;
         for (String id : ids) {
-            arrayString[i++] = String.format("\"id\":\"%s\"", id);
+            arrayString[i++] = String.format("{\"id\":\"%s\"}", id);
         }
         idsJson.append(StringUtils.join(arrayString, ","));
-        idsJson.append("}]}");
+        idsJson.append("]}");
         return idsJson.toString();
     }
 }
