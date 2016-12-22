@@ -97,16 +97,6 @@ public abstract class BaseRestTest implements TestConstants {
 
     @After
     public void tearDown() throws Exception {
-        //Result result = sendRequestInSession("GET", "/api/roles", null);
-        //assertEquals(OK, result.status());
-
-        //List<Map<String,String>> roles = TestUtil.convertListResult(result, List.class);
-        //Collection ids = TestUtil.getFieldList(roles, "id");
-        //String idsJson = TestUtil.createIdsJson(ids);
-        //Logger.info("MIRCEA idsJson " + idsJson);
-
-        //result = sendRequestInSession("DELETE", "/api/roles/delete/ids", idsJson);
-        //assertEquals(OK, result.status());
 
         Result result = sendRequestInSession("DELETE", "/api/users/" + TEST_SUPERADMIN, null);
         assertEquals(OK, result.status());

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static play.mvc.Http.Status.OK;
 
 public class UserTest extends BaseRestTest {
@@ -30,11 +32,30 @@ public class UserTest extends BaseRestTest {
     }
 
     @Test
-    public void getUsertByName() throws Exception {
+    public void getUserByName() throws Exception {
         Result result = sendRequestInSession("GET", "/api/users/name/" + testSuperadmin.getUserName(), null);
         assertEquals(OK, result.status());
         User user = (User) TestUtil.convertResult(result, User.class);
         assertEquals(testSuperadmin.getBirthDate(), user.getBirthDate());
+    }
+
+    @Test
+    public void modifyUserByName() throws Exception {
+        Result result = sendRequestInSession("GET", "/api/users/name/" + testSuperadmin.getUserName(), null);
+        assertEquals(OK, result.status());
+        User user = (User) TestUtil.convertResult(result, User.class);
+        assertNull(user.isDigestEncoded());
+
+        //partial update
+        String json = "{\"digestEncoded\":\"true\"}";
+        result = sendRequestInSession("PUT", "/api/users/name/" + testSuperadmin.getUserName(), json);
+        assertEquals(OK, result.status());
+
+        result = sendRequestInSession("GET", "/api/users/name/" + testSuperadmin.getUserName(), null);
+        assertEquals(OK, result.status());
+        user = (User) TestUtil.convertResult(result, User.class);
+        assertTrue(user.isDigestEncoded());
+        assertEquals(TEST_SUPERADMIN, user.getUserName());
     }
 
     @Test
