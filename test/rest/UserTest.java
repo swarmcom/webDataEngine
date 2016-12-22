@@ -24,7 +24,7 @@ import static play.mvc.Http.Status.OK;
 public class UserTest extends BaseRestTest {
 
     @Test
-    public void getUsertById() throws Exception {
+    public void getUserById() throws Exception {
         Result result = sendRequestInSession("GET", "/api/users/id/" + testSuperadmin.getId(), null);
         assertEquals(OK, result.status());
         User user = (User) TestUtil.convertResult(result, User.class);
