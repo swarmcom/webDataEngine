@@ -31,9 +31,9 @@
 
 <body>
 
-<menu-card heading="Customer Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
+<menu-card heading="Customer Admin Console" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
            menu='[
-           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
+           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"social:person", "description":"Manage users",
            "width":"180", "height":"140", "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/", "modifyUrl":"/api/users/id/",
            "deleteIdsUrl":"/api/users/delete/ids",
            "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"User Name", "key":"UserName"},{"name":"Roles","type":"array","key":"Roles"},{"name":"Birth Date","type":"date", "key":"BirthDate"}],
@@ -49,7 +49,7 @@
            {"menuName":"Instant Messaging","pageId":"page_InstantMessaging","schema":"/user/template/instantMessaging_settings_schema","options":"/user/template/instantMessaging_settings_options","buttonId":"create_instantMessaging"},
            {"menuName":"MyBuddy","pageId":"page_MyBuddy","schema":"/user/template/myBuddy_settings_schema","options":"/user/template/myBuddy_settings_options","buttonId":"create_myBuddy"}]},
 
-           {"cardId":"UsersGroups", "formId":"formUsersGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/usersGroups", "title":"Users Groups", "icon":"supervisor-account", "description":"Manage user groups",
+           {"cardId":"UserGroups", "formId":"formUserGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/usersGroups", "title":"User Groups", "icon":"supervisor-account", "description":"Manage user groups",
            "width":"180", "height":"140"},
 
            {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/main/account/devices", "title":"Devices", "icon":"device:devices", "description":"Manage devices",
