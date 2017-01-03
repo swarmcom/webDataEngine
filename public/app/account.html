@@ -31,10 +31,10 @@
 
 <body>
 
-<menu-card heading="Users Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
+<menu-card heading="Customer Admin Console" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
            menu='[
            {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"supervisor-account", "description":"Add, rename and manage users",
-           "width":"150", "height":"150", "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/", "modifyUrl":"/api/users/id/",
+           "width":"180", "height":"140", "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/", "modifyUrl":"/api/users/id/",
            "deleteIdsUrl":"/api/users/delete/ids",
            "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"User Name", "key":"UserName"},{"name":"Roles","type":"array","key":"Roles"},{"name":"Birth Date","type":"date", "key":"BirthDate"}],
            "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"},
@@ -50,42 +50,42 @@
            {"menuName":"MyBuddy","pageId":"page_MyBuddy","schema":"/user/template/myBuddy_settings_schema","options":"/user/template/myBuddy_settings_options","buttonId":"create_myBuddy"}]},
 
            {"cardId":"UsersGroups", "formId":"formUsersGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/usersGroups", "title":"Users Groups", "icon":"supervisor-account", "description":"Manage user groups",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
-           {"cardId":"Device", "formId":"formDevice", "list":false, "menuCard":true, "menuCardUrl":"/main/account/device", "title":"Device", "icon":"device:devices", "description":"Manage devices",
-           "width":"175", "height":"175"},
+           {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/main/account/devices", "title":"Devices", "icon":"device:devices", "description":"Manage devices",
+           "width":"180", "height":"140"},
 
            {"cardId":"DeviceGroups", "formId":"formDeviceGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/deviceGroups", "title":"Device Groups", "icon":"device:devices", "description":"Manage device groups",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Admin", "formId":"formAdmin", "list":false, "menuCard":true, "menuCardUrl":"/main/account/admin", "title":"Admin", "icon":"assessment", "description":"Manage customer administrators",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"AdminGroups", "formId":"formAdminGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/adminGroups", "title":"Admin Groups", "icon":"assessment", "description":"Manage groups of customer admins",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Meetings", "formId":"formMeetings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/meetings", "title":"Meetings", "icon":"assessment", "description":"Manage meeting rooms",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Reports", "formId":"formReports", "list":false, "menuCard":true, "menuCardUrl":"/main/account/reports", "title":"Reports", "icon":"assessment", "description":"Track usage of services",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Settings", "formId":"formSettings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/settings", "title":"Settings", "icon":"settings", "description":"Manage system settings",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Support", "formId":"formSupport", "list":false, "menuCard":true, "menuCardUrl":"/main/account/support", "title":"Support", "icon":"help", "description":"Learn more and get help",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Biling", "formId":"formBiling", "list":false, "menuCard":true, "menuCardUrl":"/main/account/biling", "title":"Biling", "icon":"credit-card", "description":"View System Bilings and make changes",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Security", "formId":"formSecurity", "list":false, "menuCard":true, "menuCardUrl":"/main/account/security", "title":"Security", "icon":"hardware:security", "description":"Manage customer security settings",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Phones", "formId":"formPhone", "list":false, "menuCard":true, "menuCardUrl":"/main/account/phone", "title":"Phones", "icon":"supervisor-account", "description":"Add, rename and manage phones",
-           "width":"175", "height":"175"},
+           "width":"180", "height":"140"},
 
            {"cardId":"Gateways", "formId":"formGateway", "list":false, "menuCard":true, "menuCardUrl":"/main/account/gateway", "title":"Gateways", "icon":"supervisor-account", "description":"Add, rename and manage gateways",
-           "width":"175", "height":"175"}]'></menu-card>
+           "width":"180", "height":"140"}]'></menu-card>
 </body>
 </html>
