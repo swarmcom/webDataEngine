@@ -1,14 +1,11 @@
 package rest;
 
 import api.domain.User;
-import api.type.DbType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import common.BaseRestTest;
 import common.TestUtil;
 import org.junit.Test;
-import play.Logger;
-import play.test.Helpers;
 import play.mvc.Result;
 
 import java.util.ArrayList;

@@ -37,7 +37,7 @@
         <template is="dom-if" if="{{list}}">
             <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
             <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
-            <paper-fab icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+            <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
         </template>
         <template is="dom-if" if="{{add}}">
             <custom-template pages={{pages}}></custom-template>
