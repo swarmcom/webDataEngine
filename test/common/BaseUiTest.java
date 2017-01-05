@@ -4,7 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import play.Logger;
 import play.api.test.WebDriverFactory;
 import play.libs.F.Callback;
 import play.test.Helpers;
@@ -29,7 +31,7 @@ public class BaseUiTest extends BaseRestTest {
         FirefoxDriver driver = (FirefoxDriver) WebDriverFactory.apply(FIREFOX);
         browser = Helpers.testBrowser(driver);
         wait = browser.fluentWait().withTimeout(30, TimeUnit.SECONDS)
-                .pollingEvery(5, TimeUnit.SECONDS)
+                .pollingEvery(3, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);
 
         Callback<TestBrowser> callback = tenantLogin();
@@ -58,7 +60,7 @@ public class BaseUiTest extends BaseRestTest {
                 WebElement login = elementMap.get(LoginPage.LOGIN_BUTTON_ID);
 
                 login.click();
-                assertTrue(browser.pageSource().contains("Users Admin Console"));
+                assertTrue(browser.pageSource().contains("Customer Admin Console"));
             }
         };
         return callback;
@@ -77,6 +79,7 @@ public class BaseUiTest extends BaseRestTest {
         element.clear();
         element.click();
         element.sendKeys(text);
+        wait.until(ExpectedConditions.textToBePresentInElementValue(element, text));
     }
 
     protected void assertAlertEquals(String text) {

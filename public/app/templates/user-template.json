@@ -48,7 +48,7 @@
         "type": "date",
         "helper": "Birth date",
         "dateFormat": "MM/DD/YYYY",
-        "manualEntry": true
+        "manualEntry": false
       },
       "digestEncoded": {
         "helper": "If checked, the password will be encoded in digest format"

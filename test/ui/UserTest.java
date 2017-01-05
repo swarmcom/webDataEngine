@@ -3,12 +3,9 @@ package ui;
 
 import common.BaseUiTest;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import play.Logger;
 import ui.page.AddUserPage;
 import ui.page.UsersAdminConsolePage;
 import ui.page.UsersPage;
@@ -44,6 +41,8 @@ public class UserTest extends BaseUiTest {
                 "form.setAttribute(\"add\",true);" +
                 "form.setAttribute(\"key\",'');" +
                 "form.setAttribute(\"list\",false);");
+
+        //add user
         addButton.click();
         elementMap = browser.waitUntil(wait, new AddUserPage());
         WebElement closeButton = elementMap.get(AddUserPage.CLOSE_BUTTON_ID);
@@ -66,21 +65,27 @@ public class UserTest extends BaseUiTest {
         saveIdentificationButton.click();
 
         assertAlertEquals("Item added");
-
         closeButton.click();
+
+        //retrieve new table rows and test user table size
+        elementMap = browser.waitUntil(wait, new UsersPage());
+        table = elementMap.get(UsersPage.USERS_TABLE_ID);
+        assertNotNull(table);
         rows = table.findElements(By.cssSelector(TABLE_CSS_ROWS_SELECTOR));
         assertEquals(4, rows.size());
 
         WebElement lastUserColumn = rows.get(rows.size() - 1);
 
+        //retrieve modify user button element from more menu
         WebElement lastUserMoreButton = lastUserColumn.findElement(By.tagName("iron-icon"));
         lastUserMoreButton.click();
         WebElement modifyUserButton = table.findElement(By.id(USERS_TABLE_MODIFY_BUTTON_ID));
         assertNotNull(modifyUserButton);
         modifyUserButton = wait.until(ExpectedConditions.visibilityOf(modifyUserButton));
         assertTrue(modifyUserButton.isDisplayed());
-        modifyUserButton.click();
 
+        //modify user
+        modifyUserButton.click();
         elementMap = browser.waitUntil(wait, new AddUserPage());
         closeButton = elementMap.get(AddUserPage.CLOSE_BUTTON_ID);
         assertNotNull(closeButton);
@@ -97,22 +102,29 @@ public class UserTest extends BaseUiTest {
 
         setText(username, "user2");
         setText(password, "password2");
-        setText(birthDate, "10/28/1944");
+        setText(birthDate, "12/28/2010");
 
         saveIdentificationButton.click();
 
         assertAlertEquals("Item modified");
         closeButton.click();
+
+        //retrieve new table rows and test again user table size
+        elementMap = browser.waitUntil(wait, new UsersPage());
+        table = elementMap.get(UsersPage.USERS_TABLE_ID);
+        assertNotNull(table);
         rows = table.findElements(By.cssSelector(TABLE_CSS_ROWS_SELECTOR));
         assertEquals(4, rows.size());
 
+        //click on table checkbox and delete added user
         lastUserColumn = rows.get(rows.size() - 1);
         WebElement lastUserCheckbox = lastUserColumn.findElement(By.tagName("input"));
         lastUserCheckbox.click();
         deleteButton.click();
         assertAlertEquals("deleted");
+
+        //test again new user table size
         rows = table.findElements(By.cssSelector(TABLE_CSS_ROWS_SELECTOR));
         assertEquals(3, rows.size());
-
     }
 }
