@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Main</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
+    <script src="/assets/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/assets/app/elements/menu-card.html">
+
+    <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/assets/components/alpaca/bootstrap/alpaca.min.css">
+
+    <script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/components/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="/assets/components/alpaca/bootstrap/alpaca.min.js"></script>
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+
+<menu-card heading="Customer Admin Console > Devices" elevation="3" width="150" height="100" color="LIGHTBLUE" cardhovercolor="YELLOW"
+           menu = '[
+           {"cardId":"Phones", "formId":"formPhone", "list":false, "menuCard":true, "menuCardUrl":"/main/account/phone", "title":"Phones", "icon":"custom:phone", "description":"Add, rename and manage phones",
+           "width":"160", "height":"140"},
+
+           {"cardId":"Gateways", "formId":"formGateway", "list":false, "menuCard":true, "menuCardUrl":"/main/account/gateway", "title":"Gateways", "icon":"custom:router", "description":"Add, rename and manage gateways",
+           "width":"160", "height":"140"}]' back-button = true back-url="/main/account"></menu-card>
+</body>
+</html>

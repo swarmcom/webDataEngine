@@ -17,6 +17,7 @@ GET     /alpaca                                      controllers.Assets.at(path=
 
 GET     /main                                        controllers.Application.googleSuperadminAsset(file="/public/app/main.html")
 GET     /main/account                                controllers.Application.adminAsset(file="/public/app/account.html")
+GET     /main/account/device                         controllers.Application.adminAsset(file="/public/app/device.html")
 GET     /main/account/gateway                        controllers.Application.adminAsset(file="/public/app/gateway.html")
 GET     /main/account/phone                          controllers.Application.adminAsset(file="/public/app/phone.html")
 
