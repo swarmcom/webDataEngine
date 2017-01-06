@@ -9,14 +9,20 @@
     <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
     <script src="/assets/components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="/assets/app/elements/menu-card.html">
-
     <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap/dist/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/assets/components/alpaca/bootstrap/alpaca.min.css">
+    <link type="text/css" rel="stylesheet" media="screen" href="/assets/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap-daterangepicker/daterangepicker.css" />
 
     <script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/assets/components/handlebars/handlebars.js"></script>
     <script type="text/javascript" src="/assets/components/alpaca/bootstrap/alpaca.min.js"></script>
+    <!-- moment for date and datetime controls -->
+    <script type="text/javascript" src="/assets/components/moment/min/moment-with-locales.min.js"></script>
+    <!-- bootstrap datetimepicker for date and datetime controls -->
+    <script type="text/javascript" src="/assets/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/assets/components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
     <style type="text/css">
 
@@ -25,24 +31,16 @@
 
 <body>
 
-<menu-card heading="Provider Admin Console" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
+<menu-card heading="Owner Admin Console" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
            menu='[
 
-           {"cardId":"Customers", "formId":"formCust", "list":true, "menuCard":false, "tableId":"tableCust",
-           "width":"160", "height":"140",
-           "operationId":"operationCust","title":"Customers" , "icon":"custom:customers",
-           "description":"Add, rename and manage customers", "url":"/api/accounts/array", "defaultsUrl":"/api/accounts/defaults",
-           "addUrl":"/api/accounts", "getUrl":"/api/accounts/id/", "modifyUrl":"/api/accounts/id/",
-           "deleteIdsUrl":"/api/accounts/delete/ids", "columns":[{"name":"Id","key":"Id"},{"name":"Account Name","key":"AccountName"},
-           {"name":"Database Name","key":"DBName"},{"name":"Database Type","key":"DBType"},{"name":"Database URI","key":"DBURI"},
-           {"name":"Superadmin username","key":"superUserName"}],
-           "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/customer/template/identification_schema",
-           "options":"/customer/template/identification_options","buttonId":"create_identification"}]},
+           {"cardId":"Providers", "formId":"formProviders", "list":false, "menuCard":true, "menuCardUrl":"/main/owner/providers",
+           "title":"Providers", "icon":"custom:providers", "description":"Manage providers",
+           "width":"160", "height":"140"},
 
-           {"cardId":"CustomerGroups", "formId":"formCustGroups" , "list":true, "menuCard":false, "tableId":"tableCustGr",
-           "width":"160", "height":"140",
-           "operationId":"operationCustGr", "title":"Customer Groups" , "icon":"custom:customer-groups",
-           "description":"Create and manage customer groups", "columns":[{"name":"Id","key":"Id"}]},
+           {"cardId":"ProviderGroups", "formId":"formProviderGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/owner/providerGroups",
+           "title":"Provider Groups", "icon":"custom:provider-groups", "description":"Manage provider groups",
+           "width":"160", "height":"140"},
 
            {"cardId":"Billing", "formId":"formBilling", "list":true, "menuCard":false, "tableId":"tableBilling",
            "width":"160", "height":"140",
@@ -51,7 +49,7 @@
 
            {"cardId":"Security", "formId":"formSecurity", "list":true, "menuCard":false, "tableId":"tableSecurity",
            "width":"160", "height":"140",
-           "operationId":"operationSecurity", "title":"Security", "icon":"custom:security", "description":"Manage provider security settings",
+           "operationId":"operationSecurity", "title":"Security", "icon":"custom:security", "description":"Manage system security settings",
            "columns":[{"name":"Id","key":"Id"}]},
 
            {"cardId":"Settings", "formId":"formSettings", "list":true, "menuCard":false, "tableId":"tableSettings",
@@ -59,10 +57,9 @@
            "operationId":"operationSettings", "title":"Settings", "icon":"custom:settings", "description":"Manage system settings",
            "columns":[{"name":"Id","key":"Id"}]},
 
-           {"cardId":"Support", "formId":"formSupport", "list":true, "menuCard":false, "tableId":"tableSupport",
-           "width":"160", "height":"140",
-           "operationId":"operationSupport", "title":"Support", "icon":"custom:help", "description":"Learn more and get help",
-           "columns":[{"name":"Id","key":"Id"}]},
+           {"cardId":"Support", "formId":"formSupport", "list":false, "menuCard":true, "menuCardUrl":"/main/owner/support",
+           "title":"Support", "icon":"custom:help", "description":"Learn more and get help",
+           "width":"160", "height":"140"},
 
            {"cardId":"Users", "formId":"formUsers", "list":true, "menuCard":false, "tableId":"tableUsers",
            "width":"160", "height":"140",
@@ -78,6 +75,7 @@
            "width":"160", "height":"140",
            "operationId":"operationReports", "title":"Reports", "icon":"custom:reports",
            "description":"Track usage of services", "columns":[{"name":"Id","key":"Id"}]}
+
            ]'></menu-card>
 </body>
 </html>

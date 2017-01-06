@@ -33,11 +33,15 @@
 
 <menu-card heading="Customer Admin Console" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
            menu='[
-           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser", "title":"Users", "icon":"custom:user", "description":"Manage users",
-           "width":"160", "height":"140", "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/", "modifyUrl":"/api/users/id/",
-           "deleteIdsUrl":"/api/users/delete/ids",
-           "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"User Name", "key":"UserName"},{"name":"Roles","type":"array","key":"Roles"},{"name":"Birth Date","type":"date", "key":"BirthDate"}],
-           "pages":[{"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"},
+
+           {"cardId":"Users", "formId":"formUser", "list":true, "menuCard":false, "tableId":"tableUser", "operationId":"operationUser",
+           "title":"Users", "icon":"custom:user", "description":"Manage users", "width":"160", "height":"140",
+           "url":"/api/users/array", "defaultsUrl":"/api/users/defaults", "addUrl":"/api/users", "getUrl":"/api/users/id/",
+           "modifyUrl":"/api/users/id/", "deleteIdsUrl":"/api/users/delete/ids",
+           "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"User Name", "key":"UserName"},
+           {"name":"Roles","type":"array","key":"Roles"},{"name":"Birth Date","type":"date", "key":"BirthDate"}],
+           "pages":[
+           {"menuName":"Identification","pageId":"page_Identification","schema":"/user/template/identification_schema","options":"/user/template/identification_options","buttonId":"create_identification"},
            {"menuName":"Unified Messaging","pageId":"page_UnifiedMessaging","schema":"/user/template/unifiedMsg_settings_schema","options":"/user/template/unifiedMsg_settings_options","buttonId":"create_unifiedMessaging"},
            {"menuName":"Contact Information","pageId":"page_ContactInformation","schema":"/user/template/contactInf_settings_schema","options":"/user/template/contactInf_settings_options","buttonId":"create_contactInformation"},
            {"menuName":"Schedules","pageId":"page_Schedules","schema":"/user/template/schedules_settings_schema","options":"/user/template/schedules_settings_options","buttonId":"create_schedules"},
@@ -49,37 +53,48 @@
            {"menuName":"Instant Messaging","pageId":"page_InstantMessaging","schema":"/user/template/instantMessaging_settings_schema","options":"/user/template/instantMessaging_settings_options","buttonId":"create_instantMessaging"},
            {"menuName":"MyBuddy","pageId":"page_MyBuddy","schema":"/user/template/myBuddy_settings_schema","options":"/user/template/myBuddy_settings_options","buttonId":"create_myBuddy"}]},
 
-           {"cardId":"UserGroups", "formId":"formUserGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/usersGroups", "title":"User Groups", "icon":"custom:user-groups", "description":"Manage user groups",
+           {"cardId":"UserGroups", "formId":"formUserGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/usersGroups",
+           "title":"User Groups", "icon":"custom:user-groups", "description":"Manage user groups",
            "width":"160", "height":"140"},
 
-           {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/main/account/device", "title":"Devices", "icon":"custom:devices", "description":"Manage devices",
+           {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/main/account/device",
+           "title":"Devices", "icon":"custom:devices", "description":"Manage devices",
            "width":"160", "height":"140"},
 
-           {"cardId":"DeviceGroups", "formId":"formDeviceGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/deviceGroups", "title":"Device Groups", "icon":"custom:device-groups", "description":"Manage device groups",
+           {"cardId":"DeviceGroups", "formId":"formDeviceGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/deviceGroups",
+           "title":"Device Groups", "icon":"custom:device-groups", "description":"Manage device groups",
            "width":"160", "height":"140"},
 
-           {"cardId":"Admin", "formId":"formAdmin", "list":false, "menuCard":true, "menuCardUrl":"/main/account/admin", "title":"Admin", "icon":"custom:admin", "description":"Manage customer administrators",
+           {"cardId":"Admin", "formId":"formAdmin", "list":false, "menuCard":true, "menuCardUrl":"/main/account/admin", "title":"Admin",
+           "icon":"custom:admin", "description":"Manage customer administrators",
            "width":"160", "height":"140"},
 
-           {"cardId":"AdminGroups", "formId":"formAdminGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/adminGroups", "title":"Admin Groups", "icon":"custom:admin-groups", "description":"Manage groups of customer admins",
+           {"cardId":"AdminGroups", "formId":"formAdminGroups", "list":false, "menuCard":true, "menuCardUrl":"/main/account/adminGroups",
+           "title":"Admin Groups", "icon":"custom:admin-groups", "description":"Manage groups of customer admins",
            "width":"160", "height":"140"},
 
-           {"cardId":"Meetings", "formId":"formMeetings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/meetings", "title":"Meetings", "icon":"custom:meeting", "description":"Manage meeting rooms",
+           {"cardId":"Meetings", "formId":"formMeetings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/meetings",
+           "title":"Meetings", "icon":"custom:meeting", "description":"Manage meeting rooms",
            "width":"160", "height":"140"},
 
-           {"cardId":"Reports", "formId":"formReports", "list":false, "menuCard":true, "menuCardUrl":"/main/account/reports", "title":"Reports", "icon":"custom:reports", "description":"Track usage of services",
+           {"cardId":"Reports", "formId":"formReports", "list":false, "menuCard":true, "menuCardUrl":"/main/account/reports",
+           "title":"Reports", "icon":"custom:reports", "description":"Track usage of services",
            "width":"160", "height":"140"},
 
-           {"cardId":"Settings", "formId":"formSettings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/settings", "title":"Settings", "icon":"custom:settings", "description":"Manage system settings",
+           {"cardId":"Settings", "formId":"formSettings", "list":false, "menuCard":true, "menuCardUrl":"/main/account/settings",
+           "title":"Settings", "icon":"custom:settings", "description":"Manage system settings",
            "width":"160", "height":"140"},
 
-           {"cardId":"Support", "formId":"formSupport", "list":false, "menuCard":true, "menuCardUrl":"/main/account/support", "title":"Support", "icon":"custom:help", "description":"Learn more and get help",
+           {"cardId":"Support", "formId":"formSupport", "list":false, "menuCard":true, "menuCardUrl":"/main/account/support",
+           "title":"Support", "icon":"custom:help", "description":"Learn more and get help",
            "width":"160", "height":"140"},
 
-           {"cardId":"Biling", "formId":"formBiling", "list":false, "menuCard":true, "menuCardUrl":"/main/account/biling", "title":"Biling", "icon":"custom:credit-card", "description":"View System Bilings and make changes",
+           {"cardId":"Billing", "formId":"formBilling", "list":false, "menuCard":true, "menuCardUrl":"/main/account/biling",
+           "title":"Billing", "icon":"custom:credit-card", "description":"View System Billings and make changes",
            "width":"160", "height":"140"},
 
-           {"cardId":"Security", "formId":"formSecurity", "list":false, "menuCard":true, "menuCardUrl":"/main/account/security", "title":"Security", "icon":"custom:security", "description":"Manage customer security settings",
+           {"cardId":"Security", "formId":"formSecurity", "list":false, "menuCard":true, "menuCardUrl":"/main/account/security",
+           "title":"Security", "icon":"custom:security", "description":"Manage customer security settings",
            "width":"160", "height":"140"}]'></menu-card>
 </body>
 </html>
