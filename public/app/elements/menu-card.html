@@ -14,35 +14,11 @@
 
 <dom-module id="menu-card">
     <style>
-        paper-header-panel[main]{
-        background-color: var(--white-100);
-        }
-        paper-header-panel[drawer]{
-        background-color: var(--paper-grey-200);
-        }
-        paper-menu.menu{
-        background-color: var(--paper-grey-200);
-        }
-        paper-item.menu{
-        background-color: var(--paper-grey-200);
-        }
-        paper-toolbar.main{
-        background-color: var(--paper-red-300);
-        color: rgba(255,255,255,.87);
-        font-size: 20px;
-        }
-        paper-toolbar.drawer{
-        background-color: var(--paper-red-300);
-        color: rgba(255,255,255,.87);
-        font-size: 20px;
-        }
-        paper-toolbar.drawer{
-        background-color: var(--paper-red-300);
-        }
         paper-button.colored {
         color: black;
         background-color: var(--paper-grey-400);
         }
+
         .container {
         margin-top:7px;
         width:100%;
@@ -51,16 +27,25 @@
         @apply(--layout-center);
         @apply(--layout-wrap);
         }
+
+        .LIGHTBLUE{background-color:#26C6DA}
+        .BLUE{background-color:#0086D4}
+        .GREEN{background-color:#9CCC65}
+        .RED{background-color: var(--paper-red-300)}
+        .GREY200{background-color: var(--paper-grey-200)}
+        .GREY400{background-color: var(--paper-grey-400)}
+        .WHITE100{background-color: var(--white-100)}
+
     </style>
     <template>
         <paper-drawer-panel force-narrow>
-            <paper-header-panel drawer>
-                <paper-toolbar class="drawer">
+            <paper-header-panel drawer style$="{{classPaperHeaderPanel(drawerPaperHeaderPanelColor)}}">
+                <paper-toolbar style$="{{classPaperToolbar(paperToolbarTextColor, paperToolbarColor)}}">
                     <span title class="flex">Menu</span>
                 </paper-toolbar>
-                <paper-menu selected="{{selected}}" class="menu">
+                <paper-menu selected="{{selected}}" style$="{{classPaperMenu(paperMenuColor)}}">
                     <template is="dom-repeat" items="{{menu}}">
-                        <paper-item class="menu">
+                        <paper-item style$="{{classPaperItem(paperItemColor)}}">
                             <iron-icon icon="{{item.icon}}"></iron-icon>
                             <paper-item-body>
                                 <div style="margin-left:10px;">{{item.title}}</div>
@@ -69,8 +54,8 @@
                     </template>
                 </paper-menu>
             </paper-header-panel>
-            <paper-header-panel main>
-                <paper-toolbar class="main">
+            <paper-header-panel main style$="{{classPaperHeaderPanel(mainPaperHeaderPanelColor)}}">
+                <paper-toolbar style$="{{classPaperToolbar(paperToolbarTextColor, paperToolbarColor)}}">
                     <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
                     <span title class="flex">{{heading}}</span>
                     <template is="dom-if" if="{{noCards}}">
@@ -167,6 +152,19 @@
          if (logoutRedirector) {
              logoutRedirector.redirect();
          }
+      },
+	  classPaperToolbar: function(textColor, color) {
+          return 'color: '+textColor+';'+
+                 'font-size: 20px; background-color:'+color;
+      },
+      classPaperHeaderPanel: function(color) {
+          return 'background-color:'+color;
+      },
+      classPaperMenu: function(color) {
+          return 'background-color:'+color;
+      },
+      classPaperItem: function(color) {
+          return 'background-color:'+color;
       }
     });
 
