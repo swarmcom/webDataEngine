@@ -50,7 +50,7 @@
             <paper-header-panel main style$="{{classPaperHeaderPanel(mainPaperHeaderPanelColor)}}">
                 <paper-toolbar style$="{{classPaperToolbar(paperToolbarTextColor, paperToolbarColor)}}">
                     <paper-icon-button paper-drawer-toggle icon="menu"></paper-icon-button>
-                    <span title class="flex">{{heading}}</span>
+                    <span title class="flex" on-mouseover="handleOver" on-mouseout="handleOut">{{heading}}</span>
                     <template is="dom-if" if="{{noCards}}">
                         <paper-icon-button id="home" icon="arrow-back" on-tap="goHome"></paper-icon-button>
                     </template>
@@ -110,11 +110,35 @@
               type: Number,
               value: -1
           },
+          toolbarTextHovercolor: {
+			    observer: "_changeToolbarTextHovercolor",
+		  },
+		  toolbarTextHoveroutcolor: {
+			    observer: "_changeToolbarTextHoveroutcolor",
+		  },
           parentHeading: {
               type: String,
               value: ''
           }
       },
+
+      _changeToolbarTextHovercolor: function(data) {
+		    this.toolbarTextHovercolor = data;
+	  },
+
+	  _changeToolbarTextHoveroutcolor: function(data) {
+		    this.toolbarTextHoveroutcolor = data;
+	  },
+
+	  handleOver: function() {
+            this.querySelector("paper-toolbar").style.color = this.toolbarTextHovercolor;
+      },
+
+      handleOut: function() {
+      alert(this.toolbarTextHoveroutcolor);
+            this.querySelector("paper-toolbar").style.color = this.toolbarTextHoveroutcolor;
+      },
+
       onIronSelect: function(e) {
          var item = this.menu[this.selected];
 
