@@ -27,7 +27,9 @@
 <body>
 
 <menu-card heading="Customer Admin Console > Devices > Phones" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
-           paper-toolbar-text-color="BLUE" paper-toolbar-color="LIGHTBLUE" drawer-paper-header-panel-color="GREY200" main-paper-header-panel-color="WHITE100" paper-menu-color="GREY200" paper-item-color="GREY200"
+           paper-toolbar-text-color="#f2f2f2" paper-toolbar-color="#3f789b" drawer-paper-header-panel-color="#ffffff"
+           main-paper-header-panel-color="#ffffff" paper-menu-color="#ffffff" paper-item-color="#ffffff"
+
            menu = '[
            {"cardId":"PolycomVVX300", "formId":"formModel2", "list":true, "menuCard":false, "tableId":"tablePhone2", "operationId":"operationPhone2", "title":"Polycom VVX 300", "icon":"perm-device-information", "description":"Add, modify, manage phones",
            "width":"160", "height":"180", "url":"/api/phones/array/PolycomVVX300", "defaultsUrl":"/api/phones/defaults/PolycomVVX300", "addUrl":"/api/phones/PolycomVVX300", "getUrl":"/api/phones/id/", "modifyUrl":"/api/phones/id/",
@@ -223,6 +225,8 @@
            {"menuName":"Calendar Integration","pageId":"page_CalendarIntegration","schema":"/phones/template/PolycomVVX600/calendarIntegration_settings_schema","options":"/phones/template/PolycomVVX600/calendarIntegration_settings_options","buttonId":"create_calendarIntegration"},
            {"menuName":"Hoteling","pageId":"page_Hoteling","schema":"/phones/template/PolycomVVX600/hoteling_settings_schema","options":"/phones/template/PolycomVVX600/hoteling_settings_options","buttonId":"create_Hoteling"}
            ]}
-           ]' back-button = true back-url="/main/account/device"></menu-card>
+           ]' back-button = true back-url="/main/account/device">
+
+</menu-card>
 </body>
 </html>
