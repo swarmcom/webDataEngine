@@ -92,7 +92,7 @@ public class SecurityConfig {
     @Bean
     public CallbackController callbackController() {
         final CallbackController callbackController = new CallbackController();
-        callbackController.setDefaultUrl("/main/account");
+        callbackController.setDefaultUrl("/owner/customer/account");
         callbackController.setMultiProfile(true);
         return callbackController;
     }

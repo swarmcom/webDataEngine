@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import play.Logger;
 
 @Configuration
 @EnableMongoRepositories("tenancy.dao")
@@ -30,6 +31,12 @@ public class TenancyConfig extends AbstractMongoConfiguration {
     @Bean
     public DBCollection accountCollection() throws Exception {
         return mongo().getDB(getDatabaseName()).getCollection("account");
+    }
+
+    @Bean
+    public DBCollection providerCollection() throws Exception {
+        Logger.info("Provider database MIRCEA");
+        return mongo().getDB(getDatabaseName()).getCollection("provider");
     }
 }
 

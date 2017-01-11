@@ -1,0 +1,41 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "title": "Identification",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "providerName": {
+        "type": "string",
+        "title": "Provider name"
+      },
+      "superadminUserName": {
+        "type": "string",
+        "title": "Superadmin User Name"
+      },
+      "superadminPassword": {
+        "type": "string",
+        "title": "Superadmin Initial Password"
+      }
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "fields": {
+      "id": {
+        "type": "hidden"
+      },
+      "superadminUserName": {
+        "helper": "Please enter superadmin user name"
+      },
+      "superadminPassword": {
+        "helper": "Please enter superadmin password"
+      }
+    }
+  },
+  "settings_defaults": {
+    "providerName": "none"
+  }
+}

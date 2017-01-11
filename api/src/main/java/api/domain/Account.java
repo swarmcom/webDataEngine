@@ -13,6 +13,7 @@ public class Account extends BeanDomain<Account> {
     protected String dbName;
     protected String superadminUserName;
     protected String superadminInitialPassword;
+    protected String providerName;
 
     public Account() {
     }
@@ -113,6 +114,14 @@ public class Account extends BeanDomain<Account> {
         this.superadminInitialPassword = superadminInitialPassword;
     }
 
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
     public void merge(Account account) {
         DbType type = account.getDbType();
         String dbUri = account.getDbUri();
@@ -120,6 +129,7 @@ public class Account extends BeanDomain<Account> {
         String dbName = account.getDbName();
         String superadminUserName = account.getSuperadminUserName();
         String superadminInitialPassword = account.getSuperadminInitialPassword();
+        String providerName = account.getProviderName();
 
         if (type != null) {
             setDbType(type);
@@ -142,6 +152,10 @@ public class Account extends BeanDomain<Account> {
 
         if (superadminInitialPassword != null) {
             setSuperadminInitialPassword(superadminInitialPassword);
+        }
+
+        if (providerName != null) {
+            setProviderName(providerName);
         }
     }
 }

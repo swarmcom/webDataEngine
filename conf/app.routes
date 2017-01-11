@@ -12,19 +12,21 @@ POST    /callback                                    @org.pac4j.play.CallbackCon
 GET     /logout                                      @org.pac4j.play.ApplicationLogoutController.logout()
 
 # Assets
-GET     /loginform                                   controllers.Assets.at(path="/public", file="app/index.html")
-GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/sample.html")
+GET     /loginform                                    controllers.Assets.at(path="/public", file="app/index.html")
+GET     /alpaca                                       controllers.Assets.at(path="/public", file="app/sample.html")
 
-GET     /main                                        controllers.Application.googleSuperadminAsset(file="/public/app/main.html")
-GET     /main/account                                controllers.Application.adminAsset(file="/public/app/account.html")
-GET     /main/account/device                         controllers.Application.adminAsset(file="/public/app/device.html")
-GET     /main/account/gateway                        controllers.Application.adminAsset(file="/public/app/gateway.html")
-GET     /main/account/phone                          controllers.Application.adminAsset(file="/public/app/phone.html")
+GET     /owner                                        controllers.Application.googleSuperadminAsset(file="/public/app/owner.html")
+GET     /owner/customer                               controllers.Application.adminAsset(file="/public/app/main.html")
+GET     /owner/customer/account                       controllers.Application.adminAsset(file="/public/app/account.html")
+GET     /owner/customer/account/device                controllers.Application.adminAsset(file="/public/app/device.html")
+GET     /owner/customer/account/device/gateway        controllers.Application.adminAsset(file="/public/app/gateway.html")
+GET     /owner/customer/account/device/phone          controllers.Application.adminAsset(file="/public/app/phone.html")
 
 # Templates
+GET     /provider/template/:key                      controllers.Providers.getTemplate(key: String)
+GET     /customer/template/:key                      controllers.Accounts.getTemplate(key: String)
 GET     /phones/template/:model/:key                 controllers.Phones.getTemplateByModel(key: String, model: String)
 GET     /gateways/template/:model/:key               controllers.Gateways.getTemplateByModel(key: String, model:String)
-GET     /customer/template/:key                      controllers.Accounts.getTemplate(key: String)
 GET     /user/template/:key                          controllers.Users.getTemplate(key: String)
 
 # REST apis
@@ -52,6 +54,17 @@ GET     /api/roles/defaults                          controllers.Roles.getDefaul
 DELETE  /api/roles/:roleName                         controllers.Roles.deleteByName(roleName: String)
 DELETE  /api/roles/account/:accountName              controllers.Roles.deleteByAccountName(accountName: String)
 DELETE  /api/roles/delete/ids                        controllers.Roles.deleteList
+
+GET     /api/providers                               controllers.Providers.list
+GET     /api/providers/array                         controllers.Providers.listArray
+POST    /api/providers                               controllers.Providers.add
+PUT     /api/providers/name/:providerName            controllers.Providers.modifyByName(providerName: String)
+GET     /api/providers/name/:providerName            controllers.Providers.getByName(providerName: String)
+PUT     /api/providers/id/:providerId                controllers.Providers.modifyById(providerId: String)
+GET     /api/providers/id/:providerId                controllers.Providers.getById(providerId: String)
+GET     /api/providers/defaults                      controllers.Providers.getDefaults
+DELETE  /api/providers/:providerName                 controllers.Providers.deleteByName(providerName: String)
+DELETE  /api/providers/delete/ids                    controllers.Providers.deleteList
 
 GET     /api/accounts                                controllers.Accounts.list
 GET     /api/accounts/array                          controllers.Accounts.listArray

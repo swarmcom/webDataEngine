@@ -34,6 +34,10 @@
       "superadminInitialPassword": {
         "type": "string",
         "title": "Superadmin Initial Password"
+      },
+      "providerName" : {
+        "type": "string",
+        "title": "Provider Name"
       }
     }
   },
@@ -61,6 +65,9 @@
       },
       "superadminInitialPassword": {
         "helper": "Please enter superadmin initial password"
+      },
+      "providerName" : {
+        "dataSource": "/aaa"
       }
     }
   },
