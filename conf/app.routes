@@ -5,22 +5,26 @@
 # Home page
 
 # Callback
-GET     /callback                                    @org.pac4j.play.CallbackController.callback()
-POST    /callback                                    @org.pac4j.play.CallbackController.callback()
+GET     /callback/provider                           @security.config.ProviderCallbackController.callback()
+POST    /callback/provider                           @security.config.ProviderCallbackController.callback()
+GET     /callback/account                            @security.config.AccountCallbackController.callback()
+POST    /callback/account                            @security.config.AccountCallbackController.callback()
 
 # Logout
-GET     /logout                                      @org.pac4j.play.ApplicationLogoutController.logout()
+GET     /logoutprovider                              @security.config.ProviderLogoutController.logout()
+GET     /logoutaccount                               @security.config.AccountLogoutController.logout()
 
 # Assets
-GET     /loginform                                    controllers.Assets.at(path="/public", file="app/index.html")
-GET     /alpaca                                       controllers.Assets.at(path="/public", file="app/sample.html")
+GET     /loginformaccount                            controllers.Assets.at(path="/public", file="app/index.html")
+GET     /loginformprovider                           controllers.Assets.at(path="/public", file="app/customer.html")
+GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/sample.html")
 
-GET     /owner                                        controllers.Application.googleSuperadminAsset(file="/public/app/owner.html")
-GET     /owner/customer                               controllers.Application.adminAsset(file="/public/app/main.html")
-GET     /owner/customer/account                       controllers.Application.adminAsset(file="/public/app/account.html")
-GET     /owner/customer/account/device                controllers.Application.adminAsset(file="/public/app/device.html")
-GET     /owner/customer/account/device/gateway        controllers.Application.adminAsset(file="/public/app/gateway.html")
-GET     /owner/customer/account/device/phone          controllers.Application.adminAsset(file="/public/app/phone.html")
+GET     /owner                                       controllers.Application.googleSuperadminAsset(file="/public/app/owner.html")
+GET     /owner/provider                              controllers.Application.adminAssetProvider(file="/public/app/provider.html")
+GET     /owner/provider/account                      controllers.Application.adminAssetAccount(file="/public/app/account.html")
+GET     /owner/provider/account/device               controllers.Application.adminAssetAccount(file="/public/app/device.html")
+GET     /owner/provider/account/device/gateway       controllers.Application.adminAssetAccount(file="/public/app/gateway.html")
+GET     /owner/provider/account/device/phone         controllers.Application.adminAssetAccount(file="/public/app/phone.html")
 
 # Templates
 GET     /provider/template/:key                      controllers.Providers.getTemplate(key: String)

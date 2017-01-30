@@ -28,10 +28,10 @@
 <dom-module id="login-form">
 
     <template>
-        <form is="iron-form" id="form" method="post" action="/callback?client_name=FormClient">
+        <form is="iron-form" id="form" method="post" action="/callback/{{controller}}?client_name={{clientName}}">
             <paper-card animated elevation="3" class="centered" fit layout vertical>
                 <div class="card-content">
-                    <paper-input name="accountid" label="Account Id" on-keydown="checkForEnter">
+                    <paper-input name="{{typeName}}" label="{{typeLabel}}" on-keydown="checkForEnter">
                     </paper-input>
                     <paper-input name="username" label="Username" on-keydown="checkForEnter">
                     </paper-input>

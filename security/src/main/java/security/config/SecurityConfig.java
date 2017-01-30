@@ -21,8 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import security.authorizer.GoogleSuperadminAuthorizer;
 
 import security.util.EncoderUtil;
+import security.validator.ProviderUsernamePasswordAuthenticator;
 import security.validator.SecurityDigestAuthenticator;
-import security.validator.SecurityUsernamePasswordAuthenticator;
+import security.validator.AccountUsernamePasswordAuthenticator;
 
 import javax.inject.Inject;
 
@@ -32,7 +33,10 @@ import javax.inject.Inject;
 public class SecurityConfig {
 
     @Inject
-    private SecurityUsernamePasswordAuthenticator usernamePasswordAuthenticator;
+    private AccountUsernamePasswordAuthenticator usernamePasswordAuthenticator;
+
+    @Inject
+    private ProviderUsernamePasswordAuthenticator providerUsernamePasswordAuthenticator;
 
     @Inject
     private SecurityDigestAuthenticator digestAuthenticator;
@@ -52,8 +56,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public FormClient formClient() {
-        FormClient formClient = new FormClient("/loginform", usernamePasswordAuthenticator);
+    public FormClient formClientProvider() {
+        FormClient formClient = new FormClient("/loginformprovider", providerUsernamePasswordAuthenticator);
+        formClient.setName("formClientProvider");
+        return formClient;
+    }
+
+    @Bean
+    public FormClient formClientAccount() {
+        FormClient formClient = new FormClient("/loginformaccount", usernamePasswordAuthenticator);
+        formClient.setName("formClientAccount");
         return formClient;
     }
 
@@ -73,7 +85,7 @@ public class SecurityConfig {
     @Bean
     public Clients authClients() {
         String baseUrl = ApiConfig.configuration.getString("baseUrl");
-        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClient(), basicClient(), digestClient());
+        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClientAccount(), formClientProvider(), basicClient(), digestClient());
         return clients;
     }
 
@@ -83,6 +95,7 @@ public class SecurityConfig {
         config.addAuthorizer("googleSuperadmin", new GoogleSuperadminAuthorizer());
         config.addAuthorizer("superadmin", new RequireAnyRoleAuthorizer<>("ROLE_SUPERADMIN"));
         config.addAuthorizer("admin", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN","ROLE_SUPERADMIN"));
+        config.addAuthorizer("provider", new RequireAnyRoleAuthorizer<>("ROLE_PROVIDER"));
         config.addAuthorizer("user", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN","ROLE_SUPERADMIN","ROLE_USER"));
         config.addAuthorizer("onlyUser", new RequireAnyRoleAuthorizer<>("ROLE_USER"));
         config.setHttpActionAdapter(new DefaultHttpActionAdapter());
@@ -90,17 +103,32 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CallbackController callbackController() {
-        final CallbackController callbackController = new CallbackController();
-        callbackController.setDefaultUrl("/owner/customer/account");
+    public AccountCallbackController accountCallbackController() {
+        final AccountCallbackController callbackController = new AccountCallbackController();
+        callbackController.setDefaultUrl("/owner/provider/account");
         callbackController.setMultiProfile(true);
         return callbackController;
     }
 
     @Bean
-    public ApplicationLogoutController applicationLogoutController() {
-        final ApplicationLogoutController logoutController = new ApplicationLogoutController();
-        logoutController.setDefaultUrl("/loginform");
+    public ProviderCallbackController providerCallbackController() {
+        final ProviderCallbackController callbackController = new ProviderCallbackController();
+        callbackController.setDefaultUrl("/owner/provider");
+        callbackController.setMultiProfile(true);
+        return callbackController;
+    }
+
+    @Bean
+    public AccountLogoutController accountLogoutController() {
+        final AccountLogoutController logoutController = new AccountLogoutController();
+        logoutController.setDefaultUrl("/loginformaccount");
+        return logoutController;
+    }
+
+    @Bean
+    public ProviderLogoutController providerLogoutController() {
+        final ProviderLogoutController logoutController = new ProviderLogoutController();
+        logoutController.setDefaultUrl("/loginformprovider");
         return logoutController;
     }
 

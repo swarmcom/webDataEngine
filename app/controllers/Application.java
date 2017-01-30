@@ -19,8 +19,13 @@ public class Application extends Controller {
         return Results.ok(Play.application().getFile(file), true);
     }
 
-    @Secure(clients = "FormClient", authorizers = "admin")
-    public Result adminAsset(String file) {
+    @Secure(clients = "formClientAccount", authorizers = "admin")
+    public Result adminAssetAccount(String file) {
+        return Results.ok(Play.application().getFile(file), true);
+    }
+
+    @Secure(clients = "formClientProvider", authorizers = "provider")
+    public Result adminAssetProvider(String file) {
         return Results.ok(Play.application().getFile(file), true);
     }
 

@@ -6,5 +6,6 @@ package security.authorizer;
 public enum RoleType {
     ROLE_USER,
     ROLE_SUPERADMIN,
-    ROLE_ADMIN
+    ROLE_ADMIN,
+    ROLE_PROVIDER
 }

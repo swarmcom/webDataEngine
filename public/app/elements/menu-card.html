@@ -59,7 +59,7 @@
                         <paper-icon-button id="back" icon="home" on-tap="handleBackTap"></paper-icon-button>
                     </template>
                     <paper-icon-button id="exit" icon="exit-to-app" on-tap="handleExitTap"></paper-icon-button>
-                    <page-redirector id ="logout" url="/logout"></page-redirector>
+                    <page-redirector id ="logout" url="{{logoutUrl}}"></page-redirector>
                 </paper-toolbar>
                 <div id="content" >
                     <div id="content-cards" class="container" hidden$="{{noCards}}">

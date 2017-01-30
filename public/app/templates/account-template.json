@@ -67,7 +67,7 @@
         "helper": "Please enter superadmin initial password"
       },
       "providerName" : {
-        "dataSource": "/aaa"
+        "dataSource": "/api/providers"
       }
     }
   },

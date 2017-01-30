@@ -35,7 +35,6 @@ public class TenancyConfig extends AbstractMongoConfiguration {
 
     @Bean
     public DBCollection providerCollection() throws Exception {
-        Logger.info("Provider database MIRCEA");
         return mongo().getDB(getDatabaseName()).getCollection("provider");
     }
 }

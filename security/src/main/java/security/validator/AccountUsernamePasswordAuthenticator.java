@@ -1,5 +1,6 @@
 package security.validator;
 
+import api.domain.BeanDomain;
 import api.domain.User;
 import api.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +20,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityUsernamePasswordAuthenticator implements Authenticator<UsernamePasswordCredentials> {
+public class AccountUsernamePasswordAuthenticator extends UsernamePasswordAuthenticator {
 
     @Inject
     UserService userService;
@@ -27,21 +28,8 @@ public class SecurityUsernamePasswordAuthenticator implements Authenticator<User
     @Inject
     private SecurityPasswordEncoder securityPasswordEncoder;
 
-    public void validate(UsernamePasswordCredentials credentials, WebContext context) {
-        if (credentials == null) {
-            this.throwsException("No credential");
-        }
-
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
-        if (CommonHelper.isBlank(username)) {
-            this.throwsException("Username cannot be blank");
-        }
-
-        if (CommonHelper.isBlank(password)) {
-            this.throwsException("Password cannot be blank");
-        }
-
+    @Override
+    public CommonProfile validate(String username, String password, WebContext context) {
         String currentAccountId = context.getRequestParameter("accountid");
         User user = userService.getUser(currentAccountId, username);
 
@@ -61,11 +49,7 @@ public class SecurityUsernamePasswordAuthenticator implements Authenticator<User
             profile.addRole(role);
         }
 
-        credentials.setUserProfile(profile);
-    }
-
-    protected void throwsException(String message) {
-        throw new CredentialsException(message);
+        return profile;
     }
 }
 
