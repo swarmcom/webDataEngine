@@ -10,7 +10,6 @@ import org.pac4j.http.client.direct.DirectDigestAuthClient;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.oidc.client.GoogleOidcClient;
 import org.pac4j.oidc.config.OidcConfiguration;
-import org.pac4j.play.ApplicationLogoutController;
 import org.pac4j.play.CallbackController;
 import org.pac4j.play.http.DefaultHttpActionAdapter;
 import org.pac4j.play.store.PlayCacheStore;
@@ -116,6 +115,14 @@ public class SecurityConfig {
         callbackController.setDefaultUrl("/owner/provider");
         callbackController.setMultiProfile(true);
         return callbackController;
+    }
+
+    @Bean
+    public OwnerCallbackController ownerCallbackController() {
+        final OwnerCallbackController ownerCallbackController = new OwnerCallbackController();
+        ownerCallbackController.setDefaultUrl("/owner");
+        ownerCallbackController.setMultiProfile(true);
+        return ownerCallbackController;
     }
 
     @Bean

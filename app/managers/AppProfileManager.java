@@ -48,4 +48,9 @@ public class AppProfileManager {
         UserProfile profile = getAuthenticatedUserProfile(ctx);
         return (String) profile.getAttribute("accountid");
     }
+
+    public String getSessionProviderId(Http.Context ctx) {
+        UserProfile profile = getAuthenticatedUserProfile(ctx);
+        return (String) profile.getAttribute("providerid");
+    }
 }

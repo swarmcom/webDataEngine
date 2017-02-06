@@ -5,6 +5,8 @@
 # Home page
 
 # Callback
+GET     /callback                                    @security.config.OwnerCallbackController.callback()
+POST    /callback                                    @security.config.OwnerCallbackController.callback()
 GET     /callback/provider                           @security.config.ProviderCallbackController.callback()
 POST    /callback/provider                           @security.config.ProviderCallbackController.callback()
 GET     /callback/account                            @security.config.AccountCallbackController.callback()
@@ -34,7 +36,6 @@ GET     /gateways/template/:model/:key               controllers.Gateways.getTem
 GET     /user/template/:key                          controllers.Users.getTemplate(key: String)
 
 # REST apis
-
 GET     /api/users                                   controllers.Users.list
 GET     /api/users/array                             controllers.Users.listArray
 POST    /api/users                                   controllers.Users.add

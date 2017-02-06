@@ -18,7 +18,8 @@ public class Account extends BeanDomain<Account> {
     public Account() {
     }
 
-    public Account(String accountName) {
+    public Account(String providerName, String accountName) {
+        this.providerName = providerName;
         this.accountName = (StringUtils.isEmpty(accountName) ? "AnonymousTenant" : accountName);
         this.dbType = DbType.mongo;
         this.dbUri = "mongodb://localhost:27017/";
@@ -27,7 +28,8 @@ public class Account extends BeanDomain<Account> {
         this.superadminInitialPassword = "123";
     }
 
-    public Account(String accountName, String dbName) {
+    public Account(String providerName, String accountName, String dbName) {
+        this.providerName = providerName;
         this.accountName = (StringUtils.isEmpty(accountName) ? "AnonymousTenant" : accountName);
         this.dbType = DbType.mongo;
         this.dbUri = "mongodb://localhost:27017/";
@@ -36,7 +38,8 @@ public class Account extends BeanDomain<Account> {
         this.superadminInitialPassword = "123";
     }
 
-    public Account(String accountName, String dbType, String dbUri, String dbName) {
+    public Account(String providerName, String accountName, String dbType, String dbUri, String dbName) {
+        this.providerName = providerName;
         this.accountName = (StringUtils.isEmpty(accountName) ? "AnonymousTenant" : accountName);
         this.dbType = (StringUtils.isEmpty(dbType) ? DbType.mongo: DbType.valueOf(dbType));
         this.dbUri = (StringUtils.isEmpty(dbUri) ? "mongodb://localhost:27017/" : dbUri);
@@ -45,7 +48,8 @@ public class Account extends BeanDomain<Account> {
         this.superadminInitialPassword = "123";
     }
 
-    public Account(String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminInitialPassword) {
+    public Account(String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminInitialPassword) {
+        this.providerName = providerName;
         this.accountName = (StringUtils.isEmpty(accountName) ? "AnonymousTenant" : accountName);
         this.dbType = (StringUtils.isEmpty(dbType) ? DbType.mongo: DbType.valueOf(dbType) );
         this.dbUri = (StringUtils.isEmpty(dbUri) ? "mongodb://localhost:27017/" : dbUri);

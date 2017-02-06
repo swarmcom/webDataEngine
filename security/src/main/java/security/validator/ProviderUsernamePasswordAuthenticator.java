@@ -1,6 +1,7 @@
 package security.validator;
 
 import api.domain.Provider;
+import api.service.AccountService;
 import api.service.ProviderService;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
@@ -17,10 +18,12 @@ public class ProviderUsernamePasswordAuthenticator extends UsernamePasswordAuthe
     @Inject
     ProviderService providerService;
 
+    @Inject
+    AccountService accountService;
+
     @Override
     public CommonProfile validate(String username, String password, WebContext context) {
         String currentProviderId = context.getRequestParameter("providerid");
-        Logger.info("MIRCEA " + currentProviderId);
         Provider provider = providerService.getProvider(currentProviderId);
 
         if (provider == null) {
@@ -30,6 +33,7 @@ public class ProviderUsernamePasswordAuthenticator extends UsernamePasswordAuthe
         if (!StringUtils.equals(password, provider.getSuperadminPassword())) {
             this.throwsException("Password does not match");
         }
+        accountService.refreshTenantSpringContexts(currentProviderId);
         CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute("provideradmin", username);

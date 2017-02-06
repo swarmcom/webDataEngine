@@ -22,7 +22,7 @@ public class TestSimpleEntityController extends SimpleEntityController {
         Account accountToAdd = new Account();
         mergeDefaults(accountToAdd, getDefaultsJSON());
         merge(accountToAdd);
-        Account savedAccount = accountService.saveAccount(accountToAdd);
+        Account savedAccount = accountService.saveAccount("testProvider", accountToAdd);
         return savedAccount;
     }
 

@@ -7,9 +7,10 @@ import java.util.Collection;
 import java.util.List;
 
 public interface DbAccountRepository extends MongoRepository<Account, String> {
-    Account findByAccountName(String accountName);
-    Account findById(String accountId);
-    List<Account> findByIdIn(Collection<String> ids);
-    Long deleteByAccountName(String accountName);
-    Long deleteByIdIn(Collection<String> ids);
+    Account findByProviderNameAndAccountName(String providerName, String accountName);
+    Account findByProviderNameAndId(String providerName, String accountId);
+    List<Account> findByProviderName(String providerName);
+    List<Account> findByProviderNameAndIdIn(Collection<String> ids);
+    Long deleteByProviderNameAndAccountName(String providerName, String accountName);
+    Long deleteByProviderNameAndIdIn(String providerName, Collection<String> ids);
 }

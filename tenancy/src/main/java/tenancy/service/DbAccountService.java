@@ -2,6 +2,7 @@ package tenancy.service;
 
 import api.config.ApiConfig;
 import api.domain.Account;
+import api.domain.User;
 import api.service.RoleService;
 import api.service.UserService;
 import api.type.DbType;
@@ -47,32 +48,54 @@ public class DbAccountService implements AccountService {
     @PostConstruct
     public void init() {
         accountCollection.createIndex(new BasicDBObject("accountName", 1), new BasicDBObject("unique", true));
-        refreshTenantSpringContexts();
     }
 
     @Override
-    public Account getAccount(String accountName) {
-        return accountRepository.findByAccountName(accountName);
+    public Account getAccount(String providerName, String accountName) {
+        return accountRepository.findByProviderNameAndAccountName(providerName, accountName);
     }
 
     @Override
-    public Account getAccountById(String accountId) {
-        return accountRepository.findById(accountId);
+    public Account getAccountById(String providerName, String accountId) {
+        return accountRepository.findByProviderNameAndId(providerName, accountId);
     }
 
     @Override
-    public Account createAccount(String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword) {
-        Account account = new Account(accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword);
-        return saveAccount(account);
+    public Account createAccount(String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword) {
+        Account account = new Account(providerName, accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword);
+        return saveAccount(providerName, account);
     }
 
     @Override
-    public Account saveAccount(Account account) {
+    public Account saveAccount(String providerName, Account account) {
+        account.setProviderName(providerName);
         Account savedAccount = accountRepository.save(account);
-        String accountName = savedAccount.getAccountName();
-        String superadminUserName = savedAccount.getSuperadminUserName();
-        String superadminPassword = savedAccount.getSuperadminInitialPassword();
-        refreshTenantSpringContexts();
+
+        refreshTenantSpringContexts(providerName);
+        refreshAccount(savedAccount);
+        
+        return savedAccount;
+    }
+
+    @Override
+    public Long deleteAccount(String providerName, String accountName) {
+        return accountRepository.deleteByProviderNameAndAccountName(providerName, accountName);
+    }
+
+    @Override
+    public Long deleteAccounts(String providerName, Collection<String> accountIds) {
+        return accountRepository.deleteByProviderNameAndIdIn(providerName, accountIds);
+    }
+
+    @Override
+    public List<? extends Account> getAccounts(String providerName) {
+        return accountRepository.findByProviderName(providerName);
+    }
+
+    private void refreshAccount(Account account) {
+        String superadminUserName = account.getSuperadminUserName();
+        String superadminPassword = account.getSuperadminInitialPassword();
+        String accountName = account.getAccountName();
         String adminRole = "ROLE_ADMIN";
         String userRole = "ROLE_USER";
         String superadminRole = "ROLE_SUPERADMIN";
@@ -88,29 +111,18 @@ public class DbAccountService implements AccountService {
         if (existingRole == null) {
             roleService.createRole(accountName, superadminRole);
         }
-        userService.createUser(accountName, superadminUserName,
-                passwordEncoder.encode(superadminPassword), new TreeSet<String>(Arrays.asList(adminRole, userRole, superadminRole)));
-
-        return savedAccount;
+        User user = userService.getUser(accountName, superadminUserName);
+        if (user == null) {
+            userService.createUser(accountName, superadminUserName,
+                    passwordEncoder.encode(superadminPassword), new TreeSet<String>(Arrays.asList(adminRole, userRole, superadminRole)));
+        } else {
+            userService.saveUser(accountName, user);
+        }
     }
 
     @Override
-    public Long deleteAccount(String accountName) {
-        return accountRepository.deleteByAccountName(accountName);
-    }
-
-    @Override
-    public Long deleteAccounts(Collection<String> accountIds) {
-        return accountRepository.deleteByIdIn(accountIds);
-    }
-
-    @Override
-    public List<? extends Account> getAccounts() {
-        return accountRepository.findAll();
-    }
-
-    private void refreshTenantSpringContexts() {
-        List<? extends Account> accounts = getAccounts();
+    public void refreshTenantSpringContexts(String providerName) {
+        List<? extends Account> accounts = getAccounts(providerName);
         String tenantId;
         DbType tenantDbType;
         String tenantConfigClassStr;

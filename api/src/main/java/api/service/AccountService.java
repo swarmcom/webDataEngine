@@ -7,17 +7,19 @@ import java.util.List;
 
 public interface AccountService {
 
-    Account getAccount (String accountName);
+    Account getAccount (String providerName, String accountName);
 
-    Account getAccountById (String accountId);
+    Account getAccountById (String providerName, String accountId);
 
-    Account createAccount (String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword);
+    Account createAccount (String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword);
 
-    Account saveAccount(Account account);
+    Account saveAccount(String providerName, Account account);
 
-    Long deleteAccount(String accountName);
+    Long deleteAccount(String providerName, String accountName);
 
-    Long deleteAccounts(Collection<String> accountIds);
+    Long deleteAccounts(String providerName, Collection<String> accountIds);
 
-    List<? extends Account> getAccounts();
+    List<? extends Account> getAccounts(String providerName);
+
+    void refreshTenantSpringContexts(String providerName);
 }
