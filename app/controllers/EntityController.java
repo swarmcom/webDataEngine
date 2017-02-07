@@ -117,11 +117,12 @@ public abstract class EntityController extends Controller {
         }
     }
 
-    protected void merge(BeanDomain existingBean) throws Exception {
+    protected BeanDomain merge(BeanDomain existingBean) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
         BeanDomain bean = objectMapper.readValue(getDataToUpdateJSON(), existingBean.getClass());
         existingBean.merge(bean);
+        return bean;
     }
 
     protected void mergeDefaults(BeanDomain bean, String defaults) throws Exception {

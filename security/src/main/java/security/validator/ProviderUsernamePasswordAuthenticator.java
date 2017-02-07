@@ -9,6 +9,8 @@ import org.pac4j.core.profile.CommonProfile;
 import org.springframework.stereotype.Component;
 import play.Logger;
 import security.authorizer.RoleType;
+import security.encoder.SecurityPasswordEncoder;
+import security.util.EncoderUtil;
 
 import javax.inject.Inject;
 
@@ -21,6 +23,9 @@ public class ProviderUsernamePasswordAuthenticator extends UsernamePasswordAuthe
     @Inject
     AccountService accountService;
 
+    @Inject
+    private SecurityPasswordEncoder securityPasswordEncoder;
+
     @Override
     public CommonProfile validate(String username, String password, WebContext context) {
         String currentProviderId = context.getRequestParameter("providerid");
@@ -29,10 +34,12 @@ public class ProviderUsernamePasswordAuthenticator extends UsernamePasswordAuthe
         if (provider == null) {
             this.throwsException("Provider not found");
         }
-
-        if (!StringUtils.equals(password, provider.getSuperadminPassword())) {
+Logger.info("MIRCEA PSS " + password + " X " + username + " D " + provider.getSuperadminPassword() + " A " + EncoderUtil.digestEncodePassword(username, EncoderUtil.DIGEST_REALM, password));
+        if (!this.securityPasswordEncoder.matches(password, provider.getSuperadminPassword()) &&
+                !StringUtils.equals(EncoderUtil.digestEncodePassword(username, EncoderUtil.DIGEST_REALM, password), provider.getSuperadminPassword())) {
             this.throwsException("Password does not match");
         }
+
         accountService.refreshTenantSpringContexts(currentProviderId);
         CommonProfile profile = new CommonProfile();
         profile.setId(username);

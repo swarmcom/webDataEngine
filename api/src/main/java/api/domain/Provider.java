@@ -10,6 +10,7 @@ public class Provider extends BeanDomain<Provider> {
     protected String providerName;
     protected String superadminUserName;
     protected String superadminPassword;
+    protected Boolean digestEncoded;
 
     public Provider() {
 
@@ -57,10 +58,19 @@ public class Provider extends BeanDomain<Provider> {
         this.superadminPassword = superadminPassword;
     }
 
+    public Boolean isDigestEncoded() {
+        return digestEncoded;
+    }
+
+    public void setDigestEncoded(Boolean digestEncoded) {
+        this.digestEncoded = digestEncoded;
+    }
+
     public void merge(Provider provider) {
         String providerName = provider.getProviderName();
         String superadminUserName = provider.getSuperadminUserName();
         String superadminPassword = provider.getSuperadminPassword();
+        Boolean digestEncoded = provider.isDigestEncoded();
 
         if (providerName != null) {
             setProviderName(providerName);
@@ -70,8 +80,8 @@ public class Provider extends BeanDomain<Provider> {
             setSuperadminUserName(superadminUserName);
         }
 
-        if (superadminPassword != null) {
-            setSuperadminPassword(superadminPassword);
+        if (digestEncoded != null) {
+            setDigestEncoded(digestEncoded);
         }
     }
 }

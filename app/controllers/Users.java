@@ -76,16 +76,30 @@ public class Users extends SimpleEntityController {
     @Override
     protected BeanDomain modifyByNameAbstract(String name) throws Exception {
         User existingUser = userService.getUser(appProfileManager.getSessionAccountId(ctx()), name);
-        merge(existingUser);
-        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
+        User userToMerge = (User)merge(existingUser);
+        String password = userToMerge.getPassword();
+        if (!StringUtils.equals(existingUser.getPassword(), password)) {
+            if (existingUser.isDigestEncoded()) {
+                existingUser.setPassword(EncoderUtil.digestEncodePassword(existingUser.getUserName(), EncoderUtil.DIGEST_REALM, password));
+            } else {
+                existingUser.setPassword(passwordEncoder.encode(password));
+            }
+        }
         return (existingUser != null ? userService.saveUser(appProfileManager.getSessionAccountId(ctx()), existingUser) : null);
     }
 
     @Override
     protected BeanDomain modifyByIdAbstract(String id) throws Exception {
         User existingUser = userService.getUserById(appProfileManager.getSessionAccountId(ctx()), id);
-        merge(existingUser);
-        existingUser.setPassword(passwordEncoder.encode(existingUser.getPassword()));
+        User userToMerge = (User)merge(existingUser);
+        String password = userToMerge.getPassword();
+        if (!StringUtils.equals(existingUser.getPassword(), password)) {
+            if (existingUser.isDigestEncoded()) {
+                existingUser.setPassword(EncoderUtil.digestEncodePassword(existingUser.getUserName(), EncoderUtil.DIGEST_REALM, password));
+            } else {
+                existingUser.setPassword(passwordEncoder.encode(password));
+            }
+        }
         return (existingUser != null ? userService.saveUser(appProfileManager.getSessionAccountId(ctx()), existingUser) : null);
     }
 

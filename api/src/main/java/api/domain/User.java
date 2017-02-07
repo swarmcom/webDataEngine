@@ -128,9 +128,6 @@ public class User extends BeanDomain<User>{
         if (userName != null) {
             setUserName(userName);
         }
-        if (userPassword != null) {
-            setPassword(userPassword);
-        }
 
         if (roles != null) {
             setRoles(roles);

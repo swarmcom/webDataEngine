@@ -11,11 +11,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.commons.codec.binary.StringUtils;
 import org.pac4j.play.java.Secure;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.With;
+import security.encoder.SecurityPasswordEncoder;
+import security.util.EncoderUtil;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -27,11 +30,19 @@ public class Providers extends SimpleEntityController {
     @Inject
     ProviderService providerService;
 
+    @Inject
+    private SecurityPasswordEncoder passwordEncoder;
+
     @Override
     protected BeanDomain addAbstract() throws Exception {
         Provider providerToAdd = new Provider();
         mergeDefaults(providerToAdd, getDefaultsJSON());
         merge(providerToAdd);
+        if (providerToAdd.isDigestEncoded()) {
+            providerToAdd.setSuperadminPassword(EncoderUtil.digestEncodePassword(providerToAdd.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, providerToAdd.getSuperadminPassword()));
+        } else {
+            providerToAdd.setSuperadminPassword(passwordEncoder.encode(providerToAdd.getSuperadminPassword()));
+        }
         Provider savedProvider = providerService.saveProvider(providerToAdd);
         return savedProvider;
     }
@@ -94,14 +105,32 @@ public class Providers extends SimpleEntityController {
     @Override
     protected BeanDomain modifyByNameAbstract(String name) throws Exception {
         Provider existingProvider = providerService.getProvider(name);
-        merge(existingProvider);
+        Provider providerToMerge = (Provider)merge(existingProvider);
+        String superadminPassword = providerToMerge.getSuperadminPassword();
+        Logger.info("MIRCEA " + superadminPassword);
+        if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
+            if (existingProvider.isDigestEncoded()) {
+                existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));
+            } else {
+                existingProvider.setSuperadminPassword(passwordEncoder.encode(superadminPassword));
+            }
+        }
         return (existingProvider != null ? providerService.saveProvider(existingProvider) : null);
     }
 
     @Override
     protected BeanDomain modifyByIdAbstract(String id) throws Exception {
         Provider existingProvider = providerService.getProviderById(id);
-        merge(existingProvider);
+        Provider providerToMerge = (Provider)merge(existingProvider);
+        String superadminPassword = providerToMerge.getSuperadminPassword();
+        Logger.info("MIRCEA 2 " + superadminPassword + " E " + existingProvider.isDigestEncoded() + " V " + existingProvider.getSuperadminUserName());
+        if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
+            if (existingProvider.isDigestEncoded()) {
+                existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));
+            } else {
+                existingProvider.setSuperadminPassword(passwordEncoder.encode(superadminPassword));
+            }
+        }
         return (existingProvider != null ? providerService.saveProvider(existingProvider) : null);
     }
 }

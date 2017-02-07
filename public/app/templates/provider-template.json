@@ -17,7 +17,13 @@
       },
       "superadminPassword": {
         "type": "string",
-        "title": "Superadmin Initial Password"
+        "title": "Superadmin Initial Password",
+        "format": "password",
+        "required": true
+      },
+      "digestEncoded": {
+        "type": "boolean",
+        "title": "Digest"
       }
     }
   },
@@ -32,6 +38,9 @@
       },
       "superadminPassword": {
         "helper": "Please enter superadmin password"
+      },
+      "digestEncoded": {
+        "helper": "If checked, the password will be encoded in digest format"
       }
     }
   },

@@ -73,7 +73,7 @@ public class DbAccountService implements AccountService {
 
         refreshTenantSpringContexts(providerName);
         refreshAccount(savedAccount);
-        
+
         return savedAccount;
     }
 
