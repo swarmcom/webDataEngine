@@ -24,6 +24,15 @@
       "digestEncoded": {
         "type": "boolean",
         "title": "Digest"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "email": {
+        "type": "string",
+        "title": "Email",
+        "format": "email"
       }
     }
   },
@@ -41,6 +50,13 @@
       },
       "digestEncoded": {
         "helper": "If checked, the password will be encoded in digest format"
+      },
+      "description": {
+        "type": "textarea",
+        "helper": "Please enter provider description"
+      },
+      "email": {
+        "helper": "Please enter provider email"
       }
     }
   },

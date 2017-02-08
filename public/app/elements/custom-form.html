@@ -8,16 +8,19 @@
 <dom-module id="custom-form">
     <style>
         paper-fab.add{
-        position: absolute;
-        bottom: 10px;
-        right: 70px;
-        background-color: green;
+          position: relative;
+          margin: 5px 5px 5px 5px;
+          background-color: green;
         }
         paper-fab.delete{
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        background-color: green;
+          position: relative;
+          margin: 5px 5px 5px 5px;
+          background-color: green;
+        }
+        div.buttons{
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
         }
     </style>
     <template>
@@ -35,9 +38,13 @@
                 handle-as="json">
         </iron-ajax>
         <template is="dom-if" if="{{list}}">
-            <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}"></custom-table>
-            <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
-            <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+            <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}" on-vaadin-grid-selected-items-changed="showDeleteButton"></custom-table>
+            <div class="buttons">
+                <template is="dom-if" if="{{deleteButton}}">
+                    <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+                </template>
+                <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
+            </div>
         </template>
         <template is="dom-if" if="{{add}}">
             <custom-template pages={{pages}}></custom-template>
@@ -77,6 +84,10 @@
         },
         pages: {
           type: Array
+        },
+        deleteButton: {
+          type: Boolean,
+          value: false
         }
       },
 
@@ -84,6 +95,13 @@
         this.key = '';
         this.list = false;
         this.add = true;
+      },
+
+      showDeleteButton: function() {
+        var table = this.querySelector('custom-table');
+        var grid = table.querySelector('vaadin-grid');
+        var selectedItems = grid.selection.selected();
+        this.deleteButton = (selectedItems.length > 0);
       },
 
       deleted: function() {
@@ -118,6 +136,7 @@
             customTable.querySelector('iron-ajax').generateRequest();
         });
       },
+
       handleDelete: function() {
         var table = this.querySelector('custom-table');
         var grid = table.querySelector('vaadin-grid');

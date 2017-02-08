@@ -61,6 +61,8 @@ public class Providers extends SimpleEntityController {
             itemNode.add(provider.getId());
             itemNode.add(provider.getProviderName());
             itemNode.add(provider.getSuperadminUserName());
+            itemNode.add(provider.getDescription());
+            itemNode.add(provider.getEmail());
             node.add(itemNode);
         }
         return node;
@@ -107,7 +109,6 @@ public class Providers extends SimpleEntityController {
         Provider existingProvider = providerService.getProvider(name);
         Provider providerToMerge = (Provider)merge(existingProvider);
         String superadminPassword = providerToMerge.getSuperadminPassword();
-        Logger.info("MIRCEA " + superadminPassword);
         if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
             if (existingProvider.isDigestEncoded()) {
                 existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));
@@ -123,7 +124,6 @@ public class Providers extends SimpleEntityController {
         Provider existingProvider = providerService.getProviderById(id);
         Provider providerToMerge = (Provider)merge(existingProvider);
         String superadminPassword = providerToMerge.getSuperadminPassword();
-        Logger.info("MIRCEA 2 " + superadminPassword + " E " + existingProvider.isDigestEncoded() + " V " + existingProvider.getSuperadminUserName());
         if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
             if (existingProvider.isDigestEncoded()) {
                 existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));

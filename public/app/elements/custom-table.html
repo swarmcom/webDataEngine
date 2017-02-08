@@ -164,7 +164,7 @@
                return valToReturn;
              });
          },
-         bindFilterData: function(filterElement, grid, tableId) {
+         bindFilterData: function(columns, filterElement, grid, tableId) {
              var customTable = this;
              if (filterElement.componentType=='daterange') {
                  filterElement.configure();
@@ -212,7 +212,7 @@
                grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
                if (i >=1) {
                    var filterElement = this.createFilterElement(col, grid, i, this.tableId);
-                   this.bindFilterData(filterElement, grid, this.tableId);
+                   this.bindFilterData(columns, filterElement, grid, this.tableId);
                }
              }
 
@@ -246,6 +246,9 @@
                   e.stopPropagation();
                 });
              }
+             grid.addEventListener('selected-items-changed', function() {
+                 this.fire('vaadin-grid-selected-items-changed');
+             });
              // Re-order the data array on sort-order-changed event
              grid.addEventListener('sort-order-changed', function() {
                var idx = grid.sortOrder[0].column;
