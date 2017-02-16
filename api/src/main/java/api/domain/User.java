@@ -27,6 +27,8 @@ public class User extends BeanDomain<User>{
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
+    protected Boolean suspended;
+
     public User() {
     }
 
@@ -104,6 +106,14 @@ public class User extends BeanDomain<User>{
         }
     }
 
+    public Boolean isSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(Boolean suspended) {
+        this.suspended = suspended;
+    }
+
     public Map<String, Map<String, Object>> getSettings() {
         return settings;
     }
@@ -116,10 +126,10 @@ public class User extends BeanDomain<User>{
     public void merge(User user) {
         String accountId = user.getAccountId();
         String userName = user.getUserName();
-        String userPassword = user.getPassword();
         Set<String> roles = user.getRoles();
         Boolean digestEncoded = user.isDigestEncoded();
         Date birthDate = user.getBirthDate();
+        Boolean suspended = user.isSuspended();
 
         if (accountId != null) {
             setAccountId(accountId);
@@ -139,6 +149,10 @@ public class User extends BeanDomain<User>{
 
         if (birthDate != null) {
             setBirthDate(birthDate);
+        }
+
+        if (suspended != null) {
+            setSuspended(suspended);
         }
 
         mergeSettings(user.getSettings(), this.settings);

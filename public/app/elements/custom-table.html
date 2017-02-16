@@ -11,6 +11,7 @@
 <link rel="import" href="/assets/app/elements/daterange-picker.html">
 <link rel="import" href="/assets/app/elements/interval-picker.html">
 <link rel="import" href="/assets/app/elements/array-picker.html">
+<link rel="import" href="/assets/app/elements/boolean-picker.html">
 
 <dom-module id="custom-table">
     <style>
@@ -56,6 +57,9 @@
             <template is="dom-if" if="{{isTypeInput(item)}}">
                 <paper-input id="{{tableId}}{{item.key}}" size="10"></paper-input>
             </template>
+            <template is="dom-if" if="{{isTypeInputBoolean(item)}}">
+                <boolean-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}" label-yes="Yes" label-no="No"></boolean-picker>
+            </template>
             <template is="dom-if" if="{{isTypeNumber(item)}}">
                 <interval-picker id="{{tableId}}{{item.key}}" id-prefix="{{tableId}}{{item.key}}"></interval-picker>
             </template>
@@ -95,7 +99,10 @@
              return item.type == 'number';
          },
          isTypeInput: function(item) {
-             return item.name != 'Id' && item.type == undefined;
+             return item.name != 'Id' && (item.type == undefined);
+         },
+         isTypeInputBoolean: function(item) {
+             return item.type == 'boolean';
          },
          isTypeArray: function(item) {
              return item.type == 'array';
@@ -141,6 +148,9 @@
                  } else if (currentFilterElement.componentType == 'array') {
                      arrayValue = {type:'array', arrayData:currentFilterElement.arrayValue};
                      filterTextArray.push(arrayValue);
+                 } else if (currentFilterElement.componentType == 'boolean') {
+                     filterBoolean = {type:'boolean', booleanFilterYes:currentFilterElement.booleanFilterYes, booleanFilterNo:currentFilterElement.booleanFilterNo};
+                     filterTextArray.push(filterBoolean);
                  } else {
                      filterTextArray.push(currentFilterElement.value.toLowerCase());
                  }
@@ -156,6 +166,9 @@
                        (!val[k+1] || (new Date(val[k+1]) < new Date(filterText.startDate) || new Date(val[k+1]) > new Date(filterText.endDate)))) {
                    valToReturn = false;
                  } else if (filterText.type == 'array' && filterText.arrayData && filterText.arrayData.length>0 && (!val[k+1] || !table.contains(filterText.arrayData, val[k+1].split(',')))) {
+                   valToReturn = false;
+                 } else if (filterText.type == 'boolean' && ((!filterText.booleanFilterYes && !filterText.booleanFilterNo) || (filterText.booleanFilterYes && !filterText.booleanFilterNo && !val[k+1])
+                   || (!filterText.booleanFilterYes && filterText.booleanFilterNo && val[k+1]))) {
                    valToReturn = false;
                  } else if (filterText.type == undefined && filterText && (!val[k+1] || val[k+1].toLowerCase()).indexOf(filterText) == -1) {
                    valToReturn = false;
@@ -186,6 +199,13 @@
                      filterElement.arrayValue = event.detail.array;
                      customTable.onFilterData(columns, grid, tableId, filterElement);
                  });
+             }  else if (filterElement.componentType=='boolean') {
+                 filterElement.configure();
+                 filterElement.addEventListener('boolean-change', function(event) {
+                     filterElement.booleanFilterYes = event.detail.booleanFilterYes;
+                     filterElement.booleanFilterNo = event.detail.booleanFilterNo;
+                     customTable.onFilterData(columns, grid, tableId, filterElement);
+                 });
              } else {
                  filterElement.addEventListener('value-changed', function() {
                      customTable.onFilterData(columns, grid, tableId, filterElement);
@@ -207,12 +227,26 @@
              for(i=0; i < columns.length; i++) {
                var col = columns[i];
                var colName = col.name;
+               var image = col.image;
                grid.addColumn({name: colName}, i);
                grid.columns[i].sortable = true;
                grid.sortOrder.push('{column: ' + i + ', direction: "asc"}');
                if (i >=1) {
                    var filterElement = this.createFilterElement(col, grid, i, this.tableId);
                    this.bindFilterData(columns, filterElement, grid, this.tableId);
+               }
+               if (image) {
+                   grid.columns[i].renderer = function(cell) {
+                       cell.element.innerHTML = '';
+                       var img = document.createElement('img');
+                       img.style.width = '24px';
+                       if (cell.data) {
+                           img.setAttribute('src', '/assets/images/lock.svg');
+                       } else {
+                           img.setAttribute('src', '/assets/images/unlock.svg');
+                       }
+                       cell.element.appendChild(img);
+                   }
                }
              }
 

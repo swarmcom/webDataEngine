@@ -1,7 +1,9 @@
 package security.validator;
 
+import api.domain.Account;
 import api.domain.BeanDomain;
 import api.domain.User;
+import api.service.AccountService;
 import api.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
@@ -19,6 +21,8 @@ import security.util.EncoderUtil;
 import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AccountUsernamePasswordAuthenticator extends UsernamePasswordAuthenticator {
 
@@ -26,11 +30,19 @@ public class AccountUsernamePasswordAuthenticator extends UsernamePasswordAuthen
     UserService userService;
 
     @Inject
+    AccountService accountService;
+
+    @Inject
     private SecurityPasswordEncoder securityPasswordEncoder;
 
     @Override
     public CommonProfile validate(String username, String password, WebContext context) {
         String currentAccountId = context.getRequestParameter("accountid");
+        List<Account> accounts = accountService.getAccountsByAccountName(currentAccountId);
+        if (accounts == null || accounts.size() != 1) {
+            this.throwsException("None or more accounts with account id: " + currentAccountId);
+        }
+        accountService.refreshTenantSpringContexts(accounts.get(0));
         User user = userService.getUser(currentAccountId, username);
 
         if (user == null) {

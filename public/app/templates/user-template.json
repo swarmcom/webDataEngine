@@ -29,6 +29,10 @@
       },
       "roles": {
         "enum": ["ROLE_ADMIN","ROLE_SUPERADMIN", "ROLE_USER"]
+      },
+      "suspended": {
+        "type": "boolean",
+        "title": "Suspended"
       }
     }
   },
@@ -61,6 +65,9 @@
         "type": "select",
         "size": 3,
         "removeDefaultNone": true
+      },
+      "suspended": {
+        "helper": "If checked, the user will be suspended"
       }
     }
   },

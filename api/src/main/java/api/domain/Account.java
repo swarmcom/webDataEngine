@@ -8,12 +8,16 @@ import org.apache.commons.lang3.StringUtils;
 public class Account extends BeanDomain<Account> {
     protected String id;
     protected String accountName;
+    protected String description;
+    protected String email;
+    protected String companyName;
     protected DbType dbType;
     protected String dbUri;
     protected String dbName;
     protected String superadminUserName;
     protected String superadminInitialPassword;
     protected String providerName;
+    protected Boolean suspended;
 
     public Account() {
     }
@@ -126,6 +130,38 @@ public class Account extends BeanDomain<Account> {
         this.providerName = providerName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Boolean isSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(Boolean suspended) {
+        this.suspended = suspended;
+    }
+
     public void merge(Account account) {
         DbType type = account.getDbType();
         String dbUri = account.getDbUri();
@@ -134,6 +170,10 @@ public class Account extends BeanDomain<Account> {
         String superadminUserName = account.getSuperadminUserName();
         String superadminInitialPassword = account.getSuperadminInitialPassword();
         String providerName = account.getProviderName();
+        String description = account.getDescription();
+        String email = account.getEmail();
+        String companyName = account.getCompanyName();
+        Boolean suspended = account.isSuspended();
 
         if (type != null) {
             setDbType(type);
@@ -160,6 +200,22 @@ public class Account extends BeanDomain<Account> {
 
         if (providerName != null) {
             setProviderName(providerName);
+        }
+
+        if (description != null) {
+            setDescription(description);
+        }
+
+        if (email != null) {
+            setEmail(email);
+        }
+
+        if (companyName != null) {
+            setCompanyName(companyName);
+        }
+
+        if (suspended != null) {
+            setSuspended(suspended);
         }
     }
 }

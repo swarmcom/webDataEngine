@@ -9,6 +9,8 @@ public interface AccountService {
 
     Account getAccount (String providerName, String accountName);
 
+    List<Account> getAccountsByAccountName (String accountName);
+
     Account getAccountById (String providerName, String accountId);
 
     Account createAccount (String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword);
@@ -21,5 +23,7 @@ public interface AccountService {
 
     List<? extends Account> getAccounts(String providerName);
 
-    void refreshTenantSpringContexts(String providerName);
+    void refreshTenantSpringContexts(Account account);
+
+    void refreshProviderSpringContexts(String providerName);
 }

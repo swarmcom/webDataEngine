@@ -1,0 +1,40 @@
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<dom-module id="boolean-picker">
+    <template>
+        <input id="booleanFilterYesId{{idPrefix}}" type="checkbox" checked="{{booleanFilterYes}}">{{labelYes}}</input>
+        <input id="booleanFilterNoId{{idPrefix}}" type="checkbox" checked="{{booleanFilterNo}}">{{labelNo}}</input>
+    </template>
+    <script>
+    Polymer({
+      is: 'boolean-picker',
+      properties: {
+         componentType: {
+             type: String,
+             value: 'boolean'
+         },
+         booleanFilterYes: {
+             type: Boolean,
+             value:true
+         },
+         booleanFilterNo: {
+             type: Boolean,
+             value:true
+         }
+      },
+      configure: function() {
+        var id = this.idPrefix;
+        var booleanFilterYesId = "booleanFilterYesId" + id;
+        var booleanFilterNoId = "booleanFilterNoId" + id;
+        var booleanPicker = this;
+        $("input[id=" + booleanFilterYesId + "]").on('change', function() {
+            booleanFilterYesVal = $(this).is(":checked");
+            booleanPicker.fire('boolean-change', {booleanFilterYes: booleanFilterYesVal, booleanFilterNo: booleanPicker.booleanFilterNo});
+        });
+        $("input[id=" + booleanFilterNoId + "]").on('change', function() {
+            booleanFilterNoVal = $(this).is(":checked");
+            booleanPicker.fire('boolean-change', {booleanFilterYes: booleanPicker.booleanFilterYes, booleanFilterNo: booleanFilterNoVal});
+        });
+      }
+    });
+  </script>
+</dom-module>

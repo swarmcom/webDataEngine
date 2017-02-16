@@ -13,6 +13,7 @@ public class Provider extends BeanDomain<Provider> {
     protected Boolean digestEncoded;
     protected String description;
     protected String email;
+    protected Boolean suspended;
 
     public Provider() {
 
@@ -84,12 +85,21 @@ public class Provider extends BeanDomain<Provider> {
         this.email = email;
     }
 
+    public Boolean isSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(Boolean suspended) {
+        this.suspended = suspended;
+    }
+
     public void merge(Provider provider) {
         String providerName = provider.getProviderName();
         String superadminUserName = provider.getSuperadminUserName();
         Boolean digestEncoded = provider.isDigestEncoded();
         String description = provider.getDescription();
         String email = provider.getEmail();
+        Boolean suspended = provider.isSuspended();
 
         if (providerName != null) {
             setProviderName(providerName);
@@ -109,6 +119,10 @@ public class Provider extends BeanDomain<Provider> {
 
         if (email != null) {
             setEmail(email);
+        }
+
+        if (suspended != null) {
+            setSuspended(suspended);
         }
     }
 }

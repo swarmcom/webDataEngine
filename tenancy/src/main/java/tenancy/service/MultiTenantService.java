@@ -4,6 +4,7 @@ package tenancy.service;
 import api.config.ApiConfig;
 import api.service.*;
 import org.springframework.stereotype.Component;
+import play.Logger;
 
 @Component
 public class MultiTenantService implements MultiService {

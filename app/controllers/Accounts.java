@@ -91,10 +91,10 @@ public class Accounts extends SimpleEntityController {
             ArrayNode itemNode = Json.newArray();
             itemNode.add(account.getId());
             itemNode.add(account.getAccountName());
-            itemNode.add(account.getDbName());
-            itemNode.add(account.getDbType().name());
-            itemNode.add(account.getDbUri());
-            itemNode.add(account.getSuperadminUserName());
+            itemNode.add(account.getCompanyName());
+            itemNode.add(account.getDescription());
+            itemNode.add(account.getEmail());
+            itemNode.add(account.isSuspended());
             node.add(itemNode);
         }
         return node;

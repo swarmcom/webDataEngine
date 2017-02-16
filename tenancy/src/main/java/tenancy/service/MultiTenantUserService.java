@@ -5,6 +5,7 @@ import api.domain.User;
 import api.service.MultiService;
 import api.service.UserService;
 import org.springframework.stereotype.Component;
+import play.Logger;
 
 import javax.inject.Inject;
 import java.util.Collection;

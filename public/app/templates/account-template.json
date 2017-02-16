@@ -11,6 +11,19 @@
         "type": "string",
         "title": "Account name"
       },
+      "companyName": {
+        "type": "string",
+        "title": "Company Name"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "email": {
+        "type": "string",
+        "title": "Email",
+        "format": "email"
+      },
       "dbType": {
         "type": "string",
         "title": "DB Type",
@@ -34,6 +47,10 @@
       "superadminInitialPassword": {
         "type": "string",
         "title": "Superadmin Initial Password"
+      },
+      "suspended": {
+        "type": "boolean",
+        "title": "Suspended"
       }
     }
   },
@@ -45,6 +62,16 @@
       },
       "accountName" : {
         "helper": "Please enter the account name."
+      },
+      "companyName" : {
+        "helper": "Please enter the company name."
+      },
+      "description": {
+        "type": "textarea",
+        "helper": "Please enter provider description"
+      },
+      "email": {
+        "helper": "Please enter provider email"
       },
       "dbType" : {
         "helper": "Please select the database type",
@@ -61,6 +88,9 @@
       },
       "superadminInitialPassword": {
         "helper": "Please enter superadmin initial password"
+      },
+      "suspended": {
+        "helper": "If checked, the account will be suspended"
       }
     }
   },

@@ -33,6 +33,10 @@
         "type": "string",
         "title": "Email",
         "format": "email"
+      },
+      "suspended": {
+        "type": "boolean",
+        "title": "Suspended"
       }
     }
   },
@@ -57,6 +61,9 @@
       },
       "email": {
         "helper": "Please enter provider email"
+      },
+      "suspended": {
+        "helper": "If checked, the provider will be suspended"
       }
     }
   },

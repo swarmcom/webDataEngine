@@ -121,6 +121,7 @@ public class Users extends SimpleEntityController {
             itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
             Date birthDate = user.getBirthDate();
             itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
+            itemNode.add(user.isSuspended());
             node.add(itemNode);
         }
         return node;

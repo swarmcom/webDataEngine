@@ -5,14 +5,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.env.ConfigurableEnvironment;
 import play.Configuration;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class ApiConfig {
 
     public static Configuration configuration;
 
-    public static HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap;
+    public static Map<String, AnnotationConfigApplicationContext> tenantSpringContextMap;
 
     public static AnnotationConfigApplicationContext createSpringContext(List<String> configClassesStr) throws Exception {
         Class[] configClasses = new Class[configClassesStr.size()];

@@ -34,13 +34,13 @@ public class ProviderUsernamePasswordAuthenticator extends UsernamePasswordAuthe
         if (provider == null) {
             this.throwsException("Provider not found");
         }
-Logger.info("MIRCEA PSS " + password + " X " + username + " D " + provider.getSuperadminPassword() + " A " + EncoderUtil.digestEncodePassword(username, EncoderUtil.DIGEST_REALM, password));
+
         if (!this.securityPasswordEncoder.matches(password, provider.getSuperadminPassword()) &&
                 !StringUtils.equals(EncoderUtil.digestEncodePassword(username, EncoderUtil.DIGEST_REALM, password), provider.getSuperadminPassword())) {
             this.throwsException("Password does not match");
         }
 
-        accountService.refreshTenantSpringContexts(currentProviderId);
+        accountService.refreshProviderSpringContexts(currentProviderId);
         CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute("provideradmin", username);

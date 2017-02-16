@@ -63,6 +63,7 @@ public class Providers extends SimpleEntityController {
             itemNode.add(provider.getSuperadminUserName());
             itemNode.add(provider.getDescription());
             itemNode.add(provider.getEmail());
+            itemNode.add(provider.isSuspended());
             node.add(itemNode);
         }
         return node;

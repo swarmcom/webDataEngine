@@ -43,8 +43,6 @@ public class DbAccountService implements AccountService {
     @Inject
     private SecurityPasswordEncoder passwordEncoder;
 
-    private HashMap<String, AnnotationConfigApplicationContext> tenantSpringContextMap = new HashMap<String, AnnotationConfigApplicationContext>();
-
     @PostConstruct
     public void init() {
         accountCollection.createIndex(new BasicDBObject("accountName", 1), new BasicDBObject("unique", true));
@@ -53,6 +51,11 @@ public class DbAccountService implements AccountService {
     @Override
     public Account getAccount(String providerName, String accountName) {
         return accountRepository.findByProviderNameAndAccountName(providerName, accountName);
+    }
+
+    @Override
+    public List<Account> getAccountsByAccountName(String accountName) {
+        return accountRepository.findByAccountName(accountName);
     }
 
     @Override
@@ -71,7 +74,7 @@ public class DbAccountService implements AccountService {
         account.setProviderName(providerName);
         Account savedAccount = accountRepository.save(account);
 
-        refreshTenantSpringContexts(providerName);
+        refreshProviderSpringContexts(providerName);
         refreshAccount(savedAccount);
 
         return savedAccount;
@@ -121,36 +124,46 @@ public class DbAccountService implements AccountService {
     }
 
     @Override
-    public void refreshTenantSpringContexts(String providerName) {
+    public void refreshProviderSpringContexts(String providerName) {
         List<? extends Account> accounts = getAccounts(providerName);
-        String tenantId;
-        DbType tenantDbType;
-        String tenantConfigClassStr;
-        AnnotationConfigApplicationContext tenantSpringContext;
+        Map<String, AnnotationConfigApplicationContext> tenantSpringContextMap = new HashMap<String, AnnotationConfigApplicationContext>();
         for (Account account : accounts) {
-            tenantId = account.getAccountName();
-            tenantDbType = account.getDbType();
-            switch (tenantDbType) {
-                case mongo: {
-                    tenantConfigClassStr = "mongo.config.MongoConfig";
-                    break;
-                }
-                case couchDB: {
-                    tenantConfigClassStr = "couchdb.config.CouchdbConfig";
-                    break;
-                }
-                default: {
-                    tenantConfigClassStr = "mongo.config.MongoConfig";
-                }
-            }
-            try {
-                tenantSpringContext = ApiConfig.createSpringContext(tenantConfigClassStr, createConfigurableEnvironment(account));
-                tenantSpringContextMap.put(tenantId, tenantSpringContext);
-            } catch (Exception ex) {
-                Logger.info("Cannot create tenant spring context", ex);
-            }
+            AnnotationConfigApplicationContext context = createTenantSpringContext(account);
+            tenantSpringContextMap.put(account.getAccountName(), context);
         }
         ApiConfig.tenantSpringContextMap = tenantSpringContextMap;
+    }
+
+    @Override
+    public void refreshTenantSpringContexts(Account account) {
+        AnnotationConfigApplicationContext context = createTenantSpringContext(account);
+        Map<String, AnnotationConfigApplicationContext> tenantSpringContextMap = new HashMap<String, AnnotationConfigApplicationContext>();
+        tenantSpringContextMap.put(account.getAccountName(), context);
+        ApiConfig.tenantSpringContextMap = tenantSpringContextMap;
+    }
+
+    private AnnotationConfigApplicationContext createTenantSpringContext(Account account) {
+        DbType tenantDbType = account.getDbType();
+        String tenantConfigClassStr;
+        switch (tenantDbType) {
+            case mongo: {
+                tenantConfigClassStr = "mongo.config.MongoConfig";
+                break;
+            }
+            case couchDB: {
+                tenantConfigClassStr = "couchdb.config.CouchdbConfig";
+                break;
+            }
+            default: {
+                tenantConfigClassStr = "mongo.config.MongoConfig";
+            }
+        }
+        try {
+            return ApiConfig.createSpringContext(tenantConfigClassStr, createConfigurableEnvironment(account));
+        } catch (Exception ex) {
+            Logger.info("Cannot create tenant spring context", ex);
+            return null;
+        }
     }
 
     private ConfigurableEnvironment createConfigurableEnvironment(Account account) {
