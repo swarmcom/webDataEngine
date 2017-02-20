@@ -19,11 +19,13 @@ public class User extends BeanDomain<User>{
 
     protected String accountId;
 
-    protected Set<String> roles = new TreeSet<String>();
+    protected Set<String> roles;
 
     protected Boolean digestEncoded;
 
     protected Date birthDate;
+
+    protected Date created;
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
 
@@ -37,6 +39,7 @@ public class User extends BeanDomain<User>{
         this.userName = userName;
         this.password = password;
         if (roles != null) {
+            this.roles = new TreeSet<String>();
             this.roles.addAll(roles);
         } else {
             this.roles.add("ROLE_USER");
@@ -95,13 +98,21 @@ public class User extends BeanDomain<User>{
         this.birthDate = birthDate;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
     public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 
     public void setRoles(Set<String> roles) {
         if (roles != null) {
-            this.roles.clear();
+            this.roles = new TreeSet<String>();
             this.roles.addAll(roles);
         }
     }
@@ -129,6 +140,7 @@ public class User extends BeanDomain<User>{
         Set<String> roles = user.getRoles();
         Boolean digestEncoded = user.isDigestEncoded();
         Date birthDate = user.getBirthDate();
+        Date created = user.getCreated();
         Boolean suspended = user.isSuspended();
 
         if (accountId != null) {
@@ -149,6 +161,10 @@ public class User extends BeanDomain<User>{
 
         if (birthDate != null) {
             setBirthDate(birthDate);
+        }
+
+        if (created != null) {
+            setCreated(created);
         }
 
         if (suspended != null) {

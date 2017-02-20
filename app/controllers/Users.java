@@ -18,8 +18,10 @@ import security.util.EncoderUtil;
 
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @With(SessionAuthenticatedAction.class)
@@ -44,6 +46,7 @@ public class Users extends SimpleEntityController {
         } else {
             userToAdd.setPassword(passwordEncoder.encode(userToAdd.getPassword()));
         }
+        userToAdd.setCreated(Calendar.getInstance().getTime());
         return userService.saveUser(appProfileManager.getSessionAccountId(ctx()), userToAdd);
     }
 
@@ -93,7 +96,7 @@ public class Users extends SimpleEntityController {
         User existingUser = userService.getUserById(appProfileManager.getSessionAccountId(ctx()), id);
         User userToMerge = (User)merge(existingUser);
         String password = userToMerge.getPassword();
-        if (!StringUtils.equals(existingUser.getPassword(), password)) {
+        if (password != null && !StringUtils.equals(existingUser.getPassword(), password)) {
             if (existingUser.isDigestEncoded()) {
                 existingUser.setPassword(EncoderUtil.digestEncodePassword(existingUser.getUserName(), EncoderUtil.DIGEST_REALM, password));
             } else {
@@ -116,11 +119,14 @@ public class Users extends SimpleEntityController {
         for (User user : users) {
             ArrayNode itemNode = Json.newArray();
             itemNode.add(user.getId());
-            itemNode.add(user.getAccountId());
             itemNode.add(user.getUserName());
             itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
             Date birthDate = user.getBirthDate();
             itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
+            Map contactInf = user.getSettings().get("contactInf");
+            itemNode.add(contactInf != null ? (String)contactInf.get("emailAddr") : "");
+            Date created = user.getCreated();
+            itemNode.add(created != null ? DateFormatUtils.format(created, DATE_FORMAT_2) : "");
             itemNode.add(user.isSuspended());
             node.add(itemNode);
         }

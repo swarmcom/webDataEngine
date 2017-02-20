@@ -110,7 +110,7 @@ public class Providers extends SimpleEntityController {
         Provider existingProvider = providerService.getProvider(name);
         Provider providerToMerge = (Provider)merge(existingProvider);
         String superadminPassword = providerToMerge.getSuperadminPassword();
-        if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
+        if (superadminPassword!= null && !StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
             if (existingProvider.isDigestEncoded()) {
                 existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));
             } else {
@@ -125,7 +125,7 @@ public class Providers extends SimpleEntityController {
         Provider existingProvider = providerService.getProviderById(id);
         Provider providerToMerge = (Provider)merge(existingProvider);
         String superadminPassword = providerToMerge.getSuperadminPassword();
-        if (!StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
+        if (superadminPassword!= null && !StringUtils.equals(existingProvider.getSuperadminPassword(), superadminPassword)) {
             if (existingProvider.isDigestEncoded()) {
                 existingProvider.setSuperadminPassword(EncoderUtil.digestEncodePassword(existingProvider.getSuperadminUserName(), EncoderUtil.DIGEST_REALM, superadminPassword));
             } else {

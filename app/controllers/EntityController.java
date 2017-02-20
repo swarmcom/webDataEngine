@@ -26,6 +26,7 @@ import java.util.Map;
 public abstract class EntityController extends Controller {
 
     protected static final String DATE_FORMAT_1 = "MM/dd/yyyy";
+    protected static final String DATE_FORMAT_2 = "yyyy-MM-dd HH:mm:ss";
 
     protected abstract BeanDomain getByNameAbstract(String name) throws Exception;
 

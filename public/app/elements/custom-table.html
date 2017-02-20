@@ -170,7 +170,7 @@
                  } else if (filterText.type == 'boolean' && ((!filterText.booleanFilterYes && !filterText.booleanFilterNo) || (filterText.booleanFilterYes && !filterText.booleanFilterNo && !val[k+1])
                    || (!filterText.booleanFilterYes && filterText.booleanFilterNo && val[k+1]))) {
                    valToReturn = false;
-                 } else if (filterText.type == undefined && filterText && (!val[k+1] || val[k+1].toLowerCase()).indexOf(filterText) == -1) {
+                 } else if (filterText.type == undefined && filterText && (!val[k+1] || val[k+1].toLowerCase().indexOf(filterText) == -1)) {
                    valToReturn = false;
                  }
                }
