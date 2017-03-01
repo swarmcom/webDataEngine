@@ -1,0 +1,38 @@
+{
+  "identification_schema": {
+    "type": "object",
+    "title": "Identification",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Id"
+      },
+      "meetingName": {
+        "type": "string",
+        "title": "Meeting Name",
+        "required": true
+      },
+      "password": {
+        "type": "string",
+        "title": "Password"
+      }
+    }
+  },
+  "identification_options": {
+    "renderForm":true,
+    "fields": {
+      "id": {
+        "disabled": "true"
+      },
+      "meetingName" : {
+        "helper": "Please enter Meeting name."
+      },
+      "password": {
+        "helper": "Please enter Meeting password"
+      }
+    }
+  },
+  "settings_defaults": {
+
+  }
+}

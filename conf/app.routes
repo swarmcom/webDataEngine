@@ -34,6 +34,7 @@ GET     /customer/template/:key                      controllers.Accounts.getTem
 GET     /phones/template/:model/:key                 controllers.Phones.getTemplateByModel(key: String, model: String)
 GET     /gateways/template/:model/:key               controllers.Gateways.getTemplateByModel(key: String, model:String)
 GET     /user/template/:key                          controllers.Users.getTemplate(key: String)
+GET     /meetings/template/:key                      controllers.Meetings.getTemplate(key: String)
 
 # REST apis
 GET     /api/users                                   controllers.Users.list
@@ -106,6 +107,17 @@ DELETE  /api/gateways/:gatewayName                   controllers.Gateways.delete
 DELETE  /api/gateways/account/:accountName           controllers.Gateways.deleteByAccountName(accountName: String)
 DELETE  /api/gateways/delete/ids                     controllers.Gateways.deleteList
 
+GET     /api/meetings                                   controllers.Meetings.list
+GET     /api/meetings/array                             controllers.Meetings.listArray
+POST    /api/meetings                                   controllers.Meetings.add
+PUT     /api/meetings/name/:meetingName                    controllers.Meetings.modifyByName(meetingName: String)
+GET     /api/meetings/name/:meetingName                    controllers.Meetings.getByName(meetingName: String)
+PUT     /api/meetings/id/:meetingId                        controllers.Meetings.modifyById(meetingId: String)
+GET     /api/meetings/id/:meetingId                        controllers.Meetings.getById(meetingId: String)
+GET     /api/meetings/defaults                          controllers.Meetings.getDefaults
+DELETE  /api/meetings/:meetingName                         controllers.Meetings.deleteByName(meetingName: String)
+DELETE  /api/meetings/account/:accountName              controllers.Meetings.deleteByAccountName(accountName: String)
+DELETE  /api/meetings/delete/ids                        controllers.Meetings.deleteList
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)

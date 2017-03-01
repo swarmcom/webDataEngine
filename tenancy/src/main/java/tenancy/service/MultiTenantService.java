@@ -28,4 +28,9 @@ public class MultiTenantService implements MultiService {
     public GatewayService getTenantGatewayService(String tenantId) {
         return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(GatewayService.class);
     }
+
+    @Override
+    public MeetingService getTenantMeetingService(String tenantId) {
+        return ApiConfig.tenantSpringContextMap.get(tenantId).getBean(MeetingService.class);
+    }
 }

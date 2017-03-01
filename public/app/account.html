@@ -61,7 +61,7 @@
            "title":"User Groups", "icon":"custom:user-groups", "description":"Manage user groups",
            "width":"160", "height":"140"},
 
-           {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/owner/customer/account/device",
+           {"cardId":"Devices", "formId":"formDevices", "list":false, "menuCard":true, "menuCardUrl":"/owner/provider/account/device",
            "title":"Devices", "icon":"custom:devices", "description":"Manage devices",
            "width":"160", "height":"140"},
 
@@ -77,9 +77,14 @@
            "title":"Admin Groups", "icon":"custom:admin-groups", "description":"Manage groups of customer admins",
            "width":"160", "height":"140"},
 
-           {"cardId":"Meetings", "formId":"formMeetings", "list":false, "menuCard":true, "menuCardUrl":"/owner/customer/account/meetings",
-           "title":"Meetings", "icon":"custom:meeting", "description":"Manage meeting rooms",
-           "width":"160", "height":"140"},
+           {"cardId":"Meetings", "formId":"formMeetings", "list":true, "menuCard":false, "tableId":"tableMeetings", "operationId":"operationMeetings",
+           "title":"Meetings", "icon":"custom:meeting", "description":"Manage meetings rooms", "width":"160", "height":"140",
+           "url":"/api/meetings/array", "defaultsUrl":"/api/meetings/defaults", "addUrl":"/api/meetings", "getUrl":"/api/meetings/id/",
+           "modifyUrl":"/api/meetings/id/", "deleteIdsUrl":"/api/meetings/delete/ids",
+           "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"Meeting Name","key":"MeetingName"},{"name":"Meeting password","key":"password"}],
+           "pages":[
+           {"menuName":"Identification","pageId":"page_Identification","schema":"/meetings/template/identification_schema","options":"/meetings/template/identification_options","buttonId":"create_identification"}
+           ]},
 
            {"cardId":"Reports", "formId":"formReports", "list":false, "menuCard":true, "menuCardUrl":"/owner/customer/account/reports",
            "title":"Reports", "icon":"custom:reports", "description":"Track usage of services",

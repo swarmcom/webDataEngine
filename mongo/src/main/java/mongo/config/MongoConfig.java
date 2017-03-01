@@ -55,4 +55,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
     public DBCollection gatewayCollection() throws Exception {
         return mongo().getDB(getDatabaseName()).getCollection("gateway");
     }
+
+    @Bean
+    public DBCollection meetingCollection() throws Exception {
+        return mongo().getDB(getDatabaseName()).getCollection("meeting");
+    }
 }
