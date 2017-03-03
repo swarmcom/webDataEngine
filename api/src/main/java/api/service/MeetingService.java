@@ -9,7 +9,7 @@ import java.util.Set;
 public interface MeetingService {
     Meeting getMeeting(String accountId, String meetingName);
 
-    Meeting createMeeting(String accountId, String meetingName, String password);
+    Meeting createMeeting(String accountId, String meetingName, String password, String duration, String participants);
 
     Meeting saveMeeting(String accountId, Meeting meeting);
 

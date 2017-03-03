@@ -83,7 +83,7 @@ public class Meetings extends SimpleEntityController {
     protected BeanDomain modifyByIdAbstract(String id) throws Exception {
         Meeting existingMeeting = meetingService.getMeetingById(appProfileManager.getSessionAccountId(ctx()), id);
         merge(existingMeeting);
-        existingMeeting.setPassword(passwordEncoder.encode(existingMeeting.getPassword()));
+        existingMeeting.setPassword(existingMeeting.getPassword());
         return (existingMeeting != null ? meetingService.saveMeeting(appProfileManager.getSessionAccountId(ctx()), existingMeeting) : null);
     }
 
@@ -104,10 +104,11 @@ public class Meetings extends SimpleEntityController {
             ArrayNode itemNode = Json.newArray();
             itemNode.add(meeting.getId());
             itemNode.add(meeting.getAccountId());
-            //System.out.println("account id is: " + meeting.getAccountId() + " id:" + meeting.getId());
             //itemNode.add(meeting.getRoomId());
             itemNode.add(meeting.getMeetingName());
             itemNode.add(meeting.getPassword());
+            itemNode.add(meeting.getDuration());
+            itemNode.add(meeting.getParticipants());
             node.add(itemNode);
         }
         return node;

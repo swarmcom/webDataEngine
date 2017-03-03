@@ -36,8 +36,8 @@ public class MongoMeetingService implements MeetingService {
     }
 
     @Override
-    public Meeting createMeeting(String accountId, String meetingName, String password) {
-        return meetingRepository.save(new Meeting(accountId, meetingName, password));
+    public Meeting createMeeting(String accountId, String meetingName, String password, String duration, String participants) {
+        return meetingRepository.save(new Meeting(accountId, meetingName, password, duration, participants));
     }
 
     @Override
@@ -48,7 +48,6 @@ public class MongoMeetingService implements MeetingService {
 
     @Override
     public List<? extends Meeting> getMeetings(String accountId) {
-        System.out.println("getMeetings are: " + accountId);
         return meetingRepository.findByAccountId(accountId);
     }
 

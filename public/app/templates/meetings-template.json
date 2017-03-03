@@ -15,6 +15,14 @@
       "password": {
         "type": "string",
         "title": "Password"
+      },
+      "duration": {
+        "type": "number",
+        "title": "Duration"
+      },
+      "participants": {
+        "type": "number",
+        "title": "Maximum Participants"
       }
     }
   },
@@ -25,14 +33,224 @@
         "disabled": "true"
       },
       "meetingName" : {
-        "helper": "Please enter Meeting name."
+        "helper": "The Room name is a text name given to the room for identification."
       },
       "password": {
         "helper": "Please enter Meeting password"
+      },
+      "duration": {
+        "helper": "Length of time in hours that the room will be available."
+      },
+      "participants": {
+        "helper": "Maximum number of participants that are allowed to join this meeting at one time."
+      }
+    }
+  },
+  "meetingInf_settings_schema": {
+    "type": "object",
+    "properties": {
+      "settings": {
+        "type": "object",
+        "properties": {
+          "meetingInf": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "moderatorPin": {
+                "title": "Moderator PIN",
+                "type": "string"
+              },
+              "accessPin": {
+                "title": "Access PIN",
+                "type": "string"
+              },
+              "videoQuality": {
+                "type": "string",
+                "title": "Video Quality",
+                "enum": [
+                  "Low",
+                  "Standard",
+                  "High",
+                  "720P",
+                  "1080P"
+                ]
+              },
+              "typeOfMeeting": {
+                "type": "string",
+                "title": "Type of Meeting",
+                "enum": [
+                  "Round Table",
+                  "Plenary"
+                ]
+              },
+              "allowRecording": {
+                "type": "string",
+                "title": "Allow Recording",
+                "enum": [
+                  "On",
+                  "Off"
+                ]
+              },
+              "allowH323Sip": {
+                "type": "string",
+                "title": "Allow H.323 and SIP",
+                "enum": [
+                  "Disabled",
+                  "Inbound Calls",
+                  "Outbound Calls",
+                  "Enabled"
+                ]
+              },
+              "allowPhoneCallsIn": {
+                "type": "string",
+                "title": "Allow Phone Calls in",
+                "enum": [
+                  "On",
+                  "Off"
+                ]
+              },
+              "videoCameraSettings": {
+                "type": "string",
+                "title": "Video Camera Settings",
+                "enum": [
+                  "Single Cam",
+                  "Single Cam w/Cam Control",
+                  "Multiple Cam",
+                  "Multiple Cam w/Cam Control"
+                ]
+              },
+              "audioMicSettings": {
+                "type": "string",
+                "title": "Audio Mic Settings",
+                "enum": [
+                  "Disabled",
+                  "Mute",
+                  "Unmute",
+                  "Force mute",
+                  "Force un-mute"
+                ]
+              },
+              "videoCameraOptions": {
+                "type": "string",
+                "title": "Video Camera Settings",
+                "enum": [
+                  "Disabled",
+                  "Mute",
+                  "Unmute",
+                  "Force mute",
+                  "Force un-mute"
+                ]
+              },
+              "chatSettings": {
+                "type": "string",
+                "title": "Chat Settings",
+                "enum": [
+                  "On",
+                  "Off"
+                ]
+              },
+              "desktopSharing": {
+                "type": "string",
+                "title": "Desktop Sharing",
+                "enum": [
+                  "On",
+                  "Off"
+                ]
+              },
+              "roomAlias": {
+                "type": "string",
+                "title": "Room Alias"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "meetingInf_settings_options": {
+    "helper": "Meeting Details",
+    "fields": {
+      "settings": {
+        "fields": {
+          "meetingInf": {
+            "toolbarSticky": true,
+            "fields": {
+              "description": {
+                "helper": "Text based information about this meeting."
+              },
+              "moderatorPin": {
+                "helper": "The Moderator PIN is a PIN than can be used to elavate a meeting participant to Moderator. The Moderator can mute, kick, etc"
+              },
+              "accessPin": {
+                "helper": "PIN that a user would need to enter to get into the meeting. If you use something other than numbers, participans with phones will not be able to enter the key."
+              },
+              "videoQuality": {
+                "removeDefaultNone": true
+              },
+              "typeOfMeeting": {
+                "removeDefaultNone": true,
+                "helper": "Determinates the meeting structure including the hand raising options."
+              },
+              "allowRecording": {
+                "removeDefaultNone": true,
+                "helper": "This allows the moderator to record meetings on demand."
+              },
+              "allowH323Sip": {
+                "removeDefaultNone": true,
+                "helper": "This allows connections to the meeting from H.323 or SIP enabled devices."
+              },
+              "allowPhoneCallsIn": {
+                "removeDefaultNone": true,
+                "helper": "Allows participants to dial in from a phone."
+              },
+              "videoCameraSettings": {
+                "removeDefaultNone": true,
+                "helper": "Unlimited, Single Camera allows the user to only have 1 camera, 'fullVideoSettings GUI'."
+              },
+              "audioMicSettings": {
+                "removeDefaultNone": true,
+                "helper": "Specifies the state of the Mic upon entering a meeting."
+              },
+              "videoCameraOptions": {
+                "removeDefaultNone": true,
+                "helper": "Specifies the state of the Video upon entering a meeting."
+              },
+              "chatSettings": {
+                "removeDefaultNone": true,
+                "helper": "Determinates if chat is allowed in the meeting."
+              },
+              "desktopSharing": {
+                "removeDefaultNone": true,
+                "helper": "Enables or disables desktop sharing in the meeting."
+              },
+              "roomAlias": {
+                "helper": "An alias that can also be used to connect to the room. Must be set by Ezuce Support."
+              }
+            }
+          }
+        }
       }
     }
   },
   "settings_defaults": {
-
+    "duration": 1,
+    "participants": 1,
+    "settings": {
+      "meetingInf": {
+        "videoQuality": ["High"],
+        "typeOfMeeting": ["Round Table"],
+        "allowRecording": ["On"],
+        "allowH323Sip": ["Enabled"],
+        "allowPhoneCallsIn": ["On"],
+        "videoCameraSettings": ["Multiple Cam w/Cam Control"],
+        "audioMicSettings": ["Unmute"],
+        "videoCameraOptions": ["Unmute"],
+        "chatSettings": ["On"],
+        "desktopSharing": ["On"]
+      }
+    }
   }
 }

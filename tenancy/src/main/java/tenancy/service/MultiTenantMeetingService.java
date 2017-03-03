@@ -23,9 +23,9 @@ public class MultiTenantMeetingService implements MeetingService {
     }
 
     @Override
-    public Meeting createMeeting(String tenantId, String meetingName, String password) {
+    public Meeting createMeeting(String tenantId, String meetingName, String password, String duration, String participants) {
         MeetingService userService = multiService.getTenantMeetingService(tenantId);
-        return userService.createMeeting(tenantId, meetingName, password);
+        return userService.createMeeting(tenantId, meetingName, password, duration, participants);
     }
 
     @Override

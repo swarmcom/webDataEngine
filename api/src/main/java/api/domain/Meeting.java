@@ -17,6 +17,10 @@ public class Meeting extends BeanDomain<Meeting>{
 
     protected String password;
 
+    protected String duration;
+
+    protected String participants;
+
     protected String accountId;
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
@@ -24,10 +28,12 @@ public class Meeting extends BeanDomain<Meeting>{
     public Meeting() {
     }
 
-    public Meeting(String accountId, String meetingName, String password) {
+    public Meeting(String accountId, String meetingName, String password, String duration, String participants) {
         this.accountId = accountId;
         this.meetingName = meetingName;
         this.password = password;
+        this.duration = duration;
+        this.participants = participants;
     }
 
     public boolean isNew() {
@@ -44,17 +50,25 @@ public class Meeting extends BeanDomain<Meeting>{
 
     public String getMeetingName() { return meetingName; }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setMeetingName(String meetingName) {
         this.meetingName = meetingName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getDuration() { return duration; }
+
+    public void setDuration(String duration) { this.duration = duration; }
+
+    public String getParticipants() { return participants; }
+
+    public void setParticipants(String participants) { this.participants = participants; }
 
     public String getAccountId() {
         return accountId;
@@ -78,6 +92,8 @@ public class Meeting extends BeanDomain<Meeting>{
         String accountId = meeting.getAccountId();
         String meetingName = meeting.getMeetingName();
         String meetingPassword = meeting.getPassword();
+        String meetingDuration = meeting.getDuration();
+        String meetingParticipants = meeting.getParticipants();
 
         if (id != null) {
             setId(id);
@@ -92,6 +108,14 @@ public class Meeting extends BeanDomain<Meeting>{
         }
         if (meetingPassword != null) {
             setPassword(meetingPassword);
+        }
+
+        if (meetingDuration != null) {
+            setDuration(meetingDuration);
+        }
+
+        if (meetingParticipants != null) {
+            setParticipants(meetingParticipants);
         }
 
         mergeSettings(meeting.getSettings(), this.settings);

@@ -81,9 +81,10 @@
            "title":"Meetings", "icon":"custom:meeting", "description":"Manage meetings rooms", "width":"160", "height":"140",
            "url":"/api/meetings/array", "defaultsUrl":"/api/meetings/defaults", "addUrl":"/api/meetings", "getUrl":"/api/meetings/id/",
            "modifyUrl":"/api/meetings/id/", "deleteIdsUrl":"/api/meetings/delete/ids",
-           "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"Meeting Name","key":"MeetingName"},{"name":"Meeting password","key":"password"}],
+           "columns":[{"name":"Id","key":"Id"},{"name":"Account","key":"Account"},{"name":"Meeting Name","key":"MeetingName"},{"name":"Meeting password","key":"password"}, {"name":"Meeting duration","key":"duration"}, {"name":"Meeting participants","key":"participants"}],
            "pages":[
-           {"menuName":"Identification","pageId":"page_Identification","schema":"/meetings/template/identification_schema","options":"/meetings/template/identification_options","buttonId":"create_identification"}
+           {"menuName":"Identification","pageId":"page_Identification","schema":"/meetings/template/identification_schema","options":"/meetings/template/identification_options","buttonId":"create_identification"},
+           {"menuName":"Meeting Details","pageId":"page_MeetingDetails","schema":"/meetings/template/meetingInf_settings_schema","options":"/meetings/template/meetingInf_settings_options","buttonId":"create_meetingInf"}
            ]},
 
            {"cardId":"Reports", "formId":"formReports", "list":false, "menuCard":true, "menuCardUrl":"/owner/customer/account/reports",
