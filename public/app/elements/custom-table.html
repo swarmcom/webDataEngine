@@ -238,14 +238,13 @@
                if (image) {
                    grid.columns[i].renderer = function(cell) {
                        cell.element.innerHTML = '';
-                       var img = document.createElement('img');
-                       img.style.width = '24px';
+                       var icon = document.createElement("iron-icon");
                        if (cell.data) {
-                           img.setAttribute('src', '/assets/images/lock.svg');
+                           icon.setAttribute("icon", "lock");
                        } else {
-                           img.setAttribute('src', '/assets/images/unlock.svg');
+                           icon.setAttribute("icon", "lock-open");
                        }
-                       cell.element.appendChild(img);
+                       cell.element.appendChild(icon);
                    }
                }
              }
