@@ -1,0 +1,152 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/iron-form/iron-form.html">
+<link rel="import" href="/assets/components/app-layout/app-layout.html">
+<link rel="import" href="/assets/components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="/assets/components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
+
+<dom-module id="custom-dialog-template">
+    <template>
+        <style include="app-grid-style">
+            :host {
+              --app-grid-columns: 3;
+            }
+
+            ul {
+              padding: 0;
+              list-style: none;
+            }
+
+            .item {
+              padding:10px;
+              background-color: white;
+            }
+
+            paper-dialog {
+              position: center;
+            }
+        </style>
+        <iron-ajax
+                id="getAction"
+                url="{{getUrl}}"
+                method="GET"
+                on-response="retrieved"
+                handle-as="json">
+        </iron-ajax>
+        <paper-dialog id="animated" with-backdrop>
+            <div class="card-content">
+            <form is="iron-form" method="POST" content-type="application/json" id="submitOptions" on-iron-form-presubmit="presubmit" on-iron-form-response="aftersubmit">
+              <ul class="app-grid">
+                <li class="item"><h2>Add Owner</h2></li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                </li>
+                <li class="item">
+                    <paper-input id="providerNameId" name="providerName" label="Provider Name" required></paper-input>
+                    <paper-input id="superadminUserNameId" name="superadminUserName" label="User Name" required></paper-input>
+                    <paper-input id="superadminPasswordId" name="superadminPassword" label="Password" type="password" required auto-validate></paper-input>
+                    <paper-checkbox id="digestEncodedId" value="true" name="digestEncoded" checked=true>Digest encoded</paper-checkbox>
+                </li>
+                <li class="item">
+                    <paper-input id="descriptionId" name="description" label="Description"></paper-input>
+                    <gold-email-input id="emailId" name="email" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
+                    <br>
+                    <paper-checkbox id="suspendedId" value="true" name="suspended" checked=false>Suspended</paper-checkbox>
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <div class="buttons">
+                        <paper-button id="resetButton" on-click="reset">Cancel</paper-button>
+                        <paper-button id="saveButton" on-click="submit">{{saveLabel}}</paper-button>
+                    </div>
+                </li>
+              </ul>
+            </form>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+    Polymer({
+      is: 'custom-dialog-template',
+      properties: {
+          id: {
+              type: String,
+              value: ''
+          },
+          addUrl: {
+              type: String,
+              value: ''
+          },
+          modifyUrl: {
+              type: String
+          },
+          getUrl: {
+              type: String
+          },
+          saveLabel: {
+              type: String,
+              value: 'Create'
+          }
+      },
+
+      presubmit: function(event) {
+          var form = this.querySelector('form');
+          if (this.id) {
+              form.request.method='put';
+          } else {
+              form.request.method='post';
+          }
+      },
+      submit: function(event) {
+          var form = this.querySelector('form');
+          if (this.id) {
+              form.action=this.modifyUrl;
+              form.submit();
+          } else {
+              form.action = this.addUrl;
+              form.submit();
+          }
+      },
+      aftersubmit: function(event) {
+          var form = this.querySelector('form');
+          if (form.request.method='put') {
+              alert('item modified')
+          } else {
+              alert('item created');
+          }
+      },
+      reset: function(event) {
+          var form = this.querySelector('form');
+          form.reset();
+      },
+      generateUI: function(item) {
+          var form = this.querySelector('form');
+          form.querySelector('#providerNameId').value=item.providerName;
+          form.querySelector('#superadminUserNameId').value=item.superadminUserName;
+          form.querySelector('#superadminPasswordId').value=item.superadminPassword;
+          form.querySelector('#digestEncodedId').checked=item.digestEncoded;
+          form.querySelector('#descriptionId').value=item.description;
+          form.querySelector('#emailId').value=item.email;
+          form.querySelector('#suspendedId').checked=item.suspended;
+      },
+      getExisting: function() {
+         this.$.getAction.generateRequest();
+      },
+      retrieved: function(request) {
+        item = request.detail.response;
+        this.generateUI(item);
+      }
+    });
+    </script>
+</dom-module>

@@ -37,7 +37,7 @@
            paper-toolbar-text-color="#f2f2f2" paper-toolbar-color="#2a824c" drawer-paper-header-panel-color="#ffffff"
            main-paper-header-panel-color="#ffffff" paper-menu-color="#ffffff" paper-item-color="#ffffff" logout-url="/logoutprovider"
            menu='[
-           {"cardId":"Providers", "formId":"formProviders", "tableId":"tableProviders", "list":true, "menuCard":false,
+           {"cardId":"Providers", "formId":"formProviders", "tableId":"tableProviders", "menuCard":false, "material":true, "alpaca":false,
            "title":"Providers", "icon":"custom:providers", "description":"Manage providers",
            "width":"160", "height":"140",
            "operationId":"operationProvider", "url":"/api/providers/array", "defaultsUrl":"/api/providers/defaults", "addUrl":"/api/providers", "getUrl":"/api/providers/id/",
@@ -46,40 +46,40 @@
            "pages":[
            {"menuName":"Identification","pageId":"page_Identification","schema":"/provider/template/identification_schema","options":"/provider/template/identification_options","buttonId":"create_identificationOwner"}]},
 
-           {"cardId":"ProviderGroups", "formId":"formProviderGroups", "list":false, "menuCard":true, "menuCardUrl":"/owner/providerGroups",
+           {"cardId":"ProviderGroups", "formId":"formProviderGroups", "menuCard":true, "menuCardUrl":"/owner/providerGroups",
            "title":"Provider Groups", "icon":"custom:provider-groups", "description":"Manage provider groups",
            "width":"160", "height":"140"},
 
-           {"cardId":"Billing", "formId":"formBilling", "list":true, "menuCard":false, "tableId":"tableBilling",
+           {"cardId":"Billing", "formId":"formBilling", "menuCard":false, "tableId":"tableBilling",
            "width":"160", "height":"140",
            "operationId":"operationBilling", "title":"Billing", "icon":"custom:credit-card",
            "description":"View System Billings and make changes"},
 
-           {"cardId":"Security", "formId":"formSecurity", "list":true, "menuCard":false, "tableId":"tableSecurity",
+           {"cardId":"Security", "formId":"formSecurity", "menuCard":false, "tableId":"tableSecurity",
            "width":"160", "height":"140",
            "operationId":"operationSecurity", "title":"Security", "icon":"custom:security", "description":"Manage system security settings",
            "columns":[{"name":"Id","key":"Id"}]},
 
-           {"cardId":"Settings", "formId":"formSettings", "list":true, "menuCard":false, "tableId":"tableSettings",
+           {"cardId":"Settings", "formId":"formSettings", "menuCard":false, "tableId":"tableSettings",
            "width":"160", "height":"140",
            "operationId":"operationSettings", "title":"Settings", "icon":"custom:settings", "description":"Manage system settings",
            "columns":[{"name":"Id","key":"Id"}]},
 
-           {"cardId":"Support", "formId":"formSupport", "list":false, "menuCard":true, "menuCardUrl":"/owner/support",
+           {"cardId":"Support", "formId":"formSupport", "menuCard":true, "menuCardUrl":"/owner/support",
            "title":"Support", "icon":"custom:help", "description":"Learn more and get help",
            "width":"160", "height":"140"},
 
-           {"cardId":"Users", "formId":"formUsers", "list":true, "menuCard":false, "tableId":"tableUsers",
+           {"cardId":"Users", "formId":"formUsers", "menuCard":false, "tableId":"tableUsers",
            "width":"160", "height":"140",
            "operationId":"operationUsers", "title":"Users", "icon":"custom:user", "description":"Manage provider users",
            "columns":[{"name":"Id","key":"Id"}]},
 
-           {"cardId":"UsersGroups", "formId":"formUsersGroups", "list":true, "menuCard":false, "menuCard":false,
+           {"cardId":"UsersGroups", "formId":"formUsersGroups", "menuCard":false, "menuCard":false,
            "width":"160", "height":"140",
            "tableId":"tableUsersGroups", "operationId":"operationUsersGroups", "title":"User Groups",
            "icon":"custom:user-groups", "description":"Manage provider user groups", "columns":[{"name":"Id","key":"Id"}]},
 
-           {"cardId":"Reports", "formId":"formReports", "list":true, "menuCard":false, "tableId":"tableReports",
+           {"cardId":"Reports", "formId":"formReports", "menuCard":false, "tableId":"tableReports",
            "width":"160", "height":"140",
            "operationId":"operationReports", "title":"Reports", "icon":"custom:reports",
            "description":"Track usage of services", "columns":[{"name":"Id","key":"Id"}]}

@@ -1,4 +1,5 @@
 <link rel="import" href="/assets/app/elements/custom-template.html">
+<link rel="import" href="/assets/app/elements/custom-dialog-template.html">
 <link rel="import" href="/assets/app/elements/custom-table.html">
 <link rel="import" href="/assets/app/elements/custom-icons.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
@@ -37,17 +38,18 @@
                 on-response="deleted"
                 handle-as="json">
         </iron-ajax>
-        <template is="dom-if" if="{{list}}">
-            <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}" on-vaadin-grid-selected-items-changed="showDeleteButton"></custom-table>
-            <div class="buttons">
-                <template is="dom-if" if="{{deleteButton}}">
-                    <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
-                </template>
-                <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
-            </div>
-        </template>
-        <template is="dom-if" if="{{add}}">
+        <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}" on-vaadin-grid-selected-items-changed="showDeleteButton"></custom-table>
+        <div class="buttons">
+            <template is="dom-if" if="{{deleteButton}}">
+                <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+            </template>
+            <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
+        </div>
+        <template is="dom-if" if="{{alpaca}}">
             <custom-template pages={{pages}}></custom-template>
+        </template>
+        <template is="dom-if" if="{{material}}">
+            <custom-dialog-template></custom-dialog-template>
         </template>
         <template is="dom-if" if="{{menuCard}}">
             <page-redirector url="{{menuCardUrl}}"></page-redirector>
@@ -58,14 +60,6 @@
     Polymer({
       is: 'custom-form',
       properties: {
-        list: {
-          type: Boolean,
-          value: true
-        },
-        add: {
-          type: Boolean,
-          value: false
-        },
         key: {
           type: String,
           value: ''
@@ -91,12 +85,6 @@
         }
       },
 
-      handleTap: function() {
-        this.key = '';
-        this.list = false;
-        this.add = true;
-      },
-
       showDeleteButton: function() {
         var table = this.querySelector('custom-table');
         var grid = table.querySelector('vaadin-grid');
@@ -111,7 +99,13 @@
       },
 
       handleClick: function() {
-        customTemplate = this.querySelector('custom-template');
+        var customTemplate;
+        if(this.material) {
+            customTemplate = this.querySelector('custom-dialog-template');
+        }
+        if(this.alpaca) {
+            customTemplate = this.querySelector('custom-template');
+        }
         customTemplate.addUrl = this.addUrl;
         customTemplate.modifyUrl = this.modifyUrl;
         customTemplate.getUrl = this.getUrl;
@@ -123,18 +117,29 @@
             customTemplate.id = this.key;
             customTemplate.modifyUrl = this.modifyUrl + this.key;
             customTemplate.getUrl = this.getUrl + this.key;
+            if (this.material) {
+                customTemplate.saveLabel='Save'
+            }
             customTemplate.getExisting();
         } else {
             customTemplate.id = '';
-            customTemplate.generateUI(JSON.stringify(this.defaultData));
+            if (this.material) {
+                customTemplate.saveLabel='Create';
+                customTemplate.generateUI(this.defaultData);
+            }
+            if (this.alpaca) {
+                customTemplate.generateUI(JSON.stringify(this.defaultData));
+            }
         }
         var customForm = this;
         var customTable = customForm.querySelector('custom-table');
+        var dialog = customTemplate.querySelector('paper-dialog');
         customTemplate.querySelector('#close').addEventListener('tap', function() {
-            customForm.list = true;
-            customForm.add = false;
             customTable.querySelector('iron-ajax').generateRequest();
+            dialog.close();
         });
+        dialog.open();
+        this.key='';
       },
 
       handleDelete: function() {
@@ -170,9 +175,6 @@
         //on click event is not recognized in Android, so we use jQuerry support for onClick, which is touchend
         var customForm = this;
         var addButton = $('#' + this.tableId + 'add');
-        addButton.on("tap touchstart", function() {
-            customForm.handleTap();
-        });
         addButton.on("click touchend", function() {
             customForm.handleClick();
         });
@@ -181,10 +183,6 @@
         var listBox = table.querySelector('#' + this.operationId).querySelector('paper-listbox');
 
         var paperItem0 = listBox.querySelector("#id0" + this.operationId);
-
-        $('#id0' + this.operationId).on("tap touchstart", function() {
-            customForm.handleTap();
-        });
 
         $('#id0' + this.operationId).on("click touchend", function() {
             customTemplate = customForm.querySelector('custom-template');

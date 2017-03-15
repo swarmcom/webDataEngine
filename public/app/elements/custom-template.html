@@ -10,6 +10,8 @@
 <link rel="import" href="/assets/components/iron-pages/iron-pages.html">
 <link rel="import" href="/assets/components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/app-layout/app-layout.html">
+<link rel="import" href="/assets/components/app-layout/app-grid/app-grid-style.html">
 
 <dom-module id="custom-template">
     <style>
@@ -40,6 +42,16 @@
         margin-top:2px;
         margin-right:2px;
         }
+
+        paper-dialog {
+          position: fixed;
+          top: 15px;
+          left: 20px;
+          right: 20px;
+          bottom: 15px;
+          padding: 20px;
+          margin: 20px;
+        }
     </style>
     <template>
         <iron-ajax
@@ -65,7 +77,8 @@
                 on-response="retrieved"
                 handle-as="json">
         </iron-ajax>
-        <paper-drawer-panel>
+        <paper-dialog id="animated" with-backdrop>
+          <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-menu selected="{{selected}}" class="menu">
                     <template is="dom-repeat" items="{{pages}}">
@@ -92,7 +105,8 @@
                         </div>
                     </paper-card>
             </paper-header-panel>
-        </paper-drawer-panel>
+          </paper-drawer-panel>
+        </paper-dialog>
     </template>
 
     <script>

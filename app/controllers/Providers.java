@@ -76,7 +76,7 @@ public class Providers extends SimpleEntityController {
 
     @Override
     protected String getDefaultsJSON() {
-        return getTemplateJSON("settings_defaults", "/public/app/templates/account-template.json");
+        return getTemplateJSON("settings_defaults", "/public/app/templates/provider-template.json");
     }
 
     @Override
