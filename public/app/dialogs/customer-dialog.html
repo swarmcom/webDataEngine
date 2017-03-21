@@ -1,0 +1,97 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/assets/components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/assets/components/iron-label/iron-label.html">
+
+<dom-module id="customer-dialog">
+    <template>
+        <style include="app-grid-style">
+            :host {
+            --app-grid-columns: 3;
+            }
+
+            ul {
+            padding: 0;
+            list-style: none;
+            }
+
+            .item {
+            padding:10px;
+            background-color: white;
+            }
+
+            paper-dialog {
+            position: center;
+            }
+        </style>
+        <paper-dialog id="animated" with-backdrop>
+            <div class="card-content">
+                <ul class="app-grid">
+                    <li class="item"><h2>Add Customer</h2></li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                        <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                    </li>
+                    <li class="item">
+                        <paper-input id="accountNameId" name="accountName" label="Account Name" required></paper-input>
+                        <paper-input id="companyNameId" name="companyName" label="Company Name" required></paper-input>
+                        <paper-input id="superadminUserNameId" name="superadminUserName" label="Superadmin User Name" required></paper-input>
+                        <paper-input id="superadminPasswordId" name="superadminInitialPassword" label="Superadmin Initial Password" type="password" required auto-validate></paper-input>
+                        <paper-input id="descriptionId" name="description" label="Description"></paper-input>
+                    </li>
+                    <li class="item">
+                        <gold-email-input id="emailId" name="email" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
+                        <paper-input id="dbUriId" name="dbUri" label="DB URI"></paper-input>
+                        <paper-input id="dbNameId" name="dbName" label="DB Name"></paper-input>
+
+                        <iron-label>Db Type<br/>
+                            <paper-radio-group id="dbTypeId" name="dbType" selected="mongo">
+                                <paper-radio-button name="mongo">mongo</paper-radio-button>
+                                <paper-radio-button name="couchDB">couchDB</paper-radio-button>
+                            </paper-radio-group>
+                        </iron-label>
+                        <br><br>
+                        <paper-checkbox id="suspendedId" value="true" name="suspended" checked=false>Suspended</paper-checkbox>
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                        <div class="buttons">
+                            <paper-button id="resetButton">Cancel</paper-button>
+                            <paper-button id="saveButton">{{saveLabel}}</paper-button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+    Polymer({
+      is: 'customer-dialog',
+
+      generateUI: function(item, form) {
+          form.querySelector('#dbTypeId').value=item.dbType;
+          form.querySelector('#dbUriId').value=item.dbUri;
+          form.querySelector('#accountNameId').value=item.accountName;
+          form.querySelector('#companyNameId').value=item.companyName;
+          form.querySelector('#superadminUserNameId').value=item.superadminUserName;
+          form.querySelector('#superadminPasswordId').value=item.superadminInitialPassword;
+          form.querySelector('#descriptionId').value=item.description;
+          form.querySelector('#emailId').value=item.email;
+          form.querySelector('#suspendedId').checked=item.suspended;
+          form.querySelector('#dbTypeId').value=item.dbType;
+          form.querySelector('#dbUriId').value=item.dbUri;
+          form.querySelector('#dbNameId').value=item.dbName;
+      }
+    });
+  </script>
+</dom-module>

@@ -1,14 +1,11 @@
-<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
-<link rel="import" href="/assets/components/paper-button/paper-button.html">
-<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
 <link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="/assets/components/iron-form/iron-form.html">
 <link rel="import" href="/assets/components/app-layout/app-layout.html">
 <link rel="import" href="/assets/components/app-layout/app-grid/app-grid-style.html">
 <link rel="import" href="/assets/components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="/assets/app/dialogs/provider-dialog.html">
+<link rel="import" href="/assets/app/dialogs/customer-dialog.html">
 
 <dom-module id="custom-material-template">
     <template>
@@ -22,6 +19,9 @@
         <form is="iron-form" method="POST" content-type="application/json" id="submitOptions" on-iron-form-presubmit="presubmit" on-iron-form-response="aftersubmit">
             <template is="dom-if" if="{{isOwner(menuType)}}">
                 <provider-dialog id="displayedDialog" save-label="{{saveLabel}}"></provider-dialog>
+            </template>
+            <template is="dom-if" if="{{isProvider(menuType)}}">
+                <customer-dialog id="displayedDialog" save-label="{{saveLabel}}"></customer-dialog>
             </template>
         </form>
     </template>
@@ -100,6 +100,9 @@
       },
       isOwner: function(type) {
         return type === 'owner';
+      },
+      isProvider: function(type) {
+        return type === 'provider';
       }
     });
 
