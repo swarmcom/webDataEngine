@@ -1,5 +1,5 @@
-<link rel="import" href="/assets/app/elements/custom-template.html">
-<link rel="import" href="/assets/app/elements/custom-dialog-template.html">
+<link rel="import" href="/assets/app/elements/custom-alpaca-template.html">
+<link rel="import" href="/assets/app/elements/custom-material-template.html">
 <link rel="import" href="/assets/app/elements/custom-table.html">
 <link rel="import" href="/assets/app/elements/custom-icons.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
@@ -46,10 +46,10 @@
             <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
         </div>
         <template is="dom-if" if="{{alpaca}}">
-            <custom-template pages={{pages}}></custom-template>
+            <custom-alpaca-template pages={{pages}}></custom-alpaca-template>
         </template>
         <template is="dom-if" if="{{material}}">
-            <custom-dialog-template></custom-dialog-template>
+            <custom-material-template menu-type="{{menuType}}"></custom-material-template>
         </template>
         <template is="dom-if" if="{{menuCard}}">
             <page-redirector url="{{menuCardUrl}}"></page-redirector>
@@ -101,10 +101,10 @@
       handleClick: function() {
         var customTemplate;
         if(this.material) {
-            customTemplate = this.querySelector('custom-dialog-template');
+            customTemplate = this.querySelector('custom-material-template');
         }
         if(this.alpaca) {
-            customTemplate = this.querySelector('custom-template');
+            customTemplate = this.querySelector('custom-alpaca-template');
         }
         customTemplate.addUrl = this.addUrl;
         customTemplate.modifyUrl = this.modifyUrl;
@@ -134,6 +134,7 @@
         var customForm = this;
         var customTable = customForm.querySelector('custom-table');
         var dialog = customTemplate.querySelector('paper-dialog');
+
         customTemplate.querySelector('#close').addEventListener('tap', function() {
             customTable.querySelector('iron-ajax').generateRequest();
             dialog.close();
@@ -185,7 +186,7 @@
         var paperItem0 = listBox.querySelector("#id0" + this.operationId);
 
         $('#id0' + this.operationId).on("click touchend", function() {
-            customTemplate = customForm.querySelector('custom-template');
+            customTemplate = customForm.querySelector('custom-alpaca-template');
             customForm.key = paperItem0.getAttribute("key");
             customForm.handleClick();
         });

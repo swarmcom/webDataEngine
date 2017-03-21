@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Created by mirceac on 12/31/16.
  */
 public class AddUserPage extends LogoutFunction {
-    public static final String CUSTOM_TEMPLATE_TAG = "custom-template";
+    public static final String CUSTOM_TEMPLATE_TAG = "custom-alpaca-template";
     public static final String PAPER_CARD_TAG = "paper-card";
     public static final String IRON_PAGES_TAG = "iron-pages";
     public static final String IDENTIFICATION_PAGE = "page_Identification";

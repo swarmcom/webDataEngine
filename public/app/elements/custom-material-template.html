@@ -1,0 +1,116 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/iron-form/iron-form.html">
+<link rel="import" href="/assets/components/app-layout/app-layout.html">
+<link rel="import" href="/assets/components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="/assets/components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="/assets/app/dialogs/provider-dialog.html">
+
+<dom-module id="custom-material-template">
+    <template>
+        <iron-ajax
+                id="getAction"
+                url="{{getUrl}}"
+                method="GET"
+                on-response="retrieved"
+                handle-as="json">
+        </iron-ajax>
+        <form is="iron-form" method="POST" content-type="application/json" id="submitOptions" on-iron-form-presubmit="presubmit" on-iron-form-response="aftersubmit">
+            <template is="dom-if" if="{{isOwner(menuType)}}">
+                <provider-dialog id="displayedDialog" save-label="{{saveLabel}}"></provider-dialog>
+            </template>
+        </form>
+    </template>
+    <script>
+    Polymer({
+      is: 'custom-material-template',
+      properties: {
+          id: {
+              type: String,
+              value: ''
+          },
+          addUrl: {
+              type: String,
+              value: ''
+          },
+          modifyUrl: {
+              type: String
+          },
+          getUrl: {
+              type: String
+          },
+          saveLabel: {
+              type: String,
+              value: 'Create'
+          }
+      },
+
+      presubmit: function(event) {
+          var form = this.querySelector('form');
+          if (this.id) {
+              form.request.method='put';
+          } else {
+              form.request.method='post';
+          }
+      },
+      submit: function(event) {
+          var form = this.querySelector('form');
+          if (this.id) {
+              form.action=this.modifyUrl;
+              form.submit();
+          } else {
+              form.action = this.addUrl;
+              form.submit();
+          }
+      },
+      aftersubmit: function(event) {
+          var form = this.querySelector('form');
+          if (form.request.method === 'put') {
+              alert('item modified')
+          } else {
+              alert('item created');
+              //switch to modify mode
+              form.request.method = 'put';
+              this.id = event.detail.response.id;
+              this.modifyUrl = this.modifyUrl + this.id;
+              this.saveLabel = 'Save';
+          }
+      },
+      reset: function(event) {
+          var form = this.querySelector('form');
+          if (!this.id) {
+              form.reset();
+          }
+      },
+      generateUI: function(item) {
+          var form = this.querySelector('form');
+          this.querySelector('#displayedDialog').generateUI(item, form);
+      },
+
+      getExisting: function() {
+         this.$.getAction.generateRequest();
+      },
+      retrieved: function(request) {
+        item = request.detail.response;
+        this.generateUI(item);
+      },
+      isOwner: function(type) {
+        return type === 'owner';
+      }
+    });
+
+    document.addEventListener('WebComponentsReady', function() {
+         var template = document.querySelector('custom-material-template');
+         template.querySelector('#displayedDialog').querySelector('#saveButton').addEventListener('click', function(event) {
+             template.submit(event);
+         });
+         template.querySelector('#displayedDialog').querySelector('#resetButton').addEventListener('click', function(event) {
+             template.reset(event);
+         });
+    })
+    </script>
+</dom-module>
