@@ -4,11 +4,20 @@
 <link rel="import" href="/assets/components/app-layout/app-grid/app-grid-style.html">
 <link rel="import" href="/assets/components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
-<link rel="import" href="/assets/app/dialogs/provider-dialog.html">
-<link rel="import" href="/assets/app/dialogs/customer-dialog.html">
+<link rel="import" href="/assets/app/dialogs/provider-panel.html">
+<link rel="import" href="/assets/app/dialogs/customer-panel.html">
 
 <dom-module id="custom-material-template">
     <template>
+        <style>
+            paper-dialog {
+              position: center;
+            }
+            iron-overlay-backdrop {
+              --iron-overlay-backdrop-opacity: 1;
+              --iron-overlay-backdrop-background-color: green;
+            }
+        </style>
         <iron-ajax
                 id="getAction"
                 url="{{getUrl}}"
@@ -17,12 +26,14 @@
                 handle-as="json">
         </iron-ajax>
         <form is="iron-form" method="POST" content-type="application/json" id="submitOptions" on-iron-form-presubmit="presubmit" on-iron-form-response="aftersubmit">
-            <template is="dom-if" if="{{isOwner(menuType)}}">
-                <provider-dialog id="displayedDialog" save-label="{{saveLabel}}"></provider-dialog>
-            </template>
-            <template is="dom-if" if="{{isProvider(menuType)}}">
-                <customer-dialog id="displayedDialog" save-label="{{saveLabel}}"></customer-dialog>
-            </template>
+           <paper-dialog id="animated" modal with-backdrop>
+              <template is="dom-if" if="{{isOwner(menuType)}}">
+                <provider-panel id="displayedDialog" save-label="{{saveLabel}}"></provider-panel>
+              </template>
+              <template is="dom-if" if="{{isProvider(menuType)}}">
+                <customer-panel id="displayedDialog" save-label="{{saveLabel}}"></customer-panel>
+              </template>
+           </paper-dialog>
         </form>
     </template>
     <script>

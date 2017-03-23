@@ -1,0 +1,104 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/assets/components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/assets/components/iron-label/iron-label.html">
+
+<dom-module id="customer-panel2">
+    <template>
+        <style include="app-grid-style">
+            :host {
+              --app-grid-columns: 3;
+            }
+
+            ul {
+              padding: 0;
+              list-style: none;
+            }
+
+            .item {
+              padding:10px;
+              background-color: white;
+            }
+
+            paper-card {
+              width:100%;
+            }
+
+            .container {
+              margin-top:40px;
+              position: center;
+
+              @apply(--layout-horizontal);
+              @apply(--layout-center);
+              @apply(--layout-wrap);
+            }
+        </style>
+        <div class="container">
+        <paper-card elevation="3">
+        <div class="card-content">
+            <ul class="app-grid">
+                <li class="item"></li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                </li>
+                <li class="item">
+                    <paper-input id="accountNameId" name="accountName" label="Account Name" readonly></paper-input>
+                    <paper-input id="companyNameId" name="companyName" label="Company Name" readonly></paper-input>
+                    <paper-input id="superadminUserNameId" name="superadminUserName" label="Superadmin User Name" readonly></paper-input>
+                    <paper-input id="superadminPasswordId" name="superadminInitialPassword" label="Superadmin Initial Password" type="password" readonly auto-validate></paper-input>
+                    <paper-input id="descriptionId" name="description" label="Description" readonly></paper-input>
+                </li>
+                <li class="item">
+                    <gold-email-input id="emailId" name="email" required auto-validate error-message="Please enter a valid email" label="Email" readonly></gold-email-input>
+                    <paper-input id="dbUriId" name="dbUri" label="DB URI" readonly></paper-input>
+                    <paper-input id="dbNameId" name="dbName" label="DB Name" readonly></paper-input>
+
+                    <iron-label>Db Type<br/>
+                        <paper-radio-group id="dbTypeId" name="dbType" selected="mongo">
+                            <paper-radio-button name="mongo" disabled>mongo</paper-radio-button>
+                            <paper-radio-button name="couchDB" disabled>couchDB</paper-radio-button>
+                        </paper-radio-group>
+                    </iron-label>
+                    <br><br>
+                    <paper-checkbox id="suspendedId" value="true" name="suspended" checked=false disabled>Suspended</paper-checkbox>
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+            </ul>
+        </div>
+        </paper-card>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'customer-panel2',
+
+      generateUI: function(item) {
+          this.querySelector('#dbTypeId').value=item.dbType;
+          this.querySelector('#dbUriId').value=item.dbUri;
+          this.querySelector('#accountNameId').value=item.accountName;
+          this.querySelector('#companyNameId').value=item.companyName;
+          this.querySelector('#superadminUserNameId').value=item.superadminUserName;
+          this.querySelector('#superadminPasswordId').value=item.superadminInitialPassword;
+          this.querySelector('#descriptionId').value=item.description;
+          this.querySelector('#emailId').value=item.email;
+          this.querySelector('#suspendedId').checked=item.suspended;
+          this.querySelector('#dbTypeId').value=item.dbType;
+          this.querySelector('#dbUriId').value=item.dbUri;
+          this.querySelector('#dbNameId').value=item.dbName;
+      }
+    });
+  </script>
+</dom-module>

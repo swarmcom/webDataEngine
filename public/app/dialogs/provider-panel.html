@@ -1,0 +1,74 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+
+<dom-module id="provider-panel">
+    <template>
+        <style include="app-grid-style">
+            :host {
+            --app-grid-columns: 3;
+            }
+
+            ul {
+            padding: 0;
+            list-style: none;
+            }
+
+            .item {
+            padding:10px;
+            background-color: white;
+            }
+        </style>
+        <div class="card-content">
+                <ul class="app-grid">
+                    <li class="item"><h2>Add Provider</h2></li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                        <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                    </li>
+                    <li class="item">
+                        <paper-input id="providerNameId" name="providerName" label="Provider Name" required></paper-input>
+                        <paper-input id="superadminUserNameId" name="superadminUserName" label="User Name" required></paper-input>
+                        <paper-input id="superadminPasswordId" name="superadminPassword" label="Password" type="password" required auto-validate></paper-input>
+                        <paper-checkbox id="digestEncodedId" value="true" name="digestEncoded" checked=true>Digest encoded</paper-checkbox>
+                    </li>
+                    <li class="item">
+                        <paper-input id="descriptionId" name="description" label="Description"></paper-input>
+                        <gold-email-input id="emailId" name="email" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
+                        <br>
+                        <paper-checkbox id="suspendedId" value="true" name="suspended" checked=false>Suspended</paper-checkbox>
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                    </li>
+                    <li class="item">
+                        <div class="buttons">
+                            <paper-button id="resetButton">Cancel</paper-button>
+                            <paper-button id="saveButton">{{saveLabel}}</paper-button>
+                        </div>
+                    </li>
+                </ul>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'provider-panel',
+
+      generateUI: function(item, form) {
+          form.querySelector('#providerNameId').value=item.providerName;
+          form.querySelector('#superadminUserNameId').value=item.superadminUserName;
+          form.querySelector('#superadminPasswordId').value=item.superadminPassword;
+          form.querySelector('#digestEncodedId').checked=item.digestEncoded;
+          form.querySelector('#descriptionId').value=item.description;
+          form.querySelector('#emailId').value=item.email;
+          form.querySelector('#suspendedId').checked=item.suspended;
+      }
+    });
+  </script>
+</dom-module>

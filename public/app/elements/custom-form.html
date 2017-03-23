@@ -1,5 +1,6 @@
 <link rel="import" href="/assets/app/elements/custom-alpaca-template.html">
 <link rel="import" href="/assets/app/elements/custom-material-template.html">
+<link rel="import" href="/assets/app/elements/custom-material-template2.html">
 <link rel="import" href="/assets/app/elements/custom-table.html">
 <link rel="import" href="/assets/app/elements/custom-icons.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
@@ -38,22 +39,25 @@
                 on-response="deleted"
                 handle-as="json">
         </iron-ajax>
-        <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}" on-vaadin-grid-selected-items-changed="showDeleteButton"></custom-table>
-        <div class="buttons">
-            <template is="dom-if" if="{{deleteButton}}">
-                <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+        <template is="dom-if" if="{{showTableMode}}">
+            <custom-table id="{{tableId}}" table-id="{{tableId}}" operation-id="{{operationId}}" url="{{url}}" columns="{{columns}}" on-vaadin-grid-selected-items-changed="showDeleteButton"></custom-table>
+            <div class="buttons">
+                <template is="dom-if" if="{{deleteButton}}">
+                    <paper-fab id="{{tableId}}delete" icon="delete" on-tap="handleDelete" class="delete"></paper-fab>
+                </template>
+                <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
+            </div>
+            <template is="dom-if" if="{{alpaca}}">
+                <custom-alpaca-template pages={{pages}}></custom-alpaca-template>
             </template>
-            <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
-        </div>
-        <template is="dom-if" if="{{alpaca}}">
-            <custom-alpaca-template pages={{pages}}></custom-alpaca-template>
+            <template is="dom-if" if="{{material}}">
+                <custom-material-template menu-type="{{menuType}}"></custom-material-template>
+            </template>
+            <template is="dom-if" if="{{menuCard}}">
+                <page-redirector url="{{menuCardUrl}}"></page-redirector>
+            </template>
         </template>
-        <template is="dom-if" if="{{material}}">
-            <custom-material-template menu-type="{{menuType}}"></custom-material-template>
-        </template>
-        <template is="dom-if" if="{{menuCard}}">
-            <page-redirector url="{{menuCardUrl}}"></page-redirector>
-        </template>
+        <custom-material-template2 hidden="{{showTableMode}}" menu-type="{{menuType}}"></custom-material-template2>
     </template>
 </dom-module>
 <script>
@@ -82,6 +86,10 @@
         deleteButton: {
           type: Boolean,
           value: false
+        },
+        showTableMode: {
+          type: Boolean,
+          value: true
         }
       },
 
@@ -179,8 +187,18 @@
         addButton.on("click touchend", function() {
             customForm.handleClick();
         });
+
         var table = document.getElementById(this.tableId);
         table.configure();
+        var grid = table.querySelector('vaadin-grid');
+        grid.rowClassGenerator = function(row) {
+            var rowIndex = row.index;
+            row.element.onclick = function() {
+                customForm.rowClick(grid.items[rowIndex]);
+            };
+            return "";
+        };
+
         var listBox = table.querySelector('#' + this.operationId).querySelector('paper-listbox');
 
         var paperItem0 = listBox.querySelector("#id0" + this.operationId);
@@ -195,6 +213,21 @@
         paperItem1.addEventListener('tap', function() {
             customForm.handleDeleteOne(paperItem1.getAttribute("key"));
         });
+      },
+
+      rowClick: function(row) {
+          this.showTableMode=false;
+          var customTable = this.querySelector('custom-table');
+          var customForm = this;
+          customTemplate = this.querySelector('custom-material-template2');
+          customTemplate.querySelector('#close').addEventListener('tap', function() {
+              customTable.querySelector('iron-ajax').generateRequest();
+              customForm.showTableMode=true;
+          });
+          customTemplate.id = row[0];
+          customTemplate.modifyUrl = this.modifyUrl + customTemplate.id;
+          customTemplate.getUrl = this.getUrl + customTemplate.id;
+          customTemplate.getExisting();
       }
     });
 </script>
