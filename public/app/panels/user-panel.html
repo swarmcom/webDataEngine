@@ -1,0 +1,95 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="/assets/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/assets/components/paper-item/paper-item.html">
+<link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
+<link rel="import" href="/assets/components/iron-input/iron-input.html">
+<link rel="import" href="/assets/components/iron-selector/iron-selector.html">
+
+<dom-module id="user-panel">
+    <template>
+        <style include="app-grid-style">
+            :host {
+            --app-grid-columns: 3;
+            }
+
+            ul {
+            padding: 0;
+            list-style: none;
+            }
+
+            .item {
+            padding:10px;
+            background-color: white;
+            }
+        </style>
+        <div class="card-content">
+            <ul class="app-grid">
+                <li class="item"><h2>Add Provider</h2></li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                </li>
+                <li class="item">
+                    <paper-input id="userNameId" name="userName" label="User Name" required></paper-input>
+                    <paper-input id="passwordId" name="password" label="Password" type="password" required auto-validate></paper-input>
+                    <br>
+                    <paper-checkbox id="digestEncodedId" value=true name="digestEncoded" checked=true>Digest encoded</paper-checkbox>
+                    <vaadin-date-picker id="birthDateId" name="birthDate" label="Birth date"></vaadin-date-picker>
+                </li>
+                <li class="item">
+                    <paper-dropdown-menu  label="Roles">
+                        <paper-listbox id="rolesId" name="roles" multi class="dropdown-content" attr-for-selected="value">
+                            <paper-item value="ROLE_ADMIN">ROLE_ADMIN</paper-item>
+                            <paper-item value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</paper-item>
+                            <paper-item value="ROLE_USER">ROLE_USER</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <gold-email-input id="primaryEmailId" name="primaryEmail" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
+                    <br>
+                    <paper-checkbox id="suspendedId" value=true name="suspended" checked=false>Suspended</paper-checkbox>
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <div class="buttons">
+                        <paper-button id="resetButton">Cancel</paper-button>
+                        <paper-button id="saveButton">{{saveLabel}}</paper-button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'user-panel',
+      properties: {
+      },
+
+      generateUI: function(item, form) {
+          form.querySelector('#userNameId').value=item.userName;
+          form.querySelector('#passwordId').value=item.password;
+          form.querySelector('#digestEncodedId').checked=item.digestEncoded;
+          form.querySelector('#birthDateId').value=item.birthDate;
+          form.querySelector('#primaryEmailId').value=item.primaryEmail;
+          form.querySelector('#suspendedId').checked=item.suspended;
+          form.querySelector('#rolesId').selectedValues = item.roles;
+      },
+
+      presubmit: function(event, form) {
+          var rolesHTML = form.querySelector('#rolesId');
+          var roles = rolesHTML.selectedValues;
+          form.request.body.roles = roles;
+      }
+    });
+  </script>
+</dom-module>

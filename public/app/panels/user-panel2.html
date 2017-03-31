@@ -1,0 +1,103 @@
+<link rel="import" href="/assets/components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/components/paper-input/paper-input.html">
+<link rel="import" href="/assets/components/gold-email-input/gold-email-input.html">
+<link rel="import" href="/assets/components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/assets/components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="/assets/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/assets/components/paper-item/paper-item.html">
+<link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
+<link rel="import" href="/assets/components/iron-input/iron-input.html">
+<link rel="import" href="/assets/components/iron-selector/iron-selector.html">
+
+<dom-module id="user-panel2">
+    <template>
+        <style include="app-grid-style">
+            :host {
+            --app-grid-columns: 3;
+            }
+
+            ul {
+            padding: 0;
+            list-style: none;
+            width:100%;
+            }
+
+            .item {
+            padding:10px;
+            background-color: white;
+            }
+
+            paper-card {
+            width:100%;
+            }
+
+            .container {
+            margin-top:40px;
+            position: center;
+
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            @apply(--layout-wrap);
+            }
+        </style>
+        <div class="container">
+        <paper-card elevation="3">
+        <div class="card-content">
+            <ul class="app-grid">
+                <li class="item"><h2>User</h2></li>
+                <li class="item">
+                </li>
+                <li class="item">
+                    <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                </li>
+                <li class="item">
+                    <paper-input id="userNameId" name="userName" label="User Name" required readonly></paper-input>
+                    <paper-input id="passwordId" name="password" label="Password" type="password" required auto-validate readonly></paper-input>
+                    <br>
+                    <paper-checkbox id="digestEncodedId" value=true name="digestEncoded" checked=true readonly>Digest encoded</paper-checkbox>
+                    <vaadin-date-picker id="birthDateId" name="birthDate" label="Birth date" readonly></vaadin-date-picker>
+                </li>
+                <li class="item">
+                    <paper-dropdown-menu  label="Roles">
+                        <paper-listbox id="rolesId" name="roles" multi class="dropdown-content" attr-for-selected="value" disabled>
+                            <paper-item value="ROLE_ADMIN">ROLE_ADMIN</paper-item>
+                            <paper-item value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</paper-item>
+                            <paper-item value="ROLE_USER">ROLE_USER</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                    <gold-email-input id="primaryEmailId" name="primaryEmail" required auto-validate error-message="Please enter a valid email" label="Email" readonly></gold-email-input>
+                    <br>
+                    <paper-checkbox id="suspendedId" value=true name="suspended" checked=false readonly>Suspended</paper-checkbox>
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+                <li class="item">
+                </li>
+            </ul>
+        </div>
+        </paper-card>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'user-panel2',
+      properties: {
+      },
+
+      generateUI: function(item) {
+          this.querySelector('#userNameId').value=item.userName;
+          this.querySelector('#passwordId').value=item.password;
+          this.querySelector('#digestEncodedId').checked=item.digestEncoded;
+          this.querySelector('#birthDateId').value=item.birthDate;
+          this.querySelector('#primaryEmailId').value=item.primaryEmail;
+          this.querySelector('#suspendedId').checked=item.suspended;
+          this.querySelector('#rolesId').selectedValues = item.roles;
+      }
+    });
+  </script>
+</dom-module>
