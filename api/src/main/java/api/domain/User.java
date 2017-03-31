@@ -25,6 +25,8 @@ public class User extends BeanDomain<User>{
 
     protected Date birthDate;
 
+    protected String primaryEmail;
+
     protected Date created;
 
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
@@ -133,6 +135,14 @@ public class User extends BeanDomain<User>{
         this.settings = settings;
     }
 
+    public String getPrimaryEmail() {
+        return primaryEmail;
+    }
+
+    public void setPrimaryEmail(String primaryEmail) {
+        this.primaryEmail = primaryEmail;
+    }
+
     @Override
     public void merge(User user) {
         String accountId = user.getAccountId();
@@ -141,10 +151,15 @@ public class User extends BeanDomain<User>{
         Boolean digestEncoded = user.isDigestEncoded();
         Date birthDate = user.getBirthDate();
         Date created = user.getCreated();
+        String primaryEmail = user.getPrimaryEmail();
         Boolean suspended = user.isSuspended();
 
         if (accountId != null) {
             setAccountId(accountId);
+        }
+
+        if (primaryEmail != null) {
+            setPrimaryEmail(primaryEmail);
         }
 
         if (userName != null) {

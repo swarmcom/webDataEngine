@@ -6,6 +6,7 @@
 <link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="/assets/app/panels/provider-panel2.html">
 <link rel="import" href="/assets/app/panels/customer-panel2.html">
+<link rel="import" href="/assets/app/panels/user-panel2.html">
 
 <dom-module id="custom-material-template2">
     <template>
@@ -24,6 +25,9 @@
         </template>
         <template is="dom-if" if="{{isProvider(menuType)}}">
             <customer-panel2 id="displayedDialog" save-label="{{saveLabel}}"></customer-panel2>
+        </template>
+        <template is="dom-if" if="{{isAccount(menuType)}}">
+              <user-panel2 id="displayedDialog" save-label="{{saveLabel}}"></user-panel2>
         </template>
     </template>
     <script>
@@ -58,11 +62,10 @@
       },
       isProvider: function(type) {
         return type === 'provider';
+      },
+      isAccount: function(type) {
+        return type === 'account';
       }
     });
-
-    document.addEventListener('WebComponentsReady', function() {
-
-    })
     </script>
 </dom-module>

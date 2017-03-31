@@ -26,7 +26,10 @@ import java.util.Map;
 public abstract class EntityController extends Controller {
 
     protected static final String DATE_FORMAT_1 = "MM/dd/yyyy";
+
     protected static final String DATE_FORMAT_2 = "yyyy-MM-dd HH:mm:ss";
+
+    protected static final String DATE_FORMAT_3 = "yyyy-MM-dd";
 
     protected abstract BeanDomain getByNameAbstract(String name) throws Exception;
 
@@ -110,7 +113,7 @@ public abstract class EntityController extends Controller {
 
     protected Result convert(Object obj) {
         if (obj != null) {
-            Json.mapper().setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
+            Json.mapper().setDateFormat(new SimpleDateFormat(DATE_FORMAT_3));
             JsonNode node = Json.toJson(obj);
             return ok(node.toString());
         } else {
@@ -120,7 +123,7 @@ public abstract class EntityController extends Controller {
 
     protected BeanDomain merge(BeanDomain existingBean) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_1));
+        objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_3));
         BeanDomain bean = objectMapper.readValue(getDataToUpdateJSON(), existingBean.getClass());
         existingBean.merge(bean);
         return bean;

@@ -220,14 +220,16 @@
           var customTable = this.querySelector('custom-table');
           var customForm = this;
           customTemplate = this.querySelector('custom-material-template2');
-          customTemplate.querySelector('#close').addEventListener('tap', function() {
+          if (customTemplate) {
+            customTemplate.querySelector('#close').addEventListener('tap', function() {
               customTable.querySelector('iron-ajax').generateRequest();
               customForm.showTableMode=true;
-          });
-          customTemplate.id = row[0];
-          customTemplate.modifyUrl = this.modifyUrl + customTemplate.id;
-          customTemplate.getUrl = this.getUrl + customTemplate.id;
-          customTemplate.getExisting();
+            });
+            customTemplate.id = row[0];
+            customTemplate.modifyUrl = this.modifyUrl + customTemplate.id;
+            customTemplate.getUrl = this.getUrl + customTemplate.id;
+            customTemplate.getExisting();
+          }
       }
     });
 </script>

@@ -6,6 +6,7 @@
 <link rel="import" href="/assets/components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="/assets/app/panels/provider-panel.html">
 <link rel="import" href="/assets/app/panels/customer-panel.html">
+<link rel="import" href="/assets/app/panels/user-panel.html">
 
 <dom-module id="custom-material-template">
     <template>
@@ -32,6 +33,9 @@
               </template>
               <template is="dom-if" if="{{isProvider(menuType)}}">
                 <customer-panel id="displayedDialog" save-label="{{saveLabel}}"></customer-panel>
+              </template>
+              <template is="dom-if" if="{{isAccount(menuType)}}">
+                <user-panel id="displayedDialog" save-label="{{saveLabel}}"></user-panel>
               </template>
            </paper-dialog>
         </form>
@@ -66,6 +70,10 @@
               form.request.method='put';
           } else {
               form.request.method='post';
+          }
+          var dialog = this.querySelector('#displayedDialog');
+          if (dialog.presubmit) {
+              dialog.presubmit(event, form);
           }
       },
       submit: function(event) {
@@ -114,17 +122,22 @@
       },
       isProvider: function(type) {
         return type === 'provider';
+      },
+      isAccount: function(type) {
+        return type === 'account';
       }
     });
 
     document.addEventListener('WebComponentsReady', function() {
          var template = document.querySelector('custom-material-template');
-         template.querySelector('#displayedDialog').querySelector('#saveButton').addEventListener('click', function(event) {
+         if (template) {
+           template.querySelector('#displayedDialog').querySelector('#saveButton').addEventListener('click', function(event) {
              template.submit(event);
-         });
-         template.querySelector('#displayedDialog').querySelector('#resetButton').addEventListener('click', function(event) {
+           });
+           template.querySelector('#displayedDialog').querySelector('#resetButton').addEventListener('click', function(event) {
              template.reset(event);
-         });
+           });
+         }
     })
     </script>
 </dom-module>

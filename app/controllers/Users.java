@@ -123,8 +123,7 @@ public class Users extends SimpleEntityController {
             itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
             Date birthDate = user.getBirthDate();
             itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
-            Map contactInf = user.getSettings().get("contactInf");
-            itemNode.add(contactInf != null ? (String)contactInf.get("emailAddr") : "");
+            itemNode.add(user.getPrimaryEmail());
             Date created = user.getCreated();
             itemNode.add(created != null ? DateFormatUtils.format(created, DATE_FORMAT_2) : "");
             itemNode.add(user.isSuspended());
