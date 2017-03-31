@@ -11,3 +11,16 @@ project/project
 /.project
 /.settings
 /RUNNING_PID
+conf/production.conf
+public/components/iron-a11y-announcer/.github/
+public/components/iron-a11y-keys-behavior/.github/
+public/components/iron-dropdown/.github/
+public/components/iron-dropdown/.travis.yml
+public/components/iron-dropdown/CONTRIBUTING.md
+public/components/iron-form-element-behavior/.travis.yml
+public/components/iron-form-element-behavior/CONTRIBUTING.md
+public/components/iron-input/.github/
+public/components/iron-overlay-behavior/.github/
+public/components/neon-animation/.github/
+public/components/neon-animation/.travis.yml
+public/components/paper-input/.github/

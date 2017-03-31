@@ -42,7 +42,7 @@
 
         <vaadin-grid items = "{{data}}" selection-mode="multi" class="content">
         </vaadin-grid>
-        <div id="{{operationId}}">
+        <div id="{{operationId}}" style="display: none;">
           <paper-card animated elevation="3" fit layout vertical>
               <paper-listbox id$="paperListbox{{operationId}}" selected={{operation}}>
                 <paper-item id$="id0{{operationId}}" value="0" key="">Modify</paper-item>
@@ -214,7 +214,6 @@
          },
          configure: function() {
              var paperListbox = this.querySelector('paper-listbox');
-             $("#" + this.operationId).hide();
              columns = this.columns;
              var grid = grid || this.querySelector('vaadin-grid');
              var i;

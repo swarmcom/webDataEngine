@@ -18,7 +18,9 @@
     "page": "page.js#~1.6.4",
     "vaadin-grid": "^1.0.0",
     "paper-item": "^1.2.1",
-    "paper-menu-button": "PolymerElements/paper-menu-button#^1.1.0"
+    "paper-menu-button": "PolymerElements/paper-menu-button#^1.1.0",
+    "vaadin-date-picker": "^1.2.1",
+    "neon-animation": "^1.2.4"
   },
   "resolutions": {
     "polymer": "^1.2.0",

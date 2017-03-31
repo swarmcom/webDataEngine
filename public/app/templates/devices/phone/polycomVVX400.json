@@ -160,32 +160,6 @@
       }
     }
   },
-  "dateTime_settings_options": {
-    "helper": "Date/Time",
-    "fields": {
-      "settings": {
-        "fields": {
-          "dateTimeSettings": {
-            "toolbarSticky": true,
-            "fields": {
-              "hourFormat": {
-                "helper": "If checked the time is in the 24h format, otherwise 12h AM/PM format."
-              },
-              "dateFormat": {
-                "helper": "Controls the format of the date string (D = day of week, d = day of the month, M = month), e.g. D,dM = \"Thursday, 3 July\" or \"Md,D = July 3, Thursday\". The field may contain 0, 1 or 2 commas, which can occur only between characters and only one at a time i.e. 'D,,dM' is illegal."
-              },
-              "dateLongFormat": {
-                "helper": "If checked, display the day and month in long format (Friday/November). Otherwise use abbreviations (Fri/Nov)"
-              },
-              "dateTop": {
-                "helper": "If checked, display date above time, else display time above date."
-              }
-            }
-          }
-        }
-      }
-    }
-  },
   "userPreferences_settings_schema": {
     "type": "object",
     "properties": {

@@ -77,7 +77,7 @@
                 on-response="retrieved"
                 handle-as="json">
         </iron-ajax>
-        <paper-dialog id="animated" with-backdrop>
+        <paper-dialog id="dialog{{id}}" with-backdrop>
           <paper-drawer-panel>
             <paper-header-panel drawer>
                 <paper-menu selected="{{selected}}" class="menu">
@@ -87,23 +87,23 @@
                 </paper-menu>
             </paper-header-panel>
             <paper-header-panel main>
-                    <paper-card animated elevation="3" style="margin-top:10px;margin-left:10px;position:relative;width:95%;" fit layout vertical>
-                        <div class="card-content" >
-                            <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
-                            <iron-pages selected="{{selected}}">
-                                <template is="dom-repeat" items="{{pages}}">
-                                    <div style="margin-top:30px">
-                                        <div class="row">
-                                            <div id="{{item.pageId}}"></div>
-                                            <div class="card-actions">
-                                                <paper-button id="{{item.buttonId}}" class="colored">Save</paper-button>
-                                            </div>
+                <paper-card animated elevation="3" style="margin-top:10px;margin-left:10px;position:relative;width:95%;" fit layout vertical>
+                    <div class="card-content" >
+                        <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
+                        <iron-pages selected="{{selected}}">
+                            <template is="dom-repeat" items="{{pages}}">
+                                <div style="margin-top:30px">
+                                    <div class="row">
+                                        <div id="{{item.pageId}}{{tableId}}"></div>
+                                        <div class="card-actions">
+                                            <paper-button id="{{item.buttonId}}{{tableId}}" class="colored">Save</paper-button>
                                         </div>
                                     </div>
-                                </template>
-                            </iron-pages>
-                        </div>
-                    </paper-card>
+                                </div>
+                            </template>
+                        </iron-pages>
+                    </div>
+                </paper-card>
             </paper-header-panel>
           </paper-drawer-panel>
         </paper-dialog>
@@ -120,7 +120,7 @@
               type: Number,
               value: -1
           },
-          id: {
+          key: {
               type: String,
               value: ''
           },
@@ -153,9 +153,9 @@
          alert("Item added");
          //make sure that a new apply will trigger a modify action
          itemJson = request.detail.response;
-         this.id = itemJson.id;
-         this.modifyUrl = this.modifyUrl + this.id;
-         this.getUrl = this.getUrl + this.id;
+         this.key = itemJson.id;
+         this.modifyUrl = this.modifyUrl + this.key;
+         this.getUrl = this.getUrl + this.key;
       },
       modified: function() {
          alert("Item modified");
@@ -171,7 +171,7 @@
           var page;
           for (i = 0; i < pages.length; i++) {
               page = pages[i];
-              this.generateAlpacaForm(page.pageId, page.schema, page.options, item, page.buttonId);
+              this.generateAlpacaForm(page.pageId+this.tableId, page.schema, page.options, item, page.buttonId+this.tableId);
           }
       },
       generateAlpacaForm: function(page, schema,options,data,saveButton) {
@@ -191,8 +191,8 @@
         });
       },
       save: function(data, template) {
-        if(template.id) {
-            data.id = template.id;
+        if(template.key) {
+            data.id = template.key;
             template.modifyExisting(data)
         } else {
             template.addNew(data);

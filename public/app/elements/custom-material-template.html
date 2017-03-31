@@ -44,7 +44,7 @@
     Polymer({
       is: 'custom-material-template',
       properties: {
-          id: {
+          key: {
               type: String,
               value: ''
           },
@@ -66,7 +66,7 @@
 
       presubmit: function(event) {
           var form = this.querySelector('form');
-          if (this.id) {
+          if (this.key) {
               form.request.method='put';
           } else {
               form.request.method='post';
@@ -78,7 +78,7 @@
       },
       submit: function(event) {
           var form = this.querySelector('form');
-          if (this.id) {
+          if (this.key) {
               form.action=this.modifyUrl;
               form.submit();
           } else {
@@ -94,14 +94,14 @@
               alert('item created');
               //switch to modify mode
               form.request.method = 'put';
-              this.id = event.detail.response.id;
+              this.key = event.detail.response.id;
               this.modifyUrl = this.modifyUrl + this.id;
               this.saveLabel = 'Save';
           }
       },
       reset: function(event) {
           var form = this.querySelector('form');
-          if (!this.id) {
+          if (!this.key) {
               form.reset();
           }
       },

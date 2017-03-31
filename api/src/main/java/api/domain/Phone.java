@@ -14,7 +14,7 @@ public class Phone extends BeanDomain<Phone> {
     protected String serialNumber;
     protected String description;
     protected String firmwareVersion;
-    protected List<String> lines = new ArrayList<String>();
+    protected List<String> lines = null;
     protected Map<String, Map<String, Object>> settings = new HashMap<String, Map<String, Object>>();
     protected PhoneModel model;
 

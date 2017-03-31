@@ -48,16 +48,16 @@
                 <paper-fab id="{{tableId}}add" icon="add" class="add"></paper-fab>
             </div>
             <template is="dom-if" if="{{alpaca}}">
-                <custom-alpaca-template pages={{pages}}></custom-alpaca-template>
+                <custom-alpaca-template id="{{tableId}}alpaca" pages={{pages}} table-id="{{tableId}}"></custom-alpaca-template>
             </template>
             <template is="dom-if" if="{{material}}">
-                <custom-material-template menu-type="{{menuType}}"></custom-material-template>
+                <custom-material-template id="{{tableId}}material" menu-type="{{menuType}}"></custom-material-template>
             </template>
             <template is="dom-if" if="{{menuCard}}">
                 <page-redirector url="{{menuCardUrl}}"></page-redirector>
             </template>
         </template>
-        <custom-material-template2 hidden="{{showTableMode}}" menu-type="{{menuType}}"></custom-material-template2>
+        <custom-material-template2 id="{{tableId}}material2" hidden="{{showTableMode}}" menu-type="{{menuType}}"></custom-material-template2>
     </template>
 </dom-module>
 <script>
@@ -122,7 +122,7 @@
             customTemplate.selected = 0;
         }
         if (this.key) {
-            customTemplate.id = this.key;
+            customTemplate.key = this.key;
             customTemplate.modifyUrl = this.modifyUrl + this.key;
             customTemplate.getUrl = this.getUrl + this.key;
             if (this.material) {
@@ -130,7 +130,7 @@
             }
             customTemplate.getExisting();
         } else {
-            customTemplate.id = '';
+            customTemplate.key = '';
             if (this.material) {
                 customTemplate.saveLabel='Create';
                 customTemplate.generateUI(this.defaultData);
@@ -216,18 +216,19 @@
       },
 
       rowClick: function(row) {
-          this.showTableMode=false;
-          var customTable = this.querySelector('custom-table');
-          var customForm = this;
           customTemplate = this.querySelector('custom-material-template2');
-          if (customTemplate) {
+          if (!customTemplate.hidden) {
+            this.showTableMode=false;
+            var customTable = this.querySelector('custom-table');
+            var customForm = this;
+
             customTemplate.querySelector('#close').addEventListener('tap', function() {
               customTable.querySelector('iron-ajax').generateRequest();
               customForm.showTableMode=true;
             });
-            customTemplate.id = row[0];
-            customTemplate.modifyUrl = this.modifyUrl + customTemplate.id;
-            customTemplate.getUrl = this.getUrl + customTemplate.id;
+            customTemplate.key = row[0];
+            customTemplate.modifyUrl = this.modifyUrl + customTemplate.key;
+            customTemplate.getUrl = this.getUrl + customTemplate.key;
             customTemplate.getExisting();
           }
       }

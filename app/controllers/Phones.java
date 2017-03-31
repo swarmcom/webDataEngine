@@ -140,7 +140,8 @@ public class Phones extends ModeledEntityController {
             itemNode.add(phone.getAccountId());
             itemNode.add(phone.getSerialNumber());
             itemNode.add(phone.getFirmwareVersion());
-            itemNode.add(phone.getLines().size());
+            List<String> lines = phone.getLines();
+            itemNode.add(lines == null ? 0 : lines.size());
             node.add(itemNode);
         }
         return node;
