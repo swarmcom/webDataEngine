@@ -216,8 +216,8 @@
       },
 
       rowClick: function(row) {
-          customTemplate = this.querySelector('custom-material-template2');
-          if (!customTemplate.hidden) {
+          if (this.material) {
+            customTemplate = this.querySelector('custom-material-template2');
             this.showTableMode=false;
             var customTable = this.querySelector('custom-table');
             var customForm = this;
