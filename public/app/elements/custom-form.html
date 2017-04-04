@@ -218,11 +218,15 @@
       rowClick: function(row) {
           if (this.material) {
             customTemplate = this.querySelector('custom-material-template2');
+            var parent = document.querySelector('paper-header-panel');
+            var color = parent.style.backgroundColor;
+            parent.style.backgroundColor = '#e6e6e6';
             this.showTableMode=false;
             var customTable = this.querySelector('custom-table');
             var customForm = this;
 
             customTemplate.querySelector('#close').addEventListener('tap', function() {
+              parent.style.backgroundColor = color;
               customTable.querySelector('iron-ajax').generateRequest();
               customForm.showTableMode=true;
             });

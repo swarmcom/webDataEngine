@@ -15,20 +15,23 @@
 <dom-module id="menu-card">
     <style>
         paper-button.colored {
-        color: black;
-        background-color: var(--paper-grey-400);
+          color: black;
+          background-color: var(--paper-grey-400);
         }
 
         .container {
-        margin-top:7px;
-        width:100%;
-        margin-left:-10px;
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-        @apply(--layout-wrap);
+          margin-top:7px;
+          width:100%;
+          margin-left:-10px;
+          @apply(--layout-horizontal);
+          @apply(--layout-center);
+          @apply(--layout-wrap);
         }
-
-
+        .row {
+          background-color:grey;
+          width:100%;
+          height:100%;
+        }
     </style>
     <template>
         <paper-drawer-panel force-narrow>
@@ -61,32 +64,26 @@
                     <paper-icon-button id="exit" icon="exit-to-app" on-tap="handleExitTap"></paper-icon-button>
                     <page-redirector id ="logout" url="{{logoutUrl}}"></page-redirector>
                 </paper-toolbar>
-                <div id="content" >
-                    <div id="content-cards" class="container" hidden$="{{noCards}}">
-                        <template is="dom-repeat" items="{{menu}}">
-                            <custompaper-card
-                                    id="{{item.cardId}}"
-                                    elevation="{{elevation}}"
-                                    width="{{item.width}}"
-                                    height="{{item.height}}"
-                                    cardhovercolor="{{cardhovercolor}}"
-                                    item="{{item.title}}"
-                                    description="{{item.description}}"
-                                    color="{{color}}"
-                                    icon="{{item.icon}}">
-                            </custompaper-card>
-                        </template>
-                    </div>
-                    <iron-pages selected="{{selected}}" on-iron-select="onIronSelect">
-                        <template is="dom-repeat" items="{{menu}}">
-                            <div id="content-item">
-                                <div class="row">
-                                    <custom-form menu-type="{{item.menuType}}" id="{{item.formId}}" alpaca="{{item.alpaca}}" material="{{item.material}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
-                                </div>
-                            </div>
-                        </template>
-                    </iron-pages>
+                <div id="content-cards" class="container" hidden$="{{noCards}}">
+                    <template is="dom-repeat" items="{{menu}}">
+                        <custompaper-card
+                            id="{{item.cardId}}"
+                            elevation="{{elevation}}"
+                            width="{{item.width}}"
+                            height="{{item.height}}"
+                            cardhovercolor="{{cardhovercolor}}"
+                            item="{{item.title}}"
+                            description="{{item.description}}"
+                            color="{{color}}"
+                            icon="{{item.icon}}">
+                        </custompaper-card>
+                    </template>
                 </div>
+                <iron-pages selected="{{selected}}" on-iron-select="onIronSelect">
+                    <template is="dom-repeat" items="{{menu}}">
+                        <custom-form menu-type="{{item.menuType}}" id="{{item.formId}}" alpaca="{{item.alpaca}}" material="{{item.material}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
+                    </template>
+                </iron-pages>
             </paper-header-panel>
         </paper-drawer-panel>
     </template>

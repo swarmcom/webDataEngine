@@ -120,9 +120,9 @@ public class Users extends SimpleEntityController {
             ArrayNode itemNode = Json.newArray();
             itemNode.add(user.getId());
             itemNode.add(user.getUserName());
-            itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
-            Date birthDate = user.getBirthDate();
-            itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
+            //itemNode.add(StringUtils.join(user.getRoles().toArray(), ","));
+            //Date birthDate = user.getBirthDate();
+            //itemNode.add(birthDate != null ? DateFormatUtils.format(birthDate, DATE_FORMAT_1) : "");
             itemNode.add(user.getPrimaryEmail());
             Date created = user.getCreated();
             itemNode.add(created != null ? DateFormatUtils.format(created, DATE_FORMAT_2) : "");
