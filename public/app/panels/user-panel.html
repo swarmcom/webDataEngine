@@ -9,56 +9,88 @@
 <link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
 <link rel="import" href="/assets/components/iron-input/iron-input.html">
 <link rel="import" href="/assets/components/iron-selector/iron-selector.html">
+<link rel="import" href="/assets/components/paper-stepper/paper-stepper.html">
+<link rel="import" href="/assets/components/iron-pages/iron-pages.html">
 
 <dom-module id="user-panel">
     <template>
         <style include="app-grid-style">
             :host {
-            --app-grid-columns: 3;
+              --app-grid-columns: 2;
             }
 
             ul {
-            padding: 0;
-            list-style: none;
+              padding: 0;
+              list-style: none;
             }
 
             .item {
-            padding:10px;
-            background-color: white;
+              padding:10px;
+              background-color: white;
             }
+
         </style>
         <div class="card-content">
             <ul class="app-grid">
-                <li class="item"><h2>User</h2></li>
                 <li class="item">
+                    <h2>User</h2>
                 </li>
                 <li class="item">
                     <paper-icon-button id="close" icon="close" class="close"></paper-icon-button>
                 </li>
+                <iron-pages selected="[[selected]]">
+                    <li class="item">
+                        <paper-input id="userNameId" name="userName" label="User Name" required></paper-input>
+                        <paper-input id="passwordId" name="password" label="Password" type="password" required auto-validate></paper-input>
+                        <br>
+                        <paper-checkbox id="digestEncodedId" value=true name="digestEncoded" checked=true>Digest encoded</paper-checkbox>
+                        <vaadin-date-picker id="birthDateId" name="birthDate" label="Birth date"></vaadin-date-picker>
+                        <br><br>
+                        <paper-button id="moreInfoButton" on-click="showWizard"><B>Additional Info</B></paper-button>
+                    </li>
+                    <li class="item">
+                            <paper-dropdown-menu  label="Roles">
+                                <paper-listbox id="rolesId" name="roles" multi class="dropdown-content" attr-for-selected="value">
+                                    <paper-item value="ROLE_ADMIN">ROLE_ADMIN</paper-item>
+                                    <paper-item value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</paper-item>
+                                    <paper-item value="ROLE_USER">ROLE_USER</paper-item>
+                                </paper-listbox>
+                            </paper-dropdown-menu>
+                            <gold-email-input id="primaryEmailId" name="primaryEmail" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
+                            <br>
+                            <paper-checkbox id="suspendedId" value=true name="suspended" checked=false>Suspended</paper-checkbox>
+                            <br><br>
+                            <div id="prevNext">
+                              <paper-button id="previousButton" on-click="previous"><B>Previous</B></paper-button>
+                              <paper-button id="nextButton" on-click="next"><B>Next</B></paper-button>
+                            </div>
+                    </li>
+
+                    <li class="item">
+                        Step 3
+                        <div id="prevNext2">
+                            <paper-button id="previousButton2" on-click="previous"><B>Previous</B></paper-button>
+                            <paper-button id="nextButton2" on-click="next"><B>Next</B></paper-button>
+                        </div>
+                    </li>
+                    <li class="item">
+                        Step 4
+                        <div id="prevNext3">
+                            <paper-button id="previousButton3" on-click="previous"><B>Previous</B></paper-button>
+                            <paper-button id="nextButton3" on-click="next"><B>Next</B></paper-button>
+                        </div>
+                    </li>
+                </iron-pages>
                 <li class="item">
-                    <paper-input id="userNameId" name="userName" label="User Name" required></paper-input>
-                    <paper-input id="passwordId" name="password" label="Password" type="password" required auto-validate></paper-input>
-                    <br>
-                    <paper-checkbox id="digestEncodedId" value=true name="digestEncoded" checked=true>Digest encoded</paper-checkbox>
-                    <vaadin-date-picker id="birthDateId" name="birthDate" label="Birth date"></vaadin-date-picker>
+
                 </li>
                 <li class="item">
-                    <paper-dropdown-menu  label="Roles">
-                        <paper-listbox id="rolesId" name="roles" multi class="dropdown-content" attr-for-selected="value">
-                            <paper-item value="ROLE_ADMIN">ROLE_ADMIN</paper-item>
-                            <paper-item value="ROLE_SUPERADMIN">ROLE_SUPERADMIN</paper-item>
-                            <paper-item value="ROLE_USER">ROLE_USER</paper-item>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-                    <gold-email-input id="primaryEmailId" name="primaryEmail" required auto-validate error-message="Please enter a valid email" label="Email"></gold-email-input>
-                    <br>
-                    <paper-checkbox id="suspendedId" value=true name="suspended" checked=false>Suspended</paper-checkbox>
-                </li>
-                <li class="item">
-                </li>
-                <li class="item">
-                </li>
-                <li class="item">
+                    <paper-stepper selected="{{selected}}" no-buttons="true">
+                        <paper-step></paper-step>
+                        <paper-step></paper-step>
+                        <paper-step></paper-step>
+                        <paper-step></paper-step>
+                    </paper-stepper>
                 </li>
                 <li class="item">
                     <div class="buttons">
@@ -73,9 +105,21 @@
     Polymer({
       is: 'user-panel',
       properties: {
-      },
 
+      },
+      showWizard: function() {
+        this.selected=this.selected+1;
+      },
+      previous: function() {
+        this.selected=this.selected-1;
+      },
+      next: function() {
+        if (this.selected < 3) {
+           this.selected=this.selected+1;
+        }
+      },
       generateUI: function(item, form) {
+
           form.querySelector('#userNameId').value=item.userName;
           form.querySelector('#passwordId').value=item.password;
           form.querySelector('#digestEncodedId').checked=item.digestEncoded;
@@ -83,6 +127,7 @@
           form.querySelector('#primaryEmailId').value=item.primaryEmail;
           form.querySelector('#suspendedId').checked=item.suspended;
           form.querySelector('#rolesId').selectedValues = item.roles;
+
       },
 
       presubmit: function(event, form) {
