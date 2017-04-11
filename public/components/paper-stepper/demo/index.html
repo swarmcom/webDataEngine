@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+	<head>
+	    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../../paper-styles/demo-pages.html">
+		<link rel="import" href="../../iron-pages/iron-pages.html">
+		<link rel="import" href="../../iron-icons/image-icons.html">
+		<link rel="import" href="../../paper-button/paper-button.html">
+		<link rel="import" href="../../paper-checkbox/paper-checkbox.html">
+		<link rel="import" href="../paper-stepper.html">
+		<link rel="import" href="../paper-step.html">
+		<link rel="import" href="../paper-icon-stepper.html">
+		<link rel="import" href="../paper-icon-step.html">
+	</head>
+
+	<body>
+		<template is="dom-bind">
+			<h2>Stepper with dots</h2>
+
+			<div class="vertical-section">
+				<template is="dom-bind">
+					<paper-stepper selected="{{selected}}" no-buttons="[[noButtons]]">
+						<paper-step></paper-step>
+						<paper-step></paper-step>
+						<paper-step></paper-step>
+						<paper-step></paper-step>
+					</paper-stepper>
+
+					<iron-pages selected="[[selected]]">
+						<div>Step 1</div>
+						<div>Step 2</div>
+						<div>Step 3</div>
+						<div>Step 4</div>
+					</iron-pages>
+
+					<br>
+
+					<paper-checkbox checked="{{noButtons}}">No buttons</paper-checkbox>
+				</template>
+			</div>
+
+			<h2>Stepper with progress bar</h2>
+
+			<div class="vertical-section">
+				<paper-stepper progress-bar>
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+				</paper-stepper>
+			</div>
+
+			<h2>Localized stepper</h2>
+
+			<div class="vertical-section">
+				<paper-stepper back-label="Zurück" next-label="Vor">
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+				</paper-stepper>
+			</div>
+
+			<h2>Icon stepper</h2>
+
+			<div class="vertical-section">
+				<paper-icon-stepper id="stepper">
+					<paper-icon-step icon="image:brightness-1"></paper-icon-step>
+					<paper-icon-step icon="image:brightness-1"></paper-icon-step>
+					<paper-icon-step icon="image:brightness-1"></paper-icon-step>
+					<paper-icon-step icon="image:brightness-1"></paper-icon-step>
+				</paper-icon-stepper>
+				<paper-button raised on-tap="prev">prev</paper-button><paper-button raised on-tap="next">next</paper-button><paper-button raised on-tap="clear">clear</paper-button>
+			</div>
+		</template>
+
+		<script>
+			var scope = document.querySelector('template[is=dom-bind]');
+			scope.next = function() {
+				this.$.stepper.next();
+			};
+			scope.prev = function() {
+				this.$.stepper.previous();
+			};
+			scope.clear = function() {
+				this.$.stepper.clear();
+			};
+		</script>
+	</body>
+</html>

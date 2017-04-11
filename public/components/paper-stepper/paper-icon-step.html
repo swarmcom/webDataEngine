@@ -1,0 +1,42 @@
+<!doctype html>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<!--
+A step within a Material Design stepper represented by an icon.
+
+@demo demo/index.html
+-->
+<dom-module id="paper-icon-step">
+
+	<template>
+
+		<style>
+			:host(.iron-selected) .icon {
+				color: var(--paper-icon-step-color, --google-blue-500);
+			}
+
+			:host(:not(.iron-selected)) .icon {
+				color: var(--disabled-text-color);
+			}
+		</style>
+
+		<iron-icon icon="[[icon]]" class="icon"></iron-icon>
+
+	</template>
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'paper-icon-step',
+		properties: {
+			icon: String
+		}
+	});
+
+})();
+
+</script>

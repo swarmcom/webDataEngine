@@ -1,0 +1,181 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+A Material Design [stepper](https://www.google.com/design/spec/components/steppers.html).
+
+### Example
+
+```html
+<paper-stepper>
+  <paper-step></paper-step>
+  <paper-step></paper-step>
+  <paper-step></paper-step>
+</paper-stepper>
+```
+
+
+@demo demo/index.html
+-->
+<dom-module id="paper-stepper">
+
+	<template>
+
+		<style>
+			:host {
+				@apply --layout-horizontal;
+				@apply --layout-center-center;
+			}
+
+			.nav {
+				color: var(--secondary-text-color);
+				text-transform: uppercase;
+				font-weight: 500!important;
+				@apply --paper-font-body1;
+			}
+
+			.nav[disabled] {
+				color: var(--disabled-text-color);
+			}
+
+			.steps {
+				text-align: center;
+			}
+		</style>
+
+		<paper-button class="nav" on-tap="_tapPrevious" disabled="[[!_getDisablePrevious(selected, disablePrevious)]]" hidden$="[[noButtons]]">
+			<iron-icon icon="icons:chevron-left"></iron-icon>
+			[[backLabel]]
+		</paper-button>
+
+		<div class="flex steps" hidden$="[[progressBar]]">
+			<iron-selector id="selector" selected="{{selected}}" items="{{_items}}" on-iron-items-changed="_onItemsChanged">
+				<content></content>
+			</iron-selector>
+		</div>
+
+		<template is="dom-if" if="[[progressBar]]">
+			<paper-progress class="flex progress" max="[[_items.length]]" value="[[_computeProgressValue(selected, _items)]]"></paper-progress>
+		</template>
+
+		<paper-button class="nav" on-tap="_tapNext" disabled="[[!_getDisableNext(selected, _items.length, disableNext)]]" hidden$="[[noButtons]]">
+			[[nextLabel]]
+			<iron-icon icon="icons:chevron-right"></iron-icon>
+		</paper-button>
+
+	</template>
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'paper-stepper',
+		properties: {
+			selected: {
+				type: Number,
+				notify: true,
+				value: 0
+			},
+
+			/**
+			 * True if a progress bar is shown instead of dots.
+			 *
+			 * Use a progress bar when there are many steps, or if there are
+			 * steps that need to be inserted during the process (based o
+			 * responses to earlier steps).
+			 */
+			progressBar: {
+				type: Boolean,
+				value: false
+			},
+
+			/**
+			 * Text for the back button. Use this property to localize the element.
+			 */
+			backLabel: {
+				type: String,
+				value: 'Back'
+			},
+
+			/**
+			 * Text for the back button. Use this property to localize the element.
+			 */
+			nextLabel: {
+				type: String,
+				value: 'Next'
+			},
+			/**
+			 * Boolean for disabling the previous button.
+			 */
+			disablePrevious: {
+				type: Boolean,
+				value: false
+			},
+			/**
+			 * Boolean for disabling the next button.
+			 */
+			disableNext: {
+				type: Boolean,
+				value: false
+			},
+
+			/**
+			 * Hide back/next buttons
+			 */
+			noButtons: {
+				type: Boolean,
+				value: false,
+			},
+		},
+
+		// Private methods
+		_tapPrevious: function() {
+			this.$.selector.selectPrevious();
+		},
+		_tapNext: function() {
+			this.$.selector.selectNext();
+		},
+
+		/**
+		 * Returns true if there is a step before the current and if
+		 * _getDisablePrevious is set to false
+		 */
+		_getDisablePrevious: function(selected, disablePrevious) {
+			return selected > 0 && !disablePrevious;
+		},
+
+		/**
+		 * Returns true if there is a step after the current and if
+		 * _getDisableNext is set to false
+		 */
+		_getDisableNext: function(selected, nrItems, disableNext) {
+			return selected < nrItems - 1 && !disableNext;
+		},
+
+		/**
+		 * Returns the current progress value
+		 *
+		 * Depends on items to ensure that `max` is already set. Otherwise
+		 * `paper-progress` doesn't show the bar on startup.
+		 * TODO: Remove parameter `items` once paper-progress can handle
+		 * setting the property `value` before property `max`.
+		 */
+		_computeProgressValue: function(selected, items) {
+			return selected + 1;
+		},
+
+		_onItemsChanged: function(e) {
+			this._items = this.$.selector.items;
+		}
+	});
+
+})();
+
+</script>

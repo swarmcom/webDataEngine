@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<title>paper-stepper</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../web-component-tester/browser.js"></script>
+		<script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+		<link rel="import" href="../paper-stepper.html">
+		<link rel="import" href="../paper-step.html">
+		<link rel="import" href="../../test-fixture/test-fixture.html">
+	</head>
+	<body>
+
+		<test-fixture id="TrivialElement">
+			<template>
+				<paper-stepper>
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+					<paper-step></paper-step>
+				</paper-stepper>
+			</template>
+		</test-fixture>
+
+		<script>
+			suite('<paper-stepper>', function() {
+				suite('selected behavior', function() {
+					var element;
+
+					setup(function() {
+						element = fixture('TrivialElement');
+					});
+
+					test('defaults to first step', function() {
+						expect(element.selected).to.be.eql(0);
+					});
+
+					test('goes to next step', function() {
+						element.selected = 1;
+						element._tapNext();
+						expect(element.selected).to.be.eql(2);
+					});
+
+					test('returns to previous step', function() {
+						element.selected = 1;
+						element._tapPrevious();
+						expect(element.selected).to.be.eql(0);
+					});
+
+					test('shows previous step if not in the beginning', function() {
+						expect(element._getDisablePrevious(1, false)).to.be.true;
+					});
+					test('doesn\'t shows previous step if in the beginning', function() {
+						expect(element._getDisablePrevious(0, false)).to.be.false;
+					});
+					test('shows next step if not in the end', function() {
+						expect(element._getDisableNext(0, 2, false)).to.be.true;
+					});
+					test('doesn\'t shows next step if in the end', function() {
+						expect(element._getDisableNext(1, 2, false)).to.be.false;
+					});
+				});
+			});
+		</script>
+
+	</body>
+</html>

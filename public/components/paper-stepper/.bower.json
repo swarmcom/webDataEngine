@@ -1,0 +1,49 @@
+{
+  "name": "paper-stepper",
+  "authors": [
+    "collaborne"
+  ],
+  "description": "A Material Design stepper (Polymer 1.x)",
+  "main": "paper-stepper.html",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "paper",
+    "material design",
+    "stepper",
+    "mobile"
+  ],
+  "license": "Apache 2",
+  "homepage": "https://github.com/collaborne/paper-stepper",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-icon": "PolymerElements/iron-icon#^1.0.0",
+    "iron-icons": "PolymerElements/iron-icons#^1.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^1.0.0",
+    "paper-button": "PolymerElements/paper-button#^1.0.0",
+    "paper-progress": "PolymerElements/paper-progress#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^1.0.0",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+    "web-component-tester": "*",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "version": "1.2.0",
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.2.0",
+    "commit": "b07a676129c176d91630354c08081b902cd94b10"
+  },
+  "_source": "https://github.com/Collaborne/paper-stepper.git",
+  "_target": "^1.2.0",
+  "_originalSource": "paper-stepper",
+  "_direct": true
+}

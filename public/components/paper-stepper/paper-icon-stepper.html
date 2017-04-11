@@ -1,0 +1,123 @@
+<!doctype html>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+A Material Design [stepper](https://www.google.com/design/spec/components/steppers.html) that highlights all the already executed steps, and allows to use an icon as marker
+
+### Example
+
+```html
+<paper-icon-stepper>
+	<paper-icon-step icon="icons:grade"></paper-icon-step>
+	<paper-icon-step icon="icons:grade"></paper-icon-step>
+	<paper-icon-step icon="icons:grade"></paper-icon-step>
+	<paper-icon-step icon="icons:grade"></paper-icon-step>
+</paper-icon-stepper>
+```
+
+
+@demo demo/index.html
+-->
+<dom-module id="paper-icon-stepper">
+
+	<template>
+
+		<style>
+			:host {
+				@apply --layout-horizontal;
+				@apply --layout-center-center;
+			}
+			.steps {
+				text-align: center;
+			}
+		</style>
+
+		<div class="flex steps">
+			<iron-selector id="selector" multi selected-values="{{selectedValues}}" items="{{_items}}" on-iron-items-changed="_onItemsChanged">
+				<content></content>
+			</iron-selector>
+		</div>
+
+	</template>
+</dom-module>
+
+<script>
+
+(function() {
+
+	Polymer({
+		is: 'paper-icon-stepper',
+		properties: {
+			/**
+			 * Indeces of the steps already selected
+			 */
+			selectedValues: {
+				type: Array,
+				notify: true,
+				value: []
+			},
+			/**
+			 * Currently selected step
+			 */
+			_selected: {
+				type: Number,
+				value: -1
+			}
+		},
+
+		/**
+		 * Goes back one step
+		 */
+		previous: function() {
+			//XXX: Multi selector does not offer selectPrevious() function
+			if (this._selected < 0) {
+				// we are back to start
+				return;
+			}
+			// remove the currently selected from the array
+			var index = this.selectedValues.indexOf(this._selected);
+			this.splice('selectedValues', index, 1);
+			this._selected--;
+		},
+		/**
+		 * Goes forward one step
+		 */
+		next: function() {
+			//XXX: Multi selector does not offer selectNext() function
+			if (this._selected === (this._items.length - 1)) {
+				// We reached the end
+				return;
+			}
+			if (this._selected >= 0) {
+				this._selected++;
+			} else if (this.selectedValues.length <= 0) {
+				// no items selected yet
+				this._selected = 0;
+			} else {
+				// items selected (e.g. specified by the caller). Default to the element after the last element of the array
+				this._selected = this.selectedValues[this.selectedValues.length]++;
+			}
+
+			this.push('selectedValues', this._selected);
+		},
+		/**
+		 * Clears all the steps
+		 */
+		clear: function() {
+			this.selectedValues = [];
+			this._selected = -1;
+		},
+		_onItemsChanged: function(e) {
+			this._items = this.$.selector.items;
+		}
+	});
+
+})();
+
+</script>
