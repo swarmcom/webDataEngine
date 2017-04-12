@@ -156,7 +156,7 @@ public abstract class EntityController extends Controller {
     protected String getTemplateJSON(String key, String templateFile) {
         String schema = StringUtils.EMPTY;
         try {
-            JsonNode node = new ObjectMapper().readTree(Play.application().getFile(templateFile));
+            JsonNode node = new ObjectMapper().readTree(Play.application().resourceAsStream(templateFile));
             schema = node.get(key).toString();
         } catch (IOException e) {
             e.printStackTrace();
