@@ -7,6 +7,7 @@
 <link rel="import" href="/assets/app/panels/provider-panel.html">
 <link rel="import" href="/assets/app/panels/customer-panel.html">
 <link rel="import" href="/assets/app/panels/user-panel.html">
+<link rel="import" href="/assets/app/panels/customer-subscription-panel.html">
 
 <dom-module id="custom-material-template">
     <template>
@@ -32,6 +33,9 @@
               </template>
               <template is="dom-if" if="{{isAccount(menuType)}}">
                 <user-panel id="displayedDialog" save-label="{{saveLabel}}"></user-panel>
+              </template>
+              <template is="dom-if" if="{{isSubscription(menuType)}}">
+                <customer-subscription-panel id="displayedDialog" save-label="{{saveLabel}}"></customer-subscription-panel>
               </template>
            </paper-dialog>
         </form>
@@ -90,8 +94,9 @@
               alert('item created');
               //switch to modify mode
               form.request.method = 'put';
+              alert(JSON.stringify(event.detail.response));
               this.key = event.detail.response.id;
-              this.modifyUrl = this.modifyUrl + this.id;
+              this.modifyUrl = this.modifyUrl + this.key;
               this.saveLabel = 'Save';
           }
       },
@@ -121,7 +126,11 @@
       },
       isAccount: function(type) {
         return type === 'account';
+      },
+      isSubscription: function(type) {
+        return type === 'subscription';
       }
+
     });
 
     document.addEventListener('WebComponentsReady', function() {

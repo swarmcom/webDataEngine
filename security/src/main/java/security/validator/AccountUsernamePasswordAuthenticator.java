@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class AccountUsernamePasswordAuthenticator extends UsernamePasswordAuthenticator {
@@ -57,6 +58,10 @@ public class AccountUsernamePasswordAuthenticator extends UsernamePasswordAuthen
         profile.setId(username);
         profile.addAttribute("username", username);
         profile.addAttribute("accountid", currentAccountId);
+        Set<String> accRoles = accounts.get(0).getRoles();
+        if (accRoles != null) {
+            user.getRoles().addAll(accRoles);
+        }
         for (String role : user.getRoles()) {
             profile.addRole(role);
         }

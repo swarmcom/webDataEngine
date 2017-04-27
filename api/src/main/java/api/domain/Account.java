@@ -3,6 +3,10 @@ package api.domain;
 import api.type.DbType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.StringUtils;
+import play.Logger;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Account extends BeanDomain<Account> {
@@ -18,6 +22,8 @@ public class Account extends BeanDomain<Account> {
     protected String superadminInitialPassword;
     protected String providerName;
     protected Boolean suspended;
+    protected Set<String> roles;
+
 
     public Account() {
     }
@@ -52,7 +58,7 @@ public class Account extends BeanDomain<Account> {
         this.superadminInitialPassword = "123";
     }
 
-    public Account(String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminInitialPassword) {
+    public Account(String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminInitialPassword, Set<String> roles) {
         this.providerName = providerName;
         this.accountName = (StringUtils.isEmpty(accountName) ? "AnonymousTenant" : accountName);
         this.dbType = (StringUtils.isEmpty(dbType) ? DbType.mongo: DbType.valueOf(dbType) );
@@ -60,6 +66,12 @@ public class Account extends BeanDomain<Account> {
         this.dbName = (StringUtils.isEmpty(dbName) ? "webDataEngine" : dbName);
         this.superadminUserName = (StringUtils.isEmpty(superadminUserName) ? "superadmin" : superadminUserName);
         this.superadminInitialPassword = (StringUtils.isEmpty(superadminInitialPassword) ? "123" : superadminInitialPassword);
+        if (roles != null) {
+            this.roles = new TreeSet<String>();
+            this.roles.addAll(roles);
+        } else {
+            this.roles.add("ROLE_ACCOUNT_ADMIN");
+        }
     }
 
     public boolean isNew() {
@@ -162,6 +174,17 @@ public class Account extends BeanDomain<Account> {
         this.suspended = suspended;
     }
 
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        if (roles != null) {
+            this.roles = new TreeSet<String>();
+            this.roles.addAll(roles);
+        }
+    }
+
     public void merge(Account account) {
         DbType type = account.getDbType();
         String dbUri = account.getDbUri();
@@ -174,6 +197,7 @@ public class Account extends BeanDomain<Account> {
         String email = account.getEmail();
         String companyName = account.getCompanyName();
         Boolean suspended = account.isSuspended();
+        Set<String> roles = account.getRoles();
 
         if (type != null) {
             setDbType(type);
@@ -188,6 +212,10 @@ public class Account extends BeanDomain<Account> {
 
         if (dbName != null) {
             setDbName(dbName);
+        }
+
+        if (roles != null) {
+            setRoles(roles);
         }
 
         if (superadminUserName != null) {

@@ -7,8 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.CommonProfile;
 import org.springframework.stereotype.Component;
-import play.Logger;
-import security.authorizer.RoleType;
+import api.type.RoleType;
 import security.encoder.SecurityPasswordEncoder;
 import security.util.EncoderUtil;
 

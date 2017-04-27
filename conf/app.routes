@@ -3,6 +3,7 @@
 # ~~~~
 
 # Home page
+GET /                                                controllers.Assets.at(path="/public", file="app/landing.html")
 
 # Callback
 GET     /callback                                    @security.config.OwnerCallbackController.callback()
@@ -11,18 +12,25 @@ GET     /callback/provider                           @security.config.ProviderCa
 POST    /callback/provider                           @security.config.ProviderCallbackController.callback()
 GET     /callback/account                            @security.config.AccountCallbackController.callback()
 POST    /callback/account                            @security.config.AccountCallbackController.callback()
+GET     /callback/elkaccount                         @security.config.ElkAccountCallbackController.callback()
+POST    /callback/elkaccount                         @security.config.ElkAccountCallbackController.callback()
 
 # Logout
 GET     /logoutprovider                              @security.config.ProviderLogoutController.logout()
 GET     /logoutaccount                               @security.config.AccountLogoutController.logout()
+GET     /logoutelkaccount                            @security.config.ElkAccountLogoutController.logout()
 
 # Assets
 GET     /loginformaccount                            controllers.Assets.at(path="/public", file="app/index.html")
+GET     /sipstats                                    controllers.Assets.at(path="/public", file="components/sipStats/index.php")
+GET     /loginformelkaccount                         controllers.Assets.at(path="/public", file="app/elkIndex.html")
 GET     /loginformprovider                           controllers.Assets.at(path="/public", file="app/customer.html")
+GET     /subscription                                controllers.Assets.at(path="/public", file="app/subscription.html")
 GET     /alpaca                                      controllers.Assets.at(path="/public", file="app/sample.html")
 
 GET     /owner                                       controllers.Application.googleSuperadminAsset(file="/public/app/owner.html")
 GET     /owner/provider                              controllers.Application.adminAssetProvider(file="/public/app/provider.html")
+GET     /owner/provider/elk                          controllers.Application.elkAssetAccount(file="/public/app/elk.html")
 GET     /owner/provider/account                      controllers.Application.adminAssetAccount(file="/public/app/account.html")
 GET     /owner/provider/account/device               controllers.Application.adminAssetAccount(file="/public/app/device.html")
 GET     /owner/provider/account/device/gateway       controllers.Application.adminAssetAccount(file="/public/app/gateway.html")
@@ -83,6 +91,10 @@ GET     /api/accounts/defaults                       controllers.Accounts.getDef
 DELETE  /api/accounts/:accountName                   controllers.Accounts.deleteByName(accountName: String)
 DELETE  /api/accounts/delete/ids                     controllers.Accounts.deleteList
 
+POST    /api/elkaccounts                             controllers.ElkAccounts.add
+PUT     /api/elkaccounts/id/:accountId               controllers.ElkAccounts.modifyById(accountId: String)
+GET     /api/elkaccounts/id/:accountId                  controllers.ElkAccounts.getById(accountId: String)
+
 GET     /api/phones/:model                           controllers.Phones.list(model: String)
 GET     /api/phones/array/:model                     controllers.Phones.listArray(model: String)
 POST    /api/phones/:model                           controllers.Phones.add(model: String)
@@ -110,7 +122,7 @@ DELETE  /api/gateways/delete/ids                     controllers.Gateways.delete
 GET     /api/meetings                                   controllers.Meetings.list
 GET     /api/meetings/array                             controllers.Meetings.listArray
 POST    /api/meetings                                   controllers.Meetings.add
-PUT     /api/meetings/name/:meetingName                    controllers.Meetings.modifyByName(meetingName: String)
+PUT     /api/meetings/name/:meetingName                 controllers.Meetings.modifyByName(meetingName: String)
 GET     /api/meetings/name/:meetingName                    controllers.Meetings.getByName(meetingName: String)
 PUT     /api/meetings/id/:meetingId                        controllers.Meetings.modifyById(meetingId: String)
 GET     /api/meetings/id/:meetingId                        controllers.Meetings.getById(meetingId: String)

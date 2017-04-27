@@ -1,0 +1,59 @@
+<link rel="import" href="/assets/components/paper-card/paper-card.html">
+<link rel="import" href="/assets/components/paper-button/paper-button.html">
+<link rel="import" href="/assets/app/elements/page-redirector.html">
+
+<link href='//fonts.googleapis.com/css' rel='stylesheet'>
+
+<dom-module id="custom-landing">
+    <style>
+        p {
+          font-family: 'Allan';font-size: 20px;
+        }
+
+        .center {
+          margin: auto;
+          width: 50%;
+          padding: 10%;
+        }
+
+    </style>
+    <template>
+        <page-redirector id ="loginElkRedirector" url="/owner/provider/elk"></page-redirector>
+        <page-redirector id ="subscribeElkRedirector" url="/subscription"></page-redirector>
+        <div class="center">
+            <paper-card heading="" image="/../images/landingPage.jpeg" elevation="3" alt="Cloud">
+                <div class="card-content">
+                    <p>Welcome to eZuce Assurance as a service website!</p>
+                </div>
+                <div class="card-actions  row">
+
+                    <div class="col-xs-6" align="center">
+                        <button type="button" class="btn btn-primary btn-lg" on-click="loginElk" >Log In</button>
+
+                    </div>
+
+                    <div class="col-xs-6" align="center">
+                        <button type="button" class="btn btn-danger btn-lg" on-click="subscribeElk" >Sign Up</button>
+                    </div>
+
+                </div>
+            </paper-card>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'custom-landing',
+      properties: {
+
+      },
+      loginElk: function() {
+        var redirector = this.querySelector('#loginElkRedirector');
+        redirector.redirect();
+      },
+      subscribeElk: function() {
+        var redirector = this.querySelector('#subscribeElkRedirector');
+        redirector.redirect();
+      }
+    });
+  </script>
+</dom-module>

@@ -8,6 +8,7 @@ import api.service.UserService;
 import api.type.DbType;
 import api.domain.Role;
 import api.service.AccountService;
+import api.type.RoleType;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -65,7 +66,7 @@ public class DbAccountService implements AccountService {
 
     @Override
     public Account createAccount(String providerName, String accountName, String dbType, String dbUri, String dbName, String superadminUserName, String superadminPassword) {
-        Account account = new Account(providerName, accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword);
+        Account account = new Account(providerName, accountName, dbType, dbUri, dbName, superadminUserName, superadminPassword, null);
         return saveAccount(providerName, account);
     }
 
@@ -73,9 +74,11 @@ public class DbAccountService implements AccountService {
     public Account saveAccount(String providerName, Account account) {
         account.setProviderName(providerName);
         Account savedAccount = accountRepository.save(account);
-
-        refreshProviderSpringContexts(providerName);
-        refreshAccount(savedAccount);
+        Set<String> roles = account.getRoles();
+        if (!(roles != null && roles.size() == 1 && roles.contains(RoleType.ROLE_ACCOUNT_ELK.name()))) {
+            refreshProviderSpringContexts(providerName);
+            refreshAccount(savedAccount);
+        }
 
         return savedAccount;
     }

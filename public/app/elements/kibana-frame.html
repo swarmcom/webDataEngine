@@ -1,0 +1,19 @@
+<link rel="import" href="/assets/components/paper-card/paper-card.html">
+<dom-module id="kibana-frame">
+    <style>
+
+    </style>
+    <template>
+        <iframe src="{{elkUrl}}" style="position:fixed; top:67px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>
+            Your browser doesn't support iframes
+        </iframe>
+    </template>
+    <script>
+    Polymer({
+      is: 'kibana-frame',
+      properties: {
+
+      }
+    });
+  </script>
+</dom-module>

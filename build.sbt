@@ -1,3 +1,6 @@
+import play.routes.compiler.InjectedRoutesGenerator
+import play.sbt.PlayJava
+
 name := """webDataEngine"""
 
 version := "1.0-SNAPSHOT"
@@ -25,6 +28,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  filters,
   "org.springframework.guice" % "spring-guice" % "1.0.0.BUILD-SNAPSHOT",
   "org.springframework" % "spring-core" % "4.2.2.RELEASE",
   "org.springframework" % "spring-context" % "4.2.2.RELEASE"

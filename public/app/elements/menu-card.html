@@ -11,6 +11,7 @@
 <link rel="import" href="/assets/app/elements/custompaper-card.html">
 <link rel="import" href="/assets/app/elements/custom-form.html">
 <link rel="import" href="/assets/components/paper-fab/paper-fab.html"/>
+<link rel="import" href="/assets/app/elements/kibana-frame.html">
 
 <dom-module id="menu-card">
     <style>
@@ -81,7 +82,14 @@
                 </div>
                 <iron-pages selected="{{selected}}" on-iron-select="onIronSelect">
                     <template is="dom-repeat" items="{{menu}}">
-                        <custom-form menu-type="{{item.menuType}}" id="{{item.formId}}" alpaca="{{item.alpaca}}" material="{{item.material}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
+                        <template is="dom-if" if="{{item.formId}}">
+                            <custom-form menu-type="{{item.menuType}}" id="{{item.formId}}" alpaca="{{item.alpaca}}" material="{{item.material}}" list="{{item.list}}" menu-card="{{item.menuCard}}" menu-card-url = "{{item.menuCardUrl}}" table-id="{{item.tableId}}" operation-id="{{item.operationId}}" url="{{item.url}}" defaults-url="{{item.defaultsUrl}}" columns="{{item.columns}}" pages="{{item.pages}}"></custom-form>
+                        </template>
+                        <template is="dom-if" if="{{item.elk}}">
+                            <div id="{{item.cardId}}kibana">
+                                <kibana-frame elk-url="{{item.elkUrl}}"></kibana-frame>
+                            </div>
+                        </template>
                     </template>
                 </iron-pages>
             </paper-header-panel>
@@ -139,7 +147,10 @@
          var item = this.menu[this.selected];
 
          var customForm = document.getElementById(item.formId);
-         var pageRedirector = customForm.querySelector('page-redirector')
+         var pageRedirector;
+         if (customForm) {
+           pageRedirector = customForm.querySelector('page-redirector');
+         }
 
          this.heading = this.parentHeading + " > " + item.title;
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Console</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
+    <script src="/assets/components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/assets/app/elements/menu-card.html">
+    <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/assets/components/alpaca/bootstrap/alpaca.min.css">
+    <link type="text/css" rel="stylesheet" href="/assets/components/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="icon" href="/../images/ezuceFavicon.ico">
+
+    <script type="text/javascript" src="/assets/components/bootstrap-multiselect/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+
+<menu-card heading="ELK Console" elevation="0" width="150" height="100" color="WHITE" cardhovercolor="LIGHTGRAY"
+           toolbar-text-hovercolor="#ffffff" toolbar-text-hoveroutcolor="#ededed" paper-toolbar-text-color="#ededed"
+           paper-toolbar-text-color="#f2f2f2" paper-toolbar-color="#2a824c" drawer-paper-header-panel-color="#ffffff"
+           main-paper-header-panel-color="#ffffff" paper-menu-color="#ffffff" paper-item-color="#ffffff" logout-url="/logoutelkaccount"
+           menu='[
+           {"cardId":"SystemMetrics", "menuCard":false, "elk":true, "elkUrl":"https://elkproxy.ezuce.ro:8090/_plugin/kibana/goto/e4e29dc162d10bc989885cf396846ea5?embed=true",
+           "title":"System Metrics", "icon":"custom:provider-groups", "description":"System metrics statistics",
+           "width":"160", "height":"140"},
+
+           {"cardId":"CallQuality", "menuCard":false, "elk":true, "elkUrl":"https://elkproxy.ezuce.ro:8090/_plugin/kibana/goto/398685b177e4be08a281a5b7085e21c8?embed=true",
+           "title":"Call Quality", "icon":"custom:phone", "description":"Call quality statistics",
+           "width":"160", "height":"140"},
+
+           {"cardId":"SipStats", "menuCard":false, "elk":true, "elkUrl":"https://elkproxy.ezuce.ro:8090/_plugin/kibana/goto/ca4621798abc70a5127f9104549b29cf?embed=true",
+           "title":"Sip Statistics", "icon":"custom:router", "description":"Sip and Proxy statistics",
+           "width":"160", "height":"140"},
+
+           {"cardId":"CallStats", "menuCard":false, "elk":true, "elkUrl":"/assets/components/sipStats/index.php",
+           "title":"Sip Statistics", "icon":"custom:phone", "description":"Call statistics",
+           "width":"160", "height":"140"}]'>
+
+
+</menu-card>
+</body>
+</html>

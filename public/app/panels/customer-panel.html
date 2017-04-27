@@ -6,6 +6,9 @@
 <link rel="import" href="/assets/components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="/assets/components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="/assets/components/iron-label/iron-label.html">
+<link rel="import" href="/assets/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/assets/components/paper-item/paper-item.html">
+<link rel="import" href="/assets/components/paper-listbox/paper-listbox.html">
 
 <dom-module id="customer-panel">
     <template>
@@ -37,6 +40,12 @@
                         <paper-input id="companyNameId" name="companyName" label="Company Name" required></paper-input>
                         <paper-input id="superadminUserNameId" name="superadminUserName" label="Superadmin User Name" required></paper-input>
                         <paper-input id="superadminPasswordId" name="superadminInitialPassword" label="Superadmin Initial Password" type="password" required auto-validate></paper-input>
+                        <paper-dropdown-menu  label="Roles">
+                            <paper-listbox id="rolesId" name="roles" multi class="dropdown-content" attr-for-selected="value">
+                                <paper-item value="ROLE_ACCOUNT_ADMIN">ROLE_ACCOUNT_ADMIN</paper-item>
+                                <paper-item value="ROLE_ACCOUNT_ELK">ROLE_ACCOUNT_ELK</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
                         <paper-input id="descriptionId" name="description" label="Description"></paper-input>
                     </li>
                     <li class="item">
@@ -85,6 +94,12 @@
           form.querySelector('#dbTypeId').value=item.dbType;
           form.querySelector('#dbUriId').value=item.dbUri;
           form.querySelector('#dbNameId').value=item.dbName;
+          form.querySelector('#rolesId').selectedValues = item.roles;
+      },
+       presubmit: function(event, form) {
+          var rolesHTML = form.querySelector('#rolesId');
+          var roles = rolesHTML.selectedValues;
+          form.request.body.roles = roles;
       }
     });
   </script>

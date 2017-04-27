@@ -4981,12 +4981,12 @@ pageunits::
 
 
 [[X59]]
-Filters
+filters.Filters
 -------
 AsciiDoc filters allow external commands to process AsciiDoc
-'Paragraphs', 'DelimitedBlocks' and 'Table' content. Filters are
+'Paragraphs', 'DelimitedBlocks' and 'Table' content. filters.Filters are
 primarily an extension mechanism for generating specialized outputs.
-Filters are implemented using external commands which are specified in
+filters.Filters are implemented using external commands which are specified in
 configuration file definitions.
 
 There's nothing special about the filters, they're just standard UNIX
@@ -5001,7 +5001,7 @@ Attribute substitution is performed on the filter command prior to
 execution -- attributes can be used to pass parameters from the
 AsciiDoc source document to the filter.
 
-WARNING: Filters sometimes included executable code. Before installing
+WARNING: filters.Filters sometimes included executable code. Before installing
 a filter you should verify that it is from a trusted source.
 
 Filter Search Paths
@@ -5023,7 +5023,7 @@ files are stored in the `filters/music` directory.
 
 Filter Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Filters are normally accompanied by a configuration file containing a
+filters.Filters are normally accompanied by a configuration file containing a
 Paragraph or DelimitedBlock definition along with corresponding markup
 templates.
 

@@ -20,8 +20,13 @@ public class Application extends Controller {
         return Results.ok(Play.application().resourceAsStream(file)).as(Http.MimeTypes.HTML);
     }
 
-    @Secure(clients = "formClientAccount", authorizers = "admin")
+    @Secure(clients = "formClientAccount", authorizers = "accountAdmin")
     public Result adminAssetAccount(String file) {
+        return Results.ok(Play.application().resourceAsStream(file)).as(Http.MimeTypes.HTML);
+    }
+
+    @Secure(clients = "formClientElkAccount", authorizers = "accountElk")
+    public Result elkAssetAccount(String file) {
         return Results.ok(Play.application().resourceAsStream(file)).as(Http.MimeTypes.HTML);
     }
 

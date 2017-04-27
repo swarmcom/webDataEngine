@@ -14,7 +14,7 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 import java.util.List;
 
 @Component

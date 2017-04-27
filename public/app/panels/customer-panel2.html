@@ -52,6 +52,12 @@
                     <paper-input id="companyNameId" name="companyName" label="Company Name" readonly></paper-input>
                     <paper-input id="superadminUserNameId" name="superadminUserName" label="Superadmin User Name" readonly></paper-input>
                     <paper-input id="superadminPasswordId" name="superadminInitialPassword" label="Superadmin Initial Password" type="password" readonly auto-validate></paper-input>
+                    <paper-dropdown-menu  label="Roles">
+                        <paper-listbox id="rolesId" name="roles" class="dropdown-content" attr-for-selected="value" disabled>
+                            <paper-item value="ROLE_ACCOUNT_ADMIN">ROLE_ACCOUNT_ADMIN</paper-item>
+                            <paper-item value="ROLE_ACCOUNT_ELK">ROLE_ACCOUNT_ELK</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
                     <paper-input id="descriptionId" name="description" label="Description" readonly></paper-input>
                 </li>
                 <li class="item">

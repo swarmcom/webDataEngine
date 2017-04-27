@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subscription</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
+    <script src="../components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="icon" href="/../images/ezuceFavicon.ico">
+
+    <link rel="import" href="/assets/app/elements/custom-material-template.html">
+
+    <script>
+
+      document.addEventListener('WebComponentsReady', function() {
+          var customTemplate = document.querySelector('custom-material-template')
+          var dialog = customTemplate.querySelector('paper-dialog');
+          dialog.open();
+      })
+
+    </script>
+
+</head>
+
+<body>
+
+<custom-material-template id="subscription" menu-type="subscription" save-label="Subscribe"
+                          add-url="/api/elkaccounts" get-url="/api/elkaccounts/id/" modify-url="/api/elkaccounts/id/"></custom-material-template>
+
+</body>
+</html>

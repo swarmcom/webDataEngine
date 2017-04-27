@@ -167,6 +167,7 @@ public abstract class EntityController extends Controller {
     private String getDataToUpdateJSON() {
         Http.RequestBody body = request().body();
         JsonNode node = body.asJson();
+
         return node.toString();
     }
 

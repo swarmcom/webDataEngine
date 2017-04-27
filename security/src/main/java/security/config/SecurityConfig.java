@@ -1,6 +1,7 @@
 package security.config;
 
 import api.config.ApiConfig;
+import api.type.RoleType;
 import com.nimbusds.jose.JWSAlgorithm;
 import org.pac4j.core.authorization.authorizer.RequireAnyRoleAuthorizer;
 import org.pac4j.core.client.Clients;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import security.authorizer.GoogleSuperadminAuthorizer;
 
 import security.util.EncoderUtil;
+import security.validator.ElkAccountUsernamePasswordAuthenticator;
 import security.validator.ProviderUsernamePasswordAuthenticator;
 import security.validator.SecurityDigestAuthenticator;
 import security.validator.AccountUsernamePasswordAuthenticator;
@@ -33,6 +35,9 @@ public class SecurityConfig {
 
     @Inject
     private AccountUsernamePasswordAuthenticator usernamePasswordAuthenticator;
+
+    @Inject
+    private ElkAccountUsernamePasswordAuthenticator elkUsernamePasswordAuthenticator;
 
     @Inject
     private ProviderUsernamePasswordAuthenticator providerUsernamePasswordAuthenticator;
@@ -69,6 +74,13 @@ public class SecurityConfig {
     }
 
     @Bean
+    public FormClient formClientElkAccount() {
+        FormClient formClient = new FormClient("/loginformelkaccount", elkUsernamePasswordAuthenticator);
+        formClient.setName("formClientElkAccount");
+        return formClient;
+    }
+
+    @Bean
     public DirectBasicAuthClient basicClient() {
         DirectBasicAuthClient basicAuthClient = new DirectBasicAuthClient(usernamePasswordAuthenticator);
         return basicAuthClient;
@@ -84,7 +96,7 @@ public class SecurityConfig {
     @Bean
     public Clients authClients() {
         String baseUrl = ApiConfig.configuration.getString("baseUrl");
-        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClientAccount(), formClientProvider(), basicClient(), digestClient());
+        Clients clients = new Clients(baseUrl + "/callback", oidcClient(), formClientAccount(), formClientElkAccount(), formClientProvider(), basicClient(), digestClient());
         return clients;
     }
 
@@ -92,11 +104,13 @@ public class SecurityConfig {
     public Config config() {
         final Config config = new Config(authClients());
         config.addAuthorizer("googleSuperadmin", new GoogleSuperadminAuthorizer());
-        config.addAuthorizer("superadmin", new RequireAnyRoleAuthorizer<>("ROLE_SUPERADMIN"));
-        config.addAuthorizer("admin", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN","ROLE_SUPERADMIN"));
-        config.addAuthorizer("provider", new RequireAnyRoleAuthorizer<>("ROLE_PROVIDER"));
-        config.addAuthorizer("user", new RequireAnyRoleAuthorizer<>("ROLE_ADMIN","ROLE_SUPERADMIN","ROLE_USER"));
-        config.addAuthorizer("onlyUser", new RequireAnyRoleAuthorizer<>("ROLE_USER"));
+        config.addAuthorizer("superadmin", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_SUPERADMIN.name()));
+        config.addAuthorizer("admin", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_ADMIN.name(),RoleType.ROLE_SUPERADMIN.name()));
+        config.addAuthorizer("provider", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_PROVIDER.name()));
+        config.addAuthorizer("user", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_ADMIN.name(),RoleType.ROLE_SUPERADMIN.name(),RoleType.ROLE_USER.name()));
+        config.addAuthorizer("onlyUser", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_USER.name()));
+        config.addAuthorizer("accountElk", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_ACCOUNT_ELK.name()));
+        config.addAuthorizer("accountAdmin", new RequireAnyRoleAuthorizer<>(RoleType.ROLE_ACCOUNT_ADMIN.name()));
         config.setHttpActionAdapter(new DefaultHttpActionAdapter());
         return config;
     }
@@ -107,6 +121,14 @@ public class SecurityConfig {
         callbackController.setDefaultUrl("/owner/provider/account");
         callbackController.setMultiProfile(true);
         return callbackController;
+    }
+
+    @Bean
+    public ElkAccountCallbackController elkAccountCallbackController() {
+        final ElkAccountCallbackController elkCallbackController = new ElkAccountCallbackController();
+        elkCallbackController.setDefaultUrl("/owner/provider/elk");
+        elkCallbackController.setMultiProfile(true);
+        return elkCallbackController;
     }
 
     @Bean
@@ -130,6 +152,13 @@ public class SecurityConfig {
         final AccountLogoutController logoutController = new AccountLogoutController();
         logoutController.setDefaultUrl("/loginformaccount");
         return logoutController;
+    }
+
+    @Bean
+    public ElkAccountLogoutController elkAccountLogoutController() {
+        final ElkAccountLogoutController elkLogoutController = new ElkAccountLogoutController();
+        elkLogoutController.setDefaultUrl("/loginformelkaccount");
+        return elkLogoutController;
     }
 
     @Bean
